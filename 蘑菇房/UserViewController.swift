@@ -1,0 +1,183 @@
+//
+//  UserViewController.swift
+//  蘑菇房
+//
+//  Created by 芒果君 on 16/5/15.
+//  Copyright © 2016年 蘑菇房工作室. All rights reserved.
+//
+
+import UIKit
+
+class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
+    
+    
+    @IBOutlet weak var tableView: UITableView!
+    
+   
+    
+    var staticItems : [StaticItem] = []
+    
+    
+    override func viewDidLoad() {
+        
+        super.viewDidLoad()
+        tableView.delegate = self
+        tableView.dataSource = self
+        staticItems = [StaticItem(iconName:"Setup",label:"设置"),StaticItem(iconName:"Delete",label: "清除缓存"),StaticItem(iconName:"About",label: "关于我们")]
+        // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    //MARK: - UITableViewDataSource
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if (indexPath.section == 0){  //用户信息栏 2016.7.5
+            return 200
+        }
+        else if(indexPath.section == 1){//滚动信息栏 2016.7.5
+            let cell = self.tableView!.dequeueReusableCellWithIdentifier("Notification")! as UITableViewCell
+            let notification = cell.viewWithTag(202) as! UILabel
+            if(notification.text!.characters.count<27){    //自适应表格宽度 2016.7.6
+                return 50
+            }
+            else {
+                return 30
+            }
+        
+        }
+        else if(indexPath.section == 2 ){//四个小图标栏 2016.7.12
+            return 120
+        }
+        
+        else if(indexPath.section == 3){//选项栏 2016.7.12
+            return 50
+        }
+            
+
+        else {
+            return 120
+        }
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+        switch section{
+        case 0:fallthrough
+        case 1:fallthrough
+        case 2:return 1
+        case 3:return staticItems.count
+        default:
+            return 1
+        }
+    }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 4
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        var cell:UITableViewCell? = UITableViewCell()
+        
+        if (indexPath.section == 0){
+            cell = self.tableView!.dequeueReusableCellWithIdentifier("UserInfo")!
+            let icon = cell!.viewWithTag(1011) as! UIImageView
+            let nameLabel = cell!.viewWithTag(1012) as! UILabel
+//          let background = cell.viewWithTag(102) as! UIImageView
+            icon.image = UIImage(named: "User")
+            icon.layer.cornerRadius = icon.frame.size.width/2.5
+            icon.clipsToBounds = true     //制作圆形的头像
+            nameLabel.text = "芒果君"//
+//          background.image = UIImage(named:"2")
+        }
+        else if (indexPath.section == 1){
+            
+            cell = self.tableView!.dequeueReusableCellWithIdentifier("Notification")!
+            let sign = cell!.viewWithTag(201) as! UIImageView
+            let notification = cell!.viewWithTag(202) as! UILabel
+            sign.image = UIImage(named: "Alert")
+            notification.text = "2016-7-6 南宁市气象局发布暴雨红色预警，请注意强对流天气"
+            
+        }
+        else if(indexPath.section == 2){
+            
+            cell = self.tableView!.dequeueReusableCellWithIdentifier("Inspector")!
+            
+            let stackview = cell!.viewWithTag(10) as! UIStackView
+            let deviceModel:String = UIDevice.currentDevice().model
+            if (deviceModel == "@iPhone 4s"){
+                stackview.spacing = 10
+            }
+            else if (deviceModel == "@iPhone 6s"){
+                stackview.spacing = 40
+            }
+            
+            //stackview_1 Room
+            let roomIcon = cell!.viewWithTag(101) as! UIImageView
+            let roomLabel = cell!.viewWithTag(102) as! UILabel
+            roomIcon.image = UIImage(named: "Mushroom")
+            roomLabel.text = "蘑菇房"
+            
+            //stackview_2 Barn
+            let barnIcon = cell!.viewWithTag(201) as! UIImageView
+            let barnLabel = cell!.viewWithTag(202) as! UILabel
+            barnIcon.image = UIImage(named: "Barn")
+            barnLabel.text = "堆料房"
+            
+            //stackview_3 Battery
+            let batteryIcon = cell!.viewWithTag(301) as! UIImageView
+            let batteryLabel = cell!.viewWithTag(302) as! UILabel
+            batteryIcon.image = UIImage(named: "Battery")
+            batteryLabel.text = "电量检测"
+            
+            //stackview_4 Statistics
+            let chartIcon = cell!.viewWithTag(401) as! UIImageView
+            let chartlabel = cell!.viewWithTag(402) as! UILabel
+            chartIcon.image = UIImage(named: "Statistics")
+            chartlabel.text = "历史数据"
+            
+//            四个stackview的编号说明：
+//            蘑菇房：图标101，标签102
+//            堆料房：图标201，标签202
+//            电量检测：图标301，标签302
+//            历史数据：图标401，标签402
+            
+        }
+        else if (indexPath.section == 3){
+            cell = self.tableView.dequeueReusableCellWithIdentifier("General",forIndexPath: indexPath)
+            let Icon = cell!.contentView.viewWithTag(3001) as! UIImageView
+            let Title = cell!.contentView.viewWithTag(3002) as! UILabel
+            let _staticItem = staticItems[indexPath.row] as StaticItem//点击后内容会消失，原因不明，目测可能和数据持久化有关2016.7.14／13:52
+            Icon.image = UIImage(named: _staticItem.iconName)
+            Title.text = _staticItem.label //有问题 2016.7.14 00:02
+        }
+        
+        return cell!
+    }
+    
+    //MARK - StoryBoardSegue
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if(segue.identifier == "SetupSegue"){
+            var indexPath = self.tableView.indexPathForSelectedRow
+            var vc = segue.destinationViewController as! GeneralDetailController
+            let row = indexPath!.row
+            var title = ""
+            switch row {
+            case 0:
+                title = "设置"
+            case 1:
+                title = "清除缓存"
+            case 2:
+                title = "关于我们"
+            default:
+                break
+            }
+            vc.navigationItem.backBarButtonItem?.title = self.navigationItem.title
+            vc.navigationItem.title = title
+            vc.selectedRow = row
+        }
+    }
+    
+}
