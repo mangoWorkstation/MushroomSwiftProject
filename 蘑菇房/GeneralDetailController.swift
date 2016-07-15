@@ -75,7 +75,7 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
                 let label = cell.viewWithTag(1001) as! UILabel
                 label.text = "退出登录"
                 label.textAlignment = NSTextAlignment.Center      //居中 2016.7.15／1:13a.m
-                cell.accessoryType = UITableViewCellAccessoryType.None   //无箭头指示器
+                cell.accessoryType = UITableViewCellAccessoryType.None   //无箭头指示器ii
             }
         }
         

@@ -10,9 +10,11 @@ import Foundation
 class NotificationPreview: NSObject {
     var preImage : String?
     var prelabel : String?
+    var isRead : Bool = false
     
-    init(preImage:String,prelabel:String) {
+    init(preImage:String,prelabel:String,isRead:Bool) {
         self.preImage = preImage
         self.prelabel = prelabel
+        self.isRead = isRead
     }
 }

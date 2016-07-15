@@ -27,7 +27,7 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
         tableView.delegate = self
         tableView.dataSource = self
         InfoType.selectedSegmentIndex = 0
-        notificationCache = [NotificationPreview(preImage: "Hello", prelabel:"南宁市未来三天高温将继续持续"),NotificationPreview(preImage: "MyName", prelabel:"您的蘑菇房高温警报"),NotificationPreview(preImage: "IsNot", prelabel:"您的蘑菇房二氧化碳浓度偏高"),NotificationPreview(preImage: "XiJinping", prelabel:"每日提醒：您的蘑菇房运行正常"),NotificationPreview(preImage: "IM", prelabel:"监控系统故障停机，请及时联系维修人员"),NotificationPreview(preImage: "LiKeqiang", prelabel:"本周蘑菇房的监测分析报告出来啦！快点开瞧瞧吧～")]
+        notificationCache = [NotificationPreview(preImage: "Hello", prelabel:"南宁市未来三天高温将继续持续",isRead: false),NotificationPreview(preImage: "MyName", prelabel:"您的蘑菇房高温警报",isRead: false),NotificationPreview(preImage: "IsNot", prelabel:"您的蘑菇房二氧化碳浓度偏高",isRead: false),NotificationPreview(preImage: "XiJinping", prelabel:"每日提醒：您的蘑菇房运行正常",isRead: false),NotificationPreview(preImage: "IM", prelabel:"监控系统故障停机，请及时联系维修人员",isRead: false),NotificationPreview(preImage: "LiKeqiang", prelabel:"本周蘑菇房的监测分析报告出来啦！快点开瞧瞧吧～",isRead: false)]
         //测试数据
         // Do any additional setup after loading the view.
     }
@@ -93,20 +93,22 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
                 cell = self.tableView.dequeueReusableCellWithIdentifier("MailCell",forIndexPath: indexPath)
                 let preImage = cell?.viewWithTag(2001) as! UIImageView
                 let preLabel = cell?.viewWithTag(2002) as! UILabel
-//                let timeLabel = cell?.viewWithTag(2003) as! UILabel
+                let timeLabel = cell?.viewWithTag(2003) as! UILabel
                 let preview = self.notificationCache[indexPath.row]
                 preImage.image = UIImage(named: preview.preImage!)
                 preLabel.text = preview.prelabel!
+                timeLabel.text = "Time"
             }
         }
         else {
             cell = self.tableView.dequeueReusableCellWithIdentifier("MailCell",forIndexPath: indexPath)
             let preImage = cell?.viewWithTag(2001) as! UIImageView
             let preLabel = cell?.viewWithTag(2002) as! UILabel
-//            let timeLabel = cell?.viewWithTag(2003) as! UILabel
+            let timeLabel = cell?.viewWithTag(2003) as! UILabel
             let preview = self.notificationCache[indexPath.row]
             preImage.image = UIImage(named: preview.preImage!)
             preLabel.text = preview.prelabel!
+            timeLabel.text = "Time"
         }
         return cell!
     }
