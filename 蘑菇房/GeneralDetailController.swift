@@ -28,33 +28,93 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
     
     //MARK: - UITableViewDelegate
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat{
-        return 50
+        let section = indexPath.section
+        if(0 == self.selectedRow){
+            return 50
+        }
+        else if(1 == self.selectedRow){
+            switch section {
+            case 0:
+                return 50
+            default:
+                return 370
+            }
+        }
+        else{
+            return 50
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
         var cell = UITableViewCell()
-        cell = self.tableView.dequeueReusableCellWithIdentifier("GeneralCell",forIndexPath: indexPath)
-        var label = cell.viewWithTag(1001) as! UILabel
         let section = indexPath.section
+        
+        //点击“设置”
         if(0 == self.selectedRow){
             if(0 == section){
+                cell = self.tableView.dequeueReusableCellWithIdentifier("GeneralCell",forIndexPath: indexPath)
+                let label = cell.viewWithTag(1001) as! UILabel
                 label.text = "账号与安全"
             }
             else if (1 == section){
+                cell = self.tableView.dequeueReusableCellWithIdentifier("GeneralCell",forIndexPath: indexPath)
+                let label = cell.viewWithTag(1001) as! UILabel
                 let labelGroup = ["新消息通知","帮助与反馈"]
                 label.text = labelGroup[indexPath.row]
             }
             else if(2 == section){
+                cell = self.tableView.dequeueReusableCellWithIdentifier("CacheCell")!
+                let label = cell.viewWithTag(2001) as! UILabel
+                let label_1 = cell.viewWithTag(2002) as! UILabel
+                label.text = "清除缓存"
+                label_1.text = "1.23 MB"  //显示缓存大小 2016.7.15/7:08
+                cell.accessoryType = UITableViewCellAccessoryType.None
+            }
+            else if(3 == section){
+                cell = self.tableView.dequeueReusableCellWithIdentifier("GeneralCell",forIndexPath: indexPath)
+                let label = cell.viewWithTag(1001) as! UILabel
                 label.text = "退出登录"
-                label.textAlignment = NSTextAlignment.Center
-                cell.accessoryType = UITableViewCellAccessoryType.None //居中 2016.7.15／1:13a.m
+                label.textAlignment = NSTextAlignment.Center      //居中 2016.7.15／1:13a.m
+                cell.accessoryType = UITableViewCellAccessoryType.None   //无箭头指示器
+            }
+        }
+        
+        //点击“关于”
+        if(1 == self.selectedRow){
+            if(0 == section){
+                cell = self.tableView.dequeueReusableCellWithIdentifier("GeneralCell",forIndexPath: indexPath)
+                let label = cell.viewWithTag(1001) as! UILabel
+                let labels = ["关于我们","给蘑菇房来个好评吧😊"]
+                label.text = labels[indexPath.row]
+                cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+            }
+            else{
+                cell = self.tableView.dequeueReusableCellWithIdentifier("AboutAppCell")!
+                let appIcon = cell.viewWithTag(2001) as! UIImageView
+                let version = cell.viewWithTag(2002) as! UILabel
+                let appName = cell.viewWithTag(2003) as! UILabel
+                let copyRight = cell.viewWithTag(2004) as! UILabel
+                appIcon.image = UIImage(named: "App")
+                version.text = "当前版本：1.0.1 Alpha"
+                appName.text = "蘑菇房"
+                copyRight.text = "Copyright © 2016 MushRoom Workstation \n All Rights Reserved \n 广西大学 蘑菇房工作室 出品"
+                copyRight.lineBreakMode = NSLineBreakMode.ByWordWrapping
+                copyRight.numberOfLines = 0
             }
         }
         return cell
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int{
-        return 3
+        if selectedRow == 0{
+            return 4
+        }
+        else if(1 == self.selectedRow){
+            return 2
+        }
+        else {
+            return 1
+        }
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
@@ -70,10 +130,23 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
                     return 1
             }
         }
+        else if(1 == self.selectedRow) {
+            switch section {
+            case 0:
+                return 2
+            default:
+                return 1
+            }
+        }
         else {
-           return 1
+            return 1
         }
     }
+    
+    //MARK: - UIStoryBoardSegue
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        <#code#>
+//    }
     /*
     // MARK: - Navigation
 

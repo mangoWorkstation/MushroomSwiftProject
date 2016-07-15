@@ -15,7 +15,7 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
    
     
-    var staticItems : [StaticItem] = []
+    var staticItems : [StaticItem] = [] //数组：用于存放静态状态图标
     
     
     override func viewDidLoad() {
@@ -23,7 +23,8 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        staticItems = [StaticItem(iconName:"Setup",label:"设置"),StaticItem(iconName:"Delete",label: "清除缓存"),StaticItem(iconName:"About",label: "关于我们")]
+        staticItems = [StaticItem(iconName:"Setup",label:"设置"),StaticItem(iconName:"About",label: "关于")]
+        //初始化静态固定图标
         // Do any additional setup after loading the view, typically from a nib.
     }
     
@@ -33,6 +34,7 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     //MARK: - UITableViewDataSource
+    //设置每一行的高度
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if (indexPath.section == 0){  //用户信息栏 2016.7.5
             return 200
@@ -55,28 +57,34 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         else if(indexPath.section == 3){//选项栏 2016.7.12
             return 50
         }
+        else if(indexPath.section == 4){
+            return 50
+        }
             
-
         else {
             return 120
         }
     }
     
+    //设置每个部分分别有多少行
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         switch section{
         case 0:fallthrough
         case 1:fallthrough
-        case 2:return 1
-        case 3:return staticItems.count
+        case 2:fallthrough
+        case 3:return 1
+        case 4:return staticItems.count
         default:
             return 1
         }
     }
     
+    //设置部分（section）的数量
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 4
+        return 5
     }
     
+    //绑定数据
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         var cell:UITableViewCell? = UITableViewCell()
@@ -145,7 +153,14 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
 //            历史数据：图标401，标签402
             
         }
-        else if (indexPath.section == 3){
+        else if(indexPath.section == 3){
+            cell = self.tableView.dequeueReusableCellWithIdentifier("Inform")!
+            let icon = cell?.viewWithTag(3001) as! UIImageView
+            let label = cell?.viewWithTag(3002) as! UILabel
+            icon.image = UIImage(named: "Inform")
+            label.text = "消息与通知"
+        }
+        else if (indexPath.section == 4){
             cell = self.tableView.dequeueReusableCellWithIdentifier("General",forIndexPath: indexPath)
             let Icon = cell!.contentView.viewWithTag(3001) as! UIImageView
             let Title = cell!.contentView.viewWithTag(3002) as! UILabel
@@ -157,26 +172,49 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         return cell!
     }
     
-    //MARK - StoryBoardSegue
+    //设置表格部分（section）的间距 2016.7.15/9:17
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{
+        if(0 == section){
+            return 0.1     //不要顶部留白
+        }
+        else if(1 == section){
+            return 2
+        }
+        else if(2 == section){
+            return 2
+        }
+        else if(4 == section){
+            return 8
+        }
+        else {
+            return 20
+        }
+    }
+    
+    //MARK - UIStoryBoardSegue
+    //segue 跳转页面
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if(segue.identifier == "SetupSegue"){
-            var indexPath = self.tableView.indexPathForSelectedRow
-            var vc = segue.destinationViewController as! GeneralDetailController
+            let indexPath = self.tableView.indexPathForSelectedRow
+            let vc = segue.destinationViewController as! GeneralDetailController
             let row = indexPath!.row
             var title = ""
             switch row {
             case 0:
                 title = "设置"
             case 1:
-                title = "清除缓存"
-            case 2:
-                title = "关于我们"
+                title = "关于蘑菇房"
             default:
                 break
             }
             vc.navigationItem.backBarButtonItem?.title = self.navigationItem.title
             vc.navigationItem.title = title
             vc.selectedRow = row
+        }
+        if(segue.identifier == "NotificationSegue"){
+            let vc = segue.destinationViewController as! NotificationViewController
+            vc.navigationItem.backBarButtonItem?.title = self.navigationItem.title
+            vc.navigationItem.title = "消息与通知"
         }
     }
     
