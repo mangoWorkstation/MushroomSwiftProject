@@ -14,11 +14,16 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
     
     @IBOutlet weak var tableView: UITableView!
     
-    var isThereAnythingNew : Bool = true{
-        didSet{
-            isThereAnythingNew = true
-        }
+    
+    @IBAction func OnChanged(sender: AnyObject) {
+        self.whichKindOfInfoType = InfoType.selectedSegmentIndex
+        self.tableView.reloadData() //重要！！刷新表格数据！！ 2016.7.16/10:58
+                                    //triggered when user click on different segments
     }
+    
+    var whichKindOfInfoType = 0 //should be initialized! 2016.7.16/11:42
+    
+    var isThereAnythingNew : Bool = false   //identify if unread messages exist 2016.7.16/11:41
     
     var notificationCache : [NotificationPreview] = []
     
@@ -26,7 +31,6 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        InfoType.selectedSegmentIndex = 0
         notificationCache = [NotificationPreview(preImage: "Hello", prelabel:"南宁市未来三天高温将继续持续",isRead: false),NotificationPreview(preImage: "MyName", prelabel:"您的蘑菇房高温警报",isRead: false),NotificationPreview(preImage: "IsNot", prelabel:"您的蘑菇房二氧化碳浓度偏高",isRead: false),NotificationPreview(preImage: "XiJinping", prelabel:"每日提醒：您的蘑菇房运行正常",isRead: false),NotificationPreview(preImage: "IM", prelabel:"监控系统故障停机，请及时联系维修人员",isRead: false),NotificationPreview(preImage: "LiKeqiang", prelabel:"本周蘑菇房的监测分析报告出来啦！快点开瞧瞧吧～",isRead: false)]
         //测试数据
         // Do any additional setup after loading the view.
@@ -81,7 +85,7 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
         var cell:UITableViewCell? = UITableViewCell()
-        if(0 == self.InfoType.selectedSegmentIndex){
+        if(self.whichKindOfInfoType == 0){
             if(self.isThereAnythingNew == false){
                 cell = self.tableView!.dequeueReusableCellWithIdentifier("EmptyMailBoxCell")!
                 let emptyIcon = cell?.viewWithTag(1001) as! UIImageView
@@ -100,7 +104,7 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
                 timeLabel.text = "Time"
             }
         }
-        else {
+        else if(self.whichKindOfInfoType == 1){
             cell = self.tableView.dequeueReusableCellWithIdentifier("MailCell",forIndexPath: indexPath)
             let preImage = cell?.viewWithTag(2001) as! UIImageView
             let preLabel = cell?.viewWithTag(2002) as! UILabel

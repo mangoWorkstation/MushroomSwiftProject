@@ -786,14 +786,14 @@
                                 <rect key="frame" x="0.0" y="20" width="600" height="44"/>
                             </navigationBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="120" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="GTP-1t-z5o">
-                                <rect key="frame" x="0.0" y="103" width="600" height="448"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="EmptyMailBoxCell" rowHeight="419" id="9f4-na-xER">
-                                        <rect key="frame" x="0.0" y="28" width="600" height="419"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="EmptyMailBoxCell" rowHeight="458" id="9f4-na-xER">
+                                        <rect key="frame" x="0.0" y="28" width="600" height="458"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9f4-na-xER" id="sAI-3G-n2c">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="418.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="458"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" tag="1001" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3Vk-Ma-qrD">
@@ -823,12 +823,12 @@
                                                 <constraint firstItem="3Vk-Ma-qrD" firstAttribute="top" secondItem="sAI-3G-n2c" secondAttribute="topMargin" constant="80" id="7Vt-3o-Iim"/>
                                                 <constraint firstItem="xHh-xo-uAx" firstAttribute="top" secondItem="3Vk-Ma-qrD" secondAttribute="bottom" constant="65" id="Vsk-1S-pCI"/>
                                                 <constraint firstItem="xHh-xo-uAx" firstAttribute="leading" secondItem="3Vk-Ma-qrD" secondAttribute="leading" constant="-103" id="etq-V5-i0u"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="xHh-xo-uAx" secondAttribute="bottom" constant="74.5" id="gS4-z5-Tdr"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="xHh-xo-uAx" secondAttribute="bottom" constant="114" id="gS4-z5-Tdr"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="MailCell" rowHeight="120" id="MbV-7e-cSd">
-                                        <rect key="frame" x="0.0" y="447" width="600" height="120"/>
+                                        <rect key="frame" x="0.0" y="486" width="600" height="120"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MbV-7e-cSd" id="4Ia-8n-DZ4">
                                             <rect key="frame" x="0.0" y="0.0" width="567" height="120"/>
@@ -882,29 +882,32 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="uIr-TM-92f">
-                                <rect key="frame" x="89" y="72" width="423" height="29"/>
-                                <segments>
-                                    <segment title="未读消息"/>
-                                    <segment title="所有消息"/>
-                                </segments>
-                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="uIr-TM-92f" firstAttribute="leading" secondItem="GxL-Bd-h1y" secondAttribute="leadingMargin" constant="69" id="5ns-uT-d2A"/>
                             <constraint firstItem="GTP-1t-z5o" firstAttribute="bottom" secondItem="7a8-NB-B93" secondAttribute="top" id="92S-4k-Bod"/>
-                            <constraint firstItem="3jy-bD-Duz" firstAttribute="bottom" secondItem="uIr-TM-92f" secondAttribute="top" constant="-8" id="GX8-Ij-qNk"/>
-                            <constraint firstItem="uIr-TM-92f" firstAttribute="top" secondItem="c4E-6S-9yI" secondAttribute="bottom" constant="8" id="HNa-Bf-Icv"/>
-                            <constraint firstItem="uIr-TM-92f" firstAttribute="centerX" secondItem="GTP-1t-z5o" secondAttribute="centerX" id="M3r-kY-j31"/>
+                            <constraint firstAttribute="trailing" secondItem="3jy-bD-Duz" secondAttribute="trailing" id="Fbm-Lc-1Qi"/>
+                            <constraint firstItem="3jy-bD-Duz" firstAttribute="bottom" secondItem="GTP-1t-z5o" secondAttribute="top" id="GpI-NT-R4g"/>
                             <constraint firstItem="3jy-bD-Duz" firstAttribute="trailing" secondItem="GTP-1t-z5o" secondAttribute="trailing" id="PVT-FR-Yhx"/>
-                            <constraint firstItem="GTP-1t-z5o" firstAttribute="top" secondItem="uIr-TM-92f" secondAttribute="bottom" constant="3" id="Wxi-Q3-VhX"/>
-                            <constraint firstItem="uIr-TM-92f" firstAttribute="centerX" secondItem="GxL-Bd-h1y" secondAttribute="centerX" id="naU-dc-XqC"/>
+                            <constraint firstItem="3jy-bD-Duz" firstAttribute="bottom" secondItem="c4E-6S-9yI" secondAttribute="bottom" id="clO-vX-mAd"/>
                             <constraint firstItem="3jy-bD-Duz" firstAttribute="leading" secondItem="GTP-1t-z5o" secondAttribute="leading" id="pkH-HA-BFN"/>
                             <constraint firstItem="3jy-bD-Duz" firstAttribute="leading" secondItem="GxL-Bd-h1y" secondAttribute="leading" id="rtC-4h-OkV"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="G8x-xm-zqR"/>
+                    <navigationItem key="navigationItem" id="G8x-xm-zqR">
+                        <nil key="title"/>
+                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="uIr-TM-92f">
+                            <rect key="frame" x="222.5" y="7.5" width="155" height="29"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="未读消息"/>
+                                <segment title="所有消息"/>
+                            </segments>
+                            <connections>
+                                <action selector="OnChanged:" destination="sLZ-QU-qxe" eventType="valueChanged" id="pf7-Js-GE5"/>
+                            </connections>
+                        </segmentedControl>
+                    </navigationItem>
                     <connections>
                         <outlet property="InfoType" destination="uIr-TM-92f" id="Ctk-tv-Kjd"/>
                         <outlet property="tableView" destination="GTP-1t-z5o" id="djw-mU-czX"/>

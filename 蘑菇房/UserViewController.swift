@@ -214,7 +214,7 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         if(segue.identifier == "NotificationSegue"){
             let vc = segue.destinationViewController as! NotificationViewController
             vc.navigationItem.backBarButtonItem?.title = self.navigationItem.title
-            vc.navigationItem.title = "消息与通知"
+            vc.navigationItem.title = ""
         }
     }
     
