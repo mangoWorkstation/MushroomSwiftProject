@@ -145,12 +145,28 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true) //点击后取消被选中状态 2016.7.17
+        if(self.selectedRow == 1){
+            if(indexPath.section == 0){
+                if(indexPath.row == 0){
+                    performSegueWithIdentifier("AboutUsSegue",sender: nil)
+                }
+            }
+        }
     }
     
     //MARK: - UIStoryBoardSegue
-//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        <#code#>
-//    }
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if(segue.identifier == "AboutUsSegue"){
+            let vc = segue.destinationViewController as! AboutUsViewController
+            vc.navigationItem.backBarButtonItem?.title = self.navigationItem.title
+            vc.navigationItem.title = "关于我们"
+        }
+        //这个segue一定要设置成accessory action，
+        //不要问我为什么，因为我他妈也不知道为什么🙄🙄
+        //2016.7.18 愤怒的一夜😤😤
+        
+    }
+    
     /*
     // MARK: - Navigation
 

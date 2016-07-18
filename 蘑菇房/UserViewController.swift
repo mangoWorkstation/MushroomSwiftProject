@@ -211,6 +211,7 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             default:
                 break
             }
+            vc.navigationController?.view.backgroundColor = UIColor.whiteColor()
             vc.navigationItem.backBarButtonItem?.title = self.navigationItem.title
             vc.navigationItem.title = title
             vc.selectedRow = row
