@@ -124,6 +124,10 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         return cell
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
+        self.List.deselectRowAtIndexPath(indexPath, animated: true) //点击后取消被选中状态 2016.7.17
+    }
+    
     
 //    更改当前标题
     func changeTitleArea(currentArea : String){

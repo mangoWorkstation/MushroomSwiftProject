@@ -143,6 +143,10 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
         }
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
+        self.tableView.deselectRowAtIndexPath(indexPath, animated: true) //点击后取消被选中状态 2016.7.17
+    }
+    
     //MARK: - UIStoryBoardSegue
 //    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 //        <#code#>
