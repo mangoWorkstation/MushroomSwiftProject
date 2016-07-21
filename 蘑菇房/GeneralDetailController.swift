@@ -14,6 +14,10 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
 
     @IBOutlet weak var tableView: UITableView!
     
+    @IBAction func close(segue:UIStoryboardSegue){
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
@@ -75,6 +79,7 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
                 let label = cell.viewWithTag(1001) as! UILabel
                 label.text = "退出登录"
                 label.textAlignment = NSTextAlignment.Center      //居中 2016.7.15／1:13a.m
+                label.textColor = UIColor.redColor()
                 cell.accessoryType = UITableViewCellAccessoryType.None   //无箭头指示器ii
             }
         }
@@ -145,6 +150,16 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true) //点击后取消被选中状态 2016.7.17
+        if(self.selectedRow == 0){
+            if(indexPath.section == 1){
+                if(indexPath.row == 0){
+                    performSegueWithIdentifier("NewMessageInformSegue", sender: nil)
+                }
+                if(indexPath.row == 1){
+                    performSegueWithIdentifier("FeedBackSegue", sender: nil)
+                }
+            }
+        }
         if(self.selectedRow == 1){
             if(indexPath.section == 0){
                 if(indexPath.row == 0){
@@ -164,9 +179,21 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
         //这个segue一定要设置成accessory action，
         //不要问我为什么，因为我他妈也不知道为什么🙄🙄
         //2016.7.18 愤怒的一夜😤😤
+        if(segue.identifier == "NewMessageInformSegue"){
+            let vc = segue.destinationViewController as! NewMessageInformViewController
+            vc.navigationItem.backBarButtonItem?.title = self.navigationItem.title
+            vc.navigationItem.title = "消息与通知"
+        }
+        
+        if(segue.identifier == "FeedBackSegue"){
+            let vc = segue.destinationViewController as! FeedBackViewController
+            vc.navigationItem.backBarButtonItem?.title = self.navigationItem.title
+            vc.navigationItem.title = "您的建议"
+        }
         
     }
     
+
     /*
     // MARK: - Navigation
 

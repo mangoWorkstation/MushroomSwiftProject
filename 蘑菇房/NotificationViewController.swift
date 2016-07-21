@@ -240,19 +240,5 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
         }
         return label
     }
-}
-
-//时间戳转日期 2016.7.16
-func timeStampToString(timeStamp:String)->String {
     
-    let string = NSString(string: timeStamp)
-    
-    let timeSta:NSTimeInterval = string.doubleValue
-    let dfmatter = NSDateFormatter()
-    dfmatter.dateFormat="yyyy年MM月dd日"
-    
-    let date = NSDate(timeIntervalSince1970: timeSta)
-    
-//    print(dfmatter.stringFromDate(date))
-    return dfmatter.stringFromDate(date)
 }
