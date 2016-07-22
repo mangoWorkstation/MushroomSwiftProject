@@ -151,6 +151,11 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true) //点击后取消被选中状态 2016.7.17
         if(self.selectedRow == 0){
+            if(indexPath.section == 0){
+                if(indexPath.row == 0){
+                    performSegueWithIdentifier("AccountSegue", sender: nil)
+                }
+            }
             if(indexPath.section == 1){
                 if(indexPath.row == 0){
                     performSegueWithIdentifier("NewMessageInformSegue", sender: nil)
@@ -189,6 +194,12 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
             let vc = segue.destinationViewController as! FeedBackViewController
             vc.navigationItem.backBarButtonItem?.title = self.navigationItem.title
             vc.navigationItem.title = "您的建议"
+        }
+        
+        if(segue.identifier == "AccountSegue"){
+            let vc = segue.destinationViewController as! AccountViewController
+            vc.navigationItem.backBarButtonItem?.title = self.navigationItem.title
+            vc.navigationItem.title = "账号与安全"
         }
         
     }

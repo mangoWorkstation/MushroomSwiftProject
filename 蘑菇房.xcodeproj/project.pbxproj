@@ -30,6 +30,11 @@
 		0D8197261CEC8E3600CE0211 /* roomInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8197251CEC8E3600CE0211 /* roomInfoModel.swift */; };
 		0D8197281CEC964C00CE0211 /* dataExchangeBetweenViewsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8197271CEC964C00CE0211 /* dataExchangeBetweenViewsDelegate.swift */; };
 		0D9CE9851D40548F004E1B27 /* PublicStaticMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9CE9841D40548F004E1B27 /* PublicStaticMethods.swift */; };
+		0D9CE9871D419F6F004E1B27 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9CE9861D419F6F004E1B27 /* AccountViewController.swift */; };
+		0D9CE9891D41AE6F004E1B27 /* EditProfilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9CE9881D41AE6F004E1B27 /* EditProfilesViewController.swift */; };
+		0DF6899F1D41BD3C001FC45A /* UserProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF6899E1D41BD3C001FC45A /* UserProfileModel.swift */; };
+		0DF689A11D41E6A9001FC45A /* FaceShowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF689A01D41E6A9001FC45A /* FaceShowViewController.swift */; };
+		0DF689A31D41EFEF001FC45A /* EditOtherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF689A21D41EFEF001FC45A /* EditOtherViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +84,11 @@
 		0D8197251CEC8E3600CE0211 /* roomInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = roomInfoModel.swift; sourceTree = "<group>"; };
 		0D8197271CEC964C00CE0211 /* dataExchangeBetweenViewsDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = dataExchangeBetweenViewsDelegate.swift; sourceTree = "<group>"; };
 		0D9CE9841D40548F004E1B27 /* PublicStaticMethods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicStaticMethods.swift; sourceTree = "<group>"; };
+		0D9CE9861D419F6F004E1B27 /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
+		0D9CE9881D41AE6F004E1B27 /* EditProfilesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfilesViewController.swift; sourceTree = "<group>"; };
+		0DF6899E1D41BD3C001FC45A /* UserProfileModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileModel.swift; sourceTree = "<group>"; };
+		0DF689A01D41E6A9001FC45A /* FaceShowViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FaceShowViewController.swift; sourceTree = "<group>"; };
+		0DF689A21D41EFEF001FC45A /* EditOtherViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditOtherViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +140,7 @@
 			children = (
 				0D7262AF1D3755AC00ACB2B9 /* StaticItemModel.swift */,
 				0D2B9B2E1D3887A9006559F1 /* NotificationPreviewModel.swift */,
+				0DF6899E1D41BD3C001FC45A /* UserProfileModel.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -143,6 +154,10 @@
 				0D2B80BC1D3C70B2007FBB8A /* AboutUsViewController.swift */,
 				0D32FEAD1D3DBC99008E79CD /* NewMessageInformViewController.swift */,
 				0D32FEAF1D3DD0A2008E79CD /* FeedBackViewController.swift */,
+				0D9CE9861D419F6F004E1B27 /* AccountViewController.swift */,
+				0D9CE9881D41AE6F004E1B27 /* EditProfilesViewController.swift */,
+				0DF689A01D41E6A9001FC45A /* FaceShowViewController.swift */,
+				0DF689A21D41EFEF001FC45A /* EditOtherViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -371,6 +386,7 @@
 			files = (
 				0D7FBC3C1CE80A6800775FCA /* WeatherViewController.swift in Sources */,
 				0D32FEB01D3DD0A2008E79CD /* FeedBackViewController.swift in Sources */,
+				0DF689A11D41E6A9001FC45A /* FaceShowViewController.swift in Sources */,
 				0D7FBC6F1CE80C7000775FCA /* UserViewController.swift in Sources */,
 				0D7FBC751CE8152200775FCA /* ChooseAreaModel.swift in Sources */,
 				0D8197261CEC8E3600CE0211 /* roomInfoModel.swift in Sources */,
@@ -378,14 +394,18 @@
 				0D0C52B01D257A840036F8A5 /* PreviewModel.swift in Sources */,
 				0D7262B41D37E6BA00ACB2B9 /* GeneralDetailController.swift in Sources */,
 				0D7262B01D3755AC00ACB2B9 /* StaticItemModel.swift in Sources */,
+				0DF689A31D41EFEF001FC45A /* EditOtherViewController.swift in Sources */,
 				0D32FEAE1D3DBC99008E79CD /* NewMessageInformViewController.swift in Sources */,
 				0D2B80BD1D3C70B2007FBB8A /* AboutUsViewController.swift in Sources */,
 				0D2B9B2F1D3887A9006559F1 /* NotificationPreviewModel.swift in Sources */,
+				0D9CE9871D419F6F004E1B27 /* AccountViewController.swift in Sources */,
 				0D7FBC731CE814EB00775FCA /* ChooseAreaViewController.swift in Sources */,
 				0D2B9B2C1D387723006559F1 /* NotificationViewController.swift in Sources */,
 				0D7FBC381CE80A6800775FCA /* AppDelegate.swift in Sources */,
+				0DF6899F1D41BD3C001FC45A /* UserProfileModel.swift in Sources */,
 				0D8197281CEC964C00CE0211 /* dataExchangeBetweenViewsDelegate.swift in Sources */,
 				0D7FBC3A1CE80A6800775FCA /* MushroomViewController.swift in Sources */,
+				0D9CE9891D41AE6F004E1B27 /* EditProfilesViewController.swift in Sources */,
 				0D9CE9851D40548F004E1B27 /* PublicStaticMethods.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
