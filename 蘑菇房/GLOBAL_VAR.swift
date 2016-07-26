@@ -17,4 +17,4 @@ var GLOBAL_NotificationCache : [NotificationPreview] = [NotificationPreview(mess
 
 var GLOBAL_UnreadMessage : [NotificationPreview] = unreadMessageFilter(GLOBAL_NotificationCache)
 
-var GLOBAL_UserProfile = UserProfiles(face: "User", nickName: "芒果君", id: 123456, sex: 1, province: "广西", city: "南宁")
+var GLOBAL_UserProfile = UserProfiles(face: "User", nickName: "芒果君", id: 123456, sex: 1, province: "广西", city: "南宁",allowPushingNotification: false,allowPushingNewMessageToMobile: false)

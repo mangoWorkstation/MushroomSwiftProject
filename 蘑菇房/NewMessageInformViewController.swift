@@ -15,7 +15,7 @@ class NewMessageInformViewController: UIViewController,UITableViewDelegate,UITab
     @IBAction func switchButtonOnChanged(sender: UISwitch, forEvent event: UIEvent) {
     }
 
-    var willAllowNewMessageInform :Bool? = false{
+    var willAllowNewMessageInform :Bool? = GLOBAL_UserProfile.allowPushingNotification{
         didSet{
             //更新用户配置文件(待完善)
         }
@@ -24,7 +24,7 @@ class NewMessageInformViewController: UIViewController,UITableViewDelegate,UITab
         }
     }
     
-    var willAllowPushNewMessageToMobile: Bool? = false{
+    var willAllowPushNewMessageToMobile: Bool? = GLOBAL_UserProfile.allowPushingNewMessageToMobile{
         didSet{
             //更新用户配置文件(待完善)
 

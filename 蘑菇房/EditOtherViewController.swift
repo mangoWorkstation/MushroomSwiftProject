@@ -13,10 +13,6 @@ class EditOtherViewController: UIViewController,UITableViewDelegate,UITableViewD
     @IBOutlet weak var tableView: UITableView!
     
     var selectedRow : String?
-    
-    var newName : String?
-    
-    var newSex : Int?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,11 +31,21 @@ class EditOtherViewController: UIViewController,UITableViewDelegate,UITableViewD
         return 50
     }
     
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?{
+        if(selectedRow == "昵称"){
+            return "请在键盘上按回车后 再点击保存哟～"
+        }
+        else {
+            return ""
+        }
+    }
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
         var cell = UITableViewCell()
         if(self.selectedRow == "昵称"){
             cell = self.tableView.dequeueReusableCellWithIdentifier("InputCell")!
             let name = cell.viewWithTag(101) as! UITextField
+            name.delegate = self
             name.text = GLOBAL_UserProfile.nickName
         }
         if(self.selectedRow == "性别"){
@@ -85,21 +91,39 @@ class EditOtherViewController: UIViewController,UITableViewDelegate,UITableViewD
                 _cell.accessoryType = UITableViewCellAccessoryType.None
             }
             cell!.accessoryType = UITableViewCellAccessoryType.Checkmark
+            //设置单选
             if(indexPath.row == 0){
-                self.newSex = 1
+                GLOBAL_UserProfile.sex = 0
             }
             else {
-                self.newSex = 0
+                GLOBAL_UserProfile.sex = 1
             }
         }
         
     }
     
     //MARK: - UITextFieldDelegate
-    func textFieldDidEndEditing(textField: UITextField) {
-        if(self.selectedRow == "昵称"){
-            self.newName = textField.text
-        }
+    func textFieldShouldBeginEditing(textField: UITextField) -> Bool{
+        print("textFieldShouldBeginEditing")
+        return true
     }
+    
+    func textFieldDidBeginEditing(textField: UITextField){
+        print("textFieldDidBeginEditing")
+    }
+    func textFieldShouldEndEditing(textField: UITextField) -> Bool{
+        print("textFieldShouldEndEditing")
+        return true
+    }    
+    func textFieldShouldReturn(textField: UITextField) -> Bool{
+        print("textFieldShouldReturn")
+        textField.resignFirstResponder()
+        return true
+    }
+    func textFieldDidEndEditing(textField: UITextField){
+        print("textFieldDidEndEditing")
+        GLOBAL_UserProfile.nickName = textField.text
 
+    }
+    
 }

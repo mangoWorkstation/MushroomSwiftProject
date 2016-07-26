@@ -16,12 +16,17 @@ class UserProfiles: NSObject {
     var province:String?
     var city:String?
     
-    init(face:String,nickName:String,id:Int,sex:Int,province:String,city:String?) {
+    var allowPushingNotification:Bool?
+    var allowPushingNewMessageToMobile:Bool?
+    
+    init(face:String,nickName:String,id:Int,sex:Int,province:String,city:String?,allowPushingNotification:Bool,allowPushingNewMessageToMobile:Bool?) {
         self.face = face
         self.nickName = nickName
         self.id = id
         self.sex = sex
         self.province = province
         self.city = city
+        self.allowPushingNewMessageToMobile = allowPushingNewMessageToMobile
+        self.allowPushingNotification = allowPushingNotification
     }
 }

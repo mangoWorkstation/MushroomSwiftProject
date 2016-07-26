@@ -34,7 +34,7 @@ class AccountViewController: UIViewController,UITableViewDelegate,UITableViewDat
         var cell = UITableViewCell()
         cell = self.tableView.dequeueReusableCellWithIdentifier("GeneralCell",forIndexPath: indexPath)
         let label = cell.viewWithTag(1001) as! UILabel
-        let labels = ["更改个人资料","更改登录密码","更改绑定手机号"]
+        let labels = ["更改登录密码","更改绑定手机号"]
         label.text! = labels[indexPath.row]
         cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
         return cell
@@ -45,22 +45,14 @@ class AccountViewController: UIViewController,UITableViewDelegate,UITableViewDat
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
-        return 3
+        return 2
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        if(indexPath.row == 0){
-            performSegueWithIdentifier("EditProfilesSegue", sender: nil)
-        }
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if(segue.identifier == "EditProfilesSegue"){
-            let vc = segue.destinationViewController as! EditProfilesViewController
-            vc.navigationItem.backBarButtonItem?.title = self.navigationItem.title
-            vc.navigationItem.title = "个人资料"
-        }
+//        if(indexPath.row == 0){
+//            performSegueWithIdentifier("EditProfilesSegue", sender: nil)
+//        }
     }
     
     

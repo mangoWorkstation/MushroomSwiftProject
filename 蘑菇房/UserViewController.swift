@@ -15,7 +15,8 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
    
     
-    var staticItems : [StaticItem] = [] //数组：用于存放静态状态图标
+    var staticItems_section_4 : [StaticItem] = [] //数组：用于存放静态状态图标
+    var staticItems_section_3 : [StaticItem] = []
     
     
     override func viewDidLoad() {
@@ -23,7 +24,9 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        staticItems = [StaticItem(iconName:"Setup",label:"设置"),StaticItem(iconName:"About",label: "关于")]
+        self.navigationController?.navigationBar.translucent = false
+        staticItems_section_3 = [StaticItem(iconName:"MyProfiles",label:"我的资料"),StaticItem(iconName:"Inform",label:"消息与通知")]
+        staticItems_section_4 = [StaticItem(iconName:"Setup",label:"设置"),StaticItem(iconName:"About",label: "关于")]
         //初始化静态固定图标
         // Do any additional setup after loading the view, typically from a nib.
     }
@@ -71,9 +74,9 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         switch section{
         case 0:fallthrough
         case 1:fallthrough
-        case 2:fallthrough
-        case 3:return 1
-        case 4:return staticItems.count
+        case 2:return 1
+        case 3:return staticItems_section_3.count
+        case 4:return staticItems_section_4.count
         default:
             return 1
         }
@@ -154,17 +157,18 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             
         }
         else if(indexPath.section == 3){
-            cell = self.tableView.dequeueReusableCellWithIdentifier("Inform")!
+            cell = self.tableView.dequeueReusableCellWithIdentifier("Inform",forIndexPath: indexPath)
             let icon = cell?.viewWithTag(3001) as! UIImageView
             let label = cell?.viewWithTag(3002) as! UILabel
-            icon.image = UIImage(named: "Inform")
-            label.text = "消息与通知"
+            let _staticItem = staticItems_section_3[indexPath.row] as StaticItem
+            icon.image = UIImage(named: _staticItem.iconName)
+            label.text = _staticItem.label
         }
         else if (indexPath.section == 4){
             cell = self.tableView.dequeueReusableCellWithIdentifier("General",forIndexPath: indexPath)
             let Icon = cell!.contentView.viewWithTag(3001) as! UIImageView
             let Title = cell!.contentView.viewWithTag(3002) as! UILabel
-            let _staticItem = staticItems[indexPath.row] as StaticItem//点击后内容会消失，原因不明，目测可能和数据持久化有关2016.7.14／13:52
+            let _staticItem = staticItems_section_4[indexPath.row] as StaticItem//点击后内容会消失，原因不明，目测可能和数据持久化有关2016.7.14／13:52
             Icon.image = UIImage(named: _staticItem.iconName)
             Title.text = _staticItem.label //有问题 2016.7.14 00:02
         }
@@ -193,6 +197,14 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true) //点击后取消被选中状态 2016.7.17
+        if(indexPath.section == 3){
+            if(indexPath.row == 0){
+                performSegueWithIdentifier("EditProfilesSegue", sender: nil)
+            }
+            if(indexPath.row == 1){
+                performSegueWithIdentifier("NotificationSegue", sender: nil)
+            }
+        }
     }
     
     //MARK - UIStoryBoardSegue
@@ -221,6 +233,11 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             vc.navigationItem.backBarButtonItem?.title = self.navigationItem.title
             vc.navigationItem.title = ""
         }
-    }
+        if(segue.identifier == "EditProfilesSegue"){
+                let vc = segue.destinationViewController as! EditProfilesViewController
+                vc.navigationItem.backBarButtonItem?.title = self.navigationItem.title
+                vc.navigationItem.title = "个人资料"
+            }
+        }
     
 }

@@ -12,21 +12,28 @@ class EditProfilesViewController: UIViewController,UITableViewDelegate,UITableVi
 
     @IBOutlet weak var tableView: UITableView!
     
-    @IBAction func close(unwindSegue :UIStoryboardSegue){
-        let vc = unwindSegue.sourceViewController as! EditOtherViewController
-        if(vc.selectedRow == "昵称"){
-            GLOBAL_UserProfile.nickName = vc.newName
-        }
-        if(vc.selectedRow == "性别"){
-            GLOBAL_UserProfile.sex = vc.newSex
-        }
+    @IBAction func unwindSegueForEditOtherVC(unwindSegue :UIStoryboardSegue){
+//        let vc = unwindSegue.sourceViewController as! EditOtherViewController
+//        let cell = vc.tableView.dequeueReusableCellWithIdentifier("InputCell")! as UITableViewCell
+//        let name = cell.viewWithTag(101) as! UITextField
+//        if(vc.selectedRow == "昵称"){
+//            GLOBAL_UserProfile.nickName = vc.newName
+//            print("\(GLOBAL_UserProfile.nickName!)")
+//            print("\(vc.newName)")
+//
+//        }
+//        if(vc.selectedRow == "性别"){
+//            GLOBAL_UserProfile.sex = vc.newSex!
+//        }
         self.tableView.reloadData() //传值有问题，没办法确定全局变量是否被修改，待解决 2016.7.22／17:55
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.reloadData()
         tableView.delegate = self
         tableView.dataSource = self
+        self.tabBarController?.tabBar.hidden = true
         // Do any additional setup after loading the view.
     }
 
