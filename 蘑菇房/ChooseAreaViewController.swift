@@ -21,6 +21,7 @@ class ChooseAreaViewController: UIViewController,UIPickerViewDelegate{
     override func viewDidLoad() {
         chooseAreaPickerView.delegate = self
         super.viewDidLoad()
+        self.navigationController?.navigationBar.translucent = false
         // Do any additional setup after loading the view, typically from a nib.
     }
     

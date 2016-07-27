@@ -58,7 +58,8 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         // Dispose of any resources that can be recreated.
     }
 
-//    滚动横幅的视图
+    //滚动横幅的视图
+    //MARK:- UIScrollViewDelegate
     func scrollViewDidScroll(scrollView: UIScrollView) {
         let width = self.view.frame.width
         let offsetX = scrollView.contentOffset.x
@@ -96,9 +97,10 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         let offsetX = CGFloat(pageIndex) * self.view.frame.width
         pageScroller.setContentOffset(CGPointMake(offsetX, 0), animated: true)
     }
-//    列表视图加载部分
-//    赋值
+
     
+    
+    //MARK:- UITableViewDelegate,UITableViewDataSource
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         return 1
     }
@@ -126,10 +128,13 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
         self.List.deselectRowAtIndexPath(indexPath, animated: true) //点击后取消被选中状态 2016.7.17
+        let cell = self.List.cellForRowAtIndexPath(indexPath)
+        let name = cell?.viewWithTag(2) as! UILabel
+        performSegueWithIdentifier("ShowDetailSegue", sender: name)
     }
     
     
-//    更改当前标题
+    //    更改当前标题,历史遗留问题，不要理我🌝🌝🌝
     func changeTitleArea(currentArea : String){
         clickOnButton.setTitle(currentArea, forState:  UIControlState.Normal)
     }
@@ -139,6 +144,11 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
             let vc = segue.destinationViewController as! ChooseAreaViewController
             vc.delegate = self
         }
+        if(segue.identifier == "ShowDetailSegue"){
+            let vc = segue.destinationViewController as! PresentRoomDetailViewController
+            let name = sender as! UILabel
+            vc.navigationItem.backBarButtonItem?.title = self.chosenArea!
+            vc.navigationItem.title = name.text
+        }
     }
-//历史遗留问题，不要理我🌝🌝🌝
 }

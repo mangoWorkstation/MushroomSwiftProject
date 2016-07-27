@@ -15,8 +15,8 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
    
     
-    var staticItems_section_4 : [StaticItem] = [] //数组：用于存放静态状态图标
-    var staticItems_section_3 : [StaticItem] = []
+    var staticItems_section_3 : [StaticItem] = [] //数组：用于存放静态状态图标
+    var staticItems_section_2 : [StaticItem] = []
     
     
     override func viewDidLoad() {
@@ -25,8 +25,8 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         tableView.delegate = self
         tableView.dataSource = self
         self.navigationController?.navigationBar.translucent = false
-        staticItems_section_3 = [StaticItem(iconName:"MyProfiles",label:"我的资料"),StaticItem(iconName:"Inform",label:"消息与通知")]
-        staticItems_section_4 = [StaticItem(iconName:"Setup",label:"设置"),StaticItem(iconName:"About",label: "关于")]
+        staticItems_section_2 = [StaticItem(iconName:"MyHouse",label:"我家的蘑菇房"),StaticItem(iconName:"MyFollow",label:"我关注的蘑菇房"),StaticItem(iconName:"Nearby",label:"附近的基地"),StaticItem(iconName:"MyProfiles",label:"我的资料"),StaticItem(iconName:"Inform",label:"消息与通知")]
+        staticItems_section_3 = [StaticItem(iconName:"Setup",label:"设置"),StaticItem(iconName:"About",label: "关于")]
         //初始化静态固定图标
         // Do any additional setup after loading the view, typically from a nib.
     }
@@ -53,14 +53,10 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             }
         
         }
-        else if(indexPath.section == 2 ){//四个小图标栏 2016.7.12
-            return 120
-        }
-        
-        else if(indexPath.section == 3){//选项栏 2016.7.12
+        else if(indexPath.section == 2){//选项栏 2016.7.12
             return 50
         }
-        else if(indexPath.section == 4){
+        else if(indexPath.section == 3){
             return 50
         }
             
@@ -73,10 +69,9 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         switch section{
         case 0:fallthrough
-        case 1:fallthrough
-        case 2:return 1
+        case 1:return 1
+        case 2:return staticItems_section_2.count
         case 3:return staticItems_section_3.count
-        case 4:return staticItems_section_4.count
         default:
             return 1
         }
@@ -84,7 +79,7 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     //设置部分（section）的数量
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 5
+        return 4
     }
     
     //绑定数据
@@ -96,12 +91,20 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             cell = self.tableView!.dequeueReusableCellWithIdentifier("UserInfo")!
             let icon = cell!.viewWithTag(1011) as! UIImageView
             let nameLabel = cell!.viewWithTag(1012) as! UILabel
-//          let background = cell.viewWithTag(102) as! UIImageView
-            icon.image = UIImage(named: "User")
-            icon.layer.cornerRadius = icon.frame.size.width/2.5
+            let background = cell!.viewWithTag(102) as! UIImageView
+            icon.image = UIImage(named: GLOBAL_UserProfile.face!)
+//            icon.bounds = CGRectMake((icon.bounds.size.width-60)/2, (icon.bounds.size.height-60)/2-150, 60, 60)
+//            icon.frame = CGRectMake((icon.bounds.size.width - 60)/2, (icon.bounds.size.height-60)/2-150, 60,60)
+            icon.layer.cornerRadius = 30
+            //注意:cornerRadius必须是storyBoard中，宽度的1/2;
+            //在storyBoard中设置imageView时，高度必须是宽度的1/4才能磨成圆形
+            //2016.7.27
+            icon.layer.masksToBounds = true
+            icon.layer.borderWidth = 3
+            icon.layer.borderColor = UIColor.whiteColor().CGColor
             icon.clipsToBounds = true     //制作圆形的头像
-            nameLabel.text = "芒果君"//
-//          background.image = UIImage(named:"2")
+            nameLabel.text = GLOBAL_UserProfile.nickName
+            background.image = UIImage(named:"Background")
         }
         else if (indexPath.section == 1){
             
@@ -112,63 +115,63 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             notification.text = "2016-7-6 南宁市气象局发布暴雨红色预警，请注意强对流天气"
             
         }
+//        else if(indexPath.section == 2){
+//            
+//            cell = self.tableView!.dequeueReusableCellWithIdentifier("Inspector")!
+//            
+//            let stackview = cell!.viewWithTag(10) as! UIStackView
+//            let deviceModel:String = UIDevice.currentDevice().model
+//            if (deviceModel == "@iPhone 4s"){
+//                stackview.spacing = 10
+//            }
+//            else if (deviceModel == "@iPhone 6s"){
+//                stackview.spacing = 40
+//            }
+//            
+//            //stackview_1 Room
+//            let roomIcon = cell!.viewWithTag(101) as! UIImageView
+//            let roomLabel = cell!.viewWithTag(102) as! UILabel
+//            roomIcon.image = UIImage(named: "Mushroom")
+//            roomLabel.text = "蘑菇房"
+//            
+//            //stackview_2 Barn
+//            let barnIcon = cell!.viewWithTag(201) as! UIImageView
+//            let barnLabel = cell!.viewWithTag(202) as! UILabel
+//            barnIcon.image = UIImage(named: "Barn")
+//            barnLabel.text = "堆料房"
+//            
+//            //stackview_3 Battery
+//            let batteryIcon = cell!.viewWithTag(301) as! UIImageView
+//            let batteryLabel = cell!.viewWithTag(302) as! UILabel
+//            batteryIcon.image = UIImage(named: "Battery")
+//            batteryLabel.text = "电量检测"
+//            
+//            //stackview_4 Statistics
+//            let chartIcon = cell!.viewWithTag(401) as! UIImageView
+//            let chartlabel = cell!.viewWithTag(402) as! UILabel
+//            chartIcon.image = UIImage(named: "Statistics")
+//            chartlabel.text = "历史数据"
+//            
+////            四个stackview的编号说明：
+////            蘑菇房：图标101，标签102
+////            堆料房：图标201，标签202
+////            电量检测：图标301，标签302
+////            历史数据：图标401，标签402
+//            
+//        }
         else if(indexPath.section == 2){
-            
-            cell = self.tableView!.dequeueReusableCellWithIdentifier("Inspector")!
-            
-            let stackview = cell!.viewWithTag(10) as! UIStackView
-            let deviceModel:String = UIDevice.currentDevice().model
-            if (deviceModel == "@iPhone 4s"){
-                stackview.spacing = 10
-            }
-            else if (deviceModel == "@iPhone 6s"){
-                stackview.spacing = 40
-            }
-            
-            //stackview_1 Room
-            let roomIcon = cell!.viewWithTag(101) as! UIImageView
-            let roomLabel = cell!.viewWithTag(102) as! UILabel
-            roomIcon.image = UIImage(named: "Mushroom")
-            roomLabel.text = "蘑菇房"
-            
-            //stackview_2 Barn
-            let barnIcon = cell!.viewWithTag(201) as! UIImageView
-            let barnLabel = cell!.viewWithTag(202) as! UILabel
-            barnIcon.image = UIImage(named: "Barn")
-            barnLabel.text = "堆料房"
-            
-            //stackview_3 Battery
-            let batteryIcon = cell!.viewWithTag(301) as! UIImageView
-            let batteryLabel = cell!.viewWithTag(302) as! UILabel
-            batteryIcon.image = UIImage(named: "Battery")
-            batteryLabel.text = "电量检测"
-            
-            //stackview_4 Statistics
-            let chartIcon = cell!.viewWithTag(401) as! UIImageView
-            let chartlabel = cell!.viewWithTag(402) as! UILabel
-            chartIcon.image = UIImage(named: "Statistics")
-            chartlabel.text = "历史数据"
-            
-//            四个stackview的编号说明：
-//            蘑菇房：图标101，标签102
-//            堆料房：图标201，标签202
-//            电量检测：图标301，标签302
-//            历史数据：图标401，标签402
-            
-        }
-        else if(indexPath.section == 3){
             cell = self.tableView.dequeueReusableCellWithIdentifier("Inform",forIndexPath: indexPath)
             let icon = cell?.viewWithTag(3001) as! UIImageView
             let label = cell?.viewWithTag(3002) as! UILabel
-            let _staticItem = staticItems_section_3[indexPath.row] as StaticItem
+            let _staticItem = staticItems_section_2[indexPath.row] as StaticItem
             icon.image = UIImage(named: _staticItem.iconName)
             label.text = _staticItem.label
         }
-        else if (indexPath.section == 4){
+        else if (indexPath.section == 3){
             cell = self.tableView.dequeueReusableCellWithIdentifier("General",forIndexPath: indexPath)
             let Icon = cell!.contentView.viewWithTag(3001) as! UIImageView
             let Title = cell!.contentView.viewWithTag(3002) as! UILabel
-            let _staticItem = staticItems_section_4[indexPath.row] as StaticItem//点击后内容会消失，原因不明，目测可能和数据持久化有关2016.7.14／13:52
+            let _staticItem = staticItems_section_3[indexPath.row] as StaticItem
             Icon.image = UIImage(named: _staticItem.iconName)
             Title.text = _staticItem.label //有问题 2016.7.14 00:02
         }
@@ -187,21 +190,21 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         else if(2 == section){
             return 2
         }
-        else if(4 == section){
-            return 8
+        else if(3 == section){
+            return 5
         }
         else {
-            return 20
+            return 0
         }
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true) //点击后取消被选中状态 2016.7.17
-        if(indexPath.section == 3){
-            if(indexPath.row == 0){
+        if(indexPath.section == 2){
+            if(indexPath.row == 3){
                 performSegueWithIdentifier("EditProfilesSegue", sender: nil)
             }
-            if(indexPath.row == 1){
+            if(indexPath.row == 4){
                 performSegueWithIdentifier("NotificationSegue", sender: nil)
             }
         }

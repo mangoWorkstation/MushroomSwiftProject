@@ -172,6 +172,11 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
                 }
             }
         }
+        if(indexPath.section == 2){
+            let cell = self.tableView.cellForRowAtIndexPath(indexPath)
+            let detail = cell?.viewWithTag(2002) as! UILabel
+            detail.text = "0.00MB"
+        }
     }
     
     //MARK: - UIStoryBoardSegue

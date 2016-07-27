@@ -14,6 +14,7 @@
 		0D2B9B2F1D3887A9006559F1 /* NotificationPreviewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2B9B2E1D3887A9006559F1 /* NotificationPreviewModel.swift */; };
 		0D32FEAE1D3DBC99008E79CD /* NewMessageInformViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D32FEAD1D3DBC99008E79CD /* NewMessageInformViewController.swift */; };
 		0D32FEB01D3DD0A2008E79CD /* FeedBackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D32FEAF1D3DD0A2008E79CD /* FeedBackViewController.swift */; };
+		0D49900A1D48B8BD0007D99B /* PresentRoomDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4990091D48B8BD0007D99B /* PresentRoomDetailViewController.swift */; };
 		0D7262B01D3755AC00ACB2B9 /* StaticItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7262AF1D3755AC00ACB2B9 /* StaticItemModel.swift */; };
 		0D7262B41D37E6BA00ACB2B9 /* GeneralDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7262B31D37E6BA00ACB2B9 /* GeneralDetailController.swift */; };
 		0D7FBC381CE80A6800775FCA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7FBC371CE80A6800775FCA /* AppDelegate.swift */; };
@@ -62,6 +63,7 @@
 		0D2B9B2E1D3887A9006559F1 /* NotificationPreviewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationPreviewModel.swift; sourceTree = "<group>"; };
 		0D32FEAD1D3DBC99008E79CD /* NewMessageInformViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewMessageInformViewController.swift; sourceTree = "<group>"; };
 		0D32FEAF1D3DD0A2008E79CD /* FeedBackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedBackViewController.swift; sourceTree = "<group>"; };
+		0D4990091D48B8BD0007D99B /* PresentRoomDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentRoomDetailViewController.swift; sourceTree = "<group>"; };
 		0D7262AF1D3755AC00ACB2B9 /* StaticItemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticItemModel.swift; sourceTree = "<group>"; };
 		0D7262B31D37E6BA00ACB2B9 /* GeneralDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralDetailController.swift; sourceTree = "<group>"; };
 		0D7FBC341CE80A6800775FCA /* 蘑菇房.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "蘑菇房.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -131,6 +133,7 @@
 			children = (
 				0D7FBC391CE80A6800775FCA /* MushroomViewController.swift */,
 				0D7FBC721CE814EB00775FCA /* ChooseAreaViewController.swift */,
+				0D4990091D48B8BD0007D99B /* PresentRoomDetailViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -392,6 +395,7 @@
 				0D8197261CEC8E3600CE0211 /* roomInfoModel.swift in Sources */,
 				0D2B80BB1D3BB2F9007FBB8A /* GLOBAL_VAR.swift in Sources */,
 				0D0C52B01D257A840036F8A5 /* PreviewModel.swift in Sources */,
+				0D49900A1D48B8BD0007D99B /* PresentRoomDetailViewController.swift in Sources */,
 				0D7262B41D37E6BA00ACB2B9 /* GeneralDetailController.swift in Sources */,
 				0D7262B01D3755AC00ACB2B9 /* StaticItemModel.swift in Sources */,
 				0DF689A31D41EFEF001FC45A /* EditOtherViewController.swift in Sources */,
