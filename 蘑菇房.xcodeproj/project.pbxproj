@@ -28,8 +28,7 @@
 		0D7FBC6F1CE80C7000775FCA /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7FBC6E1CE80C7000775FCA /* UserViewController.swift */; };
 		0D7FBC731CE814EB00775FCA /* ChooseAreaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7FBC721CE814EB00775FCA /* ChooseAreaViewController.swift */; };
 		0D7FBC751CE8152200775FCA /* ChooseAreaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7FBC741CE8152200775FCA /* ChooseAreaModel.swift */; };
-		0D8197261CEC8E3600CE0211 /* roomInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8197251CEC8E3600CE0211 /* roomInfoModel.swift */; };
-		0D8197281CEC964C00CE0211 /* dataExchangeBetweenViewsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8197271CEC964C00CE0211 /* dataExchangeBetweenViewsDelegate.swift */; };
+		0D8197261CEC8E3600CE0211 /* RoomInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8197251CEC8E3600CE0211 /* RoomInfoModel.swift */; };
 		0D9CE9851D40548F004E1B27 /* PublicStaticMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9CE9841D40548F004E1B27 /* PublicStaticMethods.swift */; };
 		0D9CE9871D419F6F004E1B27 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9CE9861D419F6F004E1B27 /* AccountViewController.swift */; };
 		0D9CE9891D41AE6F004E1B27 /* EditProfilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9CE9881D41AE6F004E1B27 /* EditProfilesViewController.swift */; };
@@ -83,8 +82,7 @@
 		0D7FBC6E1CE80C7000775FCA /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		0D7FBC721CE814EB00775FCA /* ChooseAreaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseAreaViewController.swift; sourceTree = "<group>"; };
 		0D7FBC741CE8152200775FCA /* ChooseAreaModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseAreaModel.swift; sourceTree = "<group>"; };
-		0D8197251CEC8E3600CE0211 /* roomInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = roomInfoModel.swift; sourceTree = "<group>"; };
-		0D8197271CEC964C00CE0211 /* dataExchangeBetweenViewsDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = dataExchangeBetweenViewsDelegate.swift; sourceTree = "<group>"; };
+		0D8197251CEC8E3600CE0211 /* RoomInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomInfoModel.swift; sourceTree = "<group>"; };
 		0D9CE9841D40548F004E1B27 /* PublicStaticMethods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicStaticMethods.swift; sourceTree = "<group>"; };
 		0D9CE9861D419F6F004E1B27 /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		0D9CE9881D41AE6F004E1B27 /* EditProfilesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfilesViewController.swift; sourceTree = "<group>"; };
@@ -122,7 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				0D0C52AF1D257A840036F8A5 /* PreviewModel.swift */,
-				0D8197251CEC8E3600CE0211 /* roomInfoModel.swift */,
+				0D8197251CEC8E3600CE0211 /* RoomInfoModel.swift */,
 				0D7FBC741CE8152200775FCA /* ChooseAreaModel.swift */,
 			);
 			name = Models;
@@ -233,7 +231,6 @@
 			children = (
 				0D46331C1D2825F30070A0AF /* Controllers */,
 				0D46331B1D2825D80070A0AF /* Models */,
-				0D8197271CEC964C00CE0211 /* dataExchangeBetweenViewsDelegate.swift */,
 			);
 			name = Page_1_MushRoom;
 			sourceTree = "<group>";
@@ -392,7 +389,7 @@
 				0DF689A11D41E6A9001FC45A /* FaceShowViewController.swift in Sources */,
 				0D7FBC6F1CE80C7000775FCA /* UserViewController.swift in Sources */,
 				0D7FBC751CE8152200775FCA /* ChooseAreaModel.swift in Sources */,
-				0D8197261CEC8E3600CE0211 /* roomInfoModel.swift in Sources */,
+				0D8197261CEC8E3600CE0211 /* RoomInfoModel.swift in Sources */,
 				0D2B80BB1D3BB2F9007FBB8A /* GLOBAL_VAR.swift in Sources */,
 				0D0C52B01D257A840036F8A5 /* PreviewModel.swift in Sources */,
 				0D49900A1D48B8BD0007D99B /* PresentRoomDetailViewController.swift in Sources */,
@@ -407,7 +404,6 @@
 				0D2B9B2C1D387723006559F1 /* NotificationViewController.swift in Sources */,
 				0D7FBC381CE80A6800775FCA /* AppDelegate.swift in Sources */,
 				0DF6899F1D41BD3C001FC45A /* UserProfileModel.swift in Sources */,
-				0D8197281CEC964C00CE0211 /* dataExchangeBetweenViewsDelegate.swift in Sources */,
 				0D7FBC3A1CE80A6800775FCA /* MushroomViewController.swift in Sources */,
 				0D9CE9891D41AE6F004E1B27 /* EditProfilesViewController.swift in Sources */,
 				0D9CE9851D40548F004E1B27 /* PublicStaticMethods.swift in Sources */,

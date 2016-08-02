@@ -25,9 +25,11 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         tableView.delegate = self
         tableView.dataSource = self
         self.navigationController?.navigationBar.translucent = false
+//        self.navigationController?.navigationBar.barTintColor = UIColor.greenColor()
         staticItems_section_2 = [StaticItem(iconName:"MyHouse",label:"我家的蘑菇房"),StaticItem(iconName:"MyFollow",label:"我关注的蘑菇房"),StaticItem(iconName:"Nearby",label:"附近的基地"),StaticItem(iconName:"MyProfiles",label:"我的资料"),StaticItem(iconName:"Inform",label:"消息与通知")]
         staticItems_section_3 = [StaticItem(iconName:"Setup",label:"设置"),StaticItem(iconName:"About",label: "关于")]
         //初始化静态固定图标
+        self.automaticallyAdjustsScrollViewInsets = false
         // Do any additional setup after loading the view, typically from a nib.
     }
     
@@ -240,7 +242,7 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 let vc = segue.destinationViewController as! EditProfilesViewController
                 vc.navigationItem.backBarButtonItem?.title = self.navigationItem.title
                 vc.navigationItem.title = "个人资料"
-            }
         }
+    }
     
 }

@@ -8,11 +8,11 @@
 
 import UIKit
 
-class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,dataExchangeBetweenViewsDelegate{
+class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource{
     
-    var chosenArea :String? = "选择区域"
+    var chosenArea :String? = "选择区域" //保存选择的区域 2016.8.2
     
-    var roomPreview : [Preview] = []//本地缩略图缓存，将来可增加网络连接 2016.7.1/12:43
+    var roomPreview : [RoomInfoModel] = GLOBAL_RoomInfo //本地缩略图缓存，将来可增加网络连接 2016.7.1/12:43
     
     var timer:NSTimer!
     
@@ -24,10 +24,20 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
     
     @IBOutlet weak var List: UITableView! //列表 2016.7.1/12:43
     
+    @IBAction func unwindSegueToMushroomVC(segue:UIStoryboardSegue){
+        let vc = segue.sourceViewController as! ChooseAreaViewController
+        let index = vc.chooseAreaPickerView.selectedRowInComponent(0)
+        self.chosenArea = vc.area[index]
+        self.clickOnButton.setTitle(self.chosenArea, forState: UIControlState.Normal)
+        self.roomPreview = regionFilter(self.chosenArea!, rawDataArray: GLOBAL_RoomInfo)
+        self.List.reloadData()
+        print(roomPreview)
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        roomPreview = [Preview(name: "广西大学",preImage: "1"),Preview(name: "广西药用植物园",preImage: "2"),Preview(name: "坛洛镇蘑菇基地",preImage: "3"),Preview(name: "西乡塘区蘑菇大棚1",preImage: "2"),Preview(name: "西乡塘区蘑菇大棚2",preImage: "1"),Preview(name: "西乡塘区蘑菇大棚3",preImage: "3"),Preview(name: "西乡塘区蘑菇大棚4",preImage: "2")]
+//        roomPreview = [Preview(name: "广西大学",preImage: "1"),Preview(name: "广西药用植物园",preImage: "2"),Preview(name: "坛洛镇蘑菇基地",preImage: "3"),Preview(name: "西乡塘区蘑菇大棚1",preImage: "2"),Preview(name: "西乡塘区蘑菇大棚2",preImage: "1"),Preview(name: "西乡塘区蘑菇大棚3",preImage: "3"),Preview(name: "西乡塘区蘑菇大棚4",preImage: "2")]
         clickOnButton.setTitle("选择区域", forState: UIControlState.Normal)
         var i:Int
         for (i=1;i<=3;i += 1){
@@ -51,6 +61,7 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         // Do any additional setup after loading the view, typically from a nib.
         List.delegate = self
         List.dataSource = self
+//        self.List.reloadData()
         }
 
     override func didReceiveMemoryWarning() {
@@ -116,13 +127,14 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.List.dequeueReusableCellWithIdentifier("CellForRooms")! as UITableViewCell
-        let info = roomPreview[indexPath.section] as Preview //注意是indexPath.section，而不是row
+        let info = roomPreview[indexPath.section] as RoomInfoModel //注意是indexPath.section，而不是row
         let image = cell.viewWithTag(1) as! UIImageView
         let name = cell.viewWithTag(2) as! UILabel
         let more = cell.viewWithTag(3) as! UILabel
-        image.image = UIImage(named: info.preImage)
+        image.image = UIImage(named: info.preImage!)
         name.text = info.name
         more.text = "查看详情"
+        print("cellForRowAtIndexPath执行了")
         return cell
     }
     
@@ -131,23 +143,17 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         let cell = self.List.cellForRowAtIndexPath(indexPath)
         let name = cell?.viewWithTag(2) as! UILabel
         performSegueWithIdentifier("ShowDetailSegue", sender: name)
-    }
-    
-    
-    //    更改当前标题,历史遗留问题，不要理我🌝🌝🌝
-    func changeTitleArea(currentArea : String){
-        clickOnButton.setTitle(currentArea, forState:  UIControlState.Normal)
+        print("didSelectRowAtIndexPath执行了")
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "ChooseAreaSegue"{
             let vc = segue.destinationViewController as! ChooseAreaViewController
-            vc.delegate = self
         }
         if(segue.identifier == "ShowDetailSegue"){
             let vc = segue.destinationViewController as! PresentRoomDetailViewController
             let name = sender as! UILabel
-            vc.navigationItem.backBarButtonItem?.title = self.chosenArea!
+            vc.navigationItem.backBarButtonItem?.title = "返回"
             vc.navigationItem.title = name.text
         }
     }

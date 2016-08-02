@@ -27,39 +27,3 @@ class NotificationPreview: NSObject {
 //    }
     
 }
-/**
- * @Description 过滤出未读消息 2016.7.17
- * @Param rawDataArray : [NotificationPreview]
- * @Return [NotificationPreview]
- */
-func unreadMessageFilter(rawDataArray:[NotificationPreview])->[NotificationPreview]{
-    var filterData : [NotificationPreview] = []
-    for(var i=0;i<rawDataArray.count;i += 1){
-        let info = rawDataArray[i]
-        let isRead = info.isRead
-        if(isRead == false){
-            filterData.append(NotificationPreview(messageID: info.messageID,preImage: info.preImage!, prelabel: info.prelabel!, isRead: false, timestamp: Int(info.timestamp!)!))
-        }
-    }
-    return filterData
-}
-
-/**
- * @Description 清空所有未读消息（将所有信息设为已读） 2016.7.17
- * @Param rawDataArray : [NotificationPreview]
- * @Return [NotificationPreview]
- */
-func clearAllUnreadMessage(rawDataArray:[NotificationPreview])->[NotificationPreview]{
-    var allData : [NotificationPreview] = []
-    for (var i=0;i<rawDataArray.count;i+=1){
-        let info = rawDataArray[i]
-        let isRead = info.isRead
-        if(isRead == false){
-            allData.append(NotificationPreview(messageID: info.messageID,preImage: info.preImage!, prelabel: info.prelabel!, isRead: true, timestamp: Int(info.timestamp!)!))
-        }
-        else{
-            allData.append(NotificationPreview(messageID: info.messageID,preImage: info.preImage!, prelabel: info.prelabel!, isRead: true, timestamp: Int(info.timestamp!)!))
-        }
-    }
-    return allData
-}
