@@ -17,6 +17,8 @@
 		0D49900A1D48B8BD0007D99B /* PresentRoomDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4990091D48B8BD0007D99B /* PresentRoomDetailViewController.swift */; };
 		0D7262B01D3755AC00ACB2B9 /* StaticItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7262AF1D3755AC00ACB2B9 /* StaticItemModel.swift */; };
 		0D7262B41D37E6BA00ACB2B9 /* GeneralDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7262B31D37E6BA00ACB2B9 /* GeneralDetailController.swift */; };
+		0D77858D1D53444900A74A30 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D77858C1D53444900A74A30 /* MapKit.framework */; };
+		0D7785921D534B7400A74A30 /* NearbyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7785911D534B7400A74A30 /* NearbyViewController.swift */; };
 		0D7FBC381CE80A6800775FCA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7FBC371CE80A6800775FCA /* AppDelegate.swift */; };
 		0D7FBC3A1CE80A6800775FCA /* MushroomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7FBC391CE80A6800775FCA /* MushroomViewController.swift */; };
 		0D7FBC3C1CE80A6800775FCA /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7FBC3B1CE80A6800775FCA /* WeatherViewController.swift */; };
@@ -65,6 +67,8 @@
 		0D4990091D48B8BD0007D99B /* PresentRoomDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentRoomDetailViewController.swift; sourceTree = "<group>"; };
 		0D7262AF1D3755AC00ACB2B9 /* StaticItemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticItemModel.swift; sourceTree = "<group>"; };
 		0D7262B31D37E6BA00ACB2B9 /* GeneralDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralDetailController.swift; sourceTree = "<group>"; };
+		0D77858C1D53444900A74A30 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		0D7785911D534B7400A74A30 /* NearbyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearbyViewController.swift; sourceTree = "<group>"; };
 		0D7FBC341CE80A6800775FCA /* 蘑菇房.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "蘑菇房.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D7FBC371CE80A6800775FCA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0D7FBC391CE80A6800775FCA /* MushroomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MushroomViewController.swift; sourceTree = "<group>"; };
@@ -96,6 +100,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D77858D1D53444900A74A30 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -150,17 +155,50 @@
 			isa = PBXGroup;
 			children = (
 				0D7FBC6E1CE80C7000775FCA /* UserViewController.swift */,
+				0D7785891D53436300A74A30 /* NeabyVCs */,
+				0D7785881D5342F900A74A30 /* UserProfileVCs */,
+				0D7785871D5342AB00A74A30 /* GeneralSetupVCs */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		0D7785871D5342AB00A74A30 /* GeneralSetupVCs */ = {
+			isa = PBXGroup;
+			children = (
 				0D7262B31D37E6BA00ACB2B9 /* GeneralDetailController.swift */,
 				0D2B9B2B1D387723006559F1 /* NotificationViewController.swift */,
-				0D2B80BC1D3C70B2007FBB8A /* AboutUsViewController.swift */,
-				0D32FEAD1D3DBC99008E79CD /* NewMessageInformViewController.swift */,
 				0D32FEAF1D3DD0A2008E79CD /* FeedBackViewController.swift */,
+				0D2B80BC1D3C70B2007FBB8A /* AboutUsViewController.swift */,
+			);
+			name = GeneralSetupVCs;
+			sourceTree = "<group>";
+		};
+		0D7785881D5342F900A74A30 /* UserProfileVCs */ = {
+			isa = PBXGroup;
+			children = (
 				0D9CE9861D419F6F004E1B27 /* AccountViewController.swift */,
+				0D32FEAD1D3DBC99008E79CD /* NewMessageInformViewController.swift */,
 				0D9CE9881D41AE6F004E1B27 /* EditProfilesViewController.swift */,
 				0DF689A01D41E6A9001FC45A /* FaceShowViewController.swift */,
 				0DF689A21D41EFEF001FC45A /* EditOtherViewController.swift */,
 			);
-			name = Controllers;
+			name = UserProfileVCs;
+			sourceTree = "<group>";
+		};
+		0D7785891D53436300A74A30 /* NeabyVCs */ = {
+			isa = PBXGroup;
+			children = (
+				0D7785911D534B7400A74A30 /* NearbyViewController.swift */,
+			);
+			name = NeabyVCs;
+			sourceTree = "<group>";
+		};
+		0D7785931D54941200A74A30 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0D77858C1D53444900A74A30 /* MapKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		0D7FBC2B1CE80A6800775FCA = {
@@ -190,6 +228,7 @@
 				0D7FBC691CE80BA000775FCA /* Page_2_Weather */,
 				0D7FBC681CE80B7A00775FCA /* Page_1_MushRoom */,
 				0D7FBC671CE80AAB00775FCA /* Supporting Files */,
+				0D7785931D54941200A74A30 /* Frameworks */,
 				0D7FBC3D1CE80A6900775FCA /* Main.storyboard */,
 				0D7FBC401CE80A6900775FCA /* Assets.xcassets */,
 				0D7FBC421CE80A6900775FCA /* LaunchScreen.storyboard */,
@@ -321,6 +360,11 @@
 					0D7FBC331CE80A6800775FCA = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = 62MK55KD7L;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					0D7FBC491CE80A6900775FCA = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -389,6 +433,7 @@
 				0DF689A11D41E6A9001FC45A /* FaceShowViewController.swift in Sources */,
 				0D7FBC6F1CE80C7000775FCA /* UserViewController.swift in Sources */,
 				0D7FBC751CE8152200775FCA /* ChooseAreaModel.swift in Sources */,
+				0D7785921D534B7400A74A30 /* NearbyViewController.swift in Sources */,
 				0D8197261CEC8E3600CE0211 /* RoomInfoModel.swift in Sources */,
 				0D2B80BB1D3BB2F9007FBB8A /* GLOBAL_VAR.swift in Sources */,
 				0D0C52B01D257A840036F8A5 /* PreviewModel.swift in Sources */,

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate {
     
     var selectedRow : Int?
 
@@ -148,19 +148,21 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
         }
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
-        self.tableView.deselectRowAtIndexPath(indexPath, animated: true) //点击后取消被选中状态 2016.7.17
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){//点击后取消被选中状态 2016.7.17
         if(self.selectedRow == 0){
             if(indexPath.section == 0){
                 if(indexPath.row == 0){
+                    self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
                     performSegueWithIdentifier("AccountSegue", sender: nil)
                 }
             }
             if(indexPath.section == 1){
                 if(indexPath.row == 0){
+                    self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
                     performSegueWithIdentifier("NewMessageInformSegue", sender: nil)
                 }
                 if(indexPath.row == 1){
+                    self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
                     performSegueWithIdentifier("FeedBackSegue", sender: nil)
                 }
             }
@@ -168,6 +170,7 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
         if(self.selectedRow == 1){
             if(indexPath.section == 0){
                 if(indexPath.row == 0){
+                    self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
                     performSegueWithIdentifier("AboutUsSegue",sender: nil)
                 }
             }
@@ -175,7 +178,26 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
         if(indexPath.section == 2){
             let cell = self.tableView.cellForRowAtIndexPath(indexPath)
             let detail = cell?.viewWithTag(2002) as! UILabel
+            if detail.text != "0.00MB"{
+                let sheet = UIActionSheet(title: "将要清除所有缓存", delegate: self, cancelButtonTitle: "取消", destructiveButtonTitle: "确定")
+                sheet.showInView(self.view)
+            }
+            else{
+                self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            }
+        }
+        else{
+            self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        }
+    }
+    //MARK: - UIActionSheetDelegate
+    func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int){
+        if buttonIndex == 0 {
+            let indexPath = self.tableView.indexPathForSelectedRow
+            let cell = self.tableView.cellForRowAtIndexPath(indexPath!)
+            let detail = cell?.viewWithTag(2002) as! UILabel
             detail.text = "0.00MB"
+            self.tableView.deselectRowAtIndexPath(indexPath!, animated: true)
         }
     }
     
@@ -186,9 +208,7 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
             vc.navigationItem.backBarButtonItem?.title = self.navigationItem.title
             vc.navigationItem.title = "关于我们"
         }
-        //这个segue一定要设置成accessory action，
-        //不要问我为什么，因为我他妈也不知道为什么🙄🙄
-        //2016.7.18 愤怒的一夜😤😤
+        
         if(segue.identifier == "NewMessageInformSegue"){
             let vc = segue.destinationViewController as! NewMessageInformViewController
             vc.navigationItem.backBarButtonItem?.title = self.navigationItem.title

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NotificationViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
+class NotificationViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate{
 
     @IBOutlet weak var InfoType: UISegmentedControl!
     
@@ -23,19 +23,20 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
     }
     
     @IBAction func TrashAllMessage(sender: UIBarButtonItem) {
+        var sheet = UIActionSheet()
         if(InfoType.selectedSegmentIndex == 0){
-            for(var i=0;i<GLOBAL_UnreadMessage.count;i+=1){
-                let tempElement = clearAllUnreadMessage(GLOBAL_UnreadMessage)
-                GLOBAL_NotificationCache.append(tempElement[i])// “所有信息“中有重复元素 待解决 2016.7.17
+            if !GLOBAL_UnreadMessage.isEmpty {
+                sheet = UIActionSheet(title: "将所有未读消息标记为已读消息？", delegate: self, cancelButtonTitle: "取消", destructiveButtonTitle: "确定")
+                sheet.showInView(self.view)
             }
-            GLOBAL_UnreadMessage.removeAll()
-            self.isThereAnythingNew = false
-            self.tableView.reloadData()
         }
         else if(InfoType.selectedSegmentIndex == 1){
-            GLOBAL_NotificationCache.removeAll()
-            self.tableView.reloadData()
+            if !GLOBAL_NotificationCache.isEmpty {
+                sheet = UIActionSheet(title: "将要清空所有消息？", delegate: self, cancelButtonTitle: "取消", destructiveButtonTitle: "确定")
+                sheet.showInView(self.view)
+            }
         }
+
     }
     var whichKindOfInfoType = 0 //should be initialized! 2016.7.16/11:42
     
@@ -239,6 +240,27 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
             label = "删除"
         }
         return label
+    }
+    
+    //MARK: -UIActionSheetDelegate
+    func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int){
+        if self.InfoType.selectedSegmentIndex == 0{
+            if buttonIndex == 0 {
+                for(var i=0;i<GLOBAL_UnreadMessage.count;i+=1){
+                    let tempElement = clearAllUnreadMessage(GLOBAL_UnreadMessage)
+                    GLOBAL_NotificationCache.append(tempElement[i])// “所有信息“中有重复元素 待解决 2016.7.17
+                }
+                GLOBAL_UnreadMessage.removeAll()
+                self.isThereAnythingNew = false
+                self.tableView.reloadData()
+            }
+        }
+        else if self.InfoType.selectedSegmentIndex == 1{
+            if buttonIndex == 0{
+                GLOBAL_NotificationCache.removeAll()
+                self.tableView.reloadData()
+            }
+        }
     }
     
 }

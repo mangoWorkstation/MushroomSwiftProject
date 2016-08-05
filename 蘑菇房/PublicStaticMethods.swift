@@ -95,3 +95,21 @@ func regionFilter(chosenArea:String,rawDataArray: [RoomInfoModel])->[RoomInfoMod
     }
     return filter
 }
+
+
+/**
+ * @Description 由基地名称获取基地信息
+ * @Param name: String 基地名称
+ * @Return RoomInfoModel 基地信息
+ */
+func acquireRoomInfoByName(name:String)->RoomInfoModel{
+    var foundOut = RoomInfoModel(district: 0, name: "0", preImage: "0", address: "0", roomID: "0")
+    for(var i = 0;i<GLOBAL_RoomInfo.count;i+=1){
+        let temp = GLOBAL_RoomInfo[i]
+        if (temp.name == name){
+            foundOut = temp
+            break
+        }
+    }
+    return foundOut
+}

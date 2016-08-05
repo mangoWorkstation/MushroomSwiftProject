@@ -11,14 +11,17 @@ import UIKit
 class ChooseAreaViewController: UIViewController,UIPickerViewDelegate{
     
     let area = ["西乡塘区","兴宁区","青秀区","江南区","邕宁区","良庆区","武鸣区","横县","隆安县","马山县","上林县","宾阳县"]//count:12
-        
+    
     @IBOutlet weak var chooseAreaPickerView: UIPickerView!
+    
+    @IBOutlet weak var Background: UIImageView!
     
     let chooseArea = ChooseAreaModel()
     
     override func viewDidLoad() {
         chooseAreaPickerView.delegate = self
-        super.viewDidLoad()
+        self.Background.image = UIImage(named: "ChooseAreaBackground")
+        self.Background.contentMode = UIViewContentMode.ScaleToFill
         self.navigationController?.navigationBar.translucent = false
         // Do any additional setup after loading the view, typically from a nib.
     }

@@ -26,6 +26,7 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         tableView.dataSource = self
         self.navigationController?.navigationBar.translucent = false
 //        self.navigationController?.navigationBar.barTintColor = UIColor.greenColor()
+//        self.navigationController?.navigationBar.barTintColor = UIColor(red: 69, green: 139, blue: 116, alpha: 0.5)
         staticItems_section_2 = [StaticItem(iconName:"MyHouse",label:"我家的蘑菇房"),StaticItem(iconName:"MyFollow",label:"我关注的蘑菇房"),StaticItem(iconName:"Nearby",label:"附近的基地"),StaticItem(iconName:"MyProfiles",label:"我的资料"),StaticItem(iconName:"Inform",label:"消息与通知")]
         staticItems_section_3 = [StaticItem(iconName:"Setup",label:"设置"),StaticItem(iconName:"About",label: "关于")]
         //初始化静态固定图标
@@ -203,6 +204,9 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true) //点击后取消被选中状态 2016.7.17
         if(indexPath.section == 2){
+            if indexPath.row == 2 {
+                performSegueWithIdentifier("NearbySegue", sender: nil)
+            }
             if(indexPath.row == 3){
                 performSegueWithIdentifier("EditProfilesSegue", sender: nil)
             }
@@ -215,6 +219,11 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     //MARK - UIStoryBoardSegue
     //segue 跳转页面
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "NearbySegue"{
+            let vc = segue.destinationViewController as! NearbyViewController
+            vc.navigationItem.backBarButtonItem?.title = self.navigationItem.title
+            vc.navigationItem.title = "附近的基地"
+        }
         if(segue.identifier == "SetupSegue"){
             let indexPath = self.tableView.indexPathForSelectedRow
             let vc = segue.destinationViewController as! GeneralDetailController

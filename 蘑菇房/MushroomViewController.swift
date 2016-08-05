@@ -31,6 +31,7 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         self.clickOnButton.setTitle(self.chosenArea, forState: UIControlState.Normal)
         self.roomPreview = regionFilter(self.chosenArea!, rawDataArray: GLOBAL_RoomInfo)
         self.List.reloadData()
+        self.List.setContentOffset(CGPointMake(0,0), animated: true)//数据刷新后，返回顶部 2016.8.2
         print(roomPreview)
     }
     
@@ -113,11 +114,11 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
     
     //MARK:- UITableViewDelegate,UITableViewDataSource
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
-        return 1
+        return roomPreview.count
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return roomPreview.count
+        return 1
     }
     
 
@@ -127,14 +128,13 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.List.dequeueReusableCellWithIdentifier("CellForRooms")! as UITableViewCell
-        let info = roomPreview[indexPath.section] as RoomInfoModel //注意是indexPath.section，而不是row
+        let info = roomPreview[indexPath.row] as RoomInfoModel
         let image = cell.viewWithTag(1) as! UIImageView
         let name = cell.viewWithTag(2) as! UILabel
         let more = cell.viewWithTag(3) as! UILabel
         image.image = UIImage(named: info.preImage!)
         name.text = info.name
         more.text = "查看详情"
-        print("cellForRowAtIndexPath执行了")
         return cell
     }
     
@@ -153,8 +153,9 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         if(segue.identifier == "ShowDetailSegue"){
             let vc = segue.destinationViewController as! PresentRoomDetailViewController
             let name = sender as! UILabel
-            vc.navigationItem.backBarButtonItem?.title = "返回"
+            vc.navigationItem.backBarButtonItem?.title = self.clickOnButton.currentTitle
             vc.navigationItem.title = name.text
+            vc.roomName = name.text
         }
     }
 }
