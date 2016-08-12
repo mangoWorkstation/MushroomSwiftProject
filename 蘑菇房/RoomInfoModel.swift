@@ -13,13 +13,17 @@ class RoomInfoModel : NSObject{
     var preImage: String?
     var address: String?
     var roomID: String?
+    var latitude: Double?
+    var longitude: Double?
     
-    init(district:Int,name:String,preImage:String,address:String,roomID:String) {
+    init(district:Int,name:String,preImage:String,address:String,roomID:String,latitude:Double,longitude:Double) {
         self.districtIdentifier = district
         self.name = name
         self.preImage = preImage
         self.address = address
         self.roomID = roomID
+        self.latitude = latitude
+        self.longitude = longitude
     }
     
     //Identifier Dictionary

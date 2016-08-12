@@ -31,6 +31,7 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         staticItems_section_3 = [StaticItem(iconName:"Setup",label:"设置"),StaticItem(iconName:"About",label: "关于")]
         //初始化静态固定图标
         self.automaticallyAdjustsScrollViewInsets = false
+        self.tableView.showsVerticalScrollIndicator = true
         // Do any additional setup after loading the view, typically from a nib.
     }
     

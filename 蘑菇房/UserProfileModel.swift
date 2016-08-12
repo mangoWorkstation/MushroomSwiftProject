@@ -18,8 +18,10 @@ class UserProfiles: NSObject {
     
     var allowPushingNotification:Bool?
     var allowPushingNewMessageToMobile:Bool?
+    var latitude:Double?
+    var longitude:Double?
     
-    init(face:String,nickName:String,id:Int,sex:Int,province:String,city:String?,allowPushingNotification:Bool,allowPushingNewMessageToMobile:Bool?) {
+    init(face:String,nickName:String,id:Int,sex:Int,province:String,city:String?,allowPushingNotification:Bool,allowPushingNewMessageToMobile:Bool?,latitude:Double,longitude:Double) {
         self.face = face
         self.nickName = nickName
         self.id = id
@@ -28,5 +30,7 @@ class UserProfiles: NSObject {
         self.city = city
         self.allowPushingNewMessageToMobile = allowPushingNewMessageToMobile
         self.allowPushingNotification = allowPushingNotification
+        self.latitude = latitude
+        self.longitude = longitude
     }
 }

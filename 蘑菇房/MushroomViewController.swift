@@ -32,7 +32,6 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         self.roomPreview = regionFilter(self.chosenArea!, rawDataArray: GLOBAL_RoomInfo)
         self.List.reloadData()
         self.List.setContentOffset(CGPointMake(0,0), animated: true)//数据刷新后，返回顶部 2016.8.2
-        print(roomPreview)
     }
     
     
@@ -63,13 +62,14 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         List.delegate = self
         List.dataSource = self
 //        self.List.reloadData()
-        }
-
+        
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     //滚动横幅的视图
     //MARK:- UIScrollViewDelegate
     func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -114,11 +114,11 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
     
     //MARK:- UITableViewDelegate,UITableViewDataSource
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
-        return roomPreview.count
+        return 1
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        return roomPreview.count
     }
     
 
@@ -126,9 +126,21 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         return 120
     }
     
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{
+        if section == 0{
+            return 0.0
+        }
+        else if section > 0 {
+            return 3
+        }
+        else {
+            return 0
+        }
+    }
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.List.dequeueReusableCellWithIdentifier("CellForRooms")! as UITableViewCell
-        let info = roomPreview[indexPath.row] as RoomInfoModel
+            let info = roomPreview[indexPath.section] as RoomInfoModel
         let image = cell.viewWithTag(1) as! UIImageView
         let name = cell.viewWithTag(2) as! UILabel
         let more = cell.viewWithTag(3) as! UILabel
