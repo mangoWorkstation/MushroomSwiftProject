@@ -15,8 +15,6 @@
 		0D32FEAE1D3DBC99008E79CD /* NewMessageInformViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D32FEAD1D3DBC99008E79CD /* NewMessageInformViewController.swift */; };
 		0D32FEB01D3DD0A2008E79CD /* FeedBackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D32FEAF1D3DD0A2008E79CD /* FeedBackViewController.swift */; };
 		0D49900A1D48B8BD0007D99B /* PresentRoomDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4990091D48B8BD0007D99B /* PresentRoomDetailViewController.swift */; };
-		0D623AD41D578C1A0021FD9B /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D623AD31D578C1A0021FD9B /* icon.png */; };
-		0D623AD61D578CC90021FD9B /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D623AD51D578CC90021FD9B /* icon@2x.png */; };
 		0D7262B01D3755AC00ACB2B9 /* StaticItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7262AF1D3755AC00ACB2B9 /* StaticItemModel.swift */; };
 		0D7262B41D37E6BA00ACB2B9 /* GeneralDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7262B31D37E6BA00ACB2B9 /* GeneralDetailController.swift */; };
 		0D77858D1D53444900A74A30 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D77858C1D53444900A74A30 /* MapKit.framework */; };
@@ -33,9 +31,13 @@
 		0D7FBC731CE814EB00775FCA /* ChooseAreaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7FBC721CE814EB00775FCA /* ChooseAreaViewController.swift */; };
 		0D7FBC751CE8152200775FCA /* ChooseAreaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7FBC741CE8152200775FCA /* ChooseAreaModel.swift */; };
 		0D8197261CEC8E3600CE0211 /* RoomInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8197251CEC8E3600CE0211 /* RoomInfoModel.swift */; };
+		0D8606A81D62BF8E00CE3905 /* Page_1_MushRoom.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D8606A61D62BF8E00CE3905 /* Page_1_MushRoom.storyboard */; };
+		0D8606AB1D62BFCC00CE3905 /* Page_2_Weather.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D8606A91D62BFCC00CE3905 /* Page_2_Weather.storyboard */; };
+		0D8606AE1D62C02300CE3905 /* Page_3_User.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D8606AC1D62C02300CE3905 /* Page_3_User.storyboard */; };
 		0D9CE9851D40548F004E1B27 /* PublicStaticMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9CE9841D40548F004E1B27 /* PublicStaticMethods.swift */; };
 		0D9CE9871D419F6F004E1B27 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9CE9861D419F6F004E1B27 /* AccountViewController.swift */; };
 		0D9CE9891D41AE6F004E1B27 /* EditProfilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9CE9881D41AE6F004E1B27 /* EditProfilesViewController.swift */; };
+		0DC5263E1D61F88600B30F87 /* icon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0DC5263D1D61F88600B30F87 /* icon.jpg */; };
 		0DF6899F1D41BD3C001FC45A /* UserProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF6899E1D41BD3C001FC45A /* UserProfileModel.swift */; };
 		0DF689A11D41E6A9001FC45A /* FaceShowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF689A01D41E6A9001FC45A /* FaceShowViewController.swift */; };
 		0DF689A31D41EFEF001FC45A /* EditOtherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF689A21D41EFEF001FC45A /* EditOtherViewController.swift */; };
@@ -67,8 +69,6 @@
 		0D32FEAD1D3DBC99008E79CD /* NewMessageInformViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewMessageInformViewController.swift; sourceTree = "<group>"; };
 		0D32FEAF1D3DD0A2008E79CD /* FeedBackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedBackViewController.swift; sourceTree = "<group>"; };
 		0D4990091D48B8BD0007D99B /* PresentRoomDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentRoomDetailViewController.swift; sourceTree = "<group>"; };
-		0D623AD31D578C1A0021FD9B /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = Assets.xcassets/icon.imageset/icon.png; sourceTree = "<group>"; };
-		0D623AD51D578CC90021FD9B /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon@2x.png"; path = "Assets.xcassets/icon.imageset/icon@2x.png"; sourceTree = "<group>"; };
 		0D7262AF1D3755AC00ACB2B9 /* StaticItemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticItemModel.swift; sourceTree = "<group>"; };
 		0D7262B31D37E6BA00ACB2B9 /* GeneralDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralDetailController.swift; sourceTree = "<group>"; };
 		0D77858C1D53444900A74A30 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -91,9 +91,13 @@
 		0D7FBC721CE814EB00775FCA /* ChooseAreaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseAreaViewController.swift; sourceTree = "<group>"; };
 		0D7FBC741CE8152200775FCA /* ChooseAreaModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseAreaModel.swift; sourceTree = "<group>"; };
 		0D8197251CEC8E3600CE0211 /* RoomInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomInfoModel.swift; sourceTree = "<group>"; };
+		0D8606A71D62BF8E00CE3905 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Page_1_MushRoom.storyboard; sourceTree = "<group>"; };
+		0D8606AA1D62BFCC00CE3905 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Page_2_Weather.storyboard; sourceTree = "<group>"; };
+		0D8606AD1D62C02300CE3905 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Page_3_User.storyboard; sourceTree = "<group>"; };
 		0D9CE9841D40548F004E1B27 /* PublicStaticMethods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicStaticMethods.swift; sourceTree = "<group>"; };
 		0D9CE9861D419F6F004E1B27 /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		0D9CE9881D41AE6F004E1B27 /* EditProfilesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfilesViewController.swift; sourceTree = "<group>"; };
+		0DC5263D1D61F88600B30F87 /* icon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = icon.jpg; sourceTree = "<group>"; };
 		0DF6899E1D41BD3C001FC45A /* UserProfileModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileModel.swift; sourceTree = "<group>"; };
 		0DF689A01D41E6A9001FC45A /* FaceShowViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FaceShowViewController.swift; sourceTree = "<group>"; };
 		0DF689A21D41EFEF001FC45A /* EditOtherViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditOtherViewController.swift; sourceTree = "<group>"; };
@@ -220,15 +224,14 @@
 		0D7FBC361CE80A6800775FCA /* 蘑菇房 */ = {
 			isa = PBXGroup;
 			children = (
+				0D8606AF1D62C0FF00CE3905 /* storyboards */,
 				0D7FBC6B1CE80BDA00775FCA /* Page_3_User */,
 				0D7FBC691CE80BA000775FCA /* Page_2_Weather */,
 				0D7FBC681CE80B7A00775FCA /* Page_1_MushRoom */,
 				0D7FBC671CE80AAB00775FCA /* Supporting Files */,
 				0D77858C1D53444900A74A30 /* MapKit.framework */,
-				0D7FBC3D1CE80A6900775FCA /* Main.storyboard */,
 				0D7FBC401CE80A6900775FCA /* Assets.xcassets */,
-				0D623AD31D578C1A0021FD9B /* icon.png */,
-				0D623AD51D578CC90021FD9B /* icon@2x.png */,
+				0DC5263D1D61F88600B30F87 /* icon.jpg */,
 				0D7FBC421CE80A6900775FCA /* LaunchScreen.storyboard */,
 				0D7FBC451CE80A6900775FCA /* Info.plist */,
 			);
@@ -287,6 +290,17 @@
 				0D7262B11D37563000ACB2B9 /* Models */,
 			);
 			name = Page_3_User;
+			sourceTree = "<group>";
+		};
+		0D8606AF1D62C0FF00CE3905 /* storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				0D7FBC3D1CE80A6900775FCA /* Main.storyboard */,
+				0D8606AC1D62C02300CE3905 /* Page_3_User.storyboard */,
+				0D8606A91D62BFCC00CE3905 /* Page_2_Weather.storyboard */,
+				0D8606A61D62BF8E00CE3905 /* Page_1_MushRoom.storyboard */,
+			);
+			name = storyboards;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -400,9 +414,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				0D7FBC441CE80A6900775FCA /* LaunchScreen.storyboard in Resources */,
-				0D623AD61D578CC90021FD9B /* icon@2x.png in Resources */,
+				0D8606AB1D62BFCC00CE3905 /* Page_2_Weather.storyboard in Resources */,
+				0D8606A81D62BF8E00CE3905 /* Page_1_MushRoom.storyboard in Resources */,
+				0DC5263E1D61F88600B30F87 /* icon.jpg in Resources */,
 				0D7FBC411CE80A6900775FCA /* Assets.xcassets in Resources */,
-				0D623AD41D578C1A0021FD9B /* icon.png in Resources */,
+				0D8606AE1D62C02300CE3905 /* Page_3_User.storyboard in Resources */,
 				0D7FBC3F1CE80A6900775FCA /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -501,6 +517,30 @@
 				0D7FBC431CE80A6900775FCA /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		0D8606A61D62BF8E00CE3905 /* Page_1_MushRoom.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0D8606A71D62BF8E00CE3905 /* Base */,
+			);
+			name = Page_1_MushRoom.storyboard;
+			sourceTree = "<group>";
+		};
+		0D8606A91D62BFCC00CE3905 /* Page_2_Weather.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0D8606AA1D62BFCC00CE3905 /* Base */,
+			);
+			name = Page_2_Weather.storyboard;
+			sourceTree = "<group>";
+		};
+		0D8606AC1D62C02300CE3905 /* Page_3_User.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0D8606AD1D62C02300CE3905 /* Base */,
+			);
+			name = Page_3_User.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

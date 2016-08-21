@@ -12,7 +12,6 @@ class FeedBackViewController: UIViewController,UITableViewDelegate,UITableViewDa
 
     @IBOutlet weak var tableView: UITableView!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
@@ -26,7 +25,7 @@ class FeedBackViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
-        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+//        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
         if(indexPath.section == 1){
             
         }
@@ -60,7 +59,6 @@ class FeedBackViewController: UIViewController,UITableViewDelegate,UITableViewDa
             textView.editable = true
             textView.keyboardType = UIKeyboardType.Default
             textView.delegate = self
-            
         }
         if(indexPath.section == 1){
             cell = self.tableView.dequeueReusableCellWithIdentifier("ConfirmButtonCell")!
@@ -74,7 +72,7 @@ class FeedBackViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?{
         if(section == 0){
-            return "请输入您的建议，不超过140个字噢～\n按换行键完成输入"
+            return "请输入您的建议，不超过140个字噢～\n按换行键收起键盘"
         }
         else{
             return nil
@@ -90,7 +88,10 @@ class FeedBackViewController: UIViewController,UITableViewDelegate,UITableViewDa
         return true
     }
     
-    
+    //待解决的问题：如何获取表格中的textView，然后取消firstResponder
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        
+    }
     
 //    -(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString*)text
 //    {

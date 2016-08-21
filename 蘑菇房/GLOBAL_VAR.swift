@@ -17,7 +17,7 @@ var GLOBAL_NotificationCache : [NotificationPreview] = [NotificationPreview(mess
 
 var GLOBAL_UnreadMessage : [NotificationPreview] = unreadMessageFilter(GLOBAL_NotificationCache)
 
-var GLOBAL_UserProfile = UserProfiles(face: "User", nickName: "芒果君", id: 123456, sex: 1, province: "广西", city: "南宁",allowPushingNotification: false,allowPushingNewMessageToMobile: false,latitude: 22.8382665752,longitude: 108.2884396852)
+var GLOBAL_UserProfile = UserProfiles(face: "User", nickName: "芒果君", id: 123456, sex: 1, province: "广西", city: "南宁",allowPushingNotification: false,allowPushingNewMessageToMobile: false,latitude: 0,longitude:0)
 
 
 var GLOBAL_RoomInfo  : [RoomInfoModel] = [
@@ -26,7 +26,6 @@ var GLOBAL_RoomInfo  : [RoomInfoModel] = [
     RoomInfoModel(district: 0, name: "广西民族大学", preImage: "2", address: "南宁市西乡塘区", roomID: "00001",latitude:22.8406188793, longitude:108.2354495692),
     RoomInfoModel(district: 0, name: "广西药用植物园", preImage: "3", address: "南宁市西乡塘区", roomID: "00002",latitude:22.8539483773, longitude:108.3746464867),
     RoomInfoModel(district: 0, name: "南宁动物园", preImage: "1", address: "南宁市西乡塘区", roomID: "00003",latitude:22.836873668, longitude:108.2693347539),
-    RoomInfoModel(district: 0, name: "广西药用植物园", preImage: "3", address: "南宁市西乡塘区", roomID: "00004",latitude:22.8549315723, longitude:108.3842028547),
     RoomInfoModel(district: 0, name: "西乡塘蘑菇基地5", preImage: "1", address: "南宁市西乡塘区", roomID: "00005",latitude:22.833159668, longitude:108.2704847539),
     RoomInfoModel(district: 0, name: "西乡塘蘑菇基地6", preImage: "2", address: "南宁市西乡塘区", roomID: "00006",latitude:22.8404478915, longitude:108.2677161699),
     
@@ -138,5 +137,3 @@ var GLOBAL_RoomInfo  : [RoomInfoModel] = [
     RoomInfoModel(district: 11, name: "宾阳县蘑菇基地6", preImage: "1", address: "南宁市宾阳县", roomID: "B0005",latitude:23.2432912108, longitude:108.8305779067),
     RoomInfoModel(district: 11, name: "宾阳县蘑菇基地7", preImage: "3", address: "南宁市宾阳县", roomID: "B0006",latitude:23.2329885913, longitude:108.8464581346)
 ]
-
-var GLOBAL_NearbyRooms : [RoomInfoModel] = nearbyRoomFilter(GLOBAL_RoomInfo)

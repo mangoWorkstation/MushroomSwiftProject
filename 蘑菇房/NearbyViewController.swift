@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate,CLLocationManagerDelegate,UIAlertViewDelegate{
+class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate,CLLocationManagerDelegate,MKMapViewDelegate,UIScrollViewDelegate{
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -20,16 +20,21 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
     
     var locationManager:CLLocationManager!
     
-    var showData: [RoomInfoModel] = GLOBAL_NearbyRooms
-        
+    var showData: [RoomInfoModel] = []
+    
+    var indexPath : NSIndexPath = NSIndexPath(forRow: 5, inSection: 1)
+    
+    var progressView = UIActivityIndicatorView(frame: CGRectMake(0,0,100,100))
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        setProgressView()   //显示加载指示器 2016.8.21
+        
         tableView.delegate = self
         tableView.dataSource = self
         search.delegate = self
+        mapShow.delegate = self
         // Do any additional setup after loading the view.
-        
-        getReadyForMap()    //为地图准备数据
         
         openLocationService()   //开启定位服务
         
@@ -41,6 +46,23 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
         // Dispose of any resources that can be recreated.
     }
     
+    private func setProgressView(){
+        progressView.center = self.view.center
+        progressView.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+        progressView.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
+        progressView.backgroundColor = UIColor.lightGrayColor()
+        progressView.layer.masksToBounds = true
+        progressView.layer.cornerRadius = 20
+        progressView.clipsToBounds = true   //磨成圆角
+        self.view.addSubview(progressView)
+        progressView.startAnimating()
+    }
+    
+    private func setUserCurrentLocationAsMapCenter(){
+        self.mapShow.centerCoordinate.latitude = self.mapShow.userLocation.coordinate.latitude
+        self.mapShow.centerCoordinate.longitude = self.mapShow.userLocation.coordinate.longitude
+    }
+    
     private func getReadyForMap(){
         self.mapShow.mapType = MKMapType.Standard
         let latDelta = 0.1
@@ -48,7 +70,10 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
         let currentLocationSpan = MKCoordinateSpanMake(latDelta, lngDelta)
         
         let showInMap = self.showData
-        for(var i = 0;i<showInMap.count;i += 1){
+        let annotation = self.mapShow.userLocation
+        annotation.title = "我的位置"
+        annotation.subtitle = "耶我在这～"
+        for i in 0 ..< showInMap.count{
             let temp = showInMap[i]
             let center = CLLocation(latitude: temp.latitude!, longitude: temp.longitude!)
             let currentRegion = MKCoordinateRegion(center: center.coordinate, span: currentLocationSpan)
@@ -59,7 +84,13 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
             objectAnnotation.title = temp.name
             self.mapShow.addAnnotation(objectAnnotation)
         }
-
+        self.mapShow.userTrackingMode = MKUserTrackingMode.FollowWithHeading
+        self.mapShow.showsScale = true
+        self.mapShow.showsCompass = true
+        let userCenter = CLLocation(latitude: self.mapShow.userLocation.coordinate.longitude, longitude: self.mapShow.userLocation.coordinate.longitude)
+        let currentRegion = MKCoordinateRegion(center: userCenter.coordinate, span: currentLocationSpan)
+        self.mapShow.setRegion(currentRegion, animated: true)
+        print("getReadyForMap执行了")
     }
     
     
@@ -86,7 +117,7 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
         //状态为，用户还没有做出选择，那么就弹窗让用户选择
         if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.NotDetermined {
             locationManager.requestWhenInUseAuthorization()
-            locationManager.requestAlwaysAuthorization()
+//            locationManager.requestAlwaysAuthorization()
         }
             //状态为，用户在设置-定位中选择了【永不】，就是不允许App使用定位服务
         else if(CLLocationManager.authorizationStatus() == CLAuthorizationStatus.Denied){
@@ -114,16 +145,24 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if locations.count > 0{ //  使用last 获取 最后一个最新的位置， 前面是上一次的位置信息
+        if locations.count > 0{ //  使用last 获取，最后一个最新的位置， 前面是上一次的位置信息
             let locationInfo:CLLocation = locations.last! as CLLocation
             GLOBAL_UserProfile.latitude = locationInfo.coordinate.latitude
             GLOBAL_UserProfile.longitude = locationInfo.coordinate.longitude
-            //写入全局变量 2016.8.12
-            let alert = UIAlertView(title: "我的位置", message: "经度：\(locationInfo.coordinate.longitude),\n纬度：\(locationInfo.coordinate.latitude)", delegate: self, cancelButtonTitle: "好")
-            alert.show()
+            print("经度：\(locationInfo.coordinate.longitude)")
+            print("纬度：\(locationInfo.coordinate.latitude)")
+            print("\n")
+            self.showData = nearbyRoomFilter(GLOBAL_RoomInfo)
+            self.tableView.reloadData()
+            getReadyForMap()    //为地图准备数据
+            //因为是异步操作，只能在这里刷新视图，他妈的，逻辑绕死我了 2016.8.21
         }
+        setUserCurrentLocationAsMapCenter()
         print("didUpdateLocations执行了")
+        print("纬 : \(mapShow.centerCoordinate.latitude)")
+        print("经 : \(mapShow.centerCoordinate.longitude)")
     }
+    
 
     //MARK: - UITableViewDelegate
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat{
@@ -148,11 +187,35 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
-        let selectedLocation = GLOBAL_NearbyRooms[indexPath.row]
-        self.mapShow.centerCoordinate.latitude = selectedLocation.latitude!
-        self.mapShow.centerCoordinate.longitude = selectedLocation.longitude!
+        if indexPath.section == 0 {
+            self.mapShow.centerCoordinate.latitude = self.mapShow.userLocation.coordinate.latitude
+            self.mapShow.centerCoordinate.longitude = self.mapShow.userLocation.coordinate.longitude
+        }
+        else{
+            let selectedLocation = nearbyRoomFilter(GLOBAL_RoomInfo)[indexPath.row]
+            self.mapShow.centerCoordinate.latitude = selectedLocation.latitude!
+            self.mapShow.centerCoordinate.longitude = selectedLocation.longitude!
+        }
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
 
+    }
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 1{
+            return "以下列出距您最近的5个蘑菇种植基地"
+        }
+        else {
+            return nil
+        }
+    }
+    
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        if section == 1 {
+            return 0
+        }
+        else {
+            return 30
+        }
     }
     
     //MARK: - UITableViewDataSource
@@ -172,7 +235,7 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
         var cell = UITableViewCell()
         var showDataArray : [RoomInfoModel] = []
         if ((self.search.text?.isEmpty) != nil){
-            showDataArray = GLOBAL_NearbyRooms
+            showDataArray = nearbyRoomFilter(GLOBAL_RoomInfo)
         }
         else{
             showDataArray = self.showData
@@ -225,14 +288,49 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
         }
         else{
             self.showData.removeAll()
-            self.showData = GLOBAL_NearbyRooms
+            self.showData = nearbyRoomFilter(GLOBAL_RoomInfo)
             self.tableView.reloadData()
         }
     }
     
+    //点击回车键，收起键盘
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         self.searchBar(self.search, textDidChange: self.search.text!)
         self.search.resignFirstResponder()
     }
     
+    
+    //MARK: - MKMapViewDelegate
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView?{
+        if annotation is MKUserLocation {
+            return nil
+        }
+        let annotationIdentifier = "myStink"
+        
+        var annotationView = self.mapShow.dequeueReusableAnnotationViewWithIdentifier(annotationIdentifier)
+        
+        if annotationView == nil {
+            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: annotationIdentifier)
+            annotationView?.canShowCallout = true
+        }
+        
+        let leftIconView = UIImageView(frame: CGRectMake(0, 0, 53, 53))
+        let tempInfo = nearbyRoomFilter(GLOBAL_RoomInfo)
+        leftIconView.image = UIImage(named: tempInfo[indexPath.row - 1].preImage!)
+        annotationView?.leftCalloutAccessoryView = leftIconView
+        return annotationView
+    }
+    
+    func mapViewDidFinishRenderingMap(mapView: MKMapView, fullyRendered: Bool) {
+        if fullyRendered == true{
+            self.progressView.stopAnimating()
+        }
+    }
+    
+    //MARK: - UIScrollViewDelegate
+    //滑动时收起键盘 2016.8.14
+    func scrollViewWillBeginDragging(scrollView: UIScrollView){
+        self.search.resignFirstResponder()
+    }
 }
+

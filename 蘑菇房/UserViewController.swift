@@ -119,50 +119,6 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             notification.text = "2016-7-6 南宁市气象局发布暴雨红色预警，请注意强对流天气"
             
         }
-//        else if(indexPath.section == 2){
-//            
-//            cell = self.tableView!.dequeueReusableCellWithIdentifier("Inspector")!
-//            
-//            let stackview = cell!.viewWithTag(10) as! UIStackView
-//            let deviceModel:String = UIDevice.currentDevice().model
-//            if (deviceModel == "@iPhone 4s"){
-//                stackview.spacing = 10
-//            }
-//            else if (deviceModel == "@iPhone 6s"){
-//                stackview.spacing = 40
-//            }
-//            
-//            //stackview_1 Room
-//            let roomIcon = cell!.viewWithTag(101) as! UIImageView
-//            let roomLabel = cell!.viewWithTag(102) as! UILabel
-//            roomIcon.image = UIImage(named: "Mushroom")
-//            roomLabel.text = "蘑菇房"
-//            
-//            //stackview_2 Barn
-//            let barnIcon = cell!.viewWithTag(201) as! UIImageView
-//            let barnLabel = cell!.viewWithTag(202) as! UILabel
-//            barnIcon.image = UIImage(named: "Barn")
-//            barnLabel.text = "堆料房"
-//            
-//            //stackview_3 Battery
-//            let batteryIcon = cell!.viewWithTag(301) as! UIImageView
-//            let batteryLabel = cell!.viewWithTag(302) as! UILabel
-//            batteryIcon.image = UIImage(named: "Battery")
-//            batteryLabel.text = "电量检测"
-//            
-//            //stackview_4 Statistics
-//            let chartIcon = cell!.viewWithTag(401) as! UIImageView
-//            let chartlabel = cell!.viewWithTag(402) as! UILabel
-//            chartIcon.image = UIImage(named: "Statistics")
-//            chartlabel.text = "历史数据"
-//            
-////            四个stackview的编号说明：
-////            蘑菇房：图标101，标签102
-////            堆料房：图标201，标签202
-////            电量检测：图标301，标签302
-////            历史数据：图标401，标签402
-//            
-//        }
         else if(indexPath.section == 2){
             cell = self.tableView.dequeueReusableCellWithIdentifier("Inform",forIndexPath: indexPath)
             let icon = cell?.viewWithTag(3001) as! UIImageView

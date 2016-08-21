@@ -246,7 +246,7 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
     func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int){
         if self.InfoType.selectedSegmentIndex == 0{
             if buttonIndex == 0 {
-                for(var i=0;i<GLOBAL_UnreadMessage.count;i+=1){
+                for i in 0 ..< GLOBAL_UnreadMessage.count {
                     let tempElement = clearAllUnreadMessage(GLOBAL_UnreadMessage)
                     GLOBAL_NotificationCache.append(tempElement[i])// “所有信息“中有重复元素 待解决 2016.7.17
                 }

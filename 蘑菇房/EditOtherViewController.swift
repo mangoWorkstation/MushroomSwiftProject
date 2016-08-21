@@ -86,7 +86,7 @@ class EditOtherViewController: UIViewController,UITableViewDelegate,UITableViewD
         if(self.selectedRow == "性别"){
             let cell = self.tableView.cellForRowAtIndexPath(indexPath)
             var cells = self.tableView.visibleCells
-            for(var i=0;i<cells.count;i+=1){
+            for i in 0 ..< cells.count {
                 let _cell = cells[i] 
                 _cell.accessoryType = UITableViewCellAccessoryType.None
             }

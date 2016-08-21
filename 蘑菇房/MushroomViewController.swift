@@ -39,8 +39,7 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         super.viewDidLoad()
 //        roomPreview = [Preview(name: "广西大学",preImage: "1"),Preview(name: "广西药用植物园",preImage: "2"),Preview(name: "坛洛镇蘑菇基地",preImage: "3"),Preview(name: "西乡塘区蘑菇大棚1",preImage: "2"),Preview(name: "西乡塘区蘑菇大棚2",preImage: "1"),Preview(name: "西乡塘区蘑菇大棚3",preImage: "3"),Preview(name: "西乡塘区蘑菇大棚4",preImage: "2")]
         clickOnButton.setTitle("选择区域", forState: UIControlState.Normal)
-        var i:Int
-        for (i=1;i<=3;i += 1){
+        for i in 1..<4 {
             let image = UIImage(named: "\(i).jpg")!
             let x = CGFloat(i - 1) * self.view.frame.width
             let imageView = UIImageView(frame: CGRectMake(x, 0, self.view.frame.width, pageScroller.bounds.height))
@@ -53,8 +52,9 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
             pageScroller.delegate = self
         }
         
-        pageScroller.contentSize = CGSizeMake((self.view.frame.width * CGFloat(i-1)), pageScroller.frame.height)
-        pageDots.numberOfPages = i-1
+        let i:Int = 3
+        pageScroller.contentSize = CGSizeMake((self.view.frame.width * CGFloat(i - 1)), pageScroller.frame.height)
+        pageDots.numberOfPages = i - 1
         pageDots.currentPageIndicatorTintColor = UIColor.blueColor()
         pageDots.pageIndicatorTintColor = UIColor.grayColor()
         addTimer()
