@@ -34,6 +34,10 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         self.List.setContentOffset(CGPointMake(0,0), animated: true)//数据刷新后，返回顶部 2016.8.2
     }
     
+    @IBAction func justJumpBackToThisVC(sender:AnyObject?){
+        
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -165,7 +169,7 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         if(segue.identifier == "ShowDetailSegue"){
             let vc = segue.destinationViewController as! PresentRoomDetailViewController
             let name = sender as! UILabel
-            vc.navigationItem.backBarButtonItem?.title = self.clickOnButton.currentTitle
+            vc.currentArea = self.clickOnButton.currentTitle
             vc.navigationItem.title = name.text
             vc.roomName = name.text
         }

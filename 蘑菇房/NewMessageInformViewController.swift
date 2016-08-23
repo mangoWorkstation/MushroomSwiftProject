@@ -12,8 +12,29 @@ class NewMessageInformViewController: UIViewController,UITableViewDelegate,UITab
 
     @IBOutlet weak var tableView: UITableView!
     
-    @IBAction func switchButtonOnChanged(sender: UISwitch, forEvent event: UIEvent) {
+    @IBAction func switchButtonOnChanged(sender:UISwitch,forEvent: UIEvent?) {
+        let switchtag = sender.tag
+        if switchtag == 100{
+            if sender.on == true {
+                GLOBAL_UserProfile.allowPushingNotification = true
+            }
+            else{
+                GLOBAL_UserProfile.allowPushingNotification = false
+            }
+        }
+        if switchtag == 101 {
+            if sender.on == true{
+                GLOBAL_UserProfile.allowPushingNewMessageToMobile = true
+            }
+            else {
+                GLOBAL_UserProfile.allowPushingNewMessageToMobile = false
+            }
+        }
+        print("switchButtonOnChanged执行了")
+        print("允许1:\(GLOBAL_UserProfile.allowPushingNotification!)")
+        print("允许2:\(GLOBAL_UserProfile.allowPushingNewMessageToMobile!)")
     }
+    //监听开关状态变化：测试通过 2016.8.22
 
     var willAllowNewMessageInform :Bool? = GLOBAL_UserProfile.allowPushingNotification{
         didSet{
@@ -38,6 +59,7 @@ class NewMessageInformViewController: UIViewController,UITableViewDelegate,UITab
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.scrollEnabled = false
         // Do any additional setup after loading the view.
     }
 
@@ -75,6 +97,9 @@ class NewMessageInformViewController: UIViewController,UITableViewDelegate,UITab
         case 1: switchButton.on = self.willAllowPushNewMessageToMobile!
         default :break
         }
+        switchButton.tag = indexPath.row + 100
+        switchButton.addTarget(self, action: #selector(NewMessageInformViewController.switchButtonOnChanged(_:forEvent:)), forControlEvents: .ValueChanged)
+        //注意这句话的写法，他妈，改了几次没改对
         return cell
     }
     

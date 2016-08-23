@@ -18,6 +18,7 @@ class EditOtherViewController: UIViewController,UITableViewDelegate,UITableViewD
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.keyboardDismissMode = .OnDrag
         // Do any additional setup after loading the view.
     }
 
@@ -33,7 +34,7 @@ class EditOtherViewController: UIViewController,UITableViewDelegate,UITableViewD
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?{
         if(selectedRow == "昵称"){
-            return "请在键盘上按回车后 再点击保存哟～"
+            return "请在输入新昵称～"
         }
         else {
             return ""

@@ -13,6 +13,8 @@ class PresentRoomDetailViewController: UIViewController,UITableViewDelegate,UITa
     
     var roomName: String?
     
+    var currentArea:String?
+    
     var room: RoomInfoModel?
     
     @IBOutlet weak var tableView: UITableView!
@@ -21,6 +23,11 @@ class PresentRoomDetailViewController: UIViewController,UITableViewDelegate,UITa
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let backButton =
+            UIBarButtonItem(barButtonSystemItem: .Rewind, target: self, action: #selector(MushroomViewController.justJumpBackToThisVC))
+        backButton.title = currentArea!
+        self.navigationItem.backBarButtonItem = backButton
+        //更改不了“返回”标题 2016.8.23
         room = acquireRoomInfoByName(self.roomName!)
         self.preview.image = UIImage(named: (room?.preImage)!)
         self.navigationController?.navigationBar.translucent = false

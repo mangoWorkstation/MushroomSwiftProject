@@ -12,10 +12,12 @@ class FeedBackViewController: UIViewController,UITableViewDelegate,UITableViewDa
 
     @IBOutlet weak var tableView: UITableView!
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+//        tableView.keyboardDismissMode = .OnDrag //滑动收键盘 和 func scrollViewDidScroll(scrollView: UIScrollView) 作用相同，只留其一
         // Do any additional setup after loading the view.
     }
 
@@ -88,9 +90,9 @@ class FeedBackViewController: UIViewController,UITableViewDelegate,UITableViewDa
         return true
     }
     
-    //待解决的问题：如何获取表格中的textView，然后取消firstResponder
-    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
-        
+    //滑动收键盘
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        self.view.endEditing(true)
     }
     
 //    -(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString*)text

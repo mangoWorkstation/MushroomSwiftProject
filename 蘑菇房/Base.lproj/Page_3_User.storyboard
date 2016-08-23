@@ -436,9 +436,6 @@
                                                 </label>
                                                 <switch opaque="NO" tag="102" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gJd-Q8-Jyu">
                                                     <rect key="frame" x="533" y="6" width="51" height="31"/>
-                                                    <connections>
-                                                        <action selector="switchButtonOnChanged:forEvent:" destination="wHo-VA-j7G" eventType="valueChanged" id="ElJ-K8-Ecx"/>
-                                                    </connections>
                                                 </switch>
                                             </subviews>
                                             <constraints>
@@ -759,7 +756,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="14u-2B-6mq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1586" y="3208"/>
+            <point key="canvasLocation" x="1586" y="3996"/>
         </scene>
         <!--Feed Back View Controller-->
         <scene sceneID="SHb-cR-eoU">
@@ -1025,7 +1022,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dJV-Kt-wsV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3148" y="3545"/>
+            <point key="canvasLocation" x="1989" y="3353"/>
         </scene>
         <!--Edit Profiles View Controller-->
         <scene sceneID="Dex-CB-BBF">
@@ -1159,7 +1156,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yZR-3y-2FX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2279" y="3646"/>
+            <point key="canvasLocation" x="2315" y="3996"/>
         </scene>
         <!--我-->
         <scene sceneID="5Jb-ih-bd7">
