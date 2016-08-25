@@ -19,6 +19,7 @@
 		0D7262B41D37E6BA00ACB2B9 /* GeneralDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7262B31D37E6BA00ACB2B9 /* GeneralDetailController.swift */; };
 		0D77858D1D53444900A74A30 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D77858C1D53444900A74A30 /* MapKit.framework */; };
 		0D7785921D534B7400A74A30 /* NearbyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7785911D534B7400A74A30 /* NearbyViewController.swift */; };
+		0D780B9E1D6E9EC400105124 /* 方正清刻本悦宋简体.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 0D780B9D1D6E9EC400105124 /* 方正清刻本悦宋简体.TTF */; };
 		0D7FBC381CE80A6800775FCA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7FBC371CE80A6800775FCA /* AppDelegate.swift */; };
 		0D7FBC3A1CE80A6800775FCA /* MushroomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7FBC391CE80A6800775FCA /* MushroomViewController.swift */; };
 		0D7FBC3C1CE80A6800775FCA /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7FBC3B1CE80A6800775FCA /* WeatherViewController.swift */; };
@@ -38,6 +39,7 @@
 		0D9CE9871D419F6F004E1B27 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9CE9861D419F6F004E1B27 /* AccountViewController.swift */; };
 		0D9CE9891D41AE6F004E1B27 /* EditProfilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9CE9881D41AE6F004E1B27 /* EditProfilesViewController.swift */; };
 		0DC5263E1D61F88600B30F87 /* icon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0DC5263D1D61F88600B30F87 /* icon.jpg */; };
+		0DF373F81D6DA81100AC5E6B /* ShowMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF373F71D6DA81100AC5E6B /* ShowMapViewController.swift */; };
 		0DF6899F1D41BD3C001FC45A /* UserProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF6899E1D41BD3C001FC45A /* UserProfileModel.swift */; };
 		0DF689A11D41E6A9001FC45A /* FaceShowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF689A01D41E6A9001FC45A /* FaceShowViewController.swift */; };
 		0DF689A31D41EFEF001FC45A /* EditOtherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF689A21D41EFEF001FC45A /* EditOtherViewController.swift */; };
@@ -73,6 +75,7 @@
 		0D7262B31D37E6BA00ACB2B9 /* GeneralDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralDetailController.swift; sourceTree = "<group>"; };
 		0D77858C1D53444900A74A30 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		0D7785911D534B7400A74A30 /* NearbyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearbyViewController.swift; sourceTree = "<group>"; };
+		0D780B9D1D6E9EC400105124 /* 方正清刻本悦宋简体.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = "方正清刻本悦宋简体.TTF"; sourceTree = "<group>"; };
 		0D7FBC341CE80A6800775FCA /* 蘑菇房.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "蘑菇房.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D7FBC371CE80A6800775FCA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0D7FBC391CE80A6800775FCA /* MushroomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MushroomViewController.swift; sourceTree = "<group>"; };
@@ -98,6 +101,7 @@
 		0D9CE9861D419F6F004E1B27 /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		0D9CE9881D41AE6F004E1B27 /* EditProfilesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfilesViewController.swift; sourceTree = "<group>"; };
 		0DC5263D1D61F88600B30F87 /* icon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = icon.jpg; sourceTree = "<group>"; };
+		0DF373F71D6DA81100AC5E6B /* ShowMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowMapViewController.swift; sourceTree = "<group>"; };
 		0DF6899E1D41BD3C001FC45A /* UserProfileModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileModel.swift; sourceTree = "<group>"; };
 		0DF689A01D41E6A9001FC45A /* FaceShowViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FaceShowViewController.swift; sourceTree = "<group>"; };
 		0DF689A21D41EFEF001FC45A /* EditOtherViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditOtherViewController.swift; sourceTree = "<group>"; };
@@ -145,6 +149,7 @@
 				0D7FBC391CE80A6800775FCA /* MushroomViewController.swift */,
 				0D7FBC721CE814EB00775FCA /* ChooseAreaViewController.swift */,
 				0D4990091D48B8BD0007D99B /* PresentRoomDetailViewController.swift */,
+				0DF373F71D6DA81100AC5E6B /* ShowMapViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -201,6 +206,14 @@
 			name = NeabyVCs;
 			sourceTree = "<group>";
 		};
+		0D780B9C1D6E9EAC00105124 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				0D780B9D1D6E9EC400105124 /* 方正清刻本悦宋简体.TTF */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
 		0D7FBC2B1CE80A6800775FCA = {
 			isa = PBXGroup;
 			children = (
@@ -224,7 +237,8 @@
 		0D7FBC361CE80A6800775FCA /* 蘑菇房 */ = {
 			isa = PBXGroup;
 			children = (
-				0D8606AF1D62C0FF00CE3905 /* storyboards */,
+				0D780B9C1D6E9EAC00105124 /* Fonts */,
+				0D8606AF1D62C0FF00CE3905 /* Storyboards */,
 				0D7FBC6B1CE80BDA00775FCA /* Page_3_User */,
 				0D7FBC691CE80BA000775FCA /* Page_2_Weather */,
 				0D7FBC681CE80B7A00775FCA /* Page_1_MushRoom */,
@@ -292,7 +306,7 @@
 			name = Page_3_User;
 			sourceTree = "<group>";
 		};
-		0D8606AF1D62C0FF00CE3905 /* storyboards */ = {
+		0D8606AF1D62C0FF00CE3905 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
 				0D7FBC3D1CE80A6900775FCA /* Main.storyboard */,
@@ -300,7 +314,7 @@
 				0D8606A91D62BFCC00CE3905 /* Page_2_Weather.storyboard */,
 				0D8606A61D62BF8E00CE3905 /* Page_1_MushRoom.storyboard */,
 			);
-			name = storyboards;
+			name = Storyboards;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -418,6 +432,7 @@
 				0D8606A81D62BF8E00CE3905 /* Page_1_MushRoom.storyboard in Resources */,
 				0DC5263E1D61F88600B30F87 /* icon.jpg in Resources */,
 				0D7FBC411CE80A6900775FCA /* Assets.xcassets in Resources */,
+				0D780B9E1D6E9EC400105124 /* 方正清刻本悦宋简体.TTF in Resources */,
 				0D8606AE1D62C02300CE3905 /* Page_3_User.storyboard in Resources */,
 				0D7FBC3F1CE80A6900775FCA /* Main.storyboard in Resources */,
 			);
@@ -449,6 +464,7 @@
 				0DF689A11D41E6A9001FC45A /* FaceShowViewController.swift in Sources */,
 				0D7FBC6F1CE80C7000775FCA /* UserViewController.swift in Sources */,
 				0D7FBC751CE8152200775FCA /* ChooseAreaModel.swift in Sources */,
+				0DF373F81D6DA81100AC5E6B /* ShowMapViewController.swift in Sources */,
 				0D7785921D534B7400A74A30 /* NearbyViewController.swift in Sources */,
 				0D8197261CEC8E3600CE0211 /* RoomInfoModel.swift in Sources */,
 				0D2B80BB1D3BB2F9007FBB8A /* GLOBAL_VAR.swift in Sources */,
@@ -644,7 +660,7 @@
 				);
 				INFOPLIST_FILE = "蘑菇房/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "edu.gxu.cn.---";
+				PRODUCT_BUNDLE_IDENTIFIER = edu.gxu.cn.mushroom;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -664,7 +680,7 @@
 				);
 				INFOPLIST_FILE = "蘑菇房/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "edu.gxu.cn.---";
+				PRODUCT_BUNDLE_IDENTIFIER = edu.gxu.cn.mushroom;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";

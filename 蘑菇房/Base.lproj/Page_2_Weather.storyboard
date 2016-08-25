@@ -35,6 +35,9 @@
                             </segments>
                         </segmentedControl>
                     </navigationItem>
+                    <connections>
+                        <outlet property="selectedPage" destination="1Kg-fx-hdx" id="OWZ-5N-JDU"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YsT-rX-NXU" sceneMemberID="firstResponder"/>
             </objects>

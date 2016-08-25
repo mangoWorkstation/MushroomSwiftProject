@@ -28,8 +28,10 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setProgressView()   //显示加载指示器 2016.8.21
-        
+        dispatch_async(dispatch_get_main_queue()){
+            self.setProgressView()  //显示加载指示器 2016.8.21
+            return
+        }
         tableView.delegate = self
         tableView.dataSource = self
         search.delegate = self
@@ -37,6 +39,8 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
         // Do any additional setup after loading the view.
         
         openLocationService()   //开启定位服务
+        
+        //需要再加一个判断网络状态
         
         
     }
@@ -202,7 +206,12 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 1{
-            return "以下列出距您最近的5个蘑菇种植基地"
+            if !self.showData.isEmpty {
+                return "以下列出距您最近的5个蘑菇种植基地"
+            }
+            else {
+                return "查找不到符合条件的基地"
+            }
         }
         else {
             return nil
@@ -247,7 +256,8 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
                 let icon = cell.viewWithTag(2001) as! UIImageView
                 let currentLocation = cell.viewWithTag(2002) as! UILabel
                 icon.image = UIImage(named: "LocationPin")
-                currentLocation.text = "当前位置：广西壮族自治区南宁市大学路100号附近"    //mark:待改造
+                currentLocation.text = "当前位置：广西壮族自治区南宁市大学路100号附近"
+                currentLocation.font = UIFont(name: "FZQKBYSJW--GB1-0", size: 10.0)//mark:待改造
             }
         }
         if indexPath.section == 1 {
@@ -260,6 +270,9 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
             preImage.image = UIImage(named: showDataArray[indexPath.row].preImage!)
             address.text = showDataArray[indexPath.row].address!
             detailSign.text = "查看详情"
+            name.font = UIFont(name: "FZQKBYSJW--GB1-0", size: 15.0)
+            address.font = UIFont(name: "FZQKBYSJW--GB1-0", size: 10.0)
+            detailSign.font = UIFont(name: "FZQKBYSJW--GB1-0", size: 10.0)
         }
         cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
         

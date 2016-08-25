@@ -25,7 +25,7 @@ class EditProfilesViewController: UIViewController,UITableViewDelegate,UITableVi
 //        if(vc.selectedRow == "性别"){
 //            GLOBAL_UserProfile.sex = vc.newSex!
 //        }
-        self.tableView.reloadData() //传值有问题，没办法确定全局变量是否被修改，待解决 2016.7.22／17:55
+        self.tableView.reloadData()
     }
     
     override func viewDidLoad() {
@@ -59,6 +59,7 @@ class EditProfilesViewController: UIViewController,UITableViewDelegate,UITableVi
             let label = cell.viewWithTag(101) as! UILabel
             let icon = cell.viewWithTag(102) as! UIImageView
             label.text = "头像"
+            label.font = UIFont(name: "FZQKBYSJW--GB1-0", size: 16.0)
             icon.image = UIImage(named: GLOBAL_UserProfile.face!)
         }
         if(indexPath.row > 0){
@@ -67,6 +68,8 @@ class EditProfilesViewController: UIViewController,UITableViewDelegate,UITableVi
             let label = cell.viewWithTag(201) as! UILabel
             let detail = cell.viewWithTag(202) as! UILabel
             label.text = labels[indexPath.row - 1]
+            label.font = UIFont(name: "FZQKBYSJW--GB1-0", size: 16.0)
+            detail.font = UIFont(name: "FZQKBYSJW--GB1-0", size: 16.0)
             switch label.text! {
             case "昵称":
                 detail.text = GLOBAL_UserProfile.nickName

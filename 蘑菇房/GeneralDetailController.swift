@@ -59,12 +59,15 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
                 cell = self.tableView.dequeueReusableCellWithIdentifier("GeneralCell",forIndexPath: indexPath)
                 let label = cell.viewWithTag(1001) as! UILabel
                 label.text = "账号与安全"
+                label.font = UIFont(name: "FZQKBYSJW--GB1-0", size: 16.0)
             }
             else if (1 == section){
                 cell = self.tableView.dequeueReusableCellWithIdentifier("GeneralCell",forIndexPath: indexPath)
                 let label = cell.viewWithTag(1001) as! UILabel
                 let labelGroup = ["新消息通知","帮助与反馈"]
                 label.text = labelGroup[indexPath.row]
+                label.font = UIFont(name: "FZQKBYSJW--GB1-0", size: 16.0)
+
             }
             else if(2 == section){
                 cell = self.tableView.dequeueReusableCellWithIdentifier("CacheCell")!
@@ -72,12 +75,16 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
                 let label_1 = cell.viewWithTag(2002) as! UILabel
                 label.text = "清除缓存"
                 label_1.text = "1.23 MB"  //显示缓存大小 2016.7.15/7:08
+                label.font = UIFont(name: "FZQKBYSJW--GB1-0", size: 16.0)
+                label_1.font = UIFont(name: "FZQKBYSJW--GB1-0", size: 16.0)
+
                 cell.accessoryType = UITableViewCellAccessoryType.None
             }
             else if(3 == section){
                 cell = self.tableView.dequeueReusableCellWithIdentifier("GeneralCell",forIndexPath: indexPath)
                 let label = cell.viewWithTag(1001) as! UILabel
                 label.text = "退出登录"
+                label.font = UIFont(name: "FZQKBYSJW--GB1-0", size: 16.0)
                 label.textAlignment = NSTextAlignment.Center      //居中 2016.7.15／1:13a.m
                 label.textColor = UIColor.redColor()
                 cell.accessoryType = UITableViewCellAccessoryType.None   //无箭头指示器ii
@@ -91,6 +98,7 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
                 let label = cell.viewWithTag(1001) as! UILabel
                 let labels = ["关于我们","给蘑菇房来个好评吧😊"]
                 label.text = labels[indexPath.row]
+                label.font = UIFont(name: "FZQKBYSJW--GB1-0", size: 16.0)
                 cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
             }
             else{
@@ -101,8 +109,12 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
                 let copyRight = cell.viewWithTag(2004) as! UILabel
                 appIcon.image = UIImage(named: "App")
                 version.text = "当前版本：1.0.1 Alpha"
+                version.font = UIFont(name: "FZQKBYSJW--GB1-0", size: 12.0)
                 appName.text = "蘑菇房"
+                appName.font = UIFont(name: "FZQKBYSJW--GB1-0", size: 24.0)
                 copyRight.text = "Copyright © 2016 MushRoom Workstation \n All Rights Reserved \n 广西大学 蘑菇房工作室 出品"
+                copyRight.font = UIFont(name: "FZQKBYSJW--GB1-0", size: 12.0)
+
                 copyRight.lineBreakMode = NSLineBreakMode.ByWordWrapping
                 copyRight.numberOfLines = 0
             }

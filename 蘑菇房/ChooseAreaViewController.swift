@@ -21,7 +21,7 @@ class ChooseAreaViewController: UIViewController,UIPickerViewDelegate{
     override func viewDidLoad() {
         chooseAreaPickerView.delegate = self
         self.Background.image = UIImage(named: "ChooseAreaBackground")
-        self.Background.contentMode = UIViewContentMode.ScaleToFill
+        self.Background.contentMode = UIViewContentMode.ScaleAspectFill
         self.navigationController?.navigationBar.translucent = false
         // Do any additional setup after loading the view, typically from a nib.
     }
@@ -31,6 +31,7 @@ class ChooseAreaViewController: UIViewController,UIPickerViewDelegate{
         // Dispose of any resources that can be recreated.
     }
     
+    //MARK: - UIPickerViewDelegate
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int{
         return 1
     }
@@ -44,5 +45,16 @@ class ChooseAreaViewController: UIViewController,UIPickerViewDelegate{
         return self.area[row]
     }
     
+    func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView?) -> UIView{
+        let label = UILabel()
+        label.adjustsFontSizeToFitWidth = true
+        label.textAlignment = .Center
+        label.font = UIFont(name: "FZQKBYSJW--GB1-0", size: 20.0)
+        label.textColor = UIColor.whiteColor()
+        
+        label.text = self.area[row]
+        
+        return label
+    }
     
 }

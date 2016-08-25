@@ -22,27 +22,47 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
     
     @IBOutlet weak var pageDots: UIPageControl!//与滚动横幅配套的页面控制器 2016.7.1/12:43
     
-    @IBOutlet weak var List: UITableView! //列表 2016.7.1/12:43
+    @IBOutlet weak var tableView: UITableView! //列表 2016.7.1/12:43
     
     @IBAction func unwindSegueToMushroomVC(segue:UIStoryboardSegue){
         let vc = segue.sourceViewController as! ChooseAreaViewController
         let index = vc.chooseAreaPickerView.selectedRowInComponent(0)
         self.chosenArea = vc.area[index]
         self.clickOnButton.setTitle(self.chosenArea, forState: UIControlState.Normal)
+        
         self.roomPreview = regionFilter(self.chosenArea!, rawDataArray: GLOBAL_RoomInfo)
-        self.List.reloadData()
-        self.List.setContentOffset(CGPointMake(0,0), animated: true)//数据刷新后，返回顶部 2016.8.2
+        self.tableView.reloadData()
+        self.tableView.setContentOffset(CGPointMake(0,0), animated: true)//数据刷新后，返回顶部 2016.8.2
     }
     
     @IBAction func justJumpBackToThisVC(sender:AnyObject?){
-        
+        //就是简单返回而已 2016.8.24
     }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        roomPreview = [Preview(name: "广西大学",preImage: "1"),Preview(name: "广西药用植物园",preImage: "2"),Preview(name: "坛洛镇蘑菇基地",preImage: "3"),Preview(name: "西乡塘区蘑菇大棚1",preImage: "2"),Preview(name: "西乡塘区蘑菇大棚2",preImage: "1"),Preview(name: "西乡塘区蘑菇大棚3",preImage: "3"),Preview(name: "西乡塘区蘑菇大棚4",preImage: "2")]
+//        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+//        self.navigationController?.navigationBar.barTintColor = UIColor(red: 125/255, green: 240/255, blue: 66/255, alpha: 0.9)
         clickOnButton.setTitle("选择区域", forState: UIControlState.Normal)
+        clickOnButton.titleLabel?.font = UIFont(name: "FZQKBYSJW--GB1-0", size: 17.5)
+        
+        prepareForScrollPages()
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.backgroundColor = UIColor(red: 154/255, green: 177/255, blue: 182/255, alpha: 1)
+        tableView.separatorColor = UIColor(white: 0.9, alpha: 1)
+        
+        // Do any additional setup after loading the view, typically from a nib.
+
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    private func prepareForScrollPages(){
         for i in 1..<4 {
             let image = UIImage(named: "\(i).jpg")!
             let x = CGFloat(i - 1) * self.view.frame.width
@@ -56,22 +76,12 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
             pageScroller.delegate = self
         }
         
-        let i:Int = 3
+        let i:Int = 4
         pageScroller.contentSize = CGSizeMake((self.view.frame.width * CGFloat(i - 1)), pageScroller.frame.height)
         pageDots.numberOfPages = i - 1
         pageDots.currentPageIndicatorTintColor = UIColor.blueColor()
         pageDots.pageIndicatorTintColor = UIColor.grayColor()
         addTimer()
-        // Do any additional setup after loading the view, typically from a nib.
-        List.delegate = self
-        List.dataSource = self
-//        self.List.reloadData()
-        
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     //滚动横幅的视图
@@ -143,7 +153,7 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = self.List.dequeueReusableCellWithIdentifier("CellForRooms")! as UITableViewCell
+        let cell = self.tableView.dequeueReusableCellWithIdentifier("CellForRooms")! as UITableViewCell
             let info = roomPreview[indexPath.section] as RoomInfoModel
         let image = cell.viewWithTag(1) as! UIImageView
         let name = cell.viewWithTag(2) as! UILabel
@@ -151,12 +161,20 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         image.image = UIImage(named: info.preImage!)
         name.text = info.name
         more.text = "查看详情"
+        
+        name.font = UIFont(name: "FZQKBYSJW--GB1-0", size: 17.0)
+        more.font = UIFont(name: "FZQKBYSJW--GB1-0", size: 12.0)
+        
+        name.textColor = UIColor.whiteColor()
+        more.textColor = UIColor.blackColor()
+        
+        cell.backgroundColor = UIColor.clearColor()
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
-        self.List.deselectRowAtIndexPath(indexPath, animated: true) //点击后取消被选中状态 2016.7.17
-        let cell = self.List.cellForRowAtIndexPath(indexPath)
+        self.tableView.deselectRowAtIndexPath(indexPath, animated: true) //点击后取消被选中状态 2016.7.17
+        let cell = self.tableView.cellForRowAtIndexPath(indexPath)
         let name = cell?.viewWithTag(2) as! UILabel
         performSegueWithIdentifier("ShowDetailSegue", sender: name)
         print("didSelectRowAtIndexPath执行了")
@@ -171,6 +189,7 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
             let name = sender as! UILabel
             vc.currentArea = self.clickOnButton.currentTitle
             vc.navigationItem.title = name.text
+            vc.navigationItem.backBarButtonItem?.title = self.clickOnButton.currentTitle!
             vc.roomName = name.text
         }
     }

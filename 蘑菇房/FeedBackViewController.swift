@@ -66,6 +66,7 @@ class FeedBackViewController: UIViewController,UITableViewDelegate,UITableViewDa
             cell = self.tableView.dequeueReusableCellWithIdentifier("ConfirmButtonCell")!
             let label = cell.textLabel
             label?.text = "发送"
+            label!.font = UIFont(name: "FZQKBYSJW--GB1-0", size: 16.0)
             label?.textAlignment = NSTextAlignment.Center
             label?.textColor = UIColor.redColor()
         }
@@ -74,7 +75,7 @@ class FeedBackViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?{
         if(section == 0){
-            return "请输入您的建议，不超过140个字噢～\n按换行键收起键盘"
+            return "请输入您的建议，不超过140个字噢～"
         }
         else{
             return nil

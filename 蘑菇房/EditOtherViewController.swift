@@ -34,7 +34,7 @@ class EditOtherViewController: UIViewController,UITableViewDelegate,UITableViewD
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?{
         if(selectedRow == "昵称"){
-            return "请在输入新昵称～"
+            return "请在输入新昵称😊"
         }
         else {
             return ""
@@ -48,6 +48,7 @@ class EditOtherViewController: UIViewController,UITableViewDelegate,UITableViewD
             let name = cell.viewWithTag(101) as! UITextField
             name.delegate = self
             name.text = GLOBAL_UserProfile.nickName
+            name.font = UIFont(name: "FZQKBYSJW--GB1-0", size: 16.0)
         }
         if(self.selectedRow == "性别"){
             cell = self.tableView.dequeueReusableCellWithIdentifier("SexCell")!
@@ -61,6 +62,7 @@ class EditOtherViewController: UIViewController,UITableViewDelegate,UITableViewD
             let labels = ["女","男"]
             let label = cell.viewWithTag(103) as! UILabel
             label.text = labels[indexPath.row]
+            label.font = UIFont(name: "FZQKBYSJW--GB1-0", size: 16.0)
             
         }
         return cell

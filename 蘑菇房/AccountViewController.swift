@@ -36,6 +36,7 @@ class AccountViewController: UIViewController,UITableViewDelegate,UITableViewDat
         let label = cell.viewWithTag(1001) as! UILabel
         let labels = ["更改登录密码","更改绑定手机号"]
         label.text! = labels[indexPath.row]
+        label.font = UIFont(name: "FZQKBYSJW--GB1-0", size: 16.0)
         cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
         return cell
     }

@@ -15,7 +15,7 @@ class FaceShowViewController: UIViewController,UIActionSheetDelegate,UIImagePick
     
     
     @IBAction func headToSystemPhotoLibrary(sender:UINavigationItem,forEvent:UIEvent?){
-        let sheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: "取消", destructiveButtonTitle: nil, otherButtonTitles: "自拍一张嘛～", "从相册中选择")
+        let sheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: "取消", destructiveButtonTitle: nil, otherButtonTitles: "拍照", "从相册中选择")
         sheet.showInView(self.view)
     }
     
@@ -60,7 +60,7 @@ class FaceShowViewController: UIViewController,UIActionSheetDelegate,UIImagePick
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]){
         face.image = info[UIImagePickerControllerOriginalImage] as? UIImage
         face.contentMode = .ScaleAspectFit
-//        UIImageWriteToSavedPhotosAlbum(face.image, self, <#T##completionSelector: Selector##Selector#>, <#T##contextInfo: UnsafeMutablePointer<Void>##UnsafeMutablePointer<Void>#>)
+//        UIImageWriteToSavedPhotosAlbum(face.image, self, , )
         dismissViewControllerAnimated(true, completion: nil)
     }
     

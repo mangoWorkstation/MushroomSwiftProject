@@ -87,11 +87,12 @@ class NewMessageInformViewController: UIViewController,UITableViewDelegate,UITab
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = UITableViewCell()
-        let labels = ["允许新消息推送","短信推送到手机"]
+        let labels = ["允许新消息推送","允许短信推送到手机"]
         cell = self.tableView.dequeueReusableCellWithIdentifier("NewMessageSetupCell",forIndexPath: indexPath)
         let label = cell.viewWithTag(101) as! UILabel
         let switchButton = cell.viewWithTag(102) as! UISwitch
         label.text = labels[indexPath.row]
+        label.font = UIFont(name: "FZQKBYSJW--GB1-0", size: 16.0)
         switch indexPath.row{
         case 0: switchButton.on = self.willAllowNewMessageInform!
         case 1: switchButton.on = self.willAllowPushNewMessageToMobile!

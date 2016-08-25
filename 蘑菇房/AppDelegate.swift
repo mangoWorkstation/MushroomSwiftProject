@@ -17,6 +17,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        UINavigationBar.appearance().barTintColor = UIColor(red: 64/255, green: 151/255, blue: 32/255, alpha: 1)
+        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
+        
+        //设置标题栏的字体 2016.8.25
+        if let barFont = UIFont(name: "FZQKBYSJW--GB1-0", size: 17.5) {
+            UINavigationBar.appearance().titleTextAttributes =
+                [NSForegroundColorAttributeName:UIColor.whiteColor(),
+                 NSFontAttributeName:barFont]
+        }
+        
+        //设置选项卡的字体 2016.8.25
+        if let barFont = UIFont(name: "FZQKBYSJW--GB1-0", size: 12.0){
+            UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName:UIColor(red: 1/255, green: 1/255, blue: 1/255, alpha: 1),NSFontAttributeName:barFont], forState: .Normal)
+        }
+        //方正清刻本悦宋简体 字体编号:FZQKBYSJW--GB1-0
+        
+//        UITabBar.appearance().tintColor = UIColor(red: 242/255, green: 116/255, blue: 119/255, alpha: 1)
+        
+        application.statusBarStyle = .LightContent
+        
+//        let fontFamilyNames = UIFont.familyNames()
+//        for familyName in fontFamilyNames{
+//            let fontNames = UIFont.fontNamesForFamilyName(familyName)
+//            for fontName in fontNames {
+//                print("\tFont : "+"\(fontName.utf8)"+" \n")
+//            }
+//        }
+//        用来查找自定义字体编号 2016.8.25
+        
         return true
     }
 

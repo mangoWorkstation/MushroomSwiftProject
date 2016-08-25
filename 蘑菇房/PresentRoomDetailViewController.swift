@@ -23,11 +23,9 @@ class PresentRoomDetailViewController: UIViewController,UITableViewDelegate,UITa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let backButton =
-            UIBarButtonItem(barButtonSystemItem: .Rewind, target: self, action: #selector(MushroomViewController.justJumpBackToThisVC))
-        backButton.title = currentArea!
-        self.navigationItem.backBarButtonItem = backButton
-        //更改不了“返回”标题 2016.8.23
+        
+        prepareForBackButton()
+        
         room = acquireRoomInfoByName(self.roomName!)
         self.preview.image = UIImage(named: (room?.preImage)!)
         self.navigationController?.navigationBar.translucent = false
@@ -41,6 +39,14 @@ class PresentRoomDetailViewController: UIViewController,UITableViewDelegate,UITa
         // Dispose of any resources that can be recreated.
     }
     
+    func prepareForBackButton(){
+        let backButton = UIBarButtonItem(barButtonSystemItem: .Rewind, target: self, action: #selector(MushroomViewController.justJumpBackToThisVC))
+        let font = UIFont(name: "FZQKBYSJW--GB1-0",size: 17.5)
+        backButton.setTitleTextAttributes([NSFontAttributeName:font!], forState: .Normal)
+        self.navigationItem.backBarButtonItem = backButton
+        //更改不了“返回”标题 2016.8.23
+    }
+    
     //MARK: - UITableViewDelegate
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat{
         if indexPath.section == 0 && indexPath.row == 1{
@@ -52,6 +58,9 @@ class PresentRoomDetailViewController: UIViewController,UITableViewDelegate,UITa
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
+        if indexPath.section == 0 && indexPath.row == 1{
+            performSegueWithIdentifier("ShowMapSegue", sender: self.room)
+        }
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
@@ -88,8 +97,10 @@ class PresentRoomDetailViewController: UIViewController,UITableViewDelegate,UITa
                 let button = cell.viewWithTag(2003) as! UIButton
                 icon.image = UIImage(named: "ID")
                 label.text = self.room?.name
+                label.font = UIFont(name: "FZQKBYSJW--GB1-0", size: 18.0)
                 button.setTitle("关注", forState: UIControlState.Normal)
-                button.setBackgroundImage(UIImage(named: "Backgrond"), forState: .Normal)
+                let label_1 = NSAttributedString(string: "关注", attributes: [NSFontAttributeName:UIFont(name: "FZQKBYSJW--GB1-0", size: 14.0)!,NSForegroundColorAttributeName:UIColor(red: 28/255, green: 61/255, blue: 57/255, alpha: 1)])
+                button.setAttributedTitle(label_1, forState: .Normal)
             }
             if indexPath.row == 1 {
                 cell = self.tableView.dequeueReusableCellWithIdentifier("LocationCell", forIndexPath: indexPath)
@@ -99,7 +110,7 @@ class PresentRoomDetailViewController: UIViewController,UITableViewDelegate,UITa
                 icon.contentMode = UIViewContentMode.ScaleAspectFit
                 label.text = room?.address
                 label.textColor = UIColor.grayColor()
-                label.font.fontWithSize(13)
+                label.font = UIFont(name: "FZQKBYSJW--GB1-0", size: 15.0)
             }
         }
         if indexPath.section == 1 {
@@ -110,6 +121,7 @@ class PresentRoomDetailViewController: UIViewController,UITableViewDelegate,UITa
             let label = cell.viewWithTag(1002) as! UILabel
             icon.image = UIImage(named: icons[indexPath.row])
             label.text = labels[indexPath.row]
+            label.font = UIFont(name: "FZQKBYSJW--GB1-0", size: 17.5)
         }
         if indexPath.section == 0 && indexPath.row == 0{
             cell.accessoryType = UITableViewCellAccessoryType.None
@@ -122,6 +134,14 @@ class PresentRoomDetailViewController: UIViewController,UITableViewDelegate,UITa
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int{
         return 2
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "ShowMapSegue" {
+            let vc = segue.destinationViewController as! ShowMapViewController
+            vc.navigationController?.navigationItem.backBarButtonItem?.title  = self.navigationItem.title
+            vc.room = self.room
+        }
     }
     
 }

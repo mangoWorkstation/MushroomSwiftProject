@@ -55,10 +55,9 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
         if(GLOBAL_UnreadMessage.count == 0){
             self.isThereAnythingNew = false
         }
-//        if(whichKindOfInfoType == 0){
-//            trashButton.title = "全部标记已读"
-//        [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(right:)];
-//        }
+        InfoType.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "FZQKBYSJW--GB1-0", size: 12.0)!
+], forState: .Normal)
+        
         self.tableView.reloadData()
         // Do any additional setup after loading the view.
     }
@@ -136,6 +135,7 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
                 let emptySign = cell?.viewWithTag(1002) as! UILabel
                 emptyIcon.image = UIImage(named: "Empty")
                 emptySign.text = "暂时木有新消息，待会再来刷刷～～～～"
+                emptySign.font  = UIFont(name: "FZQKBYSJW--GB1-0", size: 18.0)
             }
             else{
                 cell = self.tableView.dequeueReusableCellWithIdentifier("MailCell",forIndexPath: indexPath)
@@ -146,7 +146,10 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
                 let preview = UnreadMessage[indexPath.row]
                 preImage.image = UIImage(named: preview.preImage!)
                 preLabel.text = preview.prelabel!
+                preLabel.font = UIFont(name: "FZQKBYSJW--GB1-0", size: 13.0)
                 timeLabel.text = timeStampToString(preview.timestamp!)
+                timeLabel.font = UIFont(name: "FZQKBYSJW--GB1-0", size: 12.0)
+
                 //返回未读信息 2016.7.17/9:40
             }
         }
