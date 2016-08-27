@@ -66,7 +66,7 @@ class FeedBackViewController: UIViewController,UITableViewDelegate,UITableViewDa
             cell = self.tableView.dequeueReusableCellWithIdentifier("ConfirmButtonCell")!
             let label = cell.textLabel
             label?.text = "发送"
-            label!.font = UIFont(name: "FZQKBYSJW--GB1-0", size: 16.0)
+            label!.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
             label?.textAlignment = NSTextAlignment.Center
             label?.textColor = UIColor.redColor()
         }

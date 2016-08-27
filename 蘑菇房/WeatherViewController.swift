@@ -15,7 +15,7 @@ class WeatherViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        selectedPage.setTitleTextAttributes([NSForegroundColorAttributeName:UIColor.whiteColor(),NSFontAttributeName:UIFont(name: "FZQKBYSJW--GB1-0", size: 12.0)!], forState: .Normal)
+        selectedPage.setTitleTextAttributes([NSForegroundColorAttributeName:UIColor.whiteColor(),NSFontAttributeName:UIFont(name: GLOBAL_appFont!, size: 12.0)!], forState: .Normal)
         // Do any additional setup after loading the view, typically from a nib.
     }
 

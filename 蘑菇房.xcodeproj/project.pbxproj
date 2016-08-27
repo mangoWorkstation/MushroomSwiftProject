@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0D0C52B01D257A840036F8A5 /* PreviewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0C52AF1D257A840036F8A5 /* PreviewModel.swift */; };
+		0D1707B01D7090C6007675E1 /* Hannotate.ttc in Resources */ = {isa = PBXBuildFile; fileRef = 0D1707AD1D7090C6007675E1 /* Hannotate.ttc */; };
 		0D2B80BB1D3BB2F9007FBB8A /* GLOBAL_VAR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2B80BA1D3BB2F9007FBB8A /* GLOBAL_VAR.swift */; };
 		0D2B80BD1D3C70B2007FBB8A /* AboutUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2B80BC1D3C70B2007FBB8A /* AboutUsViewController.swift */; };
 		0D2B9B2C1D387723006559F1 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2B9B2B1D387723006559F1 /* NotificationViewController.swift */; };
@@ -19,7 +20,6 @@
 		0D7262B41D37E6BA00ACB2B9 /* GeneralDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7262B31D37E6BA00ACB2B9 /* GeneralDetailController.swift */; };
 		0D77858D1D53444900A74A30 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D77858C1D53444900A74A30 /* MapKit.framework */; };
 		0D7785921D534B7400A74A30 /* NearbyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7785911D534B7400A74A30 /* NearbyViewController.swift */; };
-		0D780B9E1D6E9EC400105124 /* 方正清刻本悦宋简体.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 0D780B9D1D6E9EC400105124 /* 方正清刻本悦宋简体.TTF */; };
 		0D7FBC381CE80A6800775FCA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7FBC371CE80A6800775FCA /* AppDelegate.swift */; };
 		0D7FBC3A1CE80A6800775FCA /* MushroomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7FBC391CE80A6800775FCA /* MushroomViewController.swift */; };
 		0D7FBC3C1CE80A6800775FCA /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7FBC3B1CE80A6800775FCA /* WeatherViewController.swift */; };
@@ -38,6 +38,19 @@
 		0D9CE9851D40548F004E1B27 /* PublicStaticMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9CE9841D40548F004E1B27 /* PublicStaticMethods.swift */; };
 		0D9CE9871D419F6F004E1B27 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9CE9861D419F6F004E1B27 /* AccountViewController.swift */; };
 		0D9CE9891D41AE6F004E1B27 /* EditProfilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9CE9881D41AE6F004E1B27 /* EditProfilesViewController.swift */; };
+		0DB3ABE11D71516B0072E5F0 /* XWConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB3ABD01D71516B0072E5F0 /* XWConst.swift */; };
+		0DB3ABE21D71516B0072E5F0 /* XWRefreshComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB3ABD11D71516B0072E5F0 /* XWRefreshComponent.swift */; };
+		0DB3ABE31D71516B0072E5F0 /* XWShortcutMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB3ABD21D71516B0072E5F0 /* XWShortcutMethod.swift */; };
+		0DB3ABE41D71516B0072E5F0 /* XWRefreshAutoFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB3ABD41D71516B0072E5F0 /* XWRefreshAutoFooter.swift */; };
+		0DB3ABE51D71516B0072E5F0 /* XWRefreshAutoNormalFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB3ABD51D71516B0072E5F0 /* XWRefreshAutoNormalFooter.swift */; };
+		0DB3ABE61D71516B0072E5F0 /* XWRefreshAutoStateFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB3ABD61D71516B0072E5F0 /* XWRefreshAutoStateFooter.swift */; };
+		0DB3ABE71D71516B0072E5F0 /* XWRefreshFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB3ABD71D71516B0072E5F0 /* XWRefreshFooter.swift */; };
+		0DB3ABE81D71516B0072E5F0 /* XWRefreshGifHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB3ABD91D71516B0072E5F0 /* XWRefreshGifHeader.swift */; };
+		0DB3ABE91D71516B0072E5F0 /* XWRefreshHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB3ABDA1D71516B0072E5F0 /* XWRefreshHeader.swift */; };
+		0DB3ABEA1D71516B0072E5F0 /* XWRefreshNormalHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB3ABDB1D71516B0072E5F0 /* XWRefreshNormalHeader.swift */; };
+		0DB3ABEB1D71516B0072E5F0 /* XWRefreshStateHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB3ABDC1D71516B0072E5F0 /* XWRefreshStateHeader.swift */; };
+		0DB3ABEC1D71516B0072E5F0 /* UIScrollViewExtension-XW.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB3ABDE1D71516B0072E5F0 /* UIScrollViewExtension-XW.swift */; };
+		0DB3ABED1D71516B0072E5F0 /* xw_icon.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0DB3ABE01D71516B0072E5F0 /* xw_icon.bundle */; };
 		0DC5263E1D61F88600B30F87 /* icon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0DC5263D1D61F88600B30F87 /* icon.jpg */; };
 		0DF373F81D6DA81100AC5E6B /* ShowMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF373F71D6DA81100AC5E6B /* ShowMapViewController.swift */; };
 		0DF6899F1D41BD3C001FC45A /* UserProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF6899E1D41BD3C001FC45A /* UserProfileModel.swift */; };
@@ -64,6 +77,7 @@
 
 /* Begin PBXFileReference section */
 		0D0C52AF1D257A840036F8A5 /* PreviewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewModel.swift; sourceTree = "<group>"; };
+		0D1707AD1D7090C6007675E1 /* Hannotate.ttc */ = {isa = PBXFileReference; lastKnownFileType = file; path = Hannotate.ttc; sourceTree = "<group>"; };
 		0D2B80BA1D3BB2F9007FBB8A /* GLOBAL_VAR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GLOBAL_VAR.swift; sourceTree = "<group>"; };
 		0D2B80BC1D3C70B2007FBB8A /* AboutUsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutUsViewController.swift; sourceTree = "<group>"; };
 		0D2B9B2B1D387723006559F1 /* NotificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
@@ -75,7 +89,6 @@
 		0D7262B31D37E6BA00ACB2B9 /* GeneralDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralDetailController.swift; sourceTree = "<group>"; };
 		0D77858C1D53444900A74A30 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		0D7785911D534B7400A74A30 /* NearbyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearbyViewController.swift; sourceTree = "<group>"; };
-		0D780B9D1D6E9EC400105124 /* 方正清刻本悦宋简体.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = "方正清刻本悦宋简体.TTF"; sourceTree = "<group>"; };
 		0D7FBC341CE80A6800775FCA /* 蘑菇房.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "蘑菇房.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D7FBC371CE80A6800775FCA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0D7FBC391CE80A6800775FCA /* MushroomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MushroomViewController.swift; sourceTree = "<group>"; };
@@ -100,6 +113,19 @@
 		0D9CE9841D40548F004E1B27 /* PublicStaticMethods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicStaticMethods.swift; sourceTree = "<group>"; };
 		0D9CE9861D419F6F004E1B27 /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		0D9CE9881D41AE6F004E1B27 /* EditProfilesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfilesViewController.swift; sourceTree = "<group>"; };
+		0DB3ABD01D71516B0072E5F0 /* XWConst.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XWConst.swift; sourceTree = "<group>"; };
+		0DB3ABD11D71516B0072E5F0 /* XWRefreshComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XWRefreshComponent.swift; sourceTree = "<group>"; };
+		0DB3ABD21D71516B0072E5F0 /* XWShortcutMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XWShortcutMethod.swift; sourceTree = "<group>"; };
+		0DB3ABD41D71516B0072E5F0 /* XWRefreshAutoFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XWRefreshAutoFooter.swift; sourceTree = "<group>"; };
+		0DB3ABD51D71516B0072E5F0 /* XWRefreshAutoNormalFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XWRefreshAutoNormalFooter.swift; sourceTree = "<group>"; };
+		0DB3ABD61D71516B0072E5F0 /* XWRefreshAutoStateFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XWRefreshAutoStateFooter.swift; sourceTree = "<group>"; };
+		0DB3ABD71D71516B0072E5F0 /* XWRefreshFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XWRefreshFooter.swift; sourceTree = "<group>"; };
+		0DB3ABD91D71516B0072E5F0 /* XWRefreshGifHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XWRefreshGifHeader.swift; sourceTree = "<group>"; };
+		0DB3ABDA1D71516B0072E5F0 /* XWRefreshHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XWRefreshHeader.swift; sourceTree = "<group>"; };
+		0DB3ABDB1D71516B0072E5F0 /* XWRefreshNormalHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XWRefreshNormalHeader.swift; sourceTree = "<group>"; };
+		0DB3ABDC1D71516B0072E5F0 /* XWRefreshStateHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XWRefreshStateHeader.swift; sourceTree = "<group>"; };
+		0DB3ABDE1D71516B0072E5F0 /* UIScrollViewExtension-XW.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollViewExtension-XW.swift"; sourceTree = "<group>"; };
+		0DB3ABE01D71516B0072E5F0 /* xw_icon.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = xw_icon.bundle; sourceTree = "<group>"; };
 		0DC5263D1D61F88600B30F87 /* icon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = icon.jpg; sourceTree = "<group>"; };
 		0DF373F71D6DA81100AC5E6B /* ShowMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowMapViewController.swift; sourceTree = "<group>"; };
 		0DF6899E1D41BD3C001FC45A /* UserProfileModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileModel.swift; sourceTree = "<group>"; };
@@ -209,7 +235,7 @@
 		0D780B9C1D6E9EAC00105124 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				0D780B9D1D6E9EC400105124 /* 方正清刻本悦宋简体.TTF */,
+				0D1707AD1D7090C6007675E1 /* Hannotate.ttc */,
 			);
 			name = Fonts;
 			sourceTree = "<group>";
@@ -237,13 +263,13 @@
 		0D7FBC361CE80A6800775FCA /* 蘑菇房 */ = {
 			isa = PBXGroup;
 			children = (
+				0DB3ABEE1D7164320072E5F0 /* Frameworks */,
 				0D780B9C1D6E9EAC00105124 /* Fonts */,
 				0D8606AF1D62C0FF00CE3905 /* Storyboards */,
 				0D7FBC6B1CE80BDA00775FCA /* Page_3_User */,
 				0D7FBC691CE80BA000775FCA /* Page_2_Weather */,
 				0D7FBC681CE80B7A00775FCA /* Page_1_MushRoom */,
 				0D7FBC671CE80AAB00775FCA /* Supporting Files */,
-				0D77858C1D53444900A74A30 /* MapKit.framework */,
 				0D7FBC401CE80A6900775FCA /* Assets.xcassets */,
 				0DC5263D1D61F88600B30F87 /* icon.jpg */,
 				0D7FBC421CE80A6900775FCA /* LaunchScreen.storyboard */,
@@ -315,6 +341,75 @@
 				0D8606A61D62BF8E00CE3905 /* Page_1_MushRoom.storyboard */,
 			);
 			name = Storyboards;
+			sourceTree = "<group>";
+		};
+		0DB3ABCE1D71516B0072E5F0 /* XWSwiftRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				0DB3ABCF1D71516B0072E5F0 /* common */,
+				0DB3ABD31D71516B0072E5F0 /* Footer */,
+				0DB3ABD81D71516B0072E5F0 /* Header */,
+				0DB3ABDD1D71516B0072E5F0 /* Helper */,
+				0DB3ABDF1D71516B0072E5F0 /* Icon */,
+			);
+			path = XWSwiftRefresh;
+			sourceTree = "<group>";
+		};
+		0DB3ABCF1D71516B0072E5F0 /* common */ = {
+			isa = PBXGroup;
+			children = (
+				0DB3ABD01D71516B0072E5F0 /* XWConst.swift */,
+				0DB3ABD11D71516B0072E5F0 /* XWRefreshComponent.swift */,
+				0DB3ABD21D71516B0072E5F0 /* XWShortcutMethod.swift */,
+			);
+			path = common;
+			sourceTree = "<group>";
+		};
+		0DB3ABD31D71516B0072E5F0 /* Footer */ = {
+			isa = PBXGroup;
+			children = (
+				0DB3ABD41D71516B0072E5F0 /* XWRefreshAutoFooter.swift */,
+				0DB3ABD51D71516B0072E5F0 /* XWRefreshAutoNormalFooter.swift */,
+				0DB3ABD61D71516B0072E5F0 /* XWRefreshAutoStateFooter.swift */,
+				0DB3ABD71D71516B0072E5F0 /* XWRefreshFooter.swift */,
+			);
+			path = Footer;
+			sourceTree = "<group>";
+		};
+		0DB3ABD81D71516B0072E5F0 /* Header */ = {
+			isa = PBXGroup;
+			children = (
+				0DB3ABD91D71516B0072E5F0 /* XWRefreshGifHeader.swift */,
+				0DB3ABDA1D71516B0072E5F0 /* XWRefreshHeader.swift */,
+				0DB3ABDB1D71516B0072E5F0 /* XWRefreshNormalHeader.swift */,
+				0DB3ABDC1D71516B0072E5F0 /* XWRefreshStateHeader.swift */,
+			);
+			path = Header;
+			sourceTree = "<group>";
+		};
+		0DB3ABDD1D71516B0072E5F0 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				0DB3ABDE1D71516B0072E5F0 /* UIScrollViewExtension-XW.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
+		0DB3ABDF1D71516B0072E5F0 /* Icon */ = {
+			isa = PBXGroup;
+			children = (
+				0DB3ABE01D71516B0072E5F0 /* xw_icon.bundle */,
+			);
+			path = Icon;
+			sourceTree = "<group>";
+		};
+		0DB3ABEE1D7164320072E5F0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0D77858C1D53444900A74A30 /* MapKit.framework */,
+				0DB3ABCE1D71516B0072E5F0 /* XWSwiftRefresh */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -428,11 +523,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				0D7FBC441CE80A6900775FCA /* LaunchScreen.storyboard in Resources */,
+				0DB3ABED1D71516B0072E5F0 /* xw_icon.bundle in Resources */,
 				0D8606AB1D62BFCC00CE3905 /* Page_2_Weather.storyboard in Resources */,
+				0D1707B01D7090C6007675E1 /* Hannotate.ttc in Resources */,
 				0D8606A81D62BF8E00CE3905 /* Page_1_MushRoom.storyboard in Resources */,
 				0DC5263E1D61F88600B30F87 /* icon.jpg in Resources */,
 				0D7FBC411CE80A6900775FCA /* Assets.xcassets in Resources */,
-				0D780B9E1D6E9EC400105124 /* 方正清刻本悦宋简体.TTF in Resources */,
 				0D8606AE1D62C02300CE3905 /* Page_3_User.storyboard in Resources */,
 				0D7FBC3F1CE80A6900775FCA /* Main.storyboard in Resources */,
 			);
@@ -461,18 +557,28 @@
 			files = (
 				0D7FBC3C1CE80A6800775FCA /* WeatherViewController.swift in Sources */,
 				0D32FEB01D3DD0A2008E79CD /* FeedBackViewController.swift in Sources */,
+				0DB3ABE41D71516B0072E5F0 /* XWRefreshAutoFooter.swift in Sources */,
 				0DF689A11D41E6A9001FC45A /* FaceShowViewController.swift in Sources */,
 				0D7FBC6F1CE80C7000775FCA /* UserViewController.swift in Sources */,
+				0DB3ABE91D71516B0072E5F0 /* XWRefreshHeader.swift in Sources */,
+				0DB3ABE11D71516B0072E5F0 /* XWConst.swift in Sources */,
 				0D7FBC751CE8152200775FCA /* ChooseAreaModel.swift in Sources */,
 				0DF373F81D6DA81100AC5E6B /* ShowMapViewController.swift in Sources */,
 				0D7785921D534B7400A74A30 /* NearbyViewController.swift in Sources */,
 				0D8197261CEC8E3600CE0211 /* RoomInfoModel.swift in Sources */,
+				0DB3ABE31D71516B0072E5F0 /* XWShortcutMethod.swift in Sources */,
+				0DB3ABE21D71516B0072E5F0 /* XWRefreshComponent.swift in Sources */,
 				0D2B80BB1D3BB2F9007FBB8A /* GLOBAL_VAR.swift in Sources */,
 				0D0C52B01D257A840036F8A5 /* PreviewModel.swift in Sources */,
 				0D49900A1D48B8BD0007D99B /* PresentRoomDetailViewController.swift in Sources */,
 				0D7262B41D37E6BA00ACB2B9 /* GeneralDetailController.swift in Sources */,
+				0DB3ABEC1D71516B0072E5F0 /* UIScrollViewExtension-XW.swift in Sources */,
 				0D7262B01D3755AC00ACB2B9 /* StaticItemModel.swift in Sources */,
+				0DB3ABE51D71516B0072E5F0 /* XWRefreshAutoNormalFooter.swift in Sources */,
 				0DF689A31D41EFEF001FC45A /* EditOtherViewController.swift in Sources */,
+				0DB3ABEA1D71516B0072E5F0 /* XWRefreshNormalHeader.swift in Sources */,
+				0DB3ABEB1D71516B0072E5F0 /* XWRefreshStateHeader.swift in Sources */,
+				0DB3ABE81D71516B0072E5F0 /* XWRefreshGifHeader.swift in Sources */,
 				0D32FEAE1D3DBC99008E79CD /* NewMessageInformViewController.swift in Sources */,
 				0D2B80BD1D3C70B2007FBB8A /* AboutUsViewController.swift in Sources */,
 				0D2B9B2F1D3887A9006559F1 /* NotificationPreviewModel.swift in Sources */,
@@ -483,7 +589,9 @@
 				0DF6899F1D41BD3C001FC45A /* UserProfileModel.swift in Sources */,
 				0D7FBC3A1CE80A6800775FCA /* MushroomViewController.swift in Sources */,
 				0D9CE9891D41AE6F004E1B27 /* EditProfilesViewController.swift in Sources */,
+				0DB3ABE71D71516B0072E5F0 /* XWRefreshFooter.swift in Sources */,
 				0D9CE9851D40548F004E1B27 /* PublicStaticMethods.swift in Sources */,
+				0DB3ABE61D71516B0072E5F0 /* XWRefreshAutoStateFooter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

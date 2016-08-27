@@ -59,7 +59,7 @@ class EditProfilesViewController: UIViewController,UITableViewDelegate,UITableVi
             let label = cell.viewWithTag(101) as! UILabel
             let icon = cell.viewWithTag(102) as! UIImageView
             label.text = "头像"
-            label.font = UIFont(name: "FZQKBYSJW--GB1-0", size: 16.0)
+            label.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
             icon.image = UIImage(named: GLOBAL_UserProfile.face!)
         }
         if(indexPath.row > 0){
@@ -68,8 +68,8 @@ class EditProfilesViewController: UIViewController,UITableViewDelegate,UITableVi
             let label = cell.viewWithTag(201) as! UILabel
             let detail = cell.viewWithTag(202) as! UILabel
             label.text = labels[indexPath.row - 1]
-            label.font = UIFont(name: "FZQKBYSJW--GB1-0", size: 16.0)
-            detail.font = UIFont(name: "FZQKBYSJW--GB1-0", size: 16.0)
+            label.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
+            detail.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
             switch label.text! {
             case "昵称":
                 detail.text = GLOBAL_UserProfile.nickName

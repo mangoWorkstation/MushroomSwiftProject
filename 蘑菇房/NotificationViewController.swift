@@ -55,7 +55,7 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
         if(GLOBAL_UnreadMessage.count == 0){
             self.isThereAnythingNew = false
         }
-        InfoType.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "FZQKBYSJW--GB1-0", size: 12.0)!
+        InfoType.setTitleTextAttributes([NSFontAttributeName: UIFont(name: GLOBAL_appFont!, size: 12.0)!
 ], forState: .Normal)
         
         self.tableView.reloadData()
@@ -135,7 +135,7 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
                 let emptySign = cell?.viewWithTag(1002) as! UILabel
                 emptyIcon.image = UIImage(named: "Empty")
                 emptySign.text = "暂时木有新消息，待会再来刷刷～～～～"
-                emptySign.font  = UIFont(name: "FZQKBYSJW--GB1-0", size: 18.0)
+                emptySign.font  = UIFont(name: GLOBAL_appFont!, size: 18.0)
             }
             else{
                 cell = self.tableView.dequeueReusableCellWithIdentifier("MailCell",forIndexPath: indexPath)
@@ -146,9 +146,9 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
                 let preview = UnreadMessage[indexPath.row]
                 preImage.image = UIImage(named: preview.preImage!)
                 preLabel.text = preview.prelabel!
-                preLabel.font = UIFont(name: "FZQKBYSJW--GB1-0", size: 13.0)
+                preLabel.font = UIFont(name: GLOBAL_appFont!, size: 13.0)
                 timeLabel.text = timeStampToString(preview.timestamp!)
-                timeLabel.font = UIFont(name: "FZQKBYSJW--GB1-0", size: 12.0)
+                timeLabel.font = UIFont(name: GLOBAL_appFont!, size: 12.0)
 
                 //返回未读信息 2016.7.17/9:40
             }

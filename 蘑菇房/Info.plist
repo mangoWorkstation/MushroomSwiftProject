@@ -29,12 +29,16 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>定位服务将一直运行</string>
+	<string>定位服务将一直运行，电量会蹭蹭掉的哟</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>定位服务仅在应用运行时开启</string>
+	<string>蘑菇房需要您开启定位服务才能获得更好的体验，仅在应用运行期间开启，不会消耗过多资源哒</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>方正清刻本悦宋简体.TTF</string>
+		<string>站酷快乐体2016修订版.ttf</string>
+		<string>华文仿宋.ttf</string>
+		<string>Hanzipen.ttc</string>
+		<string>Hannotate.ttc</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

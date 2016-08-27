@@ -257,7 +257,7 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
                 let currentLocation = cell.viewWithTag(2002) as! UILabel
                 icon.image = UIImage(named: "LocationPin")
                 currentLocation.text = "当前位置：广西壮族自治区南宁市大学路100号附近"
-                currentLocation.font = UIFont(name: "FZQKBYSJW--GB1-0", size: 10.0)//mark:待改造
+                currentLocation.font = UIFont(name: GLOBAL_appFont!, size: 10.0)//mark:待改造
             }
         }
         if indexPath.section == 1 {
@@ -268,11 +268,14 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
             let detailSign = cell.viewWithTag(1004) as!UILabel
             name.text = showDataArray[indexPath.row].name!
             preImage.image = UIImage(named: showDataArray[indexPath.row].preImage!)
+            preImage.layer.masksToBounds = true
+            preImage.layer.cornerRadius = 10
+            preImage.clipsToBounds = true
             address.text = showDataArray[indexPath.row].address!
             detailSign.text = "查看详情"
-            name.font = UIFont(name: "FZQKBYSJW--GB1-0", size: 15.0)
-            address.font = UIFont(name: "FZQKBYSJW--GB1-0", size: 10.0)
-            detailSign.font = UIFont(name: "FZQKBYSJW--GB1-0", size: 10.0)
+            name.font = UIFont(name: GLOBAL_appFont!, size: 15.0)
+            address.font = UIFont(name: GLOBAL_appFont!, size: 10.0)
+            detailSign.font = UIFont(name: GLOBAL_appFont!, size: 10.0)
         }
         cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
         
@@ -339,6 +342,7 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
             self.progressView.stopAnimating()
         }
     }
+    
     
     //MARK: - UIScrollViewDelegate
     //滑动时收起键盘 2016.8.14

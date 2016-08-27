@@ -14,29 +14,53 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
+    //数码测色说明：
+    //统一使用“普通RGB”数值进行测色
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        GLOBAL_deviceModel = UIDevice().modelName
+        //获取设备型号
+
+        GLOBAL_appFont = "HannotateSC-W7"
+        //设置app字体
+        //Hanzipen - HanziPenSC-W3/HanziPenSC-W5
+        //Hannotate - HannotateSC-W5/HannotateSC-W7
+        //站酷快乐体 字体编号:HappyZcool-2016
+        
         UINavigationBar.appearance().barTintColor = UIColor(red: 64/255, green: 151/255, blue: 32/255, alpha: 1)
         UINavigationBar.appearance().tintColor = UIColor.whiteColor()
+
+        
         
         //设置标题栏的字体 2016.8.25
-        if let barFont = UIFont(name: "FZQKBYSJW--GB1-0", size: 17.5) {
-            UINavigationBar.appearance().titleTextAttributes =
-                [NSForegroundColorAttributeName:UIColor.whiteColor(),
-                 NSFontAttributeName:barFont]
+        if let barFont = UIFont(name: GLOBAL_appFont!, size: 17.5) {
+            UINavigationBar.appearance().titleTextAttributes = [
+                NSForegroundColorAttributeName:UIColor.whiteColor(),
+                NSFontAttributeName:barFont
+            ]
         }
         
         //设置选项卡的字体 2016.8.25
-        if let barFont = UIFont(name: "FZQKBYSJW--GB1-0", size: 12.0){
-            UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName:UIColor(red: 1/255, green: 1/255, blue: 1/255, alpha: 1),NSFontAttributeName:barFont], forState: .Normal)
+        if let barFont = UIFont(name: "PingFangSC-Regular", size: 10){
+            UITabBarItem.appearance().setTitleTextAttributes(
+                [
+//                    NSForegroundColorAttributeName:UIColor(red: 64/255, green: 151/255, blue: 32/255, alpha: 1),
+//                    NSBackgroundColorAttributeName:UIColor(red: 159/255, green: 159/255, blue: 159/255, alpha: 1),
+                    NSFontAttributeName:barFont
+                ],
+                forState: .Normal
+            )
         }
-        //方正清刻本悦宋简体 字体编号:FZQKBYSJW--GB1-0
         
-//        UITabBar.appearance().tintColor = UIColor(red: 242/255, green: 116/255, blue: 119/255, alpha: 1)
+        
+        UITabBar.appearance().tintColor = UIColor.whiteColor()
+        UITabBar.appearance().selectionIndicatorImage = UIImage(named: "tabitem-selected")
         
         application.statusBarStyle = .LightContent
         
+//        用来查找自定义字体编号,需要时取消注释状态 2016.8.25
 //        let fontFamilyNames = UIFont.familyNames()
 //        for familyName in fontFamilyNames{
 //            let fontNames = UIFont.fontNamesForFamilyName(familyName)
@@ -44,8 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //                print("\tFont : "+"\(fontName.utf8)"+" \n")
 //            }
 //        }
-//        用来查找自定义字体编号 2016.8.25
-        
+//        
         return true
     }
 
@@ -72,5 +95,48 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 
+}
+
+//extension说明:获取设备的型号
+public extension UIDevice {
+    
+    var modelName: String {
+        var systemInfo = utsname()
+        uname(&systemInfo)
+        let machineMirror = Mirror(reflecting: systemInfo.machine)
+        let identifier = machineMirror.children.reduce("") { identifier, element in
+            guard let value = element.value as? Int8 where value != 0 else { return identifier }
+            return identifier + String(UnicodeScalar(UInt8(value)))
+        }
+        
+        switch identifier {
+        case "iPod5,1":                                 return "iPod Touch 5"
+        case "iPod7,1":                                 return "iPod Touch 6"
+        case "iPhone3,1", "iPhone3,2", "iPhone3,3":     return "iPhone 4"
+        case "iPhone4,1":                               return "iPhone 4s"
+        case "iPhone5,1", "iPhone5,2":                  return "iPhone 5"
+        case "iPhone5,3", "iPhone5,4":                  return "iPhone 5c"
+        case "iPhone6,1", "iPhone6,2":                  return "iPhone 5s"
+        case "iPhone7,2":                               return "iPhone 6"
+        case "iPhone7,1":                               return "iPhone 6 Plus"
+        case "iPhone8,1":                               return "iPhone 6s"
+        case "iPhone8,2":                               return "iPhone 6s Plus"
+        case "iPhone8,4":                               return "iPhone SE"
+        case "iPad2,1", "iPad2,2", "iPad2,3", "iPad2,4":return "iPad 2"
+        case "iPad3,1", "iPad3,2", "iPad3,3":           return "iPad 3"
+        case "iPad3,4", "iPad3,5", "iPad3,6":           return "iPad 4"
+        case "iPad4,1", "iPad4,2", "iPad4,3":           return "iPad Air"
+        case "iPad5,3", "iPad5,4":                      return "iPad Air 2"
+        case "iPad2,5", "iPad2,6", "iPad2,7":           return "iPad Mini"
+        case "iPad4,4", "iPad4,5", "iPad4,6":           return "iPad Mini 2"
+        case "iPad4,7", "iPad4,8", "iPad4,9":           return "iPad Mini 3"
+        case "iPad5,1", "iPad5,2":                      return "iPad Mini 4"
+        case "iPad6,3", "iPad6,4", "iPad6,7", "iPad6,8":return "iPad Pro"
+        case "AppleTV5,3":                              return "Apple TV"
+        case "i386", "x86_64":                          return "Simulator"
+        default:                                        return identifier
+        }
+    }
+    
 }
 

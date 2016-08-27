@@ -4,7 +4,8 @@
 //
 //  Created by 芒果君 on 16/7/1.
 //  Copyright © 2016年 蘑菇房工作室. All rights reserved.
-//
+//  deprecated!
+//  过时的模型
 
 import Foundation
 

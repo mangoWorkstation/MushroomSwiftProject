@@ -49,7 +49,7 @@ class ChooseAreaViewController: UIViewController,UIPickerViewDelegate{
         let label = UILabel()
         label.adjustsFontSizeToFitWidth = true
         label.textAlignment = .Center
-        label.font = UIFont(name: "FZQKBYSJW--GB1-0", size: 20.0)
+        label.font = UIFont(name: GLOBAL_appFont!, size: 20.0)
         label.textColor = UIColor.whiteColor()
         
         label.text = self.area[row]

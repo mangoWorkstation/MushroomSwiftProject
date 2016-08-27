@@ -8,6 +8,18 @@
 
 import Foundation
 
+public var GLOBAL_deviceModel:String?{
+    didSet{
+        let filePath = NSHomeDirectory().stringByAppendingString("/Documents/deviceModel.plist")
+        let arr = NSArray(object: GLOBAL_deviceModel!)
+        arr.writeToFile(filePath, atomically: true)
+        print("写入成功！")
+        //测试通过 2016.8.27
+    }
+}
+
+var GLOBAL_appFont:String?
+
 var GLOBAL_NotificationCache : [NotificationPreview] = [NotificationPreview(messageID: 123456,preImage: "Hello", prelabel:"南宁市未来三天高温将继续持续",isRead: true,timestamp: 1468682458),
                                                         NotificationPreview(messageID: 123457,preImage: "MyName", prelabel:"您的蘑菇房高温警报",isRead: false,timestamp: 1468682459),
                                                         NotificationPreview(messageID: 123458,preImage: "IsNot", prelabel:"您的蘑菇房二氧化碳浓度偏高",isRead: false,timestamp: 1469682458),

@@ -92,7 +92,7 @@ class NewMessageInformViewController: UIViewController,UITableViewDelegate,UITab
         let label = cell.viewWithTag(101) as! UILabel
         let switchButton = cell.viewWithTag(102) as! UISwitch
         label.text = labels[indexPath.row]
-        label.font = UIFont(name: "FZQKBYSJW--GB1-0", size: 16.0)
+        label.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
         switch indexPath.row{
         case 0: switchButton.on = self.willAllowNewMessageInform!
         case 1: switchButton.on = self.willAllowPushNewMessageToMobile!

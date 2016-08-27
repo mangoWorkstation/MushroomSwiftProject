@@ -326,7 +326,7 @@
             </objects>
             <point key="canvasLocation" x="2969" y="-75"/>
         </scene>
-        <!--Choose Area View Controller-->
+        <!--Title-->
         <scene sceneID="XsK-bk-YOd">
             <objects>
                 <viewController wantsFullScreenLayout="YES" id="Q08-ds-Kmj" customClass="ChooseAreaViewController" customModule="蘑菇房" customModuleProvider="target" sceneMemberID="viewController">
@@ -341,8 +341,11 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uPZ-Th-RVd">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5pR-Oo-1lK">
+                                <rect key="frame" x="0.0" y="44" width="600" height="556"/>
+                            </pickerView>
                             <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LwA-gu-j6X">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="20" width="600" height="44"/>
                                 <items>
                                     <navigationItem title="南宁市" id="89A-8g-dQB">
                                         <barButtonItem key="rightBarButtonItem" title="确定" id="5N5-8x-Qk4">
@@ -353,9 +356,6 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5pR-Oo-1lK">
-                                <rect key="frame" x="0.0" y="44" width="600" height="556"/>
-                            </pickerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -369,10 +369,10 @@
                             <constraint firstItem="LwA-gu-j6X" firstAttribute="top" secondItem="ueu-W5-SCI" secondAttribute="bottom" id="hSv-ES-1Sq"/>
                             <constraint firstItem="uPZ-Th-RVd" firstAttribute="top" secondItem="5pR-Oo-1lK" secondAttribute="top" constant="-44" id="jzf-Kz-N66"/>
                             <constraint firstItem="uPZ-Th-RVd" firstAttribute="bottom" secondItem="WWB-5M-suI" secondAttribute="top" id="u21-9w-vkI"/>
-                            <constraint firstItem="LwA-gu-j6X" firstAttribute="top" secondItem="uPZ-Th-RVd" secondAttribute="top" id="usf-Sq-Xb4"/>
+                            <constraint firstItem="LwA-gu-j6X" firstAttribute="top" secondItem="uPZ-Th-RVd" secondAttribute="top" constant="20" id="usf-Sq-Xb4"/>
                         </constraints>
                     </view>
-                    <nil key="simulatedStatusBarMetrics"/>
+                    <navigationItem key="navigationItem" title="Title" id="B7b-Fq-il2"/>
                     <connections>
                         <outlet property="Background" destination="uPZ-Th-RVd" id="ecU-p7-0KA"/>
                         <outlet property="chooseAreaPickerView" destination="5pR-Oo-1lK" id="rAK-rK-M1J"/>
