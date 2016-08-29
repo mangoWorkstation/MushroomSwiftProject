@@ -114,6 +114,7 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.reloadData()
         
         tableView.backgroundColor = UIColor(red: 142/255, green: 164/255, blue: 182/255, alpha: 1)
         //16进制码:#8EA4B6
@@ -185,7 +186,7 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
 
     //时间控制器，控制滚动
     func addTimer() {
-        timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(MushroomViewController.nextImage), userInfo: nil, repeats: true)
+        timer = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: #selector(MushroomViewController.nextImage), userInfo: nil, repeats: true)
     }
 
     func removeTimer() {

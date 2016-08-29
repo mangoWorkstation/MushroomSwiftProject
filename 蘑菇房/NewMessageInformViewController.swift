@@ -59,7 +59,7 @@ class NewMessageInformViewController: UIViewController,UITableViewDelegate,UITab
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.scrollEnabled = false
+        tableView.scrollEnabled = true
         // Do any additional setup after loading the view.
     }
 
@@ -90,7 +90,9 @@ class NewMessageInformViewController: UIViewController,UITableViewDelegate,UITab
         let labels = ["允许新消息推送","允许短信推送到手机"]
         cell = self.tableView.dequeueReusableCellWithIdentifier("NewMessageSetupCell",forIndexPath: indexPath)
         let label = cell.viewWithTag(101) as! UILabel
-        let switchButton = cell.viewWithTag(102) as! UISwitch
+        let switchButton = UISwitch()
+        cell.accessoryView = switchButton
+        //2016.8.29修改，使列表可以滑动
         label.text = labels[indexPath.row]
         label.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
         switch indexPath.row{

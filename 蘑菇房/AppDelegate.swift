@@ -25,6 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         GLOBAL_appFont = "HannotateSC-W7"
         //设置app字体
+        //编号如下:
         //Hanzipen - HanziPenSC-W3/HanziPenSC-W5
         //Hannotate - HannotateSC-W5/HannotateSC-W7
         //站酷快乐体 字体编号:HappyZcool-2016

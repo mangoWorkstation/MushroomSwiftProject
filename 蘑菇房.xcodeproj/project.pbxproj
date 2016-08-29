@@ -85,6 +85,7 @@
 		0D32FEAD1D3DBC99008E79CD /* NewMessageInformViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewMessageInformViewController.swift; sourceTree = "<group>"; };
 		0D32FEAF1D3DD0A2008E79CD /* FeedBackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedBackViewController.swift; sourceTree = "<group>"; };
 		0D4990091D48B8BD0007D99B /* PresentRoomDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentRoomDetailViewController.swift; sourceTree = "<group>"; };
+		0D5155EB1D72DF7B00B5669C /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
 		0D7262AF1D3755AC00ACB2B9 /* StaticItemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticItemModel.swift; sourceTree = "<group>"; };
 		0D7262B31D37E6BA00ACB2B9 /* GeneralDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralDetailController.swift; sourceTree = "<group>"; };
 		0D77858C1D53444900A74A30 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -271,6 +272,7 @@
 				0D7FBC681CE80B7A00775FCA /* Page_1_MushRoom */,
 				0D7FBC671CE80AAB00775FCA /* Supporting Files */,
 				0D7FBC401CE80A6900775FCA /* Assets.xcassets */,
+				0D5155EB1D72DF7B00B5669C /* MyPlayground.playground */,
 				0DC5263D1D61F88600B30F87 /* icon.jpg */,
 				0D7FBC421CE80A6900775FCA /* LaunchScreen.storyboard */,
 				0D7FBC451CE80A6900775FCA /* Info.plist */,

@@ -16,7 +16,7 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
    
     
     var staticItems_section_3 : [StaticItem] = [] //数组：用于存放静态状态图标
-    var staticItems_section_2 : [StaticItem] = []
+    var staticItems_section_2 : [StaticItem] = [] //数组：用于存放静态状态图标
     
     
     override func viewDidLoad() {
@@ -24,6 +24,7 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        
         self.navigationController?.navigationBar.translucent = false
         
         staticItems_section_2 = [StaticItem(iconName:"MyHouse",label:"我家的蘑菇房"),StaticItem(iconName:"MyFollow",label:"我关注的蘑菇房"),StaticItem(iconName:"Nearby",label:"附近的基地"),StaticItem(iconName:"MyProfiles",label:"我的资料"),StaticItem(iconName:"Inform",label:"消息与通知")]
@@ -57,10 +58,10 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             }
         
         }
-        else if(indexPath.section == 2){//选项栏 2016.7.12
+        else if(indexPath.section == 2){//选项栏1 2016.7.12
             return 50
         }
-        else if(indexPath.section == 3){
+        else if(indexPath.section == 3){//选项栏2 2016.7.12
             return 50
         }
             

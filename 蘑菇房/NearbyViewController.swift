@@ -91,7 +91,8 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
         self.mapShow.userTrackingMode = MKUserTrackingMode.FollowWithHeading
         self.mapShow.showsScale = true
         self.mapShow.showsCompass = true
-        let userCenter = CLLocation(latitude: self.mapShow.userLocation.coordinate.longitude, longitude: self.mapShow.userLocation.coordinate.longitude)
+        let userCenter = CLLocation(latitude: self.mapShow.userLocation.coordinate.latitude, longitude: self.mapShow.userLocation.coordinate.longitude)
+        //闪退小bug在此，写错了一个参数，已更正 2016.8.29
         let currentRegion = MKCoordinateRegion(center: userCenter.coordinate, span: currentLocationSpan)
         self.mapShow.setRegion(currentRegion, animated: true)
         print("getReadyForMap执行了")
@@ -102,10 +103,8 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
         //如果设备没有开启定位服务
         if !CLLocationManager.locationServicesEnabled(){
             dispatch_async(dispatch_get_main_queue()){
-                let alert = UIAlertView(title: "提示", message: "无法定位，因为您的设备没有启用定位服务！！！！", delegate: self, cancelButtonTitle: "好")
+                let alert = UIAlertView(title: "提示", message: "无法定位，请您到“设置”中开启定位功能", delegate: self, cancelButtonTitle: "好")
                 alert.show()
-                print("hello_1")
-
             }
             return
         }
@@ -127,7 +126,7 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
         else if(CLLocationManager.authorizationStatus() == CLAuthorizationStatus.Denied){
             //需要把弹窗放在主线程才能强制显示
             dispatch_async(dispatch_get_main_queue()){
-                let alert = UIAlertView(title: "提示", message: "无法定位，因为您的设备没有启用定位服务，请到设置中启用", delegate: self, cancelButtonTitle: "好")
+                let alert = UIAlertView(title: "提示", message: "无法定位，请您到“设置”中开启定位功能", delegate: self, cancelButtonTitle: "好")
                 alert.show()
                 return
             }
@@ -143,9 +142,10 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
     
     //MARK: - CLLocationDelegate
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
-        let alert = UIAlertView(title: "提示", message: "定位发生异常：\(error)", delegate: self, cancelButtonTitle: "好")
+        let alert = UIAlertView(title: "定位异常提示", message: "请确认您是否已经开启定位服务，并重新进入该页面", delegate: self, cancelButtonTitle: "好")
         alert.show()
-        print("didFailWithError执行了")
+        self.progressView.stopAnimating()
+        print("\(error)")
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -163,8 +163,8 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
         }
         setUserCurrentLocationAsMapCenter()
         print("didUpdateLocations执行了")
-        print("纬 : \(mapShow.centerCoordinate.latitude)")
-        print("经 : \(mapShow.centerCoordinate.longitude)")
+        print("纬 : \(mapShow.userLocation.coordinate.latitude)")
+        print("经 : \(mapShow.userLocation.coordinate.longitude)")
     }
     
 
@@ -342,6 +342,11 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
             self.progressView.stopAnimating()
         }
     }
+    
+//    func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
+//        setUserCurrentLocationAsMapCenter()
+//        print("didUpdateUserLocation执行了")
+//    }
     
     
     //MARK: - UIScrollViewDelegate

@@ -430,9 +430,6 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <switch opaque="NO" tag="102" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gJd-Q8-Jyu">
-                                                    <rect key="frame" x="533" y="6" width="51" height="31"/>
-                                                </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bea-ht-hfz">
                                                     <rect key="frame" x="16" y="12" width="39.5" height="19.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -442,8 +439,6 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="bea-ht-hfz" firstAttribute="leading" secondItem="SAB-NO-xV7" secondAttribute="leadingMargin" constant="8" id="BPE-zL-qdO"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="gJd-Q8-Jyu" secondAttribute="trailing" constant="10" id="RUS-Us-Fjd"/>
-                                                <constraint firstItem="bea-ht-hfz" firstAttribute="centerY" secondItem="gJd-Q8-Jyu" secondAttribute="centerY" id="fe3-Ug-Y2y"/>
                                                 <constraint firstItem="bea-ht-hfz" firstAttribute="centerY" secondItem="SAB-NO-xV7" secondAttribute="centerY" id="saD-gR-D7Q"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -521,7 +516,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="CellForRooms" rowHeight="80" id="Xem-4d-T6m" customClass="ListTableViewCell" customModule="蘑菇房" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="CellForRooms" rowHeight="80" id="Xem-4d-T6m">
                                         <rect key="frame" x="0.0" y="133.5" width="600" height="80"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Xem-4d-T6m" id="hok-cu-UXX">

@@ -43,28 +43,7 @@ class ShowMapViewController: UIViewController,MKMapViewDelegate,CLLocationManage
             return
         }
         
-//        myLocation = UIButton(frame: CGRectMake(77, 500, 100, 20))
-        myLocation.setTitle("我的位置", forState: .Normal)
-        myLocation.backgroundColor = UIColor.greenColor()
-        myLocation.tintColor = UIColor.grayColor()
-        myLocation.imageView?.contentMode = .ScaleToFill
-//        self.view.addSubview(myLocation)
-//        myLocation.layer.cornerRadius = 5
-//        myLocation.layer.masksToBounds = true
-//        myLocation.layer.borderWidth = 3
-//        myLocation.layer.borderColor = UIColor.brownColor().CGColor
-//        myLocation.clipsToBounds = true
-        
-//        roomLocation = UIButton(frame: CGRectMake(423,500,100,20))
-        roomLocation.setTitle("基地位置", forState: .Normal)
-        roomLocation.backgroundColor = UIColor.greenColor()
-        roomLocation.tintColor = UIColor.grayColor()
-//        self.view.addSubview(roomLocation)
-//        roomLocation.layer.cornerRadius = 5
-//        roomLocation.layer.masksToBounds = true
-//        roomLocation.layer.borderWidth = 3
-//        roomLocation.layer.borderColor = UIColor.brownColor().CGColor
-//        roomLocation.clipsToBounds = true
+        prepareForClickButtons()
         
         openLocationService()
         
@@ -74,6 +53,33 @@ class ShowMapViewController: UIViewController,MKMapViewDelegate,CLLocationManage
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    private func prepareForClickButtons(){
+        myLocation.setTitle("我的位置", forState: .Normal)
+        myLocation.backgroundColor = UIColor(red: 250/255, green: 181/255, blue: 14/255, alpha: 1)
+        myLocation.tintColor = UIColor.blackColor()
+        myLocation.titleLabel?.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
+        myLocation.imageView?.contentMode = .ScaleToFill
+        myLocation.imageView?.tintColor = UIColor.whiteColor()
+        myLocation.layer.cornerRadius = 15
+        myLocation.layer.masksToBounds = true
+        myLocation.layer.borderWidth = 3
+        myLocation.layer.borderColor = UIColor(red: 158/255, green: 168/255, blue: 174/255, alpha: 1).CGColor
+        myLocation.clipsToBounds = true
+        
+        roomLocation.setTitle("基地位置", forState: .Normal)
+        roomLocation.backgroundColor = UIColor(red: 122/255, green: 120/255, blue: 123/255, alpha: 1)
+        roomLocation.tintColor = UIColor.whiteColor()
+        roomLocation.titleLabel?.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
+        roomLocation.imageView?.contentMode = .ScaleToFill
+        roomLocation.imageView?.tintColor = UIColor.whiteColor()
+        roomLocation.layer.cornerRadius = 15
+        roomLocation.layer.masksToBounds = true
+        roomLocation.layer.borderWidth = 3
+        roomLocation.layer.borderColor = UIColor(red: 158/255, green: 168/255, blue: 174/255, alpha: 1).CGColor
+        roomLocation.clipsToBounds = true
+
     }
     
     private func setProgressView(){
@@ -151,10 +157,10 @@ class ShowMapViewController: UIViewController,MKMapViewDelegate,CLLocationManage
         self.mapShow.addAnnotation(objectAnnotation)
         
         
-        self.mapShow.userTrackingMode = MKUserTrackingMode.FollowWithHeading
+        self.mapShow.userTrackingMode = .Follow
         self.mapShow.showsScale = true
         self.mapShow.showsCompass = true
-        let userCenter = CLLocation(latitude: self.mapShow.userLocation.coordinate.longitude, longitude: self.mapShow.userLocation.coordinate.longitude)
+        let userCenter = CLLocation(latitude: self.mapShow.userLocation.coordinate.latitude, longitude: self.mapShow.userLocation.coordinate.longitude)
         let userRegion = MKCoordinateRegion(center: userCenter.coordinate, span: currentLocationSpan)
         self.mapShow.setRegion(userRegion, animated: true)
         print("getReadyForMap执行了")
@@ -174,9 +180,10 @@ class ShowMapViewController: UIViewController,MKMapViewDelegate,CLLocationManage
     
     //MARK: - CLLocationDelegate
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
-        let alert = UIAlertView(title: "提示", message: "定位发生异常：\(error)", delegate: self, cancelButtonTitle: "好")
+        let alert = UIAlertView(title: "定位异常提示", message: "请确认您是否已经开启定位服务，并重新进入该页面", delegate: self, cancelButtonTitle: "我知道了")
         alert.show()
-        print("didFailWithError执行了")
+        self.progressView.stopAnimating()
+        print("\(error)")
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -190,11 +197,12 @@ class ShowMapViewController: UIViewController,MKMapViewDelegate,CLLocationManage
             getReadyForMap()    //为地图准备数据
             //因为是异步操作，只能在这里刷新视图，他妈的，逻辑绕死我了 2016.8.21
         }
-        setUserCurrentLocationAsMapCenter()
+        setRoomLocationAsMapCenter()
         print("didUpdateLocations执行了")
         print("纬 : \(mapShow.centerCoordinate.latitude)")
         print("经 : \(mapShow.centerCoordinate.longitude)")
     }
+    
 
     func mapViewDidFinishRenderingMap(mapView: MKMapView, fullyRendered: Bool) {
         if fullyRendered == true{
