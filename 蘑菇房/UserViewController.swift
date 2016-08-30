@@ -13,6 +13,19 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     @IBOutlet weak var tableView: UITableView!
     
+//    @IBAction func upPullLoadData(sender:UITableViewHeaderFooterView?){
+//        
+//        //延迟执行，模拟网络延迟
+//        xwDelay(1) { () -> Void in
+//            
+//            self.tableView.reloadData()
+//            self.tableView.headerView?.endRefreshing()
+//            
+//        }
+//        
+//    }
+
+    
    
     
     var staticItems_section_3 : [StaticItem] = [] //数组：用于存放静态状态图标
@@ -34,6 +47,7 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         self.tableView.showsVerticalScrollIndicator = true
         // Do any additional setup after loading the view, typically from a nib.
         self.tableView.reloadData()
+//        tableView.headerView = XWRefreshNormalHeader(target: self, action: #selector(UserViewController.upPullLoadData(_:)))
     }
     
     override func didReceiveMemoryWarning() {
@@ -149,8 +163,8 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     //设置表格部分（section）的间距 2016.7.15/9:17
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{
-        if(0 == section){
-            return 0.1     //不要顶部留白
+        if 0 == section{
+            return 0.1
         }
         else if(1 == section){
             return 2

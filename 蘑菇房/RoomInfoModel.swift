@@ -7,6 +7,7 @@
 //
 
 import Foundation
+
 class RoomInfoModel : NSObject{
     var districtIdentifier : Int?
     var name: String?

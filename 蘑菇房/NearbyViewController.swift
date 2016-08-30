@@ -9,6 +9,8 @@
 import UIKit
 import MapKit
 import CoreLocation
+import AddressBook
+import Contacts
 
 class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate,CLLocationManagerDelegate,MKMapViewDelegate,UIScrollViewDelegate{
 
@@ -26,6 +28,14 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
     
     var progressView = UIActivityIndicatorView(frame: CGRectMake(0,0,100,100))
     
+    var userAddress = "正在搜索..."{
+        didSet{
+            self.tableView.reloadData()
+        }
+    }
+    
+    let geocoder = CLGeocoder()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         dispatch_async(dispatch_get_main_queue()){
@@ -41,12 +51,13 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
         openLocationService()   //开启定位服务
         
         //需要再加一个判断网络状态
-        
+        prepareForGeocoder()
         
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+        self.locationManager.stopUpdatingLocation()
         // Dispose of any resources that can be recreated.
     }
     
@@ -98,7 +109,6 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
         print("getReadyForMap执行了")
     }
     
-    
     private func openLocationService(){
         //如果设备没有开启定位服务
         if !CLLocationManager.locationServicesEnabled(){
@@ -138,8 +148,51 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
         locationManager.startUpdatingLocation()
     }
     
-    
-    
+    private func prepareForGeocoder(){
+        let currentUserLocation = CLLocation(latitude: GLOBAL_UserProfile.latitude!, longitude: GLOBAL_UserProfile.longitude!)
+        self.geocoder.reverseGeocodeLocation(currentUserLocation, completionHandler: {
+            (placemarks,error) -> Void in
+            if error == nil {
+                let placemark = placemarks![0]
+                
+                let str:NSMutableString = ""
+                
+                if let province = placemark.administrativeArea{
+                    str.appendString(province)
+                    print("province : ",province)
+                }
+                
+                if let city = placemark.locality{
+                    str.appendString(city)
+                    print("city : ",city)
+                }
+                
+                if let strict = placemark.subLocality{
+                    str.appendString(strict)
+                    print("strict : ",strict)
+                }
+                
+                if let street = placemark.thoroughfare{
+                    str.appendString(street+"\n")
+                    print("street : ",street)
+                }
+                
+                if let subThoroughfare = placemark.subThoroughfare{
+                    print("subThoroughfare : ",subThoroughfare)
+                }
+                
+                if let address = placemark.name{
+                    str.appendString(address)
+                    print("address : ",address)
+                }
+                print(str)
+                self.userAddress = str as String
+            }
+            print("Geocoder 执行了！！！")
+        })
+
+    }
+
     //MARK: - CLLocationDelegate
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         let alert = UIAlertView(title: "定位异常提示", message: "请确认您是否已经开启定位服务，并重新进入该页面", delegate: self, cancelButtonTitle: "好")
@@ -171,7 +224,7 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
     //MARK: - UITableViewDelegate
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat{
         if indexPath.section == 0{
-            return 40
+            return 50
         }
         else if indexPath.section == 1{
             return 100
@@ -256,7 +309,7 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
                 let icon = cell.viewWithTag(2001) as! UIImageView
                 let currentLocation = cell.viewWithTag(2002) as! UILabel
                 icon.image = UIImage(named: "LocationPin")
-                currentLocation.text = "当前位置：广西壮族自治区南宁市大学路100号附近"
+                currentLocation.text = self.userAddress
                 currentLocation.font = UIFont(name: GLOBAL_appFont!, size: 10.0)//mark:待改造
             }
         }
@@ -297,9 +350,14 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
 //                    showData.append(temp)
 //                }
 //            }
-            self.showData = GLOBAL_RoomInfo.filter({ (tempElement:RoomInfoModel) -> Bool in
-                    return (tempElement.name?.containsString(searchText))!
-            })
+            for element in GLOBAL_RoomInfo{
+                if strcmp(element.name!,searchText) == 0{
+                    self.showData.append(element)
+                }
+            }
+//            self.showData = GLOBAL_RoomInfo.filter({ (tempElement:RoomInfoModel) -> Bool in
+//                    return (tempElement.name?.containsString(searchText))!
+//            })
             self.tableView.reloadData()
         }
         else{

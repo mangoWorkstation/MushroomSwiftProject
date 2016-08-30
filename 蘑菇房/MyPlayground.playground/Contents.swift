@@ -7,6 +7,10 @@
 //  各类功能测试的试验田
 
 import Foundation
+import CoreLocation
+import AddressBookUI
+import AddressBook
+import Contacts
 
 class NotificationPreview: NSObject {
     var preImage : String?
@@ -299,3 +303,58 @@ func nearbyRoomFilter(rawData:[RoomInfoModel])->[RoomInfoModel]{
 }
 
 var nearbys = nearbyRoomFilter(GLOBAL_RoomInfo)
+
+
+//func reverseGeocoder()->String{
+//    var info:String?
+//    var geocoder = CLGeocoder()
+//    var currentUserLocation = CLLocation(latitude: GLOBAL_UserProfile.latitude!, longitude: GLOBAL_UserProfile.longitude!)
+//    geocoder.reverseGeocodeLocation(currentUserLocation, completionHandler:
+//        {placemarks,_ in
+//        if placemarks != nil && placemarks?.count > 0{
+//            let placemark = placemarks![0] as CLPlacemark
+//            let countryName = placemark.country
+//            let cityName = placemark.subAdministrativeArea
+//            let streetName = placemark.subLocality
+//            NSOperationQueue.mainQueue().addOperationWithBlock {
+//                info = "\(streetName!), \(cityName!), \(countryName!)"
+//            }
+//        }
+//    })
+//    return info!
+//}
+//
+//let info = reverseGeocoder()
+
+//var info = reverseGeocoder()
+
+
+//func reverseGeocoder (completion: (info:String) -> Void){
+//    
+//    var geocoder = CLGeocoder()
+//    var currentUserLocation = CLLocation(latitude: 30, longitude: 122)
+//    geocoder.reverseGeocodeLocation(currentUserLocation, completionHandler: {
+//        (placemarks,error) -> Void in
+//        if placemarks != nil && placemarks?.count > 0{
+//            let placemark = placemarks![0] as CLPlacemark
+//            let addressDictionary = placemark.addressDictionary! as NSDictionary
+//            
+//            let str:NSMutableString = ""
+//            if let address = addressDictionary.objectForKey(kABPersonAddressStreetKey) as? String{
+//                str.appendString(address)
+//            }
+//            
+//            if let state = addressDictionary.objectForKey(kABPersonAddressStateKey) as? String{
+//                str.appendString(state)
+//            }
+//            
+//            if let city = addressDictionary.objectForKey(kABPersonAddressCityKey) as? String{
+//                str.appendString(city)
+//            }
+//            completion(info: str as String)
+//            
+//        }
+//        }
+//    )
+//}
+
