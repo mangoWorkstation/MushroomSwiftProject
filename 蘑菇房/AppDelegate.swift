@@ -34,7 +34,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().tintColor = UIColor.whiteColor()
 
         
-        
         //设置标题栏的字体 2016.8.25
         if let barFont = UIFont(name: GLOBAL_appFont!, size: 17.5) {
             UINavigationBar.appearance().titleTextAttributes = [

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FaceShowViewController: UIViewController,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate{
+class FaceShowViewController: UIViewController,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIPopoverPresentationControllerDelegate{
 
     
     @IBOutlet weak var face: UIImageView!
@@ -46,12 +46,24 @@ class FaceShowViewController: UIViewController,UIActionSheetDelegate,UIImagePick
             }
         }
         if buttonIndex == 2 {
-            if UIImagePickerController.isSourceTypeAvailable(.PhotoLibrary){
-                let imagePickerVC = UIImagePickerController()
-                imagePickerVC.allowsEditing = false
-                imagePickerVC.sourceType = .PhotoLibrary
-                imagePickerVC.delegate = self
-                self.presentViewController(imagePickerVC, animated: true, completion: nil)
+            if ((GLOBAL_deviceModel?.containsString("iPhone")) != nil){
+                if UIImagePickerController.isSourceTypeAvailable(.PhotoLibrary){
+                    let imagePickerVC = UIImagePickerController()
+                    imagePickerVC.allowsEditing = false
+                    imagePickerVC.sourceType = .PhotoLibrary
+                    imagePickerVC.delegate = self
+                    self.presentViewController(imagePickerVC, animated: true, completion: nil)
+                }
+            }
+            else if ((GLOBAL_deviceModel?.containsString("iPad")) != nil){
+//                if UIImagePickerController.isSourceTypeAvailable(.PhotoLibrary){
+//                    let imagePickerVC = UIImagePickerController()
+//                    imagePickerVC.allowsEditing = false
+//                    imagePickerVC.sourceType = .PhotoLibrary
+//                    imagePickerVC.delegate = self
+//                }
+                
+
             }
         }
     }
@@ -75,4 +87,13 @@ class FaceShowViewController: UIViewController,UIActionSheetDelegate,UIImagePick
         
     }
 
+//    //MARK: - NavigationSegue
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        if segue.identifier == "ShowSystemPhotoAlbumSegue"{
+//            let vc = segue.destinationViewController as! UIImagePickerController
+//            vc.popoverPresentationController?.delegate = self
+//            vc.preferredContentSize = CGSize(width: 320, height: 300)
+//            vc.delegate = self
+//        }
+//    }
 }

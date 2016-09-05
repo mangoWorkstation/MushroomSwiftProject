@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import CoreLocation
 import AddressBook
-import Contacts
+import Contacts // iOS9
 
 class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate,CLLocationManagerDelegate,MKMapViewDelegate,UIScrollViewDelegate{
 
@@ -19,6 +19,8 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
     @IBOutlet weak var search: UISearchBar!
     
     @IBOutlet weak var mapShow: MKMapView!
+    
+    var index : Int?
     
     var locationManager:CLLocationManager!
     
@@ -144,10 +146,13 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
         
         //设置定位获取成功或者失败后的代理，Class后面要加上CLLocationManagerDelegate协议
         locationManager.delegate = self
+        //设置精确度
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
         //开始获取定位信息，异步方式
         locationManager.startUpdatingLocation()
     }
     
+    //当前位置反编码 测试通过2016.8.31
     private func prepareForGeocoder(){
         let currentUserLocation = CLLocation(latitude: GLOBAL_UserProfile.latitude!, longitude: GLOBAL_UserProfile.longitude!)
         self.geocoder.reverseGeocodeLocation(currentUserLocation, completionHandler: {
@@ -175,10 +180,6 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
                 if let street = placemark.thoroughfare{
                     str.appendString(street+"\n")
                     print("street : ",street)
-                }
-                
-                if let subThoroughfare = placemark.subThoroughfare{
-                    print("subThoroughfare : ",subThoroughfare)
                 }
                 
                 if let address = placemark.name{

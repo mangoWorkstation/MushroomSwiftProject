@@ -18,7 +18,7 @@ public func timeStampToString(timeStamp:String)->String {
     
     let timeSta:NSTimeInterval = string.doubleValue
     let dfmatter = NSDateFormatter()
-    dfmatter.dateFormat="yyyy年MM月dd日"
+    dfmatter.dateFormat="yyyy年MM月dd日 HH:mm:ss"
     
     let date = NSDate(timeIntervalSince1970: timeSta)
     

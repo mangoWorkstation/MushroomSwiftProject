@@ -358,3 +358,5 @@ var nearbys = nearbyRoomFilter(GLOBAL_RoomInfo)
 //    )
 //}
 
+var num_1: CGFloat = 0.4343434
+var num_2 = round(num_1*100)

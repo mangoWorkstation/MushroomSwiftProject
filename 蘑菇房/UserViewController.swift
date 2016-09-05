@@ -45,6 +45,10 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         //初始化静态固定图标
         self.automaticallyAdjustsScrollViewInsets = false
         self.tableView.showsVerticalScrollIndicator = true
+        self.tableView.backgroundColor = UIColor(red: 142/255, green: 164/255, blue: 182/255, alpha: 1)
+        self.tableView.separatorColor = UIColor(white: 0.9, alpha: 1)
+        self.tableView.tableHeaderView?.backgroundColor = UIColor(white: 0.9,alpha: 1)
+
         // Do any additional setup after loading the view, typically from a nib.
         self.tableView.reloadData()
 //        tableView.headerView = XWRefreshNormalHeader(target: self, action: #selector(UserViewController.upPullLoadData(_:)))
@@ -135,6 +139,7 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             sign.image = UIImage(named: "Alert")
             notification.text = "2016-7-6 南宁市气象局发布暴雨红色预警，请注意强对流天气"
             notification.font = UIFont(name: GLOBAL_appFont!, size: 12.0)
+            notification.textColor = UIColor.whiteColor()
 
             
         }
@@ -146,6 +151,7 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             icon.image = UIImage(named: _staticItem.iconName)
             label.text = _staticItem.label
             label.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
+            label.textColor = UIColor.whiteColor()
         }
         else if (indexPath.section == 3){
             cell = self.tableView.dequeueReusableCellWithIdentifier("General",forIndexPath: indexPath)
@@ -153,10 +159,13 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             let Title = cell!.contentView.viewWithTag(3002) as! UILabel
             let _staticItem = staticItems_section_3[indexPath.row] as StaticItem
             Icon.image = UIImage(named: _staticItem.iconName)
-            Title.text = _staticItem.label //有问题 2016.7.14 00:02
+            Title.text = _staticItem.label
             Title.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
+            Title.textColor = UIColor.whiteColor()
 
         }
+        
+        cell?.backgroundColor = UIColor.clearColor()
         
         return cell!
     }

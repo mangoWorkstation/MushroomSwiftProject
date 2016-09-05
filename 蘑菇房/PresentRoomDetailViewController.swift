@@ -61,6 +61,9 @@ class PresentRoomDetailViewController: UIViewController,UITableViewDelegate,UITa
         if indexPath.section == 0 && indexPath.row == 1{
             performSegueWithIdentifier("ShowMapSegue", sender: self.room)
         }
+        if indexPath.section == 1 && indexPath.row == 0{
+            performSegueWithIdentifier("ShowDataSourceSegue", sender: nil)
+        }
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
@@ -141,6 +144,10 @@ class PresentRoomDetailViewController: UIViewController,UITableViewDelegate,UITa
             let vc = segue.destinationViewController as! ShowMapViewController
             vc.navigationController?.navigationItem.backBarButtonItem?.title  = self.navigationItem.title
             vc.room = self.room
+        }
+        if segue.identifier == "ShowDataSourceSegue"{
+            let vc = segue.destinationViewController as! DataSourceViewController
+            vc.navigationItem.backBarButtonItem?.title = nil
         }
     }
     

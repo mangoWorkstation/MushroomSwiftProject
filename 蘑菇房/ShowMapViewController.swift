@@ -52,6 +52,7 @@ class ShowMapViewController: UIViewController,MKMapViewDelegate,CLLocationManage
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+        locationManager.stopUpdatingLocation()
         // Dispose of any resources that can be recreated.
     }
     
