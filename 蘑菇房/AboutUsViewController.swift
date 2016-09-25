@@ -17,7 +17,7 @@ class AboutUsViewController: UIViewController {
         super.viewDidLoad()
         intro.text = "制作人员:\n陈贵豪\n李曼嘉\n许洋\nEmail:ryanhowe@qq.com \n"
         intro.font = UIFont(name: GLOBAL_appFont!, size: 18.0)
-        intro.textAlignment = NSTextAlignment.Center
+        intro.textAlignment = NSTextAlignment.center
 
         // Do any additional setup after loading the view.
     }
@@ -27,16 +27,16 @@ class AboutUsViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func shouldAutorotate() -> Bool {
+    override var shouldAutorotate : Bool {
         return false
     }
     
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        return UIInterfaceOrientationMask.Portrait
+    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask.portrait
     }
     
-    override func preferredInterfaceOrientationForPresentation() -> UIInterfaceOrientation {
-        return UIInterfaceOrientation.Portrait
+    override var preferredInterfaceOrientationForPresentation : UIInterfaceOrientation {
+        return UIInterfaceOrientation.portrait
     }
     /*
     // MARK: - Navigation

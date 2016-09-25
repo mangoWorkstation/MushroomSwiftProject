@@ -10,7 +10,7 @@ import Foundation
 
 class ChooseAreaModel{
     
-    func getAreaString(index:Int)->String?{
+    func getAreaString(_ index:Int)->String?{
         var chosenArea :String?
         switch index{
             case 0:chosenArea = "西乡塘区"

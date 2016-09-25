@@ -14,7 +14,7 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
 
     @IBOutlet weak var tableView: UITableView!
     
-    @IBAction func close(segue:UIStoryboardSegue){
+    @IBAction func close(_ segue:UIStoryboardSegue){
     }
     
     
@@ -31,8 +31,8 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
     }
     
     //MARK: - UITableViewDelegate
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat{
-        let section = indexPath.section
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
+        let section = (indexPath as NSIndexPath).section
         if(0 == self.selectedRow){
             return 50
         }
@@ -49,28 +49,28 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
         }
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         var cell = UITableViewCell()
-        let section = indexPath.section
+        let section = (indexPath as NSIndexPath).section
         
         //点击“设置”
         if(0 == self.selectedRow){
             if(0 == section){
-                cell = self.tableView.dequeueReusableCellWithIdentifier("GeneralCell",forIndexPath: indexPath)
+                cell = self.tableView.dequeueReusableCell(withIdentifier: "GeneralCell",for: indexPath)
                 let label = cell.viewWithTag(1001) as! UILabel
                 label.text = "账号与安全"
                 label.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
             }
             else if (1 == section){
-                cell = self.tableView.dequeueReusableCellWithIdentifier("GeneralCell",forIndexPath: indexPath)
+                cell = self.tableView.dequeueReusableCell(withIdentifier: "GeneralCell",for: indexPath)
                 let label = cell.viewWithTag(1001) as! UILabel
                 let labelGroup = ["新消息通知","帮助与反馈"]
-                label.text = labelGroup[indexPath.row]
+                label.text = labelGroup[(indexPath as NSIndexPath).row]
                 label.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
 
             }
             else if(2 == section){
-                cell = self.tableView.dequeueReusableCellWithIdentifier("CacheCell")!
+                cell = self.tableView.dequeueReusableCell(withIdentifier: "CacheCell")!
                 let label = cell.viewWithTag(2001) as! UILabel
                 let label_1 = cell.viewWithTag(2002) as! UILabel
                 label.text = "清除缓存"
@@ -78,31 +78,31 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
                 label.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
                 label_1.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
 
-                cell.accessoryType = UITableViewCellAccessoryType.None
+                cell.accessoryType = UITableViewCellAccessoryType.none
             }
             else if(3 == section){
-                cell = self.tableView.dequeueReusableCellWithIdentifier("GeneralCell",forIndexPath: indexPath)
+                cell = self.tableView.dequeueReusableCell(withIdentifier: "GeneralCell",for: indexPath)
                 let label = cell.viewWithTag(1001) as! UILabel
                 label.text = "退出登录"
                 label.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
-                label.textAlignment = NSTextAlignment.Center      //居中 2016.7.15／1:13a.m
-                label.textColor = UIColor.redColor()
-                cell.accessoryType = UITableViewCellAccessoryType.None   //无箭头指示器ii
+                label.textAlignment = NSTextAlignment.center      //居中 2016.7.15／1:13a.m
+                label.textColor = UIColor.red
+                cell.accessoryType = UITableViewCellAccessoryType.none   //无箭头指示器ii
             }
         }
         
         //点击“关于”
         if(1 == self.selectedRow){
             if(0 == section){
-                cell = self.tableView.dequeueReusableCellWithIdentifier("GeneralCell",forIndexPath: indexPath)
+                cell = self.tableView.dequeueReusableCell(withIdentifier: "GeneralCell",for: indexPath)
                 let label = cell.viewWithTag(1001) as! UILabel
                 let labels = ["关于我们","给蘑菇房来个好评吧😊"]
-                label.text = labels[indexPath.row]
+                label.text = labels[(indexPath as NSIndexPath).row]
                 label.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
-                cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+                cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
             }
             else{
-                cell = self.tableView.dequeueReusableCellWithIdentifier("AboutAppCell")!
+                cell = self.tableView.dequeueReusableCell(withIdentifier: "AboutAppCell")!
                 let appIcon = cell.viewWithTag(2001) as! UIImageView
                 let version = cell.viewWithTag(2002) as! UILabel
                 let appName = cell.viewWithTag(2003) as! UILabel
@@ -115,14 +115,14 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
                 copyRight.text = "Copyright © 2016 MushRoom Workstation \n All Rights Reserved \n 广西大学 蘑菇房工作室 出品"
                 copyRight.font = UIFont(name: GLOBAL_appFont!, size: 12.0)
 
-                copyRight.lineBreakMode = NSLineBreakMode.ByWordWrapping
+                copyRight.lineBreakMode = NSLineBreakMode.byWordWrapping
                 copyRight.numberOfLines = 0
             }
         }
         return cell
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int{
+    func numberOfSections(in tableView: UITableView) -> Int{
         if selectedRow == 0{
             return 4
         }
@@ -134,7 +134,7 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
         }
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         if(0 == self.selectedRow){
             switch section {
                 case 0:
@@ -160,81 +160,81 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
         }
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){//点击后取消被选中状态 2016.7.17
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){//点击后取消被选中状态 2016.7.17
         if(self.selectedRow == 0){
-            if(indexPath.section == 0){
-                if(indexPath.row == 0){
-                    self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-                    performSegueWithIdentifier("AccountSegue", sender: nil)
+            if((indexPath as NSIndexPath).section == 0){
+                if((indexPath as NSIndexPath).row == 0){
+                    self.tableView.deselectRow(at: indexPath, animated: true)
+                    performSegue(withIdentifier: "AccountSegue", sender: nil)
                 }
             }
-            if(indexPath.section == 1){
-                if(indexPath.row == 0){
-                    self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-                    performSegueWithIdentifier("NewMessageInformSegue", sender: nil)
+            if((indexPath as NSIndexPath).section == 1){
+                if((indexPath as NSIndexPath).row == 0){
+                    self.tableView.deselectRow(at: indexPath, animated: true)
+                    performSegue(withIdentifier: "NewMessageInformSegue", sender: nil)
                 }
-                if(indexPath.row == 1){
-                    self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-                    performSegueWithIdentifier("FeedBackSegue", sender: nil)
+                if((indexPath as NSIndexPath).row == 1){
+                    self.tableView.deselectRow(at: indexPath, animated: true)
+                    performSegue(withIdentifier: "FeedBackSegue", sender: nil)
                 }
             }
         }
         if(self.selectedRow == 1){
-            if(indexPath.section == 0){
-                if(indexPath.row == 0){
-                    self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-                    performSegueWithIdentifier("AboutUsSegue",sender: nil)
+            if((indexPath as NSIndexPath).section == 0){
+                if((indexPath as NSIndexPath).row == 0){
+                    self.tableView.deselectRow(at: indexPath, animated: true)
+                    performSegue(withIdentifier: "AboutUsSegue",sender: nil)
                 }
             }
         }
-        if(indexPath.section == 2){
-            let cell = self.tableView.cellForRowAtIndexPath(indexPath)
+        if((indexPath as NSIndexPath).section == 2){
+            let cell = self.tableView.cellForRow(at: indexPath)
             let detail = cell?.viewWithTag(2002) as! UILabel
             if detail.text != "0.00MB"{
                 let sheet = UIActionSheet(title: "将要清除所有缓存", delegate: self, cancelButtonTitle: "取消", destructiveButtonTitle: "确定")
-                sheet.showInView(self.view)
+                sheet.show(in: self.view)
             }
             else{
-                self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                self.tableView.deselectRow(at: indexPath, animated: true)
             }
         }
         else{
-            self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            self.tableView.deselectRow(at: indexPath, animated: true)
         }
     }
     //MARK: - UIActionSheetDelegate
-    func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int){
+    func actionSheet(_ actionSheet: UIActionSheet, clickedButtonAt buttonIndex: Int){
         if buttonIndex == 0 {
             let indexPath = self.tableView.indexPathForSelectedRow
-            let cell = self.tableView.cellForRowAtIndexPath(indexPath!)
+            let cell = self.tableView.cellForRow(at: indexPath!)
             let detail = cell?.viewWithTag(2002) as! UILabel
             detail.text = "0.00MB"
-            self.tableView.deselectRowAtIndexPath(indexPath!, animated: true)
+            self.tableView.deselectRow(at: indexPath!, animated: true)
         }
     }
     
     //MARK: - UIStoryBoardSegue
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "AboutUsSegue"){
-            let vc = segue.destinationViewController as! AboutUsViewController
+            let vc = segue.destination as! AboutUsViewController
             vc.navigationItem.backBarButtonItem?.title = self.navigationItem.title
             vc.navigationItem.title = "关于我们"
         }
         
         if(segue.identifier == "NewMessageInformSegue"){
-            let vc = segue.destinationViewController as! NewMessageInformViewController
+            let vc = segue.destination as! NewMessageInformViewController
             vc.navigationItem.backBarButtonItem?.title = self.navigationItem.title
             vc.navigationItem.title = "消息与通知"
         }
         
         if(segue.identifier == "FeedBackSegue"){
-            let vc = segue.destinationViewController as! FeedBackViewController
+            let vc = segue.destination as! FeedBackViewController
             vc.navigationItem.backBarButtonItem?.title = self.navigationItem.title
             vc.navigationItem.title = "您的建议"
         }
         
         if(segue.identifier == "AccountSegue"){
-            let vc = segue.destinationViewController as! AccountViewController
+            let vc = segue.destination as! AccountViewController
             vc.navigationItem.backBarButtonItem?.title = self.navigationItem.title
             vc.navigationItem.title = "账号与安全"
         }

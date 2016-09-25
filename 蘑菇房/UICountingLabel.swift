@@ -13,12 +13,12 @@ class UICountingLabel : UILabel
 {
     var startingValue:CGFloat = 0
     var destinationValue:CGFloat = 0
-    var progress:NSTimeInterval = NSTimeInterval()
-    var lastUpdate:NSTimeInterval = NSTimeInterval()
-    var totalTime:NSTimeInterval = NSTimeInterval()
-    var timer:NSTimer = NSTimer()
+    var progress:TimeInterval = TimeInterval()
+    var lastUpdate:TimeInterval = TimeInterval()
+    var totalTime:TimeInterval = TimeInterval()
+    var timer:Timer = Timer()
     
-    func countFrom(startValue:CGFloat, endValue:CGFloat, duration:NSTimeInterval)
+    func countFrom(_ startValue:CGFloat, endValue:CGFloat, duration:TimeInterval)
     {
         self.startingValue = startValue
         self.destinationValue = endValue
@@ -35,19 +35,19 @@ class UICountingLabel : UILabel
         {
             self.progress = 0
             self.totalTime = duration
-            self.lastUpdate = NSDate.timeIntervalSinceReferenceDate()
+            self.lastUpdate = Date.timeIntervalSinceReferenceDate
             
-            let timer = NSTimer(timeInterval:(1.0/30.0), target:self, selector:#selector(UICountingLabel.updateValue(_:)), userInfo:nil, repeats:true)
+            let timer = Timer(timeInterval:(1.0/30.0), target:self, selector:#selector(UICountingLabel.updateValue(_:)), userInfo:nil, repeats:true)
             
-            NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
-            NSRunLoop.mainRunLoop().addTimer(timer, forMode: UITrackingRunLoopMode)
+            RunLoop.main.add(timer, forMode: RunLoopMode.commonModes)
+            RunLoop.main.add(timer, forMode: RunLoopMode.UITrackingRunLoopMode)
             self.timer = timer
         }
     }
     
-    func updateValue(timer:NSTimer)
+    func updateValue(_ timer:Timer)
     {
-        let now = NSDate.timeIntervalSinceReferenceDate()
+        let now = Date.timeIntervalSinceReferenceDate
         
         self.progress = self.progress + now - self.lastUpdate
         self.lastUpdate = now

@@ -26,31 +26,31 @@ class AccountViewController: UIViewController,UITableViewDelegate,UITableViewDat
     }
     
     //MARK: - UITableViewDelegate
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat{
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
         return 50
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         var cell = UITableViewCell()
-        cell = self.tableView.dequeueReusableCellWithIdentifier("GeneralCell",forIndexPath: indexPath)
+        cell = self.tableView.dequeueReusableCell(withIdentifier: "GeneralCell",for: indexPath)
         let label = cell.viewWithTag(1001) as! UILabel
         let labels = ["更改登录密码","更改绑定手机号"]
-        label.text! = labels[indexPath.row]
+        label.text! = labels[(indexPath as NSIndexPath).row]
         label.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
-        cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+        cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
         return cell
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int{
+    func numberOfSections(in tableView: UITableView) -> Int{
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         return 2
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
-        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
+        self.tableView.deselectRow(at: indexPath, animated: true)
 //        if(indexPath.row == 0){
 //            performSegueWithIdentifier("EditProfilesSegue", sender: nil)
 //        }

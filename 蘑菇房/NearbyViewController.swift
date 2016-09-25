@@ -26,9 +26,9 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
     
     var showData: [RoomInfoModel] = []
     
-    var indexPath : NSIndexPath = NSIndexPath(forRow: 5, inSection: 1)
+    var indexPath : IndexPath = IndexPath(row: 5, section: 1)
     
-    var progressView = UIActivityIndicatorView(frame: CGRectMake(0,0,100,100))
+    var progressView = UIActivityIndicatorView(frame: CGRect(x: 0,y: 0,width: 100,height: 100))
     
     var userAddress = "正在搜索..."{
         didSet{
@@ -40,7 +40,7 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        dispatch_async(dispatch_get_main_queue()){
+        DispatchQueue.main.async{
             self.setProgressView()  //显示加载指示器 2016.8.21
             return
         }
@@ -63,11 +63,11 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
         // Dispose of any resources that can be recreated.
     }
     
-    private func setProgressView(){
+    fileprivate func setProgressView(){
         progressView.center = self.view.center
-        progressView.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-        progressView.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
-        progressView.backgroundColor = UIColor.lightGrayColor()
+        progressView.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+        progressView.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge
+        progressView.backgroundColor = UIColor.lightGray
         progressView.layer.masksToBounds = true
         progressView.layer.cornerRadius = 20
         progressView.clipsToBounds = true   //磨成圆角
@@ -75,13 +75,13 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
         progressView.startAnimating()
     }
     
-    private func setUserCurrentLocationAsMapCenter(){
+    fileprivate func setUserCurrentLocationAsMapCenter(){
         self.mapShow.centerCoordinate.latitude = self.mapShow.userLocation.coordinate.latitude
         self.mapShow.centerCoordinate.longitude = self.mapShow.userLocation.coordinate.longitude
     }
     
-    private func getReadyForMap(){
-        self.mapShow.mapType = MKMapType.Standard
+    fileprivate func getReadyForMap(){
+        self.mapShow.mapType = MKMapType.standard
         let latDelta = 0.1
         let lngDelta = 0.1
         let currentLocationSpan = MKCoordinateSpanMake(latDelta, lngDelta)
@@ -101,7 +101,7 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
             objectAnnotation.title = temp.name
             self.mapShow.addAnnotation(objectAnnotation)
         }
-        self.mapShow.userTrackingMode = MKUserTrackingMode.FollowWithHeading
+        self.mapShow.userTrackingMode = MKUserTrackingMode.followWithHeading
         self.mapShow.showsScale = true
         self.mapShow.showsCompass = true
         let userCenter = CLLocation(latitude: self.mapShow.userLocation.coordinate.latitude, longitude: self.mapShow.userLocation.coordinate.longitude)
@@ -111,10 +111,10 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
         print("getReadyForMap执行了")
     }
     
-    private func openLocationService(){
+    fileprivate func openLocationService(){
         //如果设备没有开启定位服务
         if !CLLocationManager.locationServicesEnabled(){
-            dispatch_async(dispatch_get_main_queue()){
+            DispatchQueue.main.async{
                 let alert = UIAlertView(title: "提示", message: "无法定位，请您到“设置”中开启定位功能", delegate: self, cancelButtonTitle: "好")
                 alert.show()
             }
@@ -130,14 +130,14 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
         //在IOS8以上系统中，需要使用requestWhenInUseAuthorization方法才能弹窗让用户确认是否允许使用定位服务的窗口
         
         //状态为，用户还没有做出选择，那么就弹窗让用户选择
-        if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.NotDetermined {
+        if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.notDetermined {
             locationManager.requestWhenInUseAuthorization()
 //            locationManager.requestAlwaysAuthorization()
         }
             //状态为，用户在设置-定位中选择了【永不】，就是不允许App使用定位服务
-        else if(CLLocationManager.authorizationStatus() == CLAuthorizationStatus.Denied){
+        else if(CLLocationManager.authorizationStatus() == CLAuthorizationStatus.denied){
             //需要把弹窗放在主线程才能强制显示
-            dispatch_async(dispatch_get_main_queue()){
+            DispatchQueue.main.async{
                 let alert = UIAlertView(title: "提示", message: "无法定位，请您到“设置”中开启定位功能", delegate: self, cancelButtonTitle: "好")
                 alert.show()
                 return
@@ -153,7 +153,7 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
     }
     
     //当前位置反编码 测试通过2016.8.31
-    private func prepareForGeocoder(){
+    fileprivate func prepareForGeocoder(){
         let currentUserLocation = CLLocation(latitude: GLOBAL_UserProfile.latitude!, longitude: GLOBAL_UserProfile.longitude!)
         self.geocoder.reverseGeocodeLocation(currentUserLocation, completionHandler: {
             (placemarks,error) -> Void in
@@ -163,27 +163,27 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
                 let str:NSMutableString = ""
                 
                 if let province = placemark.administrativeArea{
-                    str.appendString(province)
+                    str.append(province)
                     print("province : ",province)
                 }
                 
                 if let city = placemark.locality{
-                    str.appendString(city)
+                    str.append(city)
                     print("city : ",city)
                 }
                 
                 if let strict = placemark.subLocality{
-                    str.appendString(strict)
+                    str.append(strict)
                     print("strict : ",strict)
                 }
                 
                 if let street = placemark.thoroughfare{
-                    str.appendString(street+"\n")
+                    str.append(street+"\n")
                     print("street : ",street)
                 }
                 
                 if let address = placemark.name{
-                    str.appendString(address)
+                    str.append(address)
                     print("address : ",address)
                 }
                 print(str)
@@ -195,14 +195,14 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
     }
 
     //MARK: - CLLocationDelegate
-    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         let alert = UIAlertView(title: "定位异常提示", message: "请确认您是否已经开启定位服务，并重新进入该页面", delegate: self, cancelButtonTitle: "好")
         alert.show()
         self.progressView.stopAnimating()
         print("\(error)")
     }
     
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if locations.count > 0{ //  使用last 获取，最后一个最新的位置， 前面是上一次的位置信息
             let locationInfo:CLLocation = locations.last! as CLLocation
             GLOBAL_UserProfile.latitude = locationInfo.coordinate.latitude
@@ -223,11 +223,11 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
     
 
     //MARK: - UITableViewDelegate
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat{
-        if indexPath.section == 0{
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
+        if (indexPath as NSIndexPath).section == 0{
             return 50
         }
-        else if indexPath.section == 1{
+        else if (indexPath as NSIndexPath).section == 1{
             return 100
         }
         else {
@@ -235,7 +235,7 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
         }
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{
         if section == 0 {
             return 0
         }
@@ -244,21 +244,21 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
         }
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
-        if indexPath.section == 0 {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
+        if (indexPath as NSIndexPath).section == 0 {
             self.mapShow.centerCoordinate.latitude = self.mapShow.userLocation.coordinate.latitude
             self.mapShow.centerCoordinate.longitude = self.mapShow.userLocation.coordinate.longitude
         }
         else{
-            let selectedLocation = nearbyRoomFilter(GLOBAL_RoomInfo)[indexPath.row]
+            let selectedLocation = nearbyRoomFilter(GLOBAL_RoomInfo)[(indexPath as NSIndexPath).row]
             self.mapShow.centerCoordinate.latitude = selectedLocation.latitude!
             self.mapShow.centerCoordinate.longitude = selectedLocation.longitude!
         }
-        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        self.tableView.deselectRow(at: indexPath, animated: true)
 
     }
     
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 1{
             if !self.showData.isEmpty {
                 return "以下列出距您最近的5个蘑菇种植基地"
@@ -272,7 +272,7 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
         }
     }
     
-    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         if section == 1 {
             return 0
         }
@@ -282,7 +282,7 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
     }
     
     //MARK: - UITableViewDataSource
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         if section == 0 {
             return 1
         }
@@ -294,7 +294,7 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
         }
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         var cell = UITableViewCell()
         var showDataArray : [RoomInfoModel] = []
         if ((self.search.text?.isEmpty) != nil){
@@ -304,9 +304,9 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
             showDataArray = self.showData
         }
         
-        if indexPath.section == 0{
-            if indexPath.row == 0 {
-                cell = self.tableView.dequeueReusableCellWithIdentifier("MyLocationCell", forIndexPath: indexPath)
+        if (indexPath as NSIndexPath).section == 0{
+            if (indexPath as NSIndexPath).row == 0 {
+                cell = self.tableView.dequeueReusableCell(withIdentifier: "MyLocationCell", for: indexPath)
                 let icon = cell.viewWithTag(2001) as! UIImageView
                 let currentLocation = cell.viewWithTag(2002) as! UILabel
                 icon.image = UIImage(named: "LocationPin")
@@ -314,35 +314,35 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
                 currentLocation.font = UIFont(name: GLOBAL_appFont!, size: 10.0)//mark:待改造
             }
         }
-        if indexPath.section == 1 {
-            cell = self.tableView.dequeueReusableCellWithIdentifier("CellForRooms", forIndexPath: indexPath)
+        if (indexPath as NSIndexPath).section == 1 {
+            cell = self.tableView.dequeueReusableCell(withIdentifier: "CellForRooms", for: indexPath)
             let preImage = cell.viewWithTag(1001) as! UIImageView
             let name = cell.viewWithTag(1002) as! UILabel
             let address = cell.viewWithTag(1003) as! UILabel
             let detailSign = cell.viewWithTag(1004) as!UILabel
-            name.text = showDataArray[indexPath.row].name!
-            preImage.image = UIImage(named: showDataArray[indexPath.row].preImage!)
+            name.text = showDataArray[(indexPath as NSIndexPath).row].name!
+            preImage.image = UIImage(named: showDataArray[(indexPath as NSIndexPath).row].preImage!)
             preImage.layer.masksToBounds = true
             preImage.layer.cornerRadius = 10
             preImage.clipsToBounds = true
-            address.text = showDataArray[indexPath.row].address!
+            address.text = showDataArray[(indexPath as NSIndexPath).row].address!
             detailSign.text = "查看详情"
             name.font = UIFont(name: GLOBAL_appFont!, size: 15.0)
             address.font = UIFont(name: GLOBAL_appFont!, size: 10.0)
             detailSign.font = UIFont(name: GLOBAL_appFont!, size: 10.0)
         }
-        cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+        cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
         
         return cell
         
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int{
+    func numberOfSections(in tableView: UITableView) -> Int{
         return 2
     }
     
     //MARK: - UISearchBarDelegate
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String){
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String){
         if searchText.characters.count>0 {
             self.showData.removeAll()
 //            for(var i = 0;i<GLOBAL_RoomInfo.count;i+=1){
@@ -369,34 +369,34 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
     }
     
     //点击回车键，收起键盘
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         self.searchBar(self.search, textDidChange: self.search.text!)
         self.search.resignFirstResponder()
     }
     
     
     //MARK: - MKMapViewDelegate
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView?{
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView?{
         if annotation is MKUserLocation {
             return nil
         }
         let annotationIdentifier = "myStink"
         
-        var annotationView = self.mapShow.dequeueReusableAnnotationViewWithIdentifier(annotationIdentifier)
+        var annotationView = self.mapShow.dequeueReusableAnnotationView(withIdentifier: annotationIdentifier)
         
         if annotationView == nil {
             annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: annotationIdentifier)
             annotationView?.canShowCallout = true
         }
         
-        let leftIconView = UIImageView(frame: CGRectMake(0, 0, 53, 53))
+        let leftIconView = UIImageView(frame: CGRect(x: 0, y: 0, width: 53, height: 53))
         let tempInfo = nearbyRoomFilter(GLOBAL_RoomInfo)
-        leftIconView.image = UIImage(named: tempInfo[indexPath.row - 1].preImage!)
+        leftIconView.image = UIImage(named: tempInfo[(indexPath as IndexPath).row - 1].preImage!)
         annotationView?.leftCalloutAccessoryView = leftIconView
         return annotationView
     }
     
-    func mapViewDidFinishRenderingMap(mapView: MKMapView, fullyRendered: Bool) {
+    func mapViewDidFinishRenderingMap(_ mapView: MKMapView, fullyRendered: Bool) {
         if fullyRendered == true{
             self.progressView.stopAnimating()
         }
@@ -410,7 +410,7 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
     
     //MARK: - UIScrollViewDelegate
     //滑动时收起键盘 2016.8.14
-    func scrollViewWillBeginDragging(scrollView: UIScrollView){
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView){
         self.search.resignFirstResponder()
     }
 }

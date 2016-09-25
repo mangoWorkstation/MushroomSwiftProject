@@ -18,7 +18,7 @@ class EditOtherViewController: UIViewController,UITableViewDelegate,UITableViewD
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.keyboardDismissMode = .OnDrag
+        tableView.keyboardDismissMode = .onDrag
         // Do any additional setup after loading the view.
     }
 
@@ -28,11 +28,11 @@ class EditOtherViewController: UIViewController,UITableViewDelegate,UITableViewD
     }
     
     //MARK: - UITableViewDelegate
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat{
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
         return 50
     }
     
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?{
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String?{
         if(selectedRow == "昵称"){
             return "请在输入新昵称😊"
         }
@@ -41,38 +41,38 @@ class EditOtherViewController: UIViewController,UITableViewDelegate,UITableViewD
         }
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         var cell = UITableViewCell()
         if(self.selectedRow == "昵称"){
-            cell = self.tableView.dequeueReusableCellWithIdentifier("InputCell")!
+            cell = self.tableView.dequeueReusableCell(withIdentifier: "InputCell")!
             let name = cell.viewWithTag(101) as! UITextField
             name.delegate = self
             name.text = GLOBAL_UserProfile.nickName
             name.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
         }
         if(self.selectedRow == "性别"){
-            cell = self.tableView.dequeueReusableCellWithIdentifier("SexCell")!
+            cell = self.tableView.dequeueReusableCell(withIdentifier: "SexCell")!
             let currentSex = GLOBAL_UserProfile.sex
-            if(currentSex == 0 && indexPath.row == 0){
-                cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+            if(currentSex == 0 && (indexPath as NSIndexPath).row == 0){
+                cell.accessoryType = UITableViewCellAccessoryType.checkmark
             }
-            else if(currentSex == 1 && indexPath.row == 1){
-                cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+            else if(currentSex == 1 && (indexPath as NSIndexPath).row == 1){
+                cell.accessoryType = UITableViewCellAccessoryType.checkmark
             }
             let labels = ["女","男"]
             let label = cell.viewWithTag(103) as! UILabel
-            label.text = labels[indexPath.row]
+            label.text = labels[(indexPath as NSIndexPath).row]
             label.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
             
         }
         return cell
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int{
+    func numberOfSections(in tableView: UITableView) -> Int{
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         if(self.selectedRow == "昵称"){
             return 1
         }
@@ -84,18 +84,18 @@ class EditOtherViewController: UIViewController,UITableViewDelegate,UITableViewD
         }
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
-        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
+        self.tableView.deselectRow(at: indexPath, animated: true)
         if(self.selectedRow == "性别"){
-            let cell = self.tableView.cellForRowAtIndexPath(indexPath)
+            let cell = self.tableView.cellForRow(at: indexPath)
             var cells = self.tableView.visibleCells
             for i in 0 ..< cells.count {
                 let _cell = cells[i] 
-                _cell.accessoryType = UITableViewCellAccessoryType.None
+                _cell.accessoryType = UITableViewCellAccessoryType.none
             }
-            cell!.accessoryType = UITableViewCellAccessoryType.Checkmark
+            cell!.accessoryType = UITableViewCellAccessoryType.checkmark
             //设置单选
-            if(indexPath.row == 0){
+            if((indexPath as NSIndexPath).row == 0){
                 GLOBAL_UserProfile.sex = 0
             }
             else {
@@ -106,24 +106,24 @@ class EditOtherViewController: UIViewController,UITableViewDelegate,UITableViewD
     }
     
     //MARK: - UITextFieldDelegate
-    func textFieldShouldBeginEditing(textField: UITextField) -> Bool{
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool{
         print("textFieldShouldBeginEditing")
         return true
     }
     
-    func textFieldDidBeginEditing(textField: UITextField){
+    func textFieldDidBeginEditing(_ textField: UITextField){
         print("textFieldDidBeginEditing")
     }
-    func textFieldShouldEndEditing(textField: UITextField) -> Bool{
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool{
         print("textFieldShouldEndEditing")
         return true
     }    
-    func textFieldShouldReturn(textField: UITextField) -> Bool{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool{
         print("textFieldShouldReturn")
         textField.resignFirstResponder()
         return true
     }
-    func textFieldDidEndEditing(textField: UITextField){
+    func textFieldDidEndEditing(_ textField: UITextField){
         print("textFieldDidEndEditing")
         GLOBAL_UserProfile.nickName = textField.text
 

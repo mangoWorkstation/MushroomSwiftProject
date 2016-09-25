@@ -21,8 +21,8 @@ class ChooseAreaViewController: UIViewController,UIPickerViewDelegate{
     override func viewDidLoad() {
         chooseAreaPickerView.delegate = self
         self.Background.image = UIImage(named: "ChooseAreaBackground")
-        self.Background.contentMode = UIViewContentMode.ScaleAspectFill
-        self.navigationController?.navigationBar.translucent = false
+        self.Background.contentMode = UIViewContentMode.scaleAspectFill
+        self.navigationController?.navigationBar.isTranslucent = false
         // Do any additional setup after loading the view, typically from a nib.
     }
     
@@ -32,25 +32,25 @@ class ChooseAreaViewController: UIViewController,UIPickerViewDelegate{
     }
     
     //MARK: - UIPickerViewDelegate
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int{
+    func numberOfComponentsInPickerView(_ pickerView: UIPickerView) -> Int{
         return 1
     }
     
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int{
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int{
         return self.area.count
     }
     
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?{
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?{
         return self.area[row]
     }
     
-    func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView?) -> UIView{
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView{
         let label = UILabel()
         label.adjustsFontSizeToFitWidth = true
-        label.textAlignment = .Center
+        label.textAlignment = .center
         label.font = UIFont(name: GLOBAL_appFont!, size: 20.0)
-        label.textColor = UIColor.whiteColor()
+        label.textColor = UIColor.white
         
         label.text = self.area[row]
         

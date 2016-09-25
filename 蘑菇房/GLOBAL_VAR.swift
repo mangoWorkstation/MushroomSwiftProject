@@ -10,9 +10,9 @@ import Foundation
 
 public var GLOBAL_deviceModel:String?{
     didSet{
-        let filePath = NSHomeDirectory().stringByAppendingString("/Documents/deviceModel.plist")
+        let filePath = NSHomeDirectory() + "/Documents/deviceModel.plist"
         let arr = NSArray(object: GLOBAL_deviceModel!)
-        arr.writeToFile(filePath, atomically: true)
+        arr.write(toFile: filePath, atomically: true)
         print("写入成功！")
         //测试通过 2016.8.27
     }

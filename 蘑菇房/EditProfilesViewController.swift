@@ -12,7 +12,7 @@ class EditProfilesViewController: UIViewController,UITableViewDelegate,UITableVi
 
     @IBOutlet weak var tableView: UITableView!
     
-    @IBAction func unwindSegueForEditOtherVC(unwindSegue :UIStoryboardSegue){
+    @IBAction func unwindSegueForEditOtherVC(_ unwindSegue :UIStoryboardSegue){
 //        let vc = unwindSegue.sourceViewController as! EditOtherViewController
 //        let cell = vc.tableView.dequeueReusableCellWithIdentifier("InputCell")! as UITableViewCell
 //        let name = cell.viewWithTag(101) as! UITextField
@@ -33,7 +33,7 @@ class EditProfilesViewController: UIViewController,UITableViewDelegate,UITableVi
         self.tableView.reloadData()
         tableView.delegate = self
         tableView.dataSource = self
-        self.tabBarController?.tabBar.hidden = true
+        self.tabBarController?.tabBar.isHidden = true
         // Do any additional setup after loading the view.
     }
 
@@ -43,8 +43,8 @@ class EditProfilesViewController: UIViewController,UITableViewDelegate,UITableVi
     }
     
     //MARK: - UITableViewDelegate
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat{
-        if(indexPath.row == 0){
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
+        if((indexPath as NSIndexPath).row == 0){
             return 100
         }
         else{
@@ -52,22 +52,22 @@ class EditProfilesViewController: UIViewController,UITableViewDelegate,UITableVi
         }
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         var cell = UITableViewCell()
-        if(indexPath.row == 0){
-            cell = self.tableView.dequeueReusableCellWithIdentifier("UserIconCell",forIndexPath: indexPath)
+        if((indexPath as NSIndexPath).row == 0){
+            cell = self.tableView.dequeueReusableCell(withIdentifier: "UserIconCell",for: indexPath)
             let label = cell.viewWithTag(101) as! UILabel
             let icon = cell.viewWithTag(102) as! UIImageView
             label.text = "头像"
             label.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
             icon.image = UIImage(named: GLOBAL_UserProfile.face!)
         }
-        if(indexPath.row > 0){
-            cell = self.tableView.dequeueReusableCellWithIdentifier("GeneralCell",forIndexPath: indexPath)
+        if((indexPath as NSIndexPath).row > 0){
+            cell = self.tableView.dequeueReusableCell(withIdentifier: "GeneralCell",for: indexPath)
             let labels = ["昵称","用户ID","性别","地区"]
             let label = cell.viewWithTag(201) as! UILabel
             let detail = cell.viewWithTag(202) as! UILabel
-            label.text = labels[indexPath.row - 1]
+            label.text = labels[(indexPath as NSIndexPath).row - 1]
             label.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
             detail.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
             switch label.text! {
@@ -89,48 +89,48 @@ class EditProfilesViewController: UIViewController,UITableViewDelegate,UITableVi
             }
             
             if label.text == "用户ID" {
-                cell.accessoryType = UITableViewCellAccessoryType.None
+                cell.accessoryType = UITableViewCellAccessoryType.none
             }
             else{
-                cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+                cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
             }
         }
         return cell
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int{
+    func numberOfSections(in tableView: UITableView) -> Int{
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         return 5
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
-        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        if(indexPath.row == 0){
-            performSegueWithIdentifier("EditImageSegue", sender: nil)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
+        self.tableView.deselectRow(at: indexPath, animated: true)
+        if((indexPath as NSIndexPath).row == 0){
+            performSegue(withIdentifier: "EditImageSegue", sender: nil)
         }
-        if(indexPath.row == 1){
-            performSegueWithIdentifier("EditOtherSegue", sender: "昵称")
+        if((indexPath as NSIndexPath).row == 1){
+            performSegue(withIdentifier: "EditOtherSegue", sender: "昵称")
         }
-        if(indexPath.row == 3){
-            performSegueWithIdentifier("EditOtherSegue", sender: "性别")
+        if((indexPath as NSIndexPath).row == 3){
+            performSegue(withIdentifier: "EditOtherSegue", sender: "性别")
         }
 //        if(indexPath.row == 4){
 //            performSegueWithIdentifier("EditOtherSegue", sender: "地区")
 //        }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "EditImageSegue"){
-            let vc = segue.destinationViewController as! FaceShowViewController
+            let vc = segue.destination as! FaceShowViewController
             vc.navigationItem.backBarButtonItem?.title = self.navigationItem.title
             vc.navigationItem.title = "头像"
         }
         
         if(segue.identifier == "EditOtherSegue"){
-            let vc = segue.destinationViewController as! EditOtherViewController
+            let vc = segue.destination as! EditOtherViewController
             vc.navigationItem.backBarButtonItem?.title = self.navigationItem.title
             vc.navigationItem.rightBarButtonItem?.title = "保存"
             let rowName = sender as! String

@@ -17,13 +17,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     //数码测色说明：
     //统一使用“普通RGB”数值进行测色
     
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
         GLOBAL_deviceModel = UIDevice().modelName
         //获取设备型号
+        
 
-        GLOBAL_appFont = "HannotateSC-W7"
+        GLOBAL_appFont = "PingFangSC-Regular"
         //设置app字体
         //编号如下:
         //Hanzipen - HanziPenSC-W3/HanziPenSC-W5
@@ -31,13 +32,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //站酷快乐体 字体编号:HappyZcool-2016
         
         UINavigationBar.appearance().barTintColor = UIColor(red: 64/255, green: 151/255, blue: 32/255, alpha: 1)
-        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
+        UINavigationBar.appearance().tintColor = UIColor.white
 
         
         //设置标题栏的字体 2016.8.25
         if let barFont = UIFont(name: GLOBAL_appFont!, size: 17.5) {
             UINavigationBar.appearance().titleTextAttributes = [
-                NSForegroundColorAttributeName:UIColor.whiteColor(),
+                NSForegroundColorAttributeName:UIColor.white,
                 NSFontAttributeName:barFont
             ]
         }
@@ -50,15 +51,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //                    NSBackgroundColorAttributeName:UIColor(red: 159/255, green: 159/255, blue: 159/255, alpha: 1),
                     NSFontAttributeName:barFont
                 ],
-                forState: .Normal
+                for: UIControlState()
             )
         }
         
         
-        UITabBar.appearance().tintColor = UIColor.whiteColor()
+        UITabBar.appearance().tintColor = UIColor.white
         UITabBar.appearance().selectionIndicatorImage = UIImage(named: "tabitem-selected")
         
-        application.statusBarStyle = .LightContent
+        application.statusBarStyle = .lightContent
+        
+        Thread.sleep(forTimeInterval: 2.0)
+        //设置启动页的停留时间
         
 //        用来查找自定义字体编号,需要时取消注释状态 2016.8.25
 //        let fontFamilyNames = UIFont.familyNames()
@@ -72,25 +76,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    func applicationWillResignActive(application: UIApplication) {
+    func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
     }
 
-    func applicationDidEnterBackground(application: UIApplication) {
+    func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     }
 
-    func applicationWillEnterForeground(application: UIApplication) {
+    func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     }
 
-    func applicationDidBecomeActive(application: UIApplication) {
+    func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     }
 
-    func applicationWillTerminate(application: UIApplication) {
+    func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
@@ -105,7 +109,7 @@ public extension UIDevice {
         uname(&systemInfo)
         let machineMirror = Mirror(reflecting: systemInfo.machine)
         let identifier = machineMirror.children.reduce("") { identifier, element in
-            guard let value = element.value as? Int8 where value != 0 else { return identifier }
+            guard let value = element.value as? Int8 , value != 0 else { return identifier }
             return identifier + String(UnicodeScalar(UInt8(value)))
         }
         

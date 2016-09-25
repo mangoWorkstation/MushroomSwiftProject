@@ -24,7 +24,7 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
     //定时器
     //用于控制轮播图的滑动
     //2016.7.1
-    private var timer:NSTimer!
+    fileprivate var timer:Timer!
     
     //"选择地区"的按钮
     //2016.7.1/12:43
@@ -44,60 +44,38 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
     //2016.7.1/12:43
     @IBOutlet weak var tableView: UITableView!
     
+    let footer = ESRefreshFooterAnimator.init(frame: CGRect.zero)
+    
+    let header = ESRefreshHeaderAnimator.init(frame: CGRect.zero)
+    
+    let loadingTimeInterval : Double = 2.0
+    
+    var viewIsOnceLoaded = true
+
+    
     //unwindSegue
     //用于“选择地区”视图完成之后，刷新当前前台数据
-    @IBAction func unwindSegueToMushroomVC(segue:UIStoryboardSegue){
-        let vc = segue.sourceViewController as! ChooseAreaViewController
-        let index = vc.chooseAreaPickerView.selectedRowInComponent(0)
+    @IBAction func unwindSegueToMushroomVC(_ segue:UIStoryboardSegue){
+        let vc = segue.source as! ChooseAreaViewController
+        let index = vc.chooseAreaPickerView.selectedRow(inComponent: 0)
         self.chosenArea = vc.area[index]
-        self.tableView.headerView?.beginRefreshing()
-        self.clickOnButton.setTitle(self.chosenArea, forState: UIControlState.Normal)
+        self.clickOnButton.setTitle(self.chosenArea, for: UIControlState())
         self.backgroundData = regionFilter(self.chosenArea!, rawDataArray: GLOBAL_RoomInfo)
         self.foregroundShownData = self.backgroundData
+        self.tableView.es_startPullToRefresh()
+        self.tableView.es_autoPullToRefresh()
         self.tableView.reloadData()
-        self.tableView.setContentOffset(CGPointMake(0,0), animated: true)//数据刷新后，返回顶部 2016.8.2
+        self.tableView.setContentOffset(CGPoint(x: 0,y: 0), animated: true)//数据刷新后，返回顶部 2016.8.2
     }
     
     //上拉加载数据
     //测试于2016.8.27通过
-    @IBAction func upPullLoadData(sender:UITableViewHeaderFooterView?){
-        
-        //延迟执行，模拟网络延迟
-        xwDelay(1) { () -> Void in
-            
-            self.tableView.reloadData()
-            self.tableView.headerView?.endRefreshing()
-            
-        }
-        
-    }
-    
-    //下拉加载更多
-    //测试于2016.8.27通过
-    @IBAction func downPlullLoadData(sender:UITableViewHeaderFooterView?){
-        xwDelay(1) { () -> Void in
-            //如果从当前前台数据foregroundShownData的最后一个数据往后数15个，下标还没超过后台数据原型backgroundData的最大下标，则加载数据
-            //如果下标达到后台数据backgroundData的最大下标，则退出
-            if self.backgroundData.count > 15{
-                for i in self.foregroundShownData.endIndex..<self.foregroundShownData.endIndex+15{
-                    if i == self.backgroundData.count{
-                        break
-                    }
-                    else{
-                        self.foregroundShownData.append(GLOBAL_RoomInfo[i])
-                    }
-                }
-            }
-            self.tableView.reloadData()
-            self.tableView.footerView?.endRefreshing()
-        }
-        
-    }
+
 
     //unwindSegue
     //简单地返回到本页面
     //测试于2016.8.24通过
-    @IBAction func justJumpBackToThisVC(sender:AnyObject?){
+    @IBAction func justJumpBackToThisVC(_ sender:AnyObject?){
         //Do nothing
     }
     
@@ -105,7 +83,7 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        clickOnButton.setTitle("选择区域", forState: UIControlState.Normal)
+        clickOnButton.setTitle("选择区域", for: UIControlState())
         clickOnButton.titleLabel?.font = UIFont(name: GLOBAL_appFont!, size: 17.5)
         
         prepareForLoadedData()  //加载数据
@@ -116,17 +94,45 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         tableView.dataSource = self
         tableView.reloadData()
         
-        tableView.backgroundColor = UIColor(red: 142/255, green: 164/255, blue: 182/255, alpha: 1)
-        //16进制码:#8EA4B6
+//        tableView.backgroundColor = UIColor(red: 142/255, green: 164/255, blue: 182/255, alpha: 1)
+//        //16进制码:#8EA4B6 (142,164,182)
         
-        tableView.separatorColor = UIColor(white: 0.9, alpha: 1)    //设置分割线颜色
+//        tableView.backgroundColor = UIColor(red: 131/255, green: 175/255, blue: 155/255, alpha: 1)
         
-        tableView.headerView = XWRefreshNormalHeader(target: self, action: #selector(MushroomViewController.upPullLoadData(_:)))    //下拉刷新 2016.8.27
+        let background = UIImageView(image: UIImage(named: "Background_1"))
+        tableView.backgroundView = background
         
-        tableView.footerView = XWRefreshAutoNormalFooter(target: self, action: #selector(MushroomViewController.downPlullLoadData(_:))) //上拉加载 2016.8.27
+//        tableView.backgroundColor = UIColor.clearColor()
+        
+        
+        tableView.separatorColor = UIColor(white: 1, alpha: 1)    //设置分割线颜色
+        
+        
+        configurateHeaderAndFooter() //设置表头和表尾
+
+        self.tableView.es_addPullToRefresh(animator: header) {
+            [weak self] in
+            self?.refresh()
+        }
+        
+        
+        self.tableView.es_addInfiniteScrolling(animator: footer) {
+            [weak self] in
+            self?.loadMore()
+        }
         
         // Do any additional setup after loading the view, typically from a nib.
 
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        print(viewIsOnceLoaded)
+        print("viewDidAppear执行了")
+        if viewIsOnceLoaded {
+            super.viewDidAppear(animated)
+            self.tableView.es_startPullToRefresh()
+            self.viewIsOnceLoaded = false
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -144,49 +150,93 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         }
     }
     
+    private func configurateHeaderAndFooter(){
+        header.loadingDescription = "🍄小蘑菇正在努力加载"
+        header.pullToRefreshDescription = "下拉可以刷新噢"
+        header.releaseToRefreshDescription = "快松手呀～"
+        header.trigger = 70
+        
+        
+        footer.loadingDescription = "🍄小蘑菇正在找自己的家"
+        footer.noMoreDataDescription = "已经是最后一个啦"
+        footer.loadingMoreDescription = "上拉可以找到更多的家～"
+        
+    }
+    
+    private func refresh() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + loadingTimeInterval) {
+            self.tableView.reloadData()
+            self.tableView.es_stopPullToRefresh(completion: true)
+        }
+    }
+    
+    private func loadMore() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + loadingTimeInterval) {
+            if self.backgroundData.count > 15{
+                for i in self.foregroundShownData.endIndex..<self.foregroundShownData.endIndex+15{
+                    if i == self.backgroundData.count{
+                        break
+                    }
+                    else{
+                        self.foregroundShownData.append(GLOBAL_RoomInfo[i])
+                    }
+                }
+                self.tableView.reloadData()
+                self.tableView.es_stopLoadingMore()
+            }
+            if self.foregroundShownData == self.backgroundData{
+                self.tableView.es_noticeNoMoreData()
+            }
+            else{
+                self.tableView.es_stopLoadingMore()
+            }
+        }
+    }
+
+    
     //加载轮播图
-    private func prepareForScrollPages(){
+    fileprivate func prepareForScrollPages(){
         for i in 1..<4 {
             let image = UIImage(named: "\(i).jpg")!
             let x = CGFloat(i - 1) * self.view.frame.width
-            let imageView = UIImageView(frame: CGRectMake(x, 0, self.view.frame.width, pageScroller.bounds.height))
+            let imageView = UIImageView(frame: CGRect(x: x, y: 0, width: self.view.frame.width, height: pageScroller.bounds.height))
             imageView.image = image
-            pageScroller.pagingEnabled = true
+            pageScroller.isPagingEnabled = true
             pageScroller.showsHorizontalScrollIndicator = true
             pageScroller.showsVerticalScrollIndicator = false
-            pageScroller.scrollEnabled = true
+            pageScroller.isScrollEnabled = true
             pageScroller.addSubview(imageView)
             pageScroller.delegate = self
         }
         
         let i:Int = 4
-        pageScroller.contentSize = CGSizeMake((self.view.frame.width * CGFloat(i - 1)), pageScroller.frame.height)
+        pageScroller.contentSize = CGSize(width: (self.view.frame.width * CGFloat(i - 1)), height: pageScroller.frame.height)
         pageDots.numberOfPages = i - 1
-        pageDots.currentPageIndicatorTintColor = UIColor.blueColor()
-        pageDots.pageIndicatorTintColor = UIColor.grayColor()
+        pageDots.currentPageIndicatorTintColor = UIColor.blue
+        pageDots.pageIndicatorTintColor = UIColor.gray
         addTimer()
     }
     
     //滚动横幅的视图
     //MARK:- UIScrollViewDelegate
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let width = self.view.frame.width
         let offsetX = scrollView.contentOffset.x
         let index = (offsetX + width / 2) / width
         pageDots.currentPage = Int(index)
     }
 
-    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         removeTimer()
     }
 
-    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         addTimer()
     }
 
     //时间控制器，控制滚动
     func addTimer() {
-        timer = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: #selector(MushroomViewController.nextImage), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(MushroomViewController.nextImage), userInfo: nil, repeats: true)
     }
 
     func removeTimer() {
@@ -204,40 +254,40 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         }
     
         let offsetX = CGFloat(pageIndex) * self.view.frame.width
-        pageScroller.setContentOffset(CGPointMake(offsetX, 0), animated: true)
+        pageScroller.setContentOffset(CGPoint(x: offsetX, y: 0), animated: true)
     }
 
     
     
     //MARK:- UITableViewDelegate,UITableViewDataSource
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         return 1
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return self.foregroundShownData.count
     }
     
 
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 120
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{
         if section == 0{
-            return 0.0
+            return 2
         }
         else if section > 0 {
-            return 3
+            return 2
         }
         else {
             return 0
         }
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCellWithIdentifier("CellForRooms")! as UITableViewCell
-        let info = foregroundShownData[indexPath.section] as RoomInfoModel
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: "CellForRooms")! as UITableViewCell
+        let info = foregroundShownData[(indexPath as NSIndexPath).section] as RoomInfoModel
         let image = cell.viewWithTag(1) as! UIImageView
         let name = cell.viewWithTag(2) as! UILabel
         let more = cell.viewWithTag(3) as! UILabel
@@ -253,27 +303,36 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         name.font = UIFont(name: GLOBAL_appFont!, size: 17.0)
         more.font = UIFont(name: GLOBAL_appFont!, size: 12.0)
         
-        name.textColor = UIColor.whiteColor()
-        more.textColor = UIColor.blackColor()
+        name.textColor = UIColor.black
+        more.textColor = UIColor.black
         
-        cell.backgroundColor = UIColor.clearColor()
+        cell.backgroundColor = UIColor(white: 0.6, alpha: 0.4)
+        
+        
+        
+        cell.layer.masksToBounds = true
+        cell.layer.cornerRadius = 25
+        cell.clipsToBounds = true
+        
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
-        self.tableView.deselectRowAtIndexPath(indexPath, animated: true) //点击后取消被选中状态 2016.7.17
-        let cell = self.tableView.cellForRowAtIndexPath(indexPath)
-        let name = cell?.viewWithTag(2) as! UILabel
-        performSegueWithIdentifier("ShowDetailSegue", sender: name)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
+        let cell = self.tableView.cellForRow(at: indexPath)!
+//        cell.selectedBackgroundView?.backgroundColor = UIColor(red: 178/255, green: 190/255, blue: 143/255,alpha:1)
+//        //#B2BE9F
+        self.tableView.deselectRow(at: indexPath, animated: true)
+        let name = cell.viewWithTag(2) as! UILabel
+        performSegue(withIdentifier: "ShowDetailSegue", sender: name)
         print("didSelectRowAtIndexPath执行了")
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ChooseAreaSegue"{
-            let vc = segue.destinationViewController as! ChooseAreaViewController
+            let vc = segue.destination as! ChooseAreaViewController
         }
         if(segue.identifier == "ShowDetailSegue"){
-            let vc = segue.destinationViewController as! PresentRoomDetailViewController
+            let vc = segue.destination as! PresentRoomDetailViewController
             let name = sender as! UILabel
             vc.currentArea = self.clickOnButton.currentTitle
             vc.navigationItem.title = name.text

@@ -90,7 +90,7 @@ class PDBarChart: PDChart {
         return CGFloat(self.frame.size.height)
     }
     
-    func getBarView(frame: CGRect) -> UIView {
+    func getBarView(_ frame: CGRect) -> UIView {
         let barView: UIView = UIView(frame: frame)
         barView.backgroundColor = self.dataItem.barBgColor
         barView.clipsToBounds = true
@@ -98,21 +98,21 @@ class PDBarChart: PDChart {
         return barView
     }
     
-    func getBarShapeLayer(layerFrame: CGRect, barHeight: CGFloat) -> CAShapeLayer {
+    func getBarShapeLayer(_ layerFrame: CGRect, barHeight: CGFloat) -> CAShapeLayer {
         let shapeLayer: CAShapeLayer = CAShapeLayer()
-        shapeLayer.fillColor = UIColor.whiteColor().CGColor
-        shapeLayer.strokeColor = self.dataItem.barColor.CGColor
+        shapeLayer.fillColor = UIColor.white.cgColor
+        shapeLayer.strokeColor = self.dataItem.barColor.cgColor
         shapeLayer.lineWidth = self.dataItem.barWidth
         shapeLayer.strokeStart = 0.0
         shapeLayer.strokeEnd = 1.0
         shapeLayer.frame = layerFrame
         
         let barPath: UIBezierPath = UIBezierPath()
-        barPath.moveToPoint(CGPointMake(self.dataItem.barWidth / 2, layerFrame.size.height))
-        barPath.addLineToPoint(CGPointMake(self.dataItem.barWidth / 2, layerFrame.size.height - barHeight))
+        barPath.move(to: CGPoint(x: self.dataItem.barWidth / 2, y: layerFrame.size.height))
+        barPath.addLine(to: CGPoint(x: self.dataItem.barWidth / 2, y: layerFrame.size.height - barHeight))
         barPath.stroke()
         
-        shapeLayer.path = barPath.CGPath
+        shapeLayer.path = barPath.cgPath
         
         return shapeLayer
     }
@@ -147,7 +147,7 @@ class PDBarChart: PDChart {
             let bvx: CGFloat = basePoint.x + xDegreeInterval / 2 + self.dataItem.barMargin + (self.dataItem.barWidth + self.dataItem.barMargin * 2) * CGFloat(i)
             let bvy: CGFloat = basePoint.y - bvh - self.dataItem.axesWidth / 2
             
-            let barView: UIView = self.getBarView(CGRectMake(bvx, bvy, bvw, bvh))
+            let barView: UIView = self.getBarView(CGRect(x: bvx, y: bvy, width: bvw, height: bvh))
             self.barBgArray.append(barView)
             self.addSubview(barView)
         }
@@ -167,8 +167,8 @@ class PDBarChart: PDChart {
             let barView: UIView = self.barBgArray[i]
             
             //barShape
-            let barShapeLayer: CAShapeLayer = self.getBarShapeLayer(CGRectMake(0, 0, barView.frame.size.width, barView.frame.size.height), barHeight: point.y / self.dataItem.yMax * yAxesHeight)
-            barShapeLayer.addAnimation(self.getBarAnimation(), forKey: "barAnimation")
+            let barShapeLayer: CAShapeLayer = self.getBarShapeLayer(CGRect(x: 0, y: 0, width: barView.frame.size.width, height: barView.frame.size.height), barHeight: point.y / self.dataItem.yMax * yAxesHeight)
+            barShapeLayer.add(self.getBarAnimation(), forKey: "barAnimation")
             self.barLayerArray.append(barShapeLayer)
             barView.layer.addSublayer(barShapeLayer)
         }
@@ -176,11 +176,11 @@ class PDBarChart: PDChart {
         UIGraphicsEndImageContext()
     }
 
-    override func drawRect(rect: CGRect)
+    override func draw(_ rect: CGRect)
     {
-        super.drawRect(rect)
+        super.draw(rect)
         
-        let context: CGContextRef = UIGraphicsGetCurrentContext()!
+        let context: CGContext = UIGraphicsGetCurrentContext()!
         axesComponent.strokeAxes(context)
     }
 

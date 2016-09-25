@@ -26,18 +26,18 @@ class FeedBackViewController: UIViewController,UITableViewDelegate,UITableViewDa
         // Dispose of any resources that can be recreated.
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
 //        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        if(indexPath.section == 1){
+        if((indexPath as NSIndexPath).section == 1){
             
         }
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat{
-        if(indexPath.section == 0){
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
+        if((indexPath as NSIndexPath).section == 0){
             return 200
         }
-        else if(indexPath.section == 1){
+        else if((indexPath as NSIndexPath).section == 1){
             return 50
         }
         else {
@@ -45,35 +45,35 @@ class FeedBackViewController: UIViewController,UITableViewDelegate,UITableViewDa
         }
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = UITableViewCell()
-        if(indexPath.section == 0){
-            cell = self.tableView.dequeueReusableCellWithIdentifier("InputCell")!
+        if((indexPath as NSIndexPath).section == 0){
+            cell = self.tableView.dequeueReusableCell(withIdentifier: "InputCell")!
             let textView = cell.viewWithTag(102) as! UITextView
-            textView.editable = true
-            textView.keyboardType = UIKeyboardType.Default
+            textView.isEditable = true
+            textView.keyboardType = UIKeyboardType.default
             textView.delegate = self
         }
-        if(indexPath.section == 1){
-            cell = self.tableView.dequeueReusableCellWithIdentifier("ConfirmButtonCell")!
+        if((indexPath as NSIndexPath).section == 1){
+            cell = self.tableView.dequeueReusableCell(withIdentifier: "ConfirmButtonCell")!
             let label = cell.textLabel
             label?.text = "发送"
             label!.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
-            label?.textAlignment = NSTextAlignment.Center
-            label?.textColor = UIColor.redColor()
+            label?.textAlignment = NSTextAlignment.center
+            label?.textColor = UIColor.red
         }
         return cell
     }
     
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?{
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String?{
         if(section == 0){
             return "请输入您的建议，不超过140个字噢～"
         }
@@ -83,7 +83,7 @@ class FeedBackViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     
 //回车收键盘 2016.7.21
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool{
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool{
         if(text == "\n"){
             textView.resignFirstResponder()
             return false
@@ -92,7 +92,7 @@ class FeedBackViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     
     //滑动收键盘
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.view.endEditing(true)
     }
     

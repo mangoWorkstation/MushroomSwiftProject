@@ -25,7 +25,7 @@ class PDPieChartDataItem {
     var clockWise: Bool = true
     var chartStartAngle: CGFloat = CGFloat(-M_PI / 2)
     var pieTipFontSize: CGFloat = 12.0
-    var pieTipTextColor: UIColor = UIColor.whiteColor()
+    var pieTipTextColor: UIColor = UIColor.white
     var pieMargin: CGFloat = 0
     
     //required
@@ -49,26 +49,26 @@ class PDPieChart: PDChart {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func getShapeLayerWithARCPath(color: UIColor?, lineWidth: CGFloat, center: CGPoint, radius: CGFloat, startAngle: CGFloat, endAngle: CGFloat, clockWise: Bool) -> CAShapeLayer {
+    func getShapeLayerWithARCPath(_ color: UIColor?, lineWidth: CGFloat, center: CGPoint, radius: CGFloat, startAngle: CGFloat, endAngle: CGFloat, clockWise: Bool) -> CAShapeLayer {
         //layer
         let pathLayer: CAShapeLayer = CAShapeLayer()
         pathLayer.lineCap = kCALineCapButt
-        pathLayer.fillColor = UIColor.clearColor().CGColor
+        pathLayer.fillColor = UIColor.clear.cgColor
         if (color != nil) {
-            pathLayer.strokeColor = color!.CGColor
+            pathLayer.strokeColor = color!.cgColor
         }
         pathLayer.lineWidth = self.dataItem.pieWidth
         pathLayer.strokeStart = 0.0
         pathLayer.strokeEnd = 1.0
-        pathLayer.backgroundColor = UIColor.clearColor().CGColor
+        pathLayer.backgroundColor = UIColor.clear.cgColor
         
         //path
         let path: UIBezierPath = UIBezierPath()
         path.lineWidth = lineWidth
-        path.addArcWithCenter(center, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: self.dataItem.clockWise)
+        path.addArc(withCenter: center, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: self.dataItem.clockWise)
         path.stroke()
         
-        pathLayer.path = path.CGPath
+        pathLayer.path = path.cgPath
         return pathLayer
     }
     
@@ -78,7 +78,7 @@ class PDPieChart: PDChart {
         let center: CGPoint = CGPoint(x: self.frame.size.width / 2, y: self.frame.size.height / 2)
         
         let chartLayer: CAShapeLayer = CAShapeLayer()
-        chartLayer.backgroundColor = UIColor.clearColor().CGColor
+        chartLayer.backgroundColor = UIColor.clear.cgColor
         self.layer.addSublayer(chartLayer)
         
         UIGraphicsBeginImageContext(self.frame.size)
@@ -106,11 +106,11 @@ class PDPieChart: PDChart {
         }
         
         //mask
-        let maskCenter: CGPoint = CGPointMake(self.frame.size.width / 2.0, self.frame.size.height / 2)
+        let maskCenter: CGPoint = CGPoint(x: self.frame.size.width / 2.0, y: self.frame.size.height / 2)
         let maskRadius: CGFloat = self.frame.size.width / 2 - self.dataItem.pieMargin - self.dataItem.pieWidth / 2
         let maskStartAngle: CGFloat = -CGFloat(M_PI) / 2
         let maskEndAngle: CGFloat = CGFloat(M_PI) * 2 - CGFloat(M_PI) / 2
-        let maskLayer: CAShapeLayer = self.getShapeLayerWithARCPath(UIColor.whiteColor(), lineWidth: self.dataItem.pieWidth, center: maskCenter, radius: maskRadius, startAngle: maskStartAngle, endAngle: maskEndAngle, clockWise: true)
+        let maskLayer: CAShapeLayer = self.getShapeLayerWithARCPath(UIColor.white, lineWidth: self.dataItem.pieWidth, center: maskCenter, radius: maskRadius, startAngle: maskStartAngle, endAngle: maskEndAngle, clockWise: true)
         maskLayer.strokeStart = 0.0
         maskLayer.strokeEnd = 1.0
         
@@ -119,8 +119,8 @@ class PDPieChart: PDChart {
         animation.fromValue = 0.0
         animation.toValue = 1.0
         animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-        animation.removedOnCompletion = true
-        maskLayer.addAnimation(animation, forKey: "maskAnimation")
+        animation.isRemovedOnCompletion = true
+        maskLayer.add(animation, forKey: "maskAnimation")
         
         self.layer.mask = maskLayer
         
@@ -131,11 +131,11 @@ class PDPieChart: PDChart {
             let dataItem: PieDataItem = self.dataItem.dataArray[i]
             
             let pieTipLabel: UILabel = UILabel()
-            pieTipLabel.backgroundColor = UIColor.clearColor();
-            pieTipLabel.font = UIFont.systemFontOfSize(self.dataItem.pieTipFontSize)
+            pieTipLabel.backgroundColor = UIColor.clear;
+            pieTipLabel.font = UIFont.systemFont(ofSize: self.dataItem.pieTipFontSize)
             pieTipLabel.textColor = self.dataItem.pieTipTextColor
             pieTipLabel.numberOfLines = 2
-            pieTipLabel.lineBreakMode = .ByWordWrapping
+            pieTipLabel.lineBreakMode = .byWordWrapping
             //芒果君自己新增的属性 2016.9.3
             if (dataItem.description != nil) {
                 pieTipLabel.text = dataItem.description! + "\n\(round(dataItem.percentage * 100))%"
@@ -147,7 +147,7 @@ class PDPieChart: PDChart {
             pieTipLabel.alpha = 0.0
             pieTipLabel.center = pieCenterPointArray[i]
             
-            UIView.animateWithDuration(0.5, delay: NSTimeInterval(self.dataItem.animationDur), options: UIViewAnimationOptions.CurveEaseInOut, animations:{
+            UIView.animate(withDuration: 0.5, delay: TimeInterval(self.dataItem.animationDur), options: UIViewAnimationOptions(), animations:{
                     () -> Void in
                     pieTipLabel.alpha = 1.0
                 }, completion: {
@@ -159,8 +159,8 @@ class PDPieChart: PDChart {
         }
     }
     
-    override func drawRect(rect: CGRect) {
-        super.drawRect(rect)
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
     }
 
 }

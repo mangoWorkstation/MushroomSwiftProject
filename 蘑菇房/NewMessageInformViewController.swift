@@ -12,10 +12,10 @@ class NewMessageInformViewController: UIViewController,UITableViewDelegate,UITab
 
     @IBOutlet weak var tableView: UITableView!
     
-    @IBAction func switchButtonOnChanged(sender:UISwitch,forEvent: UIEvent?) {
+    @IBAction func switchButtonOnChanged(_ sender:UISwitch,forEvent: UIEvent?) {
         let switchtag = sender.tag
         if switchtag == 100{
-            if sender.on == true {
+            if sender.isOn == true {
                 GLOBAL_UserProfile.allowPushingNotification = true
             }
             else{
@@ -23,7 +23,7 @@ class NewMessageInformViewController: UIViewController,UITableViewDelegate,UITab
             }
         }
         if switchtag == 101 {
-            if sender.on == true{
+            if sender.isOn == true{
                 GLOBAL_UserProfile.allowPushingNewMessageToMobile = true
             }
             else {
@@ -59,7 +59,7 @@ class NewMessageInformViewController: UIViewController,UITableViewDelegate,UITab
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.scrollEnabled = true
+        tableView.isScrollEnabled = true
         // Do any additional setup after loading the view.
     }
 
@@ -69,39 +69,39 @@ class NewMessageInformViewController: UIViewController,UITableViewDelegate,UITab
     }
     
     //MARK: - UITableViewDelegate,UITableViewDataSource
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
-        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
+        self.tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat{
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
         return 50
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 2
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = UITableViewCell()
         let labels = ["允许新消息推送","允许短信推送到手机"]
-        cell = self.tableView.dequeueReusableCellWithIdentifier("NewMessageSetupCell",forIndexPath: indexPath)
+        cell = self.tableView.dequeueReusableCell(withIdentifier: "NewMessageSetupCell",for: indexPath)
         let label = cell.viewWithTag(101) as! UILabel
         let switchButton = UISwitch()
         cell.accessoryView = switchButton
         //2016.8.29修改，使列表可以滑动
-        label.text = labels[indexPath.row]
+        label.text = labels[(indexPath as NSIndexPath).row]
         label.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
-        switch indexPath.row{
-        case 0: switchButton.on = self.willAllowNewMessageInform!
-        case 1: switchButton.on = self.willAllowPushNewMessageToMobile!
+        switch (indexPath as NSIndexPath).row{
+        case 0: switchButton.isOn = self.willAllowNewMessageInform!
+        case 1: switchButton.isOn = self.willAllowPushNewMessageToMobile!
         default :break
         }
-        switchButton.tag = indexPath.row + 100
-        switchButton.addTarget(self, action: #selector(NewMessageInformViewController.switchButtonOnChanged(_:forEvent:)), forControlEvents: .ValueChanged)
+        switchButton.tag = (indexPath as NSIndexPath).row + 100
+        switchButton.addTarget(self, action: #selector(NewMessageInformViewController.switchButtonOnChanged(_:forEvent:)), for: .valueChanged)
         //注意这句话的写法，他妈，改了几次没改对
         return cell
     }

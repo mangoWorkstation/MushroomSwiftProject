@@ -12,18 +12,18 @@ import Foundation
  * @Param timeStamp : String
  * @Return String
  */
-public func timeStampToString(timeStamp:String)->String {
+public func timeStampToString(_ timeStamp:String)->String {
     
     let string = NSString(string: timeStamp)
     
-    let timeSta:NSTimeInterval = string.doubleValue
-    let dfmatter = NSDateFormatter()
+    let timeSta:TimeInterval = string.doubleValue
+    let dfmatter = DateFormatter()
     dfmatter.dateFormat="yyyy年MM月dd日 HH:mm:ss"
     
-    let date = NSDate(timeIntervalSince1970: timeSta)
+    let date = Date(timeIntervalSince1970: timeSta)
     
     //    print(dfmatter.stringFromDate(date))
-    return dfmatter.stringFromDate(date)
+    return dfmatter.string(from: date)
 }
 
 
@@ -32,7 +32,7 @@ public func timeStampToString(timeStamp:String)->String {
  * @Param rawDataArray : [NotificationPreview]
  * @Return [NotificationPreview]
  */
-func unreadMessageFilter(rawDataArray:[NotificationPreview])->[NotificationPreview]{
+func unreadMessageFilter(_ rawDataArray:[NotificationPreview])->[NotificationPreview]{
     var filterData : [NotificationPreview] = []
     for i in 0 ..< rawDataArray.count{
         let info = rawDataArray[i]
@@ -49,7 +49,7 @@ func unreadMessageFilter(rawDataArray:[NotificationPreview])->[NotificationPrevi
  * @Param rawDataArray : [NotificationPreview]
  * @Return [NotificationPreview]
  */
-func clearAllUnreadMessage(rawDataArray:[NotificationPreview])->[NotificationPreview]{
+func clearAllUnreadMessage(_ rawDataArray:[NotificationPreview])->[NotificationPreview]{
     var allData : [NotificationPreview] = []
     for i in 0 ..< rawDataArray.count{
         let info = rawDataArray[i]
@@ -69,7 +69,7 @@ func clearAllUnreadMessage(rawDataArray:[NotificationPreview])->[NotificationPre
  * @Param rawDataArray : [RoomInfoModel]
  * @Return [RoomInfoModel]
  */
-func regionFilter(chosenArea:String,rawDataArray: [RoomInfoModel])->[RoomInfoModel]{
+func regionFilter(_ chosenArea:String,rawDataArray: [RoomInfoModel])->[RoomInfoModel]{
     var filter : [RoomInfoModel] = []
     var tempIdentifier:Int?
     switch chosenArea {
@@ -102,7 +102,7 @@ func regionFilter(chosenArea:String,rawDataArray: [RoomInfoModel])->[RoomInfoMod
  * @Param name: String 基地名称
  * @Return RoomInfoModel 基地信息
  */
-func acquireRoomInfoByName(name:String)->RoomInfoModel{
+func acquireRoomInfoByName(_ name:String)->RoomInfoModel{
     var foundOut = RoomInfoModel(district: 0, name: "0", preImage: "0", address: "0", roomID: "0",latitude: 0.0,longitude:0.0)
     for i in 0 ..< GLOBAL_RoomInfo.count {
         let temp = GLOBAL_RoomInfo[i]
@@ -119,7 +119,7 @@ func acquireRoomInfoByName(name:String)->RoomInfoModel{
  * @Param roomID: String 基地ID
  * @Return RoomInfoModel 基地信息
  */
-func acquireRoomInfoByRoomID(roomID:String)->RoomInfoModel{
+func acquireRoomInfoByRoomID(_ roomID:String)->RoomInfoModel{
     var foundOut = RoomInfoModel(district: 0, name: "0", preImage: "0", address: "0", roomID: "0",latitude: 0.0,longitude:0.0)
     for i in 0 ..< GLOBAL_RoomInfo.count {
         let temp = GLOBAL_RoomInfo[i]
@@ -140,9 +140,9 @@ func acquireRoomInfoByRoomID(roomID:String)->RoomInfoModel{
  * @Param lng_2: Double 地点1精度
  * @Return Double 两地直线距离
  */
-func distanceCalc(lat_1:Double,lng_1:Double,lat_2:Double,lng_2:Double)->Double{
+func distanceCalc(_ lat_1:Double,lng_1:Double,lat_2:Double,lng_2:Double)->Double{
     let EARTH_RADIUS = 6378.137
-    func rad(d:Double)->Double{
+    func rad(_ d:Double)->Double{
         return d * M_PI / 180.0
     }
     let radLat_1 = rad(lat_1)
@@ -155,7 +155,7 @@ func distanceCalc(lat_1:Double,lng_1:Double,lat_2:Double,lng_2:Double)->Double{
     return s
 }
 
-func nearbyRoomFilter(rawData:[RoomInfoModel])->[RoomInfoModel]{
+func nearbyRoomFilter(_ rawData:[RoomInfoModel])->[RoomInfoModel]{
     var filterData :[RoomInfoModel] = []
     var differences : Dictionary<String,Double> = [:]
     for i in 0 ..< GLOBAL_RoomInfo.count {
@@ -166,7 +166,7 @@ func nearbyRoomFilter(rawData:[RoomInfoModel])->[RoomInfoModel]{
         let lng_2 = GLOBAL_UserProfile.longitude
         differences[roomID!] = distanceCalc(lat_1!, lng_1: lng_1!, lat_2: lat_2!, lng_2: lng_2!)
     }
-    let dicArray = differences.sort{
+    let dicArray = differences.sorted{
         $0.1<$1.1
     }
     for i in 0 ..< 5 {

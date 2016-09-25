@@ -98,98 +98,98 @@ class PDChartAxesComponent: NSObject {
         return yDegreeInterval
     }
     
-    func getAxesDegreeTipLabel(tipText: String, center: CGPoint, size: CGSize, fontSize: CGFloat, textAlignment: NSTextAlignment, textColor: UIColor) -> UILabel {
+    func getAxesDegreeTipLabel(_ tipText: String, center: CGPoint, size: CGSize, fontSize: CGFloat, textAlignment: NSTextAlignment, textColor: UIColor) -> UILabel {
         let label: UILabel = UILabel(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: size))
         label.text = tipText
         label.center = center
         label.textAlignment = textAlignment
         label.textColor = textColor
-        label.backgroundColor = UIColor.clearColor()
+        label.backgroundColor = UIColor.clear
         label.adjustsFontSizeToFitWidth = true
-        label.font = UIFont.systemFontOfSize(fontSize)
+        label.font = UIFont.systemFont(ofSize: fontSize)
         return label
     }
     
-    func getXAxesDegreeTipLabel(tipText: String, center: CGPoint, size: CGSize, fontSize: CGFloat) -> UILabel {
-        return self.getAxesDegreeTipLabel(tipText, center: center, size: size, fontSize: fontSize, textAlignment: NSTextAlignment.Center, textColor: dataItem.axesTipColor)
+    func getXAxesDegreeTipLabel(_ tipText: String, center: CGPoint, size: CGSize, fontSize: CGFloat) -> UILabel {
+        return self.getAxesDegreeTipLabel(tipText, center: center, size: size, fontSize: fontSize, textAlignment: NSTextAlignment.center, textColor: dataItem.axesTipColor)
     }
     
-    func getYAxesDegreeTipLabel(tipText: String, center: CGPoint, size: CGSize, fontSize: CGFloat) -> UILabel {
-        return self.getAxesDegreeTipLabel(tipText, center: center, size: size, fontSize: fontSize, textAlignment: NSTextAlignment.Right, textColor: dataItem.axesTipColor)
+    func getYAxesDegreeTipLabel(_ tipText: String, center: CGPoint, size: CGSize, fontSize: CGFloat) -> UILabel {
+        return self.getAxesDegreeTipLabel(tipText, center: center, size: size, fontSize: fontSize, textAlignment: NSTextAlignment.right, textColor: dataItem.axesTipColor)
     }
     
-    func strokeAxes(context: CGContextRef?) {
+    func strokeAxes(_ context: CGContext?) {
         let xAxesWidth: CGFloat = self.getXAxesWidth()
         let yAxesHeight: CGFloat = self.getYAxesHeight()
         let basePoint: CGPoint = self.getBasePoint()
         
         
         if dataItem.showAxes {
-            CGContextSetStrokeColorWithColor(context, dataItem.axesColor.CGColor)
-            CGContextSetFillColorWithColor(context, dataItem.axesColor.CGColor)
+            context?.setStrokeColor(dataItem.axesColor.cgColor)
+            context?.setFillColor(dataItem.axesColor.cgColor)
             
             let axesPath: UIBezierPath = UIBezierPath()
             axesPath.lineWidth = dataItem.axesWidth
-            axesPath.lineCapStyle = CGLineCap.Round
-            axesPath.lineJoinStyle = CGLineJoin.Round
+            axesPath.lineCapStyle = CGLineCap.round
+            axesPath.lineJoinStyle = CGLineJoin.round
             
             //x axes--------------------------------------
-            axesPath.moveToPoint(CGPoint(x: basePoint.x, y: basePoint.y))
-            axesPath.addLineToPoint(CGPoint(x: basePoint.x + xAxesWidth, y: basePoint.y))
+            axesPath.move(to: CGPoint(x: basePoint.x, y: basePoint.y))
+            axesPath.addLine(to: CGPoint(x: basePoint.x + xAxesWidth, y: basePoint.y))
             
             //degrees in x axes
-            let xDegreeNum: Int = Int((dataItem.xMax - (dataItem.xMax % dataItem.xInterval)) / dataItem.xInterval)
+            let xDegreeNum: Int = Int((dataItem.xMax - (dataItem.xMax.truncatingRemainder(dividingBy: dataItem.xInterval))) / dataItem.xInterval)
             let xDegreeInterval: CGFloat = self.getXDegreeInterval()
 
             if dataItem.showXDegree {
                 for i in 0..<xDegreeNum {
                     let degreeX: CGFloat = basePoint.x + xDegreeInterval * CGFloat(i + 1)
-                    axesPath.moveToPoint(CGPoint(x: degreeX, y: basePoint.y))
-                    axesPath.addLineToPoint(CGPoint(x: degreeX, y: basePoint.y - dataItem.degreeLength))
+                    axesPath.move(to: CGPoint(x: degreeX, y: basePoint.y))
+                    axesPath.addLine(to: CGPoint(x: degreeX, y: basePoint.y - dataItem.degreeLength))
                 }
             }
             
             //x axes arrow
             //arrow body
-            axesPath.moveToPoint(CGPoint(x: basePoint.x + xAxesWidth, y: basePoint.y))
-            axesPath.addLineToPoint(CGPoint(x: basePoint.x + xAxesWidth + dataItem.arrowBodyLength, y: basePoint.y))
+            axesPath.move(to: CGPoint(x: basePoint.x + xAxesWidth, y: basePoint.y))
+            axesPath.addLine(to: CGPoint(x: basePoint.x + xAxesWidth + dataItem.arrowBodyLength, y: basePoint.y))
             //arrow head
             let arrowPath: UIBezierPath = UIBezierPath()
             arrowPath.lineWidth = dataItem.axesWidth
-            arrowPath.lineCapStyle = CGLineCap.Round
-            arrowPath.lineJoinStyle = CGLineJoin.Round
+            arrowPath.lineCapStyle = CGLineCap.round
+            arrowPath.lineJoinStyle = CGLineJoin.round
             
             let xArrowTopPoint: CGPoint = CGPoint(x: basePoint.x + xAxesWidth + dataItem.arrowBodyLength + dataItem.arrowHeight, y: basePoint.y)
-            arrowPath.moveToPoint(xArrowTopPoint)
-            arrowPath.addLineToPoint(CGPoint(x: basePoint.x + xAxesWidth + dataItem.arrowBodyLength, y: basePoint.y - dataItem.arrowWidth / 2))
-            arrowPath.addLineToPoint(CGPoint(x: basePoint.x + xAxesWidth + dataItem.arrowBodyLength, y: basePoint.y + dataItem.arrowWidth / 2))
-            arrowPath.addLineToPoint(xArrowTopPoint)
+            arrowPath.move(to: xArrowTopPoint)
+            arrowPath.addLine(to: CGPoint(x: basePoint.x + xAxesWidth + dataItem.arrowBodyLength, y: basePoint.y - dataItem.arrowWidth / 2))
+            arrowPath.addLine(to: CGPoint(x: basePoint.x + xAxesWidth + dataItem.arrowBodyLength, y: basePoint.y + dataItem.arrowWidth / 2))
+            arrowPath.addLine(to: xArrowTopPoint)
             
             //y axes--------------------------------------
-            axesPath.moveToPoint(CGPoint(x: basePoint.x, y: basePoint.y))
-            axesPath.addLineToPoint(CGPoint(x: basePoint.x, y: basePoint.y - yAxesHeight))
+            axesPath.move(to: CGPoint(x: basePoint.x, y: basePoint.y))
+            axesPath.addLine(to: CGPoint(x: basePoint.x, y: basePoint.y - yAxesHeight))
             
             //degrees in y axes
-            let yDegreesNum: Int = Int((dataItem.yMax - (dataItem.yMax % dataItem.yInterval)) / dataItem.yInterval)
+            let yDegreesNum: Int = Int((dataItem.yMax - (dataItem.yMax.truncatingRemainder(dividingBy: dataItem.yInterval))) / dataItem.yInterval)
             let yDegreeInterval: CGFloat = self.getYDegreeInterval()
             if dataItem.showYDegree {
                 for i in 0..<yDegreesNum {
                     let degreeY: CGFloat = basePoint.y - yDegreeInterval * CGFloat(i + 1)
-                    axesPath.moveToPoint(CGPoint(x: basePoint.x, y: degreeY))
-                    axesPath.addLineToPoint(CGPoint(x: basePoint.x +  dataItem.degreeLength, y: degreeY))
+                    axesPath.move(to: CGPoint(x: basePoint.x, y: degreeY))
+                    axesPath.addLine(to: CGPoint(x: basePoint.x +  dataItem.degreeLength, y: degreeY))
                 }
             }
             
             //y axes arrow
             //arrow body
-            axesPath.moveToPoint(CGPoint(x: basePoint.x, y: basePoint.y - yAxesHeight))
-            axesPath.addLineToPoint(CGPoint(x: basePoint.x, y: basePoint.y - yAxesHeight - dataItem.arrowBodyLength))
+            axesPath.move(to: CGPoint(x: basePoint.x, y: basePoint.y - yAxesHeight))
+            axesPath.addLine(to: CGPoint(x: basePoint.x, y: basePoint.y - yAxesHeight - dataItem.arrowBodyLength))
             //arrow head
             let yArrowTopPoint: CGPoint = CGPoint(x: basePoint.x, y: basePoint.y - yAxesHeight - dataItem.arrowBodyLength - dataItem.arrowHeight)
-            arrowPath.moveToPoint(yArrowTopPoint)
-            arrowPath.addLineToPoint(CGPoint(x: basePoint.x - dataItem.arrowWidth / 2, y: basePoint.y - yAxesHeight - dataItem.arrowBodyLength))
-            arrowPath.addLineToPoint(CGPoint(x: basePoint.x + dataItem.arrowWidth / 2, y: basePoint.y - yAxesHeight - dataItem.arrowBodyLength))
-            arrowPath.addLineToPoint(yArrowTopPoint)
+            arrowPath.move(to: yArrowTopPoint)
+            arrowPath.addLine(to: CGPoint(x: basePoint.x - dataItem.arrowWidth / 2, y: basePoint.y - yAxesHeight - dataItem.arrowBodyLength))
+            arrowPath.addLine(to: CGPoint(x: basePoint.x + dataItem.arrowWidth / 2, y: basePoint.y - yAxesHeight - dataItem.arrowBodyLength))
+            arrowPath.addLine(to: yArrowTopPoint)
             
             axesPath.stroke()
             arrowPath.stroke()

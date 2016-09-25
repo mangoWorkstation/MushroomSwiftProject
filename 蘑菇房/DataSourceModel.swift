@@ -13,25 +13,25 @@ class DataSource : NSObject {
 //    var roomID : String!
 //    var area: String!
 //    var level: String? //可为nil
-     var timestamp: NSTimeInterval?
+     var timestamp: TimeInterval?
      var finalIdentifier: String!
      var arr_airTemperature: [CGFloat]?
      var arr_airHumidity: [CGFloat]?
      var arr_soilTemperatrue: [CGFloat]?
      var arr_soilHumidity: [CGFloat]?
     
-     private var currentAirTemperature: CGFloat?
-     private var currentAirHumidity: CGFloat?
-     private var currentSoilTemperature: CGFloat?
-     private var currentSoilHumidity: CGFloat?
+     fileprivate var currentAirTemperature: CGFloat?
+     fileprivate var currentAirHumidity: CGFloat?
+     fileprivate var currentSoilTemperature: CGFloat?
+     fileprivate var currentSoilHumidity: CGFloat?
     
      var arr_CO2: [CGFloat]?
-     private var currentCO2: CGFloat?
+     fileprivate var currentCO2: CGFloat?
     
      var arr_Voltage: [CGFloat]?
-     private var currentVoltage: CGFloat?
+     fileprivate var currentVoltage: CGFloat?
     
-    init(roomID:String!,area:String!,level:String?,timestamp:NSTimeInterval!,arr_airTemperature:[CGFloat]?,arr_airHumidity:[CGFloat]?,arr_soilTemperatrue:[CGFloat]?,arr_soilHumidity:[CGFloat]?,arr_CO2:[CGFloat]?,arr_Voltage: [CGFloat]?) {
+    init(roomID:String!,area:String!,level:String?,timestamp:TimeInterval!,arr_airTemperature:[CGFloat]?,arr_airHumidity:[CGFloat]?,arr_soilTemperatrue:[CGFloat]?,arr_soilHumidity:[CGFloat]?,arr_CO2:[CGFloat]?,arr_Voltage: [CGFloat]?) {
         if level != nil{
             self.finalIdentifier = roomID + area + level!
         }

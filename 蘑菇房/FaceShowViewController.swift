@@ -14,16 +14,16 @@ class FaceShowViewController: UIViewController,UIActionSheetDelegate,UIImagePick
     @IBOutlet weak var face: UIImageView!
     
     
-    @IBAction func headToSystemPhotoLibrary(sender:UINavigationItem,forEvent:UIEvent?){
+    @IBAction func headToSystemPhotoLibrary(_ sender:UINavigationItem,forEvent:UIEvent?){
         let sheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: "取消", destructiveButtonTitle: nil, otherButtonTitles: "拍照", "从相册中选择")
-        sheet.showInView(self.view)
+        sheet.show(in: self.view)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.blackColor()
+        view.backgroundColor = UIColor.black
         face.image = UIImage(named: GLOBAL_UserProfile.face!)
-        let rightItem = UIBarButtonItem(barButtonSystemItem: .Compose, target: self, action: #selector(FaceShowViewController.headToSystemPhotoLibrary(_: forEvent: )))
+        let rightItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(FaceShowViewController.headToSystemPhotoLibrary(_: forEvent: )))
         self.navigationItem.rightBarButtonItem = rightItem
         // Do any additional setup after loading the view.
     }
@@ -34,28 +34,28 @@ class FaceShowViewController: UIViewController,UIActionSheetDelegate,UIImagePick
     }
     
     //MARK: - UIActionSheetDelegate
-    func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int){
+    func actionSheet(_ actionSheet: UIActionSheet, clickedButtonAt buttonIndex: Int){
         if buttonIndex == 1{
-            if UIImagePickerController.isSourceTypeAvailable(.Camera){
+            if UIImagePickerController.isSourceTypeAvailable(.camera){
                 let imagePickerVC = UIImagePickerController()
                 imagePickerVC.allowsEditing = false
-                imagePickerVC.sourceType = .Camera
-                imagePickerVC.cameraDevice = .Front
+                imagePickerVC.sourceType = .camera
+                imagePickerVC.cameraDevice = .front
                 imagePickerVC.delegate = self
-                self.presentViewController(imagePickerVC, animated: true, completion: nil)
+                self.present(imagePickerVC, animated: true, completion: nil)
             }
         }
         if buttonIndex == 2 {
-            if ((GLOBAL_deviceModel?.containsString("iPhone")) != nil){
-                if UIImagePickerController.isSourceTypeAvailable(.PhotoLibrary){
+            if ((GLOBAL_deviceModel?.contains("iPhone")) != nil){
+                if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
                     let imagePickerVC = UIImagePickerController()
                     imagePickerVC.allowsEditing = false
-                    imagePickerVC.sourceType = .PhotoLibrary
+                    imagePickerVC.sourceType = .photoLibrary
                     imagePickerVC.delegate = self
-                    self.presentViewController(imagePickerVC, animated: true, completion: nil)
+                    self.present(imagePickerVC, animated: true, completion: nil)
                 }
             }
-            else if ((GLOBAL_deviceModel?.containsString("iPad")) != nil){
+            else if ((GLOBAL_deviceModel?.contains("iPad")) != nil){
 //                if UIImagePickerController.isSourceTypeAvailable(.PhotoLibrary){
 //                    let imagePickerVC = UIImagePickerController()
 //                    imagePickerVC.allowsEditing = false
@@ -69,21 +69,21 @@ class FaceShowViewController: UIViewController,UIActionSheetDelegate,UIImagePick
     }
     
     //MARK: - UIImagePickerControllerDelegate
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]){
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]){
         face.image = info[UIImagePickerControllerOriginalImage] as? UIImage
-        face.contentMode = .ScaleAspectFit
+        face.contentMode = .scaleAspectFit
 //        UIImageWriteToSavedPhotosAlbum(face.image, self, , )
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
-    func saveImage(currentImage:UIImage){
+    func saveImage(_ currentImage:UIImage){
         let imageData = UIImageJPEGRepresentation(currentImage, 1)
         print(NSHomeDirectory())
-        let filePath = NSHomeDirectory().stringByAppendingString("Documents/UserProfile/face.png")
-        imageData?.writeToFile(filePath, atomically: false)
+        let filePath = NSHomeDirectory() + "Documents/UserProfile/face.png"
+        try? imageData?.write(to: URL(fileURLWithPath: filePath), options: [])
     }
     
-    func imageSavedInspector(image:UIImage,didFinishSavingWithError:NSError,contextInfo:AnyObject?){
+    func imageSavedInspector(_ image:UIImage,didFinishSavingWithError:NSError,contextInfo:AnyObject?){
         
     }
 
