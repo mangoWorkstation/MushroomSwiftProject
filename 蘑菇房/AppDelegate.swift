@@ -61,7 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         application.statusBarStyle = .lightContent
         
-        Thread.sleep(forTimeInterval: 2.0)
+        Thread.sleep(forTimeInterval: 1.0)
         //设置启动页的停留时间
         
 //        用来查找自定义字体编号,需要时取消注释状态 2016.8.25

@@ -27,6 +27,11 @@ class FaceShowViewController: UIViewController,UIActionSheetDelegate,UIImagePick
         self.navigationItem.rightBarButtonItem = rightItem
         // Do any additional setup after loading the view.
     }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        saveImage(self.face.image!)
+        print("图片已保存")
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

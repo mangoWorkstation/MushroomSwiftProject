@@ -87,10 +87,11 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
         let currentLocationSpan = MKCoordinateSpanMake(latDelta, lngDelta)
         
         let showInMap = self.showData
+        let locationCount = showInMap.count
         let annotation = self.mapShow.userLocation
         annotation.title = "我的位置"
         annotation.subtitle = "耶我在这～"
-        for i in 0 ..< showInMap.count{
+        for i in 0 ..< locationCount{
             let temp = showInMap[i]
             let center = CLLocation(latitude: temp.latitude!, longitude: temp.longitude!)
             let currentRegion = MKCoordinateRegion(center: center.coordinate, span: currentLocationSpan)
@@ -351,7 +352,8 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
 //                    showData.append(temp)
 //                }
 //            }
-            for element in GLOBAL_RoomInfo{
+            let elements = GLOBAL_RoomInfo.values
+            for element in elements{
                 if strcmp(element.name!,searchText) == 0{
                     self.showData.append(element)
                 }

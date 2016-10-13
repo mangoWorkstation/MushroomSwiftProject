@@ -69,7 +69,7 @@ func clearAllUnreadMessage(_ rawDataArray:[NotificationPreview])->[NotificationP
  * @Param rawDataArray : [RoomInfoModel]
  * @Return [RoomInfoModel]
  */
-func regionFilter(_ chosenArea:String,rawDataArray: [RoomInfoModel])->[RoomInfoModel]{
+func regionFilter(_ chosenArea:String,rawDataArray: Dictionary<String,RoomInfoModel>)->[RoomInfoModel]{
     var filter : [RoomInfoModel] = []
     var tempIdentifier:Int?
     switch chosenArea {
@@ -87,10 +87,10 @@ func regionFilter(_ chosenArea:String,rawDataArray: [RoomInfoModel])->[RoomInfoM
     case "宾阳县":tempIdentifier = 11
     default:tempIdentifier = nil
     }
-    for i in 0 ..< rawDataArray.count {
-        let tempElement = rawDataArray[i]
-        if (tempIdentifier == tempElement.districtIdentifier){
-            filter.append(tempElement)
+    let elements = rawDataArray.values
+    for element in elements {
+        if (tempIdentifier == element.districtIdentifier){
+            filter.append(element)
         }
     }
     return filter
@@ -104,10 +104,10 @@ func regionFilter(_ chosenArea:String,rawDataArray: [RoomInfoModel])->[RoomInfoM
  */
 func acquireRoomInfoByName(_ name:String)->RoomInfoModel{
     var foundOut = RoomInfoModel(district: 0, name: "0", preImage: "0", address: "0", roomID: "0",latitude: 0.0,longitude:0.0)
-    for i in 0 ..< GLOBAL_RoomInfo.count {
-        let temp = GLOBAL_RoomInfo[i]
-        if (temp.name == name){
-            foundOut = temp
+    let elements = GLOBAL_RoomInfo.values
+    for element in elements {
+        if (element.name == name){
+            foundOut = element
             break
         }
     }
@@ -121,10 +121,10 @@ func acquireRoomInfoByName(_ name:String)->RoomInfoModel{
  */
 func acquireRoomInfoByRoomID(_ roomID:String)->RoomInfoModel{
     var foundOut = RoomInfoModel(district: 0, name: "0", preImage: "0", address: "0", roomID: "0",latitude: 0.0,longitude:0.0)
-    for i in 0 ..< GLOBAL_RoomInfo.count {
-        let temp = GLOBAL_RoomInfo[i]
-        if (temp.roomID == roomID){
-            foundOut = temp
+    let elements = GLOBAL_RoomInfo.values
+    for element in elements {
+        if (element.roomID == roomID){
+            foundOut = element
             break
         }
     }
@@ -155,13 +155,14 @@ func distanceCalc(_ lat_1:Double,lng_1:Double,lat_2:Double,lng_2:Double)->Double
     return s
 }
 
-func nearbyRoomFilter(_ rawData:[RoomInfoModel])->[RoomInfoModel]{
-    var filterData :[RoomInfoModel] = []
+func nearbyRoomFilter(_ rawData: Dictionary<String,RoomInfoModel>)->[RoomInfoModel]{
+    var filterData : [RoomInfoModel] = []
     var differences : Dictionary<String,Double> = [:]
-    for i in 0 ..< GLOBAL_RoomInfo.count {
-        let roomID = GLOBAL_RoomInfo[i].roomID
-        let lat_1 = GLOBAL_RoomInfo[i].latitude
-        let lng_1 = GLOBAL_RoomInfo[i].longitude
+    let elements = GLOBAL_RoomInfo.values
+    for element in elements {
+        let roomID = element.roomID
+        let lat_1 = element.latitude
+        let lng_1 = element.longitude
         let lat_2 = GLOBAL_UserProfile.latitude
         let lng_2 = GLOBAL_UserProfile.longitude
         differences[roomID!] = distanceCalc(lat_1!, lng_1: lng_1!, lat_2: lat_2!, lng_2: lng_2!)

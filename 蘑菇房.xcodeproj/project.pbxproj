@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0D0C52B01D257A840036F8A5 /* PreviewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0C52AF1D257A840036F8A5 /* PreviewModel.swift */; };
+		0D1017831D981A45005BCE84 /* TabbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1017821D981A45005BCE84 /* TabbarViewController.swift */; };
 		0D2B80BB1D3BB2F9007FBB8A /* GLOBAL_VAR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2B80BA1D3BB2F9007FBB8A /* GLOBAL_VAR.swift */; };
 		0D2B80BD1D3C70B2007FBB8A /* AboutUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2B80BC1D3C70B2007FBB8A /* AboutUsViewController.swift */; };
 		0D2B9B2C1D387723006559F1 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2B9B2B1D387723006559F1 /* NotificationViewController.swift */; };
@@ -102,6 +103,7 @@
 
 /* Begin PBXFileReference section */
 		0D0C52AF1D257A840036F8A5 /* PreviewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewModel.swift; sourceTree = "<group>"; };
+		0D1017821D981A45005BCE84 /* TabbarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabbarViewController.swift; sourceTree = "<group>"; };
 		0D2B80BA1D3BB2F9007FBB8A /* GLOBAL_VAR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GLOBAL_VAR.swift; sourceTree = "<group>"; };
 		0D2B80BC1D3C70B2007FBB8A /* AboutUsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutUsViewController.swift; sourceTree = "<group>"; };
 		0D2B9B2B1D387723006559F1 /* NotificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
@@ -264,13 +266,6 @@
 			name = NeabyVCs;
 			sourceTree = "<group>";
 		};
-		0D780B9C1D6E9EAC00105124 /* Fonts */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Fonts;
-			sourceTree = "<group>";
-		};
 		0D7A7A8B1D7AB5BA009A3A1D /* UICountingLabel */ = {
 			isa = PBXGroup;
 			children = (
@@ -303,7 +298,6 @@
 			isa = PBXGroup;
 			children = (
 				0DB3ABEE1D7164320072E5F0 /* Frameworks */,
-				0D780B9C1D6E9EAC00105124 /* Fonts */,
 				0D8606AF1D62C0FF00CE3905 /* Storyboards */,
 				0D7FBC6B1CE80BDA00775FCA /* Page_3_User */,
 				0D7FBC691CE80BA000775FCA /* Page_2_Weather */,
@@ -333,6 +327,7 @@
 			isa = PBXGroup;
 			children = (
 				0D46331C1D2825F30070A0AF /* Controllers */,
+				0D1017821D981A45005BCE84 /* TabbarViewController.swift */,
 				0D46331B1D2825D80070A0AF /* Models */,
 			);
 			name = Page_1_MushRoom;
@@ -628,6 +623,7 @@
 				0D7785921D534B7400A74A30 /* NearbyViewController.swift in Sources */,
 				0DB357C81D7900A2002A7D85 /* PDChartAxesComponent.swift in Sources */,
 				0D8197261CEC8E3600CE0211 /* RoomInfoModel.swift in Sources */,
+				0D1017831D981A45005BCE84 /* TabbarViewController.swift in Sources */,
 				0D2B80BB1D3BB2F9007FBB8A /* GLOBAL_VAR.swift in Sources */,
 				0DC26BF91D941C7600A35048 /* ESRefreshProtocol.swift in Sources */,
 				0D0C52B01D257A840036F8A5 /* PreviewModel.swift in Sources */,

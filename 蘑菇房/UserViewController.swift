@@ -12,21 +12,8 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     
     @IBOutlet weak var tableView: UITableView!
-    
-//    @IBAction func upPullLoadData(sender:UITableViewHeaderFooterView?){
-//        
-//        //延迟执行，模拟网络延迟
-//        xwDelay(1) { () -> Void in
-//            
-//            self.tableView.reloadData()
-//            self.tableView.headerView?.endRefreshing()
-//            
-//        }
-//        
-//    }
 
-    
-   
+    @IBOutlet weak var UserInfoColumn: UIImageView!
     
     var staticItems_section_3 : [StaticItem] = [] //数组：用于存放静态状态图标
     var staticItems_section_2 : [StaticItem] = [] //数组：用于存放静态状态图标
@@ -40,18 +27,43 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         self.navigationController?.navigationBar.isTranslucent = false
         
+        configUserInfo()
+        
         staticItems_section_2 = [StaticItem(iconName:"MyHouse",label:"我家的蘑菇房"),StaticItem(iconName:"MyFollow",label:"我关注的蘑菇房"),StaticItem(iconName:"Nearby",label:"附近的基地"),StaticItem(iconName:"MyProfiles",label:"我的资料"),StaticItem(iconName:"Inform",label:"消息与通知")]
         staticItems_section_3 = [StaticItem(iconName:"Setup",label:"设置"),StaticItem(iconName:"About",label: "关于")]
         //初始化静态固定图标
-        self.automaticallyAdjustsScrollViewInsets = false
-        self.tableView.showsVerticalScrollIndicator = true
-        self.tableView.backgroundColor = UIColor(red: 142/255, green: 164/255, blue: 182/255, alpha: 1)
+//        self.tableView.showsVerticalScrollIndicator = true
+//        self.tableView.backgroundColor = UIColor(red: 142/255, green: 164/255, blue: 182/255, alpha: 1)
         self.tableView.separatorColor = UIColor(white: 0.9, alpha: 1)
-        self.tableView.tableHeaderView?.backgroundColor = UIColor(white: 0.9,alpha: 1)
+        
+        let background = UIImageView(image: UIImage(named: "Background_1"))
+        self.tableView.backgroundView = background
+        self.tableView.sectionHeaderHeight = 0
+        self.tableView.tableFooterView = UIView(frame: CGRect.zero)
+
 
         // Do any additional setup after loading the view, typically from a nib.
         self.tableView.reloadData()
-//        tableView.headerView = XWRefreshNormalHeader(target: self, action: #selector(UserViewController.upPullLoadData(_:)))
+        
+    }
+    
+    
+    private func configUserInfo(){
+//        UserInfoColumn.image = UIImage(named: "Background")
+//        UserInfoColumn.contentMode = .scaleAspectFill
+//        print(UserInfoColumn.center.x)
+//        print(UserInfoColumn.center.y)
+//        
+//        print(UserInfoColumn.frame.width)
+//        print(UserInfoColumn.frame.height)
+//        let face = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+//        face.image = UIImage(named: GLOBAL_UserProfile.face!)
+//        face.layer.masksToBounds = true
+//        face.layer.borderWidth = 3
+//        face.layer.borderColor = UIColor.white.cgColor
+//        face.layer.cornerRadius = 25
+//        face.clipsToBounds = true
+//        UserInfoColumn.addSubview(face)
     }
     
     override func didReceiveMemoryWarning() {
@@ -59,13 +71,17 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewWillLayoutSubviews() {
+        self.tableView.reloadData()
+    }
+    
     //MARK: - UITableViewDataSource
     //设置每一行的高度
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if ((indexPath as NSIndexPath).section == 0){  //用户信息栏 2016.7.5
-            return 200
+        if (indexPath as NSIndexPath).section == 0{
+            return 300
         }
-        else if((indexPath as NSIndexPath).section == 1){//滚动信息栏 2016.7.5
+        if((indexPath as NSIndexPath).section == 1){//滚动信息栏 2016.7.5
             let cell = self.tableView!.dequeueReusableCell(withIdentifier: "Notification")! as UITableViewCell
             let notification = cell.viewWithTag(202) as! UILabel
             if(notification.text!.characters.count < 27){    //自适应表格宽度 2016.7.6
@@ -91,7 +107,7 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     //设置每个部分分别有多少行
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         switch section{
-        case 0:fallthrough
+        case 0:return 1
         case 1:return 1
         case 2:return staticItems_section_2.count
         case 3:return staticItems_section_3.count
@@ -118,7 +134,7 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             icon.image = UIImage(named: GLOBAL_UserProfile.face!)
 //            icon.bounds = CGRectMake((icon.bounds.size.width-60)/2, (icon.bounds.size.height-60)/2-150, 60, 60)
 //            icon.frame = CGRectMake((icon.bounds.size.width - 60)/2, (icon.bounds.size.height-60)/2-150, 60,60)
-            icon.layer.cornerRadius = 30
+            icon.layer.cornerRadius = 25
             //注意:cornerRadius必须是storyBoard中，宽度的1/2;
             //在storyBoard中设置imageView时，高度必须是宽度的1/4才能磨成圆形
             //2016.7.27
@@ -131,7 +147,7 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             nameLabel.textColor = UIColor.white
             background.image = UIImage(named:"Background")
         }
-        else if ((indexPath as NSIndexPath).section == 1){
+        if ((indexPath as NSIndexPath).section == 1){
             
             cell = self.tableView!.dequeueReusableCell(withIdentifier: "Notification")!
             let sign = cell!.viewWithTag(201) as! UIImageView
@@ -139,7 +155,7 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             sign.image = UIImage(named: "Alert")
             notification.text = "2016-7-6 南宁市气象局发布暴雨红色预警，请注意强对流天气"
             notification.font = UIFont(name: GLOBAL_appFont!, size: 12.0)
-            notification.textColor = UIColor.white
+            notification.textColor = UIColor.black
 
             
         }
@@ -151,7 +167,7 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             icon.image = UIImage(named: _staticItem.iconName)
             label.text = _staticItem.label
             label.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
-            label.textColor = UIColor.white
+            label.textColor = UIColor.black
         }
         else if ((indexPath as NSIndexPath).section == 3){
             cell = self.tableView.dequeueReusableCell(withIdentifier: "General",for: indexPath)
@@ -161,34 +177,36 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             Icon.image = UIImage(named: _staticItem.iconName)
             Title.text = _staticItem.label
             Title.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
-            Title.textColor = UIColor.white
+            Title.textColor = UIColor.black
 
         }
-        
-        cell?.backgroundColor = UIColor.gray
-        cell!.layer.masksToBounds = true
-        cell?.layer.cornerRadius = 10
-        cell?.clipsToBounds = true
+        if (indexPath as NSIndexPath).section != 0 {
+            cell!.backgroundColor = UIColor(white: 0.6, alpha: 0.4)
+            cell!.layer.masksToBounds = true
+            cell?.layer.cornerRadius = 10
+            cell?.clipsToBounds = true
+        }
         
         return cell!
     }
     
     //设置表格部分（section）的间距 2016.7.15/9:17
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{
-        if 0 == section{
-            return 0.1
+        
+        if(0 == section){
+            return 0
         }
         else if(1 == section){
             return 2
         }
         else if(2 == section){
-            return 2
+            return 5
         }
-        else if(3 == section){
+        else if 3 == section{
             return 5
         }
         else {
-            return 0
+            return 100
         }
     }
     

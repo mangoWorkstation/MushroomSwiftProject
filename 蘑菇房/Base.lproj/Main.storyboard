@@ -6,10 +6,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Tab Bar Controller-->
+        <!--Tabbar View Controller-->
         <scene sceneID="yl2-sM-qoP">
             <objects>
-                <tabBarController hidesBottomBarWhenPushed="YES" id="49e-Tb-3d3" sceneMemberID="viewController">
+                <tabBarController hidesBottomBarWhenPushed="YES" id="49e-Tb-3d3" customClass="TabbarViewController" customModule="蘑菇房" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
                         <rect key="frame" x="0.0" y="975" width="768" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -40,7 +40,7 @@
         <scene sceneID="Kyz-wu-Xi5">
             <objects>
                 <viewControllerPlaceholder storyboardIdentifier="UINavigationController-DHC-jQ-PFh" storyboardName="Page_2_Weather" id="oug-Ao-4R2" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="K9j-Y2-hye"/>
+                    <tabBarItem key="tabBarItem" tag="1" title="Item" id="K9j-Y2-hye"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sjB-1A-Ebs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -50,7 +50,7 @@
         <scene sceneID="wfR-4T-2ZH">
             <objects>
                 <viewControllerPlaceholder storyboardName="Page_3_User" id="Yai-I7-Kj4" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="8eJ-wt-XSS"/>
+                    <tabBarItem key="tabBarItem" tag="2" title="Item" id="8eJ-wt-XSS"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2TL-LH-fX7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

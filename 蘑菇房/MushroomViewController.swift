@@ -14,12 +14,12 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
     
     //后台的数据原型
     //2016.8.27
-    var backgroundData : [RoomInfoModel] = GLOBAL_RoomInfo//本地缩略图缓存，将来可增加网络连接 2016.7.1/12:43
+    var backgroundData : [RoomInfoModel] = Array(GLOBAL_RoomInfo.values)//本地缩略图缓存，将来可增加网络连接 2016.7.1/12:43
     
     //前台的显示数据，是数据原型的子数组。
     //滑动到表格的底部时，从后台原型变量处拿数据，并在尾部追加，每次追加15条，直至前后台数据完全一致
     //2016.8.27
-    var foregroundShownData : [RoomInfoModel] = []
+    var foregroundShownData :[RoomInfoModel] = []
     
     //定时器
     //用于控制轮播图的滑动
@@ -83,12 +83,17 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         clickOnButton.setTitle("选择区域", for: UIControlState())
         clickOnButton.titleLabel?.font = UIFont(name: GLOBAL_appFont!, size: 17.5)
         
         prepareForLoadedData()  //加载数据
         
         prepareForScrollPages() //加载轮播图
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(MushroomViewController.refresh(_notification:)), name: NSNotification.Name(rawValue: "homeRefresh"), object: nil)
+        
+        //点击tabbar后刷新页面
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -137,12 +142,15 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+        NotificationCenter.default.removeObserver(self)
+        print("removed!!!")
         // Dispose of any resources that can be recreated.
     }
     
     //为首次加载准备数据，仅显示15条，滑动到底部再继续加载
     private func prepareForLoadedData(){
-        for newElement in backgroundData {
+        let newElements = backgroundData
+        for newElement in newElements{
             self.foregroundShownData.append(newElement)
             if self.foregroundShownData.count > 15{
                 break
@@ -170,6 +178,15 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         }
     }
     
+    //override
+    @objc private func refresh(_notification:NotificationCenter) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + loadingTimeInterval) {
+            self.tableView.reloadData()
+            self.tableView.es_stopPullToRefresh(completion: true)
+        }
+    }
+    
+    
     private func loadMore() {
         DispatchQueue.main.asyncAfter(deadline: .now() + loadingTimeInterval) {
             if self.backgroundData.count > 15{
@@ -178,7 +195,7 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
                         break
                     }
                     else{
-                        self.foregroundShownData.append(GLOBAL_RoomInfo[i])
+                        self.foregroundShownData.append(self.backgroundData[i])
                     }
                 }
                 self.tableView.reloadData()

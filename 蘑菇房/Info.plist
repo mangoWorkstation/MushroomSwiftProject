@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSCameraUsageDescription</key>
+	<string>蘑菇房需要使用相机才能获取您的美美自拍😊</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>蘑菇房需要访问相册来获取您的新头像哟😉</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>CFBundleAllowMixedLocalizations</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
