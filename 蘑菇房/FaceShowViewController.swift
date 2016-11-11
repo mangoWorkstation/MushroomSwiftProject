@@ -10,37 +10,14 @@ import UIKit
 
 class FaceShowViewController: UIViewController,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIPopoverPresentationControllerDelegate{
 
+    let userDefault = UserDefaults()
     
     @IBOutlet weak var face: UIImageView!
     
-    
     @IBAction func headToSystemPhotoLibrary(_ sender:UINavigationItem,forEvent:UIEvent?){
-        let sheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: "取消", destructiveButtonTitle: nil, otherButtonTitles: "拍照", "从相册中选择")
-        sheet.show(in: self.view)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = UIColor.black
-        face.image = UIImage(named: GLOBAL_UserProfile.face!)
-        let rightItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(FaceShowViewController.headToSystemPhotoLibrary(_: forEvent: )))
-        self.navigationItem.rightBarButtonItem = rightItem
-        // Do any additional setup after loading the view.
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        saveImage(self.face.image!)
-        print("图片已保存")
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    //MARK: - UIActionSheetDelegate
-    func actionSheet(_ actionSheet: UIActionSheet, clickedButtonAt buttonIndex: Int){
-        if buttonIndex == 1{
+        let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        sheet.addAction(UIAlertAction(title: "拍照", style: .default, handler: {
+            (action)->Void in
             if UIImagePickerController.isSourceTypeAvailable(.camera){
                 let imagePickerVC = UIImagePickerController()
                 imagePickerVC.allowsEditing = false
@@ -49,8 +26,10 @@ class FaceShowViewController: UIViewController,UIActionSheetDelegate,UIImagePick
                 imagePickerVC.delegate = self
                 self.present(imagePickerVC, animated: true, completion: nil)
             }
-        }
-        if buttonIndex == 2 {
+
+        }))
+        sheet.addAction(UIAlertAction(title: "从手机相册选择", style: .default, handler: {
+            (action)->Void in
             if ((GLOBAL_deviceModel?.contains("iPhone")) != nil){
                 if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
                     let imagePickerVC = UIImagePickerController()
@@ -67,17 +46,45 @@ class FaceShowViewController: UIViewController,UIActionSheetDelegate,UIImagePick
 //                    imagePickerVC.sourceType = .PhotoLibrary
 //                    imagePickerVC.delegate = self
 //                }
+//                
                 
-
             }
-        }
+            
+        }))
+        sheet.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
+        
+        present(sheet, animated: true, completion: nil)
+
     }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = UIColor.black
+        face.image = UIImage(data: GLOBAL_UserProfile.face as Data)
+        face.contentMode = .scaleToFill
+        let rightItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(FaceShowViewController.headToSystemPhotoLibrary(_: forEvent: )))
+        self.navigationItem.rightBarButtonItem = rightItem
+        // Do any additional setup after loading the view.
+    }
+    
+//    override func viewDidDisappear(_ animated: Bool) {
+//        saveImage(self.face.image!)
+//        print("图片已保存")
+//    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
     
     //MARK: - UIImagePickerControllerDelegate
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]){
         face.image = info[UIImagePickerControllerOriginalImage] as? UIImage
-        face.contentMode = .scaleAspectFit
-//        UIImageWriteToSavedPhotosAlbum(face.image, self, , )
+        face.contentMode = .scaleToFill
+//        let userDefault = UserDefaults()
+        let faceData = UIImageJPEGRepresentation(face.image!, 100)
+        GLOBAL_UserProfile.face = faceData!
         dismiss(animated: true, completion: nil)
     }
     
@@ -93,12 +100,4 @@ class FaceShowViewController: UIViewController,UIActionSheetDelegate,UIImagePick
     }
 
 //    //MARK: - NavigationSegue
-//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        if segue.identifier == "ShowSystemPhotoAlbumSegue"{
-//            let vc = segue.destinationViewController as! UIImagePickerController
-//            vc.popoverPresentationController?.delegate = self
-//            vc.preferredContentSize = CGSize(width: 320, height: 300)
-//            vc.delegate = self
-//        }
-//    }
 }

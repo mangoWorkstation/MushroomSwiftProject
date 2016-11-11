@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -16,44 +18,27 @@
                         <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="蘑菇背景.png" highlighted="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iCt-9s-00m"/>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copyright © 2016 蘑菇房工作室出品" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Ki-1m-m5r">
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="qUv-Er-E9s"/>
-                                </constraints>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="蘑菇背景.png" highlightedImage="蘑菇背景.png" highlighted="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iCt-9s-00m">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copyright © 2016 广西大学 蘑菇房工作室出品" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Ki-1m-m5r">
+                                <rect key="frame" x="31" y="601" width="313" height="21"/>
                                 <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="15"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="D6c-6p-Dh7">
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="6Au-Ib-nZq"/>
-                                    <constraint firstAttribute="width" constant="50" id="GgP-sp-Th1"/>
-                                </constraints>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="蘑菇房 " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fTd-cP-5GJ">
-                                <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="25"/>
-                                <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="fTd-cP-5GJ" firstAttribute="leading" secondItem="D6c-6p-Dh7" secondAttribute="trailing" constant="-13" id="05q-mm-D7Y"/>
-                            <constraint firstItem="iCt-9s-00m" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="72R-xi-QeH"/>
-                            <constraint firstItem="5Ki-1m-m5r" firstAttribute="top" secondItem="fTd-cP-5GJ" secondAttribute="bottom" constant="20" id="GQp-8y-R3j"/>
-                            <constraint firstItem="iCt-9s-00m" firstAttribute="centerX" secondItem="5Ki-1m-m5r" secondAttribute="centerX" id="GYn-Jn-d97"/>
-                            <constraint firstItem="D6c-6p-Dh7" firstAttribute="top" secondItem="iCt-9s-00m" secondAttribute="bottom" constant="-99" id="Iav-2y-Pke"/>
-                            <constraint firstItem="D6c-6p-Dh7" firstAttribute="top" secondItem="fTd-cP-5GJ" secondAttribute="top" id="JM0-Ir-tyl"/>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="5Ki-1m-m5r" secondAttribute="bottom" constant="8" symbolic="YES" id="MNQ-hk-hto"/>
-                            <constraint firstItem="5Ki-1m-m5r" firstAttribute="top" secondItem="D6c-6p-Dh7" secondAttribute="bottom" constant="20" id="YXU-lO-f8b"/>
-                            <constraint firstItem="iCt-9s-00m" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="aVY-4B-rpp"/>
-                            <constraint firstAttribute="trailing" secondItem="iCt-9s-00m" secondAttribute="trailing" id="gKh-ut-fH7"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="fTd-cP-5GJ" secondAttribute="trailing" constant="81" id="k9E-Vn-sJ3"/>
-                            <constraint firstItem="D6c-6p-Dh7" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="93" id="xMN-DY-bud"/>
+                            <constraint firstItem="iCt-9s-00m" firstAttribute="bottom" secondItem="xb3-aO-Qok" secondAttribute="top" id="91y-Hv-X9t"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="5Ki-1m-m5r" secondAttribute="bottom" constant="45" id="R8J-rK-tDC"/>
+                            <constraint firstItem="iCt-9s-00m" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="dB1-xp-J84"/>
+                            <constraint firstItem="iCt-9s-00m" firstAttribute="centerX" secondItem="5Ki-1m-m5r" secondAttribute="centerX" id="i2p-Gl-YGh"/>
+                            <constraint firstAttribute="trailing" secondItem="iCt-9s-00m" secondAttribute="trailing" id="ozT-Uj-WD4"/>
+                            <constraint firstItem="iCt-9s-00m" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="yeS-iM-EOV"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -63,7 +48,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="icon.jpg" width="640" height="640"/>
         <image name="蘑菇背景.png" width="1080" height="1920"/>
     </resources>
 </document>

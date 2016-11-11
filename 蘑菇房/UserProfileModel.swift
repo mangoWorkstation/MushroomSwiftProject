@@ -9,7 +9,7 @@
 import Foundation
 
 class UserProfiles: NSObject {
-    var face:String?
+    var face:Data
     var nickName:String?
     var id:Int?
     var sex:Int?
@@ -21,8 +21,8 @@ class UserProfiles: NSObject {
     var latitude:Double?
     var longitude:Double?
     
-    init(face:String,nickName:String,id:Int,sex:Int,province:String,city:String?,allowPushingNotification:Bool,allowPushingNewMessageToMobile:Bool?,latitude:Double?,longitude:Double?) {
-        self.face = face
+    init(face:NSData,nickName:String,id:Int,sex:Int,province:String,city:String,allowPushingNotification:Bool,allowPushingNewMessageToMobile:Bool?,latitude:Double?,longitude:Double?) {
+        self.face = face as Data
         self.nickName = nickName
         self.id = id
         self.sex = sex
@@ -38,5 +38,32 @@ class UserProfiles: NSObject {
             self.latitude = nil
             self.longitude = nil
         }
+    }
+    
+    init(coder aDecoder:NSCoder!){
+        self.face = aDecoder.decodeObject(forKey: "face") as! Data
+        self.nickName = aDecoder.decodeObject(forKey: "nickName") as? String
+        self.id = aDecoder.decodeObject(forKey: "id") as? Int
+        self.sex = aDecoder.decodeObject(forKey: "sex") as? Int
+        self.province = aDecoder.decodeObject(forKey: "province") as? String
+        self.city = aDecoder.decodeObject(forKey: "city") as? String
+        self.allowPushingNotification = aDecoder.decodeObject(forKey: "allowPushingNotification") as? Bool
+        self.allowPushingNewMessageToMobile = aDecoder.decodeObject(forKey: "allowPushingNewMessageToMobile") as? Bool
+        self.latitude = aDecoder.decodeObject(forKey: "latitude") as? Double
+        self.longitude = aDecoder.decodeObject(forKey: "longitude") as? Double
+    }
+    
+    func encodeWithCoder(_ aCoder:NSCoder!){
+        aCoder.encode(face,forKey:"face")
+        aCoder.encode(nickName,forKey:"nickName")
+        aCoder.encode(id,forKey:"id")
+        aCoder.encode(sex,forKey:"sex")
+        aCoder.encode(province,forKey:"province")
+        aCoder.encode(city,forKey:"city")
+        aCoder.encode(allowPushingNotification,forKey:"allowPushingNotification")
+        aCoder.encode(allowPushingNewMessageToMobile,forKey:"allowPushingNewMessageToMobile")
+        aCoder.encode(latitude,forKey:"latitude")
+        aCoder.encode(longitude,forKey:"longitude")
+
     }
 }

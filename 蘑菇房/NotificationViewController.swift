@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AudioToolbox
 
 class NotificationViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate{
 
@@ -16,6 +17,8 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
     
     @IBOutlet weak var trashButton: UIBarButtonItem!
     
+//    var isPlaying = false
+    
     @IBAction func SegmentOnChanged(_ sender: AnyObject) {
         self.whichKindOfInfoType = InfoType.selectedSegmentIndex
         self.tableView.reloadData() //重要！！刷新表格数据！！ 2016.7.16/10:58
@@ -23,17 +26,47 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
     }
     
     @IBAction func TrashAllMessage(_ sender: UIBarButtonItem) {
-        var sheet = UIActionSheet()
+        var sheet = UIAlertController()
         if(InfoType.selectedSegmentIndex == 0){
             if !GLOBAL_UnreadMessage.isEmpty {
-                sheet = UIActionSheet(title: "将所有未读消息标记为已读消息？", delegate: self, cancelButtonTitle: "取消", destructiveButtonTitle: "确定")
-                sheet.show(in: self.view)
+                sheet = UIAlertController(title: "将要把所有未读消息标记为已读？", message: nil, preferredStyle: .actionSheet)
+                sheet.addAction(UIAlertAction(title: "确定", style: .default, handler: {
+                    (action)->Void in
+                    if self.InfoType.selectedSegmentIndex == 0{
+                        for i in 0 ..< GLOBAL_UnreadMessage.count {
+                            let tempElement = clearAllUnreadMessage(GLOBAL_UnreadMessage)
+                            GLOBAL_NotificationCache.append(tempElement[i])// “所有信息“中有重复元素 待解决 2016.7.17
+                        }
+                        GLOBAL_UnreadMessage.removeAll()
+                        self.isThereAnythingNew = false
+                        self.tableView.reloadData()
+                        
+                    }
+                }))
+                sheet.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
+                present(sheet, animated: true, completion: nil)
+            }
+            else {
+                sheet = UIAlertController(title: "已读消息都被清空啦", message: nil, preferredStyle: .alert)
+                sheet.addAction(UIAlertAction(title: "我知道啦😊", style: .cancel, handler: nil))
+                present(sheet, animated: true, completion: nil)
             }
         }
         else if(InfoType.selectedSegmentIndex == 1){
             if !GLOBAL_NotificationCache.isEmpty {
-                sheet = UIActionSheet(title: "将要清空所有消息？", delegate: self, cancelButtonTitle: "取消", destructiveButtonTitle: "确定")
-                sheet.show(in: self.view)
+                sheet = UIAlertController(title: "将要清空所有消息？", message: nil, preferredStyle: .actionSheet)
+                sheet.addAction(UIAlertAction(title: "确定", style: .default, handler: {
+                    (action)->Void in
+                    GLOBAL_NotificationCache.removeAll()
+                    self.tableView.reloadData()
+                }))
+                sheet.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
+                present(sheet, animated: true, completion: nil)
+            }
+            else {
+                sheet = UIAlertController(title: "所有消息都被清空啦", message: nil, preferredStyle: .alert)
+                sheet.addAction(UIAlertAction(title: "我知道啦😊", style: .cancel, handler: nil))
+                present(sheet, animated: true, completion: nil)
             }
         }
 
@@ -42,11 +75,7 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
     
     var isThereAnythingNew : Bool = true   //identify if unread messages exist 2016.7.16/11:41 // Need to be updated later
     
-//    var notificationCache : [NotificationPreview] = GLOBAL_NotificationCache
-//    
-//    var unreadMessage : [NotificationPreview] = GLOBAL_UnreadMessage
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
@@ -66,6 +95,7 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
     
     //MARK: - UITableViewDelegate,UITableViewDataSource
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
@@ -245,25 +275,5 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
         return label
     }
     
-    //MARK: -UIActionSheetDelegate
-    func actionSheet(_ actionSheet: UIActionSheet, clickedButtonAt buttonIndex: Int){
-        if self.InfoType.selectedSegmentIndex == 0{
-            if buttonIndex == 0 {
-                for i in 0 ..< GLOBAL_UnreadMessage.count {
-                    let tempElement = clearAllUnreadMessage(GLOBAL_UnreadMessage)
-                    GLOBAL_NotificationCache.append(tempElement[i])// “所有信息“中有重复元素 待解决 2016.7.17
-                }
-                GLOBAL_UnreadMessage.removeAll()
-                self.isThereAnythingNew = false
-                self.tableView.reloadData()
-            }
-        }
-        else if self.InfoType.selectedSegmentIndex == 1{
-            if buttonIndex == 0{
-                GLOBAL_NotificationCache.removeAll()
-                self.tableView.reloadData()
-            }
-        }
-    }
-    
 }
+

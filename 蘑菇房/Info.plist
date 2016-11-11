@@ -2,16 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSCameraUsageDescription</key>
-	<string>蘑菇房需要使用相机才能获取您的美美自拍😊</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>蘑菇房需要访问相册来获取您的新头像哟😉</string>
-	<key>LSApplicationCategoryType</key>
-	<string></string>
 	<key>CFBundleAllowMixedLocalizations</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>CFBundleDisplayName</key>
+	<string>鲜果云</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIconFile</key>
@@ -32,12 +28,23 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>蘑菇房需要使用相机才能获取您的美美自拍😊</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>定位服务将一直运行，电量会蹭蹭掉的哟</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>蘑菇房需要您开启定位服务才能获得更好的体验，仅在应用运行期间开启，不会消耗过多资源哒</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>蘑菇房需要访问相册来获取您的新头像哟😉</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>方正清刻本悦宋简体.TTF</string>
@@ -45,6 +52,41 @@
 		<string>华文仿宋.ttf</string>
 		<string>Hanzipen.ttc</string>
 		<string>Hannotate.ttc</string>
+	</array>
+	<key>UIApplicationShortcutItems</key>
+	<array>
+		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>MyHouse</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>基地数据</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>popMyBaseInfo</string>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>Air</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>即时天气</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>popWeather</string>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>Inform</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>消息与通知</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>popNotification </string>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemIconType</key>
+			<string>UIApplicationShortcutIconTypeShare</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>分享“蘑菇房”</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>popShare</string>
+		</dict>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

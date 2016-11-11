@@ -14,9 +14,9 @@ class ShowMapViewController: UIViewController,MKMapViewDelegate,CLLocationManage
 
     var room:RoomInfoModel!
     
-    var locationManager:CLLocationManager!
+    private var locationManager:CLLocationManager!
     
-    var progressView = UIActivityIndicatorView(frame: CGRect(x: 0,y: 0,width: 100,height: 100))
+    private var progressView = UIActivityIndicatorView(frame: CGRect(x: 0,y: 0,width: 100,height: 100))
     
     @IBOutlet weak var mapShow: MKMapView!
     
@@ -87,22 +87,34 @@ class ShowMapViewController: UIViewController,MKMapViewDelegate,CLLocationManage
         progressView.center = self.view.center
         progressView.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
         progressView.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge
+        let label = UILabel(frame: CGRect(x: 21, y: 57, width: 70, height: 50))
+        label.text = "正在加载..."
+        label.textColor = UIColor.white
+        label.font = UIFont(name: GLOBAL_appFont!, size: 12)
+        progressView.addSubview(label)
         progressView.backgroundColor = UIColor.lightGray
         progressView.layer.masksToBounds = true
         progressView.layer.cornerRadius = 20
         progressView.clipsToBounds = true   //磨成圆角
         self.view.addSubview(progressView)
         progressView.startAnimating()
+
     }
     
     fileprivate func openLocationService(){
         //如果设备没有开启定位服务
         if !CLLocationManager.locationServicesEnabled(){
             DispatchQueue.main.async{
-                let alert = UIAlertView(title: "提示", message: "无法定位，因为您的设备没有启用定位服务！！！！", delegate: self, cancelButtonTitle: "好")
-                alert.show()
-                print("hello_1")
-                
+                let alertView = UIAlertController(title: "无法定位", message: "定位服务未开启或服务器无响应🤔\n请进入“设置”->”蘑菇房“，检查是否允许蘑菇房使用定位服务", preferredStyle: .alert)
+                alertView.addAction(UIAlertAction(title: "好", style: .default, handler: nil))
+                alertView.addAction(UIAlertAction(title: "设置", style: .default, handler: {
+                    (action)->Void in
+                    let settingUrl = NSURL(string: UIApplicationOpenSettingsURLString)
+                    if UIApplication.shared.canOpenURL(settingUrl as! URL){
+                        UIApplication.shared.openURL(settingUrl as! URL)
+                    }
+                }))
+                self.present(alertView, animated: true, completion: nil)
             }
             return
         }
@@ -124,8 +136,16 @@ class ShowMapViewController: UIViewController,MKMapViewDelegate,CLLocationManage
         else if(CLLocationManager.authorizationStatus() == CLAuthorizationStatus.denied){
             //需要把弹窗放在主线程才能强制显示
             DispatchQueue.main.async{
-                let alert = UIAlertView(title: "提示", message: "无法定位，因为您的设备没有启用定位服务，请到设置中启用", delegate: self, cancelButtonTitle: "好")
-                alert.show()
+                let alertView = UIAlertController(title: "无法定位", message: "定位服务未开启或服务器无响应🤔\n请进入“设置”->”蘑菇房“，检查是否允许蘑菇房使用定位服务", preferredStyle: .alert)
+                alertView.addAction(UIAlertAction(title: "设置", style: .default, handler: {
+                    (action)->Void in
+                    let settingUrl = NSURL(string: UIApplicationOpenSettingsURLString)
+                    if UIApplication.shared.canOpenURL(settingUrl as! URL){
+                        UIApplication.shared.openURL(settingUrl as! URL)
+                    }
+                }))
+                alertView.addAction(UIAlertAction(title: "好", style: .default, handler: nil))
+                self.present(alertView, animated: true, completion: nil)
                 return
             }
         }
@@ -181,10 +201,20 @@ class ShowMapViewController: UIViewController,MKMapViewDelegate,CLLocationManage
     
     //MARK: - CLLocationDelegate
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        let alert = UIAlertView(title: "定位异常提示", message: "请确认您是否已经开启定位服务，并重新进入该页面", delegate: self, cancelButtonTitle: "我知道了")
-        alert.show()
+        let alertView = UIAlertController(title: "定位发生异常", message: "服务器无响应或定位服务未开启🤔\n请进入“设置”->”蘑菇房“，检查是否允许蘑菇房使用定位服务", preferredStyle: .alert)
+        alertView.addAction(UIAlertAction(title: "好", style: .cancel, handler: nil))
+        alertView.addAction(UIAlertAction(title: "设置", style: .default, handler: {
+            (action)->Void in
+            let settingUrl = NSURL(string: UIApplicationOpenSettingsURLString)
+            if UIApplication.shared.canOpenURL(settingUrl as! URL){
+                UIApplication.shared.openURL(settingUrl as! URL)
+            }
+        }))
+        self.present(alertView, animated: true, completion: nil)
+        
         self.progressView.stopAnimating()
         print("\(error)")
+
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

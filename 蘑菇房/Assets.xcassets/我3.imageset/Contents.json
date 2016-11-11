@@ -2,7 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "2531170_072250346001_2.jpg",
+      "filename" : "我3.png",
       "scale" : "1x"
     },
     {
@@ -17,5 +17,9 @@
   "info" : {
     "version" : 1,
     "author" : "xcode"
+  },
+  "properties" : {
+    "compression-type" : "automatic",
+    "template-rendering-intent" : "original"
   }
 }

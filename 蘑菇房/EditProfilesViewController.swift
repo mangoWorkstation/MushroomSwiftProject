@@ -42,6 +42,10 @@ class EditProfilesViewController: UIViewController,UITableViewDelegate,UITableVi
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        self.tableView.reloadData()
+    }
+    
     //MARK: - UITableViewDelegate
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
         if((indexPath as NSIndexPath).row == 0){
@@ -60,7 +64,8 @@ class EditProfilesViewController: UIViewController,UITableViewDelegate,UITableVi
             let icon = cell.viewWithTag(102) as! UIImageView
             label.text = "头像"
             label.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
-            icon.image = UIImage(named: GLOBAL_UserProfile.face!)
+            icon.image = UIImage(data: (GLOBAL_UserProfile.face as NSData) as Data)
+            icon.contentMode = .scaleToFill
         }
         if((indexPath as NSIndexPath).row > 0){
             cell = self.tableView.dequeueReusableCell(withIdentifier: "GeneralCell",for: indexPath)

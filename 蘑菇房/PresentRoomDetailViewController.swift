@@ -17,6 +17,10 @@ class PresentRoomDetailViewController: UIViewController,UITableViewDelegate,UITa
     
     var room: RoomInfoModel?
     
+    private let header = ESRefreshHeaderAnimator.init(frame: CGRect.zero)
+    
+    private let loadingTimeInterval : Double = 2.0
+    
     @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var preview: UIImageView!
@@ -31,7 +35,20 @@ class PresentRoomDetailViewController: UIViewController,UITableViewDelegate,UITa
         self.navigationController?.navigationBar.isTranslucent = false
         tableView.delegate = self
         tableView.dataSource = self
+        configurateHeaderAndFooter()
+        self.tableView.es_addPullToRefresh(animator: header) {
+            [weak self] in
+            self?.refresh()
+        }
+
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        let indexPath = self.tableView.indexPathForSelectedRow
+        if indexPath != nil {
+            self.tableView.deselectRow(at: indexPath!, animated: true)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -39,13 +56,28 @@ class PresentRoomDetailViewController: UIViewController,UITableViewDelegate,UITa
         // Dispose of any resources that can be recreated.
     }
     
-    func prepareForBackButton(){
+    private func configurateHeaderAndFooter(){
+        header.loadingDescription = "🍄小蘑菇正在努力刷新数据"
+        header.pullToRefreshDescription = "👇🏻下拉可以刷新噢"
+        header.releaseToRefreshDescription = "👋🏻快松手呀～"
+        header.trigger = 70
+    }
+    
+    private func refresh() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + loadingTimeInterval) {
+            self.tableView.reloadData()
+            self.tableView.es_stopPullToRefresh(completion: true)
+        }
+    }
+    
+    private func prepareForBackButton(){
         let backButton = UIBarButtonItem(barButtonSystemItem: .rewind, target: self, action: #selector(MushroomViewController.justJumpBackToThisVC))
         let font = UIFont(name: GLOBAL_appFont!,size: 17.5)
         backButton.setTitleTextAttributes([NSFontAttributeName:font!], for: UIControlState())
         self.navigationItem.backBarButtonItem = backButton
         //更改不了“返回”标题 2016.8.23
     }
+    
     
     //MARK: - UITableViewDelegate
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
@@ -62,9 +94,34 @@ class PresentRoomDetailViewController: UIViewController,UITableViewDelegate,UITa
             performSegue(withIdentifier: "ShowMapSegue", sender: self.room)
         }
         if (indexPath as NSIndexPath).section == 1 && (indexPath as NSIndexPath).row == 0{
-            performSegue(withIdentifier: "ShowDataSourceSegue", sender: nil)
+            if (GLOBAL_DataSource[(self.room?.roomID)! + "A0"] != nil){
+                performSegue(withIdentifier: "ShowDataSourceSegue", sender: self.room)
+            }
+            else {
+                let alertView = UIAlertController(title: "数据获取失败", message: "请检查是否允许蘑菇房使用网络😊", preferredStyle: .alert)
+                alertView.addAction(UIAlertAction(title: "设置", style: .default, handler: {
+                    (action)->Void in
+                    let settingUrl = NSURL(string: UIApplicationOpenSettingsURLString)
+                    if UIApplication.shared.canOpenURL(settingUrl as! URL){
+                        UIApplication.shared.openURL(settingUrl as! URL)
+                    }
+                }))
+                alertView.addAction(UIAlertAction(title: "好", style: .default, handler: nil))
+                present(alertView, animated: true, completion: {
+                    self.tableView.deselectRow(at: indexPath, animated: true)
+                })
+            }
         }
-        self.tableView.deselectRow(at: indexPath, animated: true)
+        if (indexPath as NSIndexPath).section == 1 {
+            if indexPath.row != 0{
+                let alertView = UIAlertController(title: "前方施工", message: "新功能正在开发，敬请期待😊", preferredStyle: .alert)
+                alertView.addAction(UIAlertAction(title: "好", style: .default, handler: nil))
+                present(alertView, animated: true, completion: {
+                    self.tableView.deselectRow(at: indexPath, animated: true)
+                })
+            }
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat{
@@ -102,8 +159,14 @@ class PresentRoomDetailViewController: UIViewController,UITableViewDelegate,UITa
                 label.text = self.room?.name
                 label.font = UIFont(name: GLOBAL_appFont!, size: 18.0)
                 button.setTitle("关注", for: UIControlState())
-                let label_1 = NSAttributedString(string: "关注", attributes: [NSFontAttributeName:UIFont(name: GLOBAL_appFont!, size: 14.0)!,NSForegroundColorAttributeName:UIColor(red: 28/255, green: 61/255, blue: 57/255, alpha: 1)])
+                let label_1 = NSAttributedString(string: "申请查看权限", attributes: [NSFontAttributeName:UIFont(name: GLOBAL_appFont!, size: 14.0)!,NSForegroundColorAttributeName:UIColor(red: 28/255, green: 61/255, blue: 57/255, alpha: 1)])
                 button.setAttributedTitle(label_1, for: UIControlState())
+                button.backgroundColor = UIColor(red: 250/255, green: 181/255, blue: 14/255, alpha: 1)
+                button.clipsToBounds = true
+                button.layer.masksToBounds = true
+                button.layer.cornerRadius = 10
+                button.layer.borderWidth = 5
+                button.layer.borderColor = UIColor.white.cgColor
             }
             if (indexPath as NSIndexPath).row == 1 {
                 cell = self.tableView.dequeueReusableCell(withIdentifier: "LocationCell", for: indexPath)
@@ -147,7 +210,9 @@ class PresentRoomDetailViewController: UIViewController,UITableViewDelegate,UITa
         }
         if segue.identifier == "ShowDataSourceSegue"{
             let vc = segue.destination as! DataSourceViewController
+            let room = sender as! RoomInfoModel
             vc.navigationItem.backBarButtonItem?.title = nil
+            vc.roomID = room.roomID!
         }
     }
     

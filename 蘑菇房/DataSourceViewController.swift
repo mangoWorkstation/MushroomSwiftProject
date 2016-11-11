@@ -13,20 +13,20 @@ class DataSourceViewController: UIViewController,UITableViewDelegate,UITableView
     @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var DataType: UISegmentedControl!
-    
+        
     var roomID = "00000" //暂定
     
-    var shownDatum = GLOBAL_DataSource
+    private var shownDatum = GLOBAL_DataSource
     
-    let areaIndex = ["A","B","C","D"]
+    private let areaIndex = ["A","B","C","D"]
     
-    var whichKindOfDataShow = 0
+    private var whichKindOfDataShow = 0
     
-    var historyDataType = 0
+    private var historyDataType = 0
     
-    let header = ESRefreshHeaderAnimator.init(frame: CGRect.zero)
+    private let header = ESRefreshHeaderAnimator.init(frame: CGRect.zero)
 
-    let loadingTimeInterval : Double = 2.0
+    private let loadingTimeInterval : Double = 2.0
 
     
     @IBAction func changeDataSourceType(_ sender:UISegmentedControl!,forEvent:UIEvent?){
@@ -43,13 +43,10 @@ class DataSourceViewController: UIViewController,UITableViewDelegate,UITableView
         }
     }
     
-    @IBAction func showSegmentedHistoryData(_ sender:UISegmentedControl!,forEvent:UIEvent?){
-        let row = sender.tag - 1001
-        let indexPath = IndexPath(row: row, section: 1)
+    func showSegmentedHistoryData(_ sender:UISegmentedControl!,forEvent:UIEvent?){
         self.historyDataType = sender.selectedSegmentIndex
-        sender.tag = 1001
-        self.tableView.reloadRows(at: [indexPath], with: .automatic)
-        
+//        self.tableView.reloadData()
+        print("成功更改了！")
     }
     
     
@@ -73,8 +70,6 @@ class DataSourceViewController: UIViewController,UITableViewDelegate,UITableView
             [weak self] in
             self?.refresh()
         }
-        
-//        tableView.headerView = XWRefreshNormalHeader(target: self, action: #selector(MushroomViewController.upPullLoadData(_:)))
         
         self.tableView.sectionIndexColor = UIColor.white
         self.tableView.sectionIndexBackgroundColor = UIColor(red: 64/255, green: 100/255, blue: 32/255, alpha: 1)
@@ -157,7 +152,7 @@ class DataSourceViewController: UIViewController,UITableViewDelegate,UITableView
             }
             
             
-            let datum = shownDatum[self.roomID+self.areaIndex[(indexPath as NSIndexPath).section]+"\((indexPath as NSIndexPath).row)"]
+            let datum = shownDatum[self.roomID + self.areaIndex[(indexPath as NSIndexPath).section] + "\((indexPath as NSIndexPath).row)"]
             
             //气温
             let label_1 = cell!.viewWithTag(1001) as! UILabel
@@ -352,117 +347,106 @@ class DataSourceViewController: UIViewController,UITableViewDelegate,UITableView
                 while(pieChart_CO2 == nil)
             
         }
-    
-    //*********************************************************************************************************************************
-    //历史数据统计图
-    if self.whichKindOfDataShow == 1 {
-        if cell == nil{
-            cell = self.tableView.dequeueReusableCell(withIdentifier: "HistoryCell", for: indexPath)
-        }
-        else {
-            while cell.contentView.subviews.last != nil{
-                cell.contentView.subviews.last!.removeFromSuperview()
-            }
-            cell = self.tableView.dequeueReusableCell(withIdentifier: "HistoryCell", for: indexPath)
-        }
-    
-        let datum = shownDatum[self.roomID+self.areaIndex[(indexPath as NSIndexPath).section]+"\((indexPath as NSIndexPath).row)"]
-    
-        let segControl = cell.viewWithTag(1001) as? UISegmentedControl
-//        segControl.addTarget(self, action: #selector(DataSourceViewController.showSegmentedHistoryData(_:forEvent:)), forControlEvents: .ValueChanged)
-        segControl!.tintColor = UIColor.white
-        segControl!.backgroundColor = UIColor.green
-//        segControl!.tag = indexPath.row + 1000
         
-        if segControl!.selectedSegmentIndex == 0{
-            
-            var airTemperatureHistory : PDBarChart? = cell.viewWithTag(1002) as? PDBarChart
-            
-            
-            let tempArr = datum?.arr_airTemperature
-            let dataItem = PDBarChartDataItem()
-            dataItem.yMax = (tempArr?.max())! + 5.0
-            dataItem.yInterval = 5.0
-            dataItem.xMax = 7.0
-            dataItem.xInterval = 1.0
-            dataItem.xAxesDegreeTexts = ["周日", "一", "二", "三", "四", "五", "周六"]
-            dataItem.barPointArray = [
-                CGPoint(x: CGFloat(7), y: round(tempArr![7])),
-                CGPoint(x: CGFloat(6), y: round(tempArr![6])),
-                CGPoint(x: CGFloat(5), y: round(tempArr![5])),
-                CGPoint(x: CGFloat(4), y: round(tempArr![4])),
-                CGPoint(x: CGFloat(3), y: round(tempArr![3])),
-                CGPoint(x: CGFloat(2), y: round(tempArr![2])),
-                CGPoint(x: CGFloat(1), y: round(tempArr![1])),
-            ]
-            airTemperatureHistory = PDBarChart(frame: CGRect(x: 50, y: 100, width: 300, height: 200), dataItem: dataItem)
-            airTemperatureHistory?.backgroundColor = UIColor(red: 142/255, green: 164/255, blue: 182/255, alpha: 1)
-            airTemperatureHistory?.strokeChart()
-            repeat{
-                if airTemperatureHistory == nil{
-                    cell.addSubview(airTemperatureHistory!)
+        //*********************************************************************************************************************************
+        
+        //历史数据统计图
+        if self.whichKindOfDataShow == 1 {
+            if cell == nil{
+                cell = self.tableView.dequeueReusableCell(withIdentifier: "HistoryCell", for: indexPath)
+            }
+            else {
+                while cell.contentView.subviews.last != nil{
+                    cell.contentView.subviews.last!.removeFromSuperview()
                 }
-                else{
-                    airTemperatureHistory?.removeFromSuperview()
-                    cell.addSubview(airTemperatureHistory!)
-                }
+                cell = self.tableView.dequeueReusableCell(withIdentifier: "HistoryCell", for: indexPath)
+            }
+            
+            let datum = shownDatum[self.roomID+self.areaIndex[(indexPath as NSIndexPath).section]+"\((indexPath as NSIndexPath).row)"]
+            
+            let segControl = cell.viewWithTag(1001) as? UISegmentedControl
+            segControl!.tintColor = UIColor.white
+            segControl!.backgroundColor = UIColor(red: 64/255, green: 151/255, blue: 32/255, alpha: 1)
+//            segControl!.tag = indexPath.row + 1000
+            segControl?.addTarget(self, action: #selector(DataSourceViewController.showSegmentedHistoryData(_:forEvent:)), for: .valueChanged)
+            self.tableView.reloadRows(at: [indexPath], with: .automatic)
+            print("刷新啦")
+            
+            if segControl!.selectedSegmentIndex == 0{
                 
-            }while airTemperatureHistory == nil
+                var airTemperatureHistory : PDBarChart? = cell.viewWithTag(1002) as? PDBarChart
+                
+                func prepareForAirTemperatureHistory(){
+                    let tempArr = datum?.arr_airTemperature
+                    let dataItem = PDBarChartDataItem()
+                    dataItem.yMax = (tempArr?.max())!
+                    dataItem.yInterval = 5.0
+                    dataItem.xMax = 7.0
+                    dataItem.xInterval = 1.0
+                    dataItem.xAxesDegreeTexts = ["周日", "一", "二", "三", "四", "五", "周六"]
+                    dataItem.barPointArray = [
+                        CGPoint(x: CGFloat(7), y: round(tempArr![7])),
+                        CGPoint(x: CGFloat(6), y: round(tempArr![6])),
+                        CGPoint(x: CGFloat(5), y: round(tempArr![5])),
+                        CGPoint(x: CGFloat(4), y: round(tempArr![4])),
+                        CGPoint(x: CGFloat(3), y: round(tempArr![3])),
+                        CGPoint(x: CGFloat(2), y: round(tempArr![2])),
+                        CGPoint(x: CGFloat(1), y: round(tempArr![1])),
+                    ]
+                    airTemperatureHistory = PDBarChart(frame: CGRect(x: 30, y: 100, width: 300, height: 200), dataItem: dataItem)
+                    airTemperatureHistory?.backgroundColor = UIColor.clear
+                    airTemperatureHistory?.tag = 1002
+                    airTemperatureHistory?.strokeChart()
+
+                }
+                repeat{
+                    if airTemperatureHistory == nil{
+                        prepareForAirTemperatureHistory()
+                        cell.addSubview(airTemperatureHistory!)
+                    }
+                    else{
+                        airTemperatureHistory?.removeFromSuperview()
+                        prepareForAirTemperatureHistory()
+                        cell.addSubview(airTemperatureHistory!)
+                    }
+                    
+                }while airTemperatureHistory == nil
+            }
         }
-//        if self.historyDataType == 1 {
-//            return cell
-//        }
+        
+        cell!.isUserInteractionEnabled = true
+        cell!.backgroundColor = UIColor.clear
+        
+        
+        print("cellForRowAtIndexPath执行了")
+        print("(\((indexPath as NSIndexPath).section)),(\((indexPath as NSIndexPath).row))")
+        return cell!
     }
-
-    //            //for barChart
-    //
-    //            var dataItem: PDBarChartDataItem = PDBarChartDataItem()
-    //            dataItem.xMax = 7.0
-    //            dataItem.xInterval = 1.0
-    //            dataItem.yMax = 100.0
-    //            dataItem.yInterval = 10.0
-    //            dataItem.barPointArray = [CGPoint(x: 1.0, y: 95.0), CGPoint(x: 2.0, y: 25.0), CGPoint(x: 3.0, y: 30.0), CGPoint(x: 4.0, y:50.0), CGPoint(x: 5.0, y: 55.0), CGPoint(x: 6.0, y: 60.0), CGPoint(x: 7.0, y: 90.0)]
-    //            dataItem.xAxesDegreeTexts = ["周日", "一", "二", "三", "四", "五", "周六"]
-    //            dataItem.yAxesDegreeTexts = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"]
-    //
-    //            var barChart: PDBarChart = PDBarChart(frame: CGRectMake(0, 100, 320, 320), dataItem: dataItem)
-    //
-    //            self.view.addSubview(barChart)
-    //            barChart.addSubview(barChart)
     
     
-    cell!.isUserInteractionEnabled = true
-    cell!.backgroundColor = UIColor.clear
+    func numberOfSections(in tableView: UITableView) -> Int{
+        return 4 //A,B,C,D四个区
+    }
     
-    print("cellForRowAtIndexPath执行了")
-    print("(\((indexPath as NSIndexPath).section)),(\((indexPath as NSIndexPath).row))")
-    print(self.roomID+self.areaIndex[(indexPath as NSIndexPath).section]+"\((indexPath as NSIndexPath).row)")
+    func sectionIndexTitles(for tableView: UITableView) -> [String]?{
+        return ["A区","B区","C区","D区"]
+    }
     
-    return cell!
-}
-
-
-func numberOfSections(in tableView: UITableView) -> Int{
-    return 4 //A,B,C,D四个区
-}
-
-func sectionIndexTitles(for tableView: UITableView) -> [String]?{
-    return ["A区","B区","C区","D区"]
-}
-
-func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int{
-    return index
-}
-
-
-/*
- // MARK: - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
- // Get the new view controller using segue.destinationViewController.
- // Pass the selected object to the new view controller.
- }
- */
-
+    func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int{
+        return index
+    }
+    
+    
+    
+    
+    /*
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

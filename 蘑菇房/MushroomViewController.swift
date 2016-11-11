@@ -14,7 +14,7 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
     
     //后台的数据原型
     //2016.8.27
-    var backgroundData : [RoomInfoModel] = Array(GLOBAL_RoomInfo.values)//本地缩略图缓存，将来可增加网络连接 2016.7.1/12:43
+    var backgroundData : [RoomInfoModel] = Array(GLOBAL_RoomInfo.values)
     
     //前台的显示数据，是数据原型的子数组。
     //滑动到表格的底部时，从后台原型变量处拿数据，并在尾部追加，每次追加15条，直至前后台数据完全一致
@@ -44,13 +44,15 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
     //2016.7.1/12:43
     @IBOutlet weak var tableView: UITableView!
     
-    let footer = ESRefreshFooterAnimator.init(frame: CGRect.zero)
+    private let footer = ESRefreshFooterAnimator.init(frame: CGRect.zero)
     
-    let header = ESRefreshHeaderAnimator.init(frame: CGRect.zero)
+    private let header = ESRefreshHeaderAnimator.init(frame: CGRect.zero)
     
-    let loadingTimeInterval : Double = 2.0
+    private let loadingTimeInterval : Double = 2.0
     
-    var viewIsOnceLoaded = true
+    private var viewIsOnceLoaded = true
+    
+
 
     
     //unwindSegue
@@ -125,6 +127,12 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
             [weak self] in
             self?.loadMore()
         }
+        
+//        let dataArray = ["1","2","3"]
+        
+        
+        
+        
         
         // Do any additional setup after loading the view, typically from a nib.
 
@@ -229,8 +237,9 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         let i:Int = 4
         pageScroller.contentSize = CGSize(width: (self.view.frame.width * CGFloat(i - 1)), height: pageScroller.frame.height)
         pageDots.numberOfPages = i - 1
-        pageDots.currentPageIndicatorTintColor = UIColor.blue
+        pageDots.currentPageIndicatorTintColor = UIColor.yellow
         pageDots.pageIndicatorTintColor = UIColor.gray
+        pageScroller.addSubview(pageDots)
         addTimer()
     }
     
@@ -346,7 +355,7 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ChooseAreaSegue"{
-            let vc = segue.destination as! ChooseAreaViewController
+            _ = segue.destination as! ChooseAreaViewController
         }
         if(segue.identifier == "ShowDetailSegue"){
             let vc = segue.destination as! PresentRoomDetailViewController

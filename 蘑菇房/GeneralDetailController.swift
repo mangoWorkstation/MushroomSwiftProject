@@ -107,7 +107,11 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
                 let version = cell.viewWithTag(2002) as! UILabel
                 let appName = cell.viewWithTag(2003) as! UILabel
                 let copyRight = cell.viewWithTag(2004) as! UILabel
-                appIcon.image = UIImage(named: "App")
+                appIcon.image = UIImage(named: "icon")
+                appIcon.contentMode = .scaleToFill
+                appIcon.clipsToBounds = true
+                appIcon.layer.masksToBounds = true
+                appIcon.layer.cornerRadius = 10
                 version.text = "当前版本：1.0.1 Alpha"
                 version.font = UIFont(name: GLOBAL_appFont!, size: 12.0)
                 appName.text = "蘑菇房"
@@ -191,8 +195,21 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
             let cell = self.tableView.cellForRow(at: indexPath)
             let detail = cell?.viewWithTag(2002) as! UILabel
             if detail.text != "0.00MB"{
-                let sheet = UIActionSheet(title: "将要清除所有缓存", delegate: self, cancelButtonTitle: "取消", destructiveButtonTitle: "确定")
-                sheet.show(in: self.view)
+//                let sheet = UIActionSheet(title: "将要清除所有缓存", delegate: self, cancelButtonTitle: "取消", destructiveButtonTitle: "确定")
+//                sheet.show(in: self.view)
+                let sheet = UIAlertController(title: "将要清除所有缓存", message: nil, preferredStyle: .actionSheet)
+                sheet.addAction(UIAlertAction(title: "确定", style: .destructive, handler: {
+                    (action)-> Void in
+                    let cell = self.tableView.cellForRow(at: indexPath)
+                    let detail = cell?.viewWithTag(2002) as! UILabel
+                    detail.text = "0.00MB"
+                }))
+                sheet.addAction(UIAlertAction(title: "取消", style: .cancel, handler: {
+                    (action)-> Void in
+                    self.tableView.deselectRow(at: indexPath, animated: true)
+                }))
+                present(sheet, animated: true, completion: nil)
+                self.tableView.deselectRow(at: indexPath, animated: true)
             }
             else{
                 self.tableView.deselectRow(at: indexPath, animated: true)
@@ -200,16 +217,6 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
         }
         else{
             self.tableView.deselectRow(at: indexPath, animated: true)
-        }
-    }
-    //MARK: - UIActionSheetDelegate
-    func actionSheet(_ actionSheet: UIActionSheet, clickedButtonAt buttonIndex: Int){
-        if buttonIndex == 0 {
-            let indexPath = self.tableView.indexPathForSelectedRow
-            let cell = self.tableView.cellForRow(at: indexPath!)
-            let detail = cell?.viewWithTag(2002) as! UILabel
-            detail.text = "0.00MB"
-            self.tableView.deselectRow(at: indexPath!, animated: true)
         }
     }
     
@@ -241,15 +248,4 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
         
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

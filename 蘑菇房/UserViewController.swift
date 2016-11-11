@@ -131,7 +131,7 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             let icon = cell!.viewWithTag(1011) as! UIImageView
             let nameLabel = cell!.viewWithTag(1012) as! UILabel
             let background = cell!.viewWithTag(102) as! UIImageView
-            icon.image = UIImage(named: GLOBAL_UserProfile.face!)
+            icon.image = UIImage(data: GLOBAL_UserProfile.face)
 //            icon.bounds = CGRectMake((icon.bounds.size.width-60)/2, (icon.bounds.size.height-60)/2-150, 60, 60)
 //            icon.frame = CGRectMake((icon.bounds.size.width - 60)/2, (icon.bounds.size.height-60)/2-150, 60,60)
             icon.layer.cornerRadius = 25
@@ -145,7 +145,16 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             nameLabel.text = GLOBAL_UserProfile.nickName
             nameLabel.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
             nameLabel.textColor = UIColor.white
-            background.image = UIImage(named:"Background")
+            
+            //黑科技，将头像高斯模糊化，作为背景 2016.10.17
+            let ciImage = CIImage(image: UIImage(data: GLOBAL_UserProfile.face)!)
+            let filterMirror = CIFilter(name: "CIGaussianBlur")
+            filterMirror?.setValue(ciImage, forKey: kCIInputImageKey)
+            let filterImage = filterMirror?.value(forKey: kCIOutputImageKey)
+            let context = CIContext(options: nil)
+            let cgImage = context.createCGImage(filterImage as! CIImage, from: (cell?.frame)!)
+            background.image = UIImage(cgImage: cgImage!)
+            
         }
         if ((indexPath as NSIndexPath).section == 1){
             

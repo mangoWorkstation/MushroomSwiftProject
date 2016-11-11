@@ -16,7 +16,7 @@ class ChooseAreaViewController: UIViewController,UIPickerViewDelegate{
     
     @IBOutlet weak var Background: UIImageView!
     
-    let chooseArea = ChooseAreaModel()
+    private let chooseArea = ChooseAreaModel()
     
     override func viewDidLoad() {
         chooseAreaPickerView.delegate = self
