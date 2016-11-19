@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import CoreData
+import Foundation
 
 class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource{
     
@@ -34,11 +36,19 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
     //2016.7.1/12:43
     @IBOutlet weak var pageScroller: UIScrollView!
     
+    private var pageDots: UIPageControl!
+    
+    private var pageDotsView : UIView!
+    //横条
+    
+    private var pageScrollTitle:UILabel!
+    
+
+    
     //与滚动横幅配套的页面控制器
     //暂时被覆盖在view的最底层，原因不明
     //若无法解决，则忽略
     //2016.7.1/12:43
-    @IBOutlet weak var pageDots: UIPageControl!
     
     //列表 
     //2016.7.1/12:43
@@ -84,7 +94,13 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+//        self.removeAllRecordInExplictEntity(_EntityName: "Base")
+//        self.insertNewRecordForBases()
+////        self.displayAllBase()
+//        self.removeAllRecordInExplictEntity(_EntityName: "Crops")
+//        self.insertNewRecordForCrops()
+//        self.removeAllRecordInExplictEntity(_EntityName: "AirHumidity")
+//        self.insertNewRecordForAirHumidity()
         
         clickOnButton.setTitle("选择区域", for: UIControlState())
         clickOnButton.titleLabel?.font = UIFont(name: GLOBAL_appFont!, size: 17.5)
@@ -109,11 +125,7 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         let background = UIImageView(image: UIImage(named: "Background_1"))
         tableView.backgroundView = background
         
-//        tableView.backgroundColor = UIColor.clearColor()
-        
-        
         tableView.separatorColor = UIColor(white: 1, alpha: 1)    //设置分割线颜色
-        
         
         configurateHeaderAndFooter() //设置表头和表尾
 
@@ -127,12 +139,6 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
             [weak self] in
             self?.loadMore()
         }
-        
-//        let dataArray = ["1","2","3"]
-        
-        
-        
-        
         
         // Do any additional setup after loading the view, typically from a nib.
 
@@ -176,7 +182,6 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         footer.loadingDescription = "🍄小蘑菇正在找自己的家"
         footer.noMoreDataDescription = "已经是最后一个啦"
         footer.loadingMoreDescription = "上拉可以找到更多的家～"
-        
     }
     
     private func refresh() {
@@ -218,28 +223,49 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         }
     }
 
+    @IBAction func openWebView(sender:UIButton,forEvent:UIEvent?){
+        performSegue(withIdentifier: "officialWeb", sender: nil)
+    }
     
     //加载轮播图
     fileprivate func prepareForScrollPages(){
         for i in 1..<4 {
             let image = UIImage(named: "\(i).jpg")!
             let x = CGFloat(i - 1) * self.view.frame.width
-            let imageView = UIImageView(frame: CGRect(x: x, y: 0, width: self.view.frame.width, height: pageScroller.bounds.height))
-            imageView.image = image
+            let button = UIButton(frame: CGRect(x: x, y: 0, width: self.view.frame.width, height: pageScroller.bounds.height))
+            button.setBackgroundImage(image, for: .normal)
+            button.addTarget(self, action: #selector(MushroomViewController.openWebView(sender:forEvent:)), for: .touchUpInside)
             pageScroller.isPagingEnabled = true
             pageScroller.showsHorizontalScrollIndicator = true
             pageScroller.showsVerticalScrollIndicator = false
             pageScroller.isScrollEnabled = true
-            pageScroller.addSubview(imageView)
+            pageScroller.addSubview(button)
             pageScroller.delegate = self
+            
         }
-        
-        let i:Int = 4
+        let i = 4
         pageScroller.contentSize = CGSize(width: (self.view.frame.width * CGFloat(i - 1)), height: pageScroller.frame.height)
+        
+        pageDots = UIPageControl(frame: CGRect(x: UIScreen.main.bounds.maxX - 70, y: -10, width: 50, height: 50))
         pageDots.numberOfPages = i - 1
-        pageDots.currentPageIndicatorTintColor = UIColor.yellow
-        pageDots.pageIndicatorTintColor = UIColor.gray
-        pageScroller.addSubview(pageDots)
+        pageDots.currentPageIndicatorTintColor = UIColor.green
+        pageDots.pageIndicatorTintColor = UIColor.white
+        
+        pageDotsView = UIView(frame: CGRect(x: 0, y: self.pageScroller.frame.maxY - 30, width: UIScreen.main.bounds.maxX, height: 30))
+        pageDotsView.backgroundColor = UIColor.darkGray
+        pageDotsView.alpha = 0.8
+        
+        pageScrollTitle = UILabel(frame: CGRect(x: 20, y: 0, width: 200, height: 30))
+        pageScrollTitle.text = "广西大学官方首页"
+        //初始化默认值为1
+        pageScrollTitle.font = UIFont(name: GLOBAL_appFont!, size: 15.0)
+        pageScrollTitle.textColor = UIColor.white
+        
+        self.pageScroller.superview?.addSubview(pageDotsView)
+        self.pageDotsView.addSubview(pageDots)
+        self.pageDotsView.addSubview(pageScrollTitle)
+        //将三个点加载scrollView的父类视图上才能固定
+        
         addTimer()
     }
     
@@ -250,6 +276,16 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         let offsetX = scrollView.contentOffset.x
         let index = (offsetX + width / 2) / width
         pageDots.currentPage = Int(index)
+        switch pageDots.currentPage {
+        case 0:
+            pageScrollTitle.text = "广西大学官方首页"
+        case 1:
+            pageScrollTitle.text = "广西大学农学院官方首页"
+        default:
+            pageScrollTitle.text = "广西大学计电学院官方首页"
+        }
+        //        self.tableView.fixedPullToRefreshViewForDidScroll()
+        
     }
 
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
@@ -334,8 +370,6 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         
         cell.backgroundColor = UIColor(white: 0.6, alpha: 0.4)
         
-        
-        
         cell.layer.masksToBounds = true
         cell.layer.cornerRadius = 25
         cell.clipsToBounds = true
@@ -345,14 +379,13 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
         let cell = self.tableView.cellForRow(at: indexPath)!
-//        cell.selectedBackgroundView?.backgroundColor = UIColor(red: 178/255, green: 190/255, blue: 143/255,alpha:1)
-//        //#B2BE9F
         self.tableView.deselectRow(at: indexPath, animated: true)
         let name = cell.viewWithTag(2) as! UILabel
         performSegue(withIdentifier: "ShowDetailSegue", sender: name)
         print("didSelectRowAtIndexPath执行了")
     }
     
+    //MARK: - UIStoryBoardSegue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ChooseAreaSegue"{
             _ = segue.destination as! ChooseAreaViewController
@@ -365,5 +398,258 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
             vc.navigationItem.backBarButtonItem?.title = self.clickOnButton.currentTitle!
             vc.roomName = name.text
         }
+        if segue.identifier == "officialWeb"{
+            let vc = segue.destination as! pageScrollWebViewController
+            vc.navigationItem.backBarButtonItem?.title = nil
+            switch self.pageDots.currentPage {
+            case 0:
+                vc.url = "http://www.gxu.edu.cn"
+                vc.navigationItem.title = "广西大学"
+            case 1:
+                vc.url = "http://nxy.gxu.edu.cn"
+                vc.navigationItem.title = "广西大学农学院"
+            default:
+                vc.navigationItem.title = "广西大学计电学院"
+                vc.url = "http://www.ccie.gxu.edu.cn"
+            }
+        }
     }
+    
+    
+    //MARK: - 固件预置数据库读写
+    
+    //MARK: - 基地表100段
+    func insertNewRecordForBases(){
+        var main_user : [Int64] = []
+        var main_base : [Int64] = []
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.managedObjectContext
+        
+
+        let currentUser_ID = GLOBAL_UserProfile.id!
+        let currentBase_ID = arc4random()
+        main_user.append(Int64(currentUser_ID))
+        main_base.append(Int64(currentBase_ID))
+        let current_base_entity = NSEntityDescription.insertNewObject(forEntityName: "Base", into: context) as! BaseManagedObject
+        current_base_entity.user_ID = Int64(currentUser_ID)
+        current_base_entity.base_ID = Int64(currentBase_ID)
+        do {
+            try context.save()
+            print("当前用户与基地ID成功写入缓存")
+        } catch let error{
+            print("context can't save!, Error: \(error)")
+        }
+        
+        
+        for _ in 0..<100 {
+            var temp_user_ID = Int64(arc4random())
+            for temp in main_user{
+                while temp == temp_user_ID {
+                    temp_user_ID = Int64(arc4random())
+                }
+            }
+            var temp_base_ID = Int64(arc4random())
+            for temp in main_base{
+                while temp == temp_base_ID {
+                    temp_base_ID = Int64(arc4random())
+                }
+            }
+            main_user.append(temp_user_ID)
+            main_base.append(temp_base_ID)
+            
+            let temp_base_entity = NSEntityDescription.insertNewObject(forEntityName: "Base", into: context) as! BaseManagedObject
+            temp_base_entity.user_ID = temp_user_ID
+            temp_base_entity.base_ID = temp_base_ID
+            
+            do {
+                try context.save()
+            } catch let error{
+                print("context can't save!, Error: \(error)")
+            }
+        }
+        print("成功写入基地表\n")
+
+    }
+
+    
+    func displayAllBase(){
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.managedObjectContext
+        let entity = NSEntityDescription.entity(forEntityName: "Base", in: context)
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>()
+        fetchRequest.entity = entity
+        do{
+            let data = try? context.fetch(fetchRequest) as! [NSManagedObject]
+            for temp in data! as! [BaseManagedObject] {
+                print("用户ID：\(temp.user_ID)     基地ID：\(temp.base_ID)")
+            }
+        }
+    }
+    
+    //MARK: - 农作物表4段
+    func insertNewRecordForCrops(){
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.managedObjectContext
+        
+        var mainKeys : [Int64] = []
+        let cropsTypeName = ["蘑菇","芒果","甘蔗","葡萄"]
+        for i in 0..<4 {
+            var crops_ID = Int64(arc4random())
+            for temp in mainKeys {
+                while temp == crops_ID{
+                    crops_ID = Int64(arc4random())
+                }
+            }
+            mainKeys.append(crops_ID)
+            let entity = NSEntityDescription.insertNewObject(forEntityName: "Crops", into: context) as! CropsManagedObject
+            entity.crops_ID = crops_ID
+            entity.crops_name = cropsTypeName[i]
+            do {
+                try context.save()
+            } catch let error{
+                print("context can't save!, Error: \(error)")
+            }
+        }
+        print("成功写入农作物表")
+    }
+
+    
+    //MARK: - 空气湿度表100段
+    func insertNewRecordForAirHumidity(){
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.managedObjectContext
+        
+        //一个内部类，用来寄存数据而已
+        class AH{
+            var baseID:Int64
+            var userID:Int64
+            var time:Int64
+            var value:Double
+            var dataID:Int64
+            var cropsID:Int64
+            
+            init(baseID:Int64,userID:Int64,time:Int64,value:Double,dataID:Int64,cropsID:Int64) {
+                self.baseID = baseID
+                self.userID = userID
+                self.time = time
+                self.dataID = dataID
+                self.value = value
+                self.cropsID = cropsID
+            }
+            
+        }
+
+        //取基地表
+        var entity = NSEntityDescription.entity(forEntityName: "Base", in: context)
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>()
+        fetchRequest.entity = entity
+        let Base = try? context.fetch(fetchRequest) as! [NSManagedObject]
+        var baseManageObjectArr : [AH] = []
+        for tempBase in Base as! [BaseManagedObject]{
+            let baseManageObjectArrTemp = AH(baseID: 0,userID: 0,time: 0,value: 0,dataID: 0,cropsID: 0)
+            baseManageObjectArrTemp.baseID = tempBase.base_ID
+            baseManageObjectArrTemp.userID = tempBase.user_ID
+            baseManageObjectArr.append(baseManageObjectArrTemp)
+        }
+        
+        //取农作物表
+        entity = NSEntityDescription.entity(forEntityName: "Crops", in: context)
+        fetchRequest.entity = entity
+        let Crops = try? context.fetch(fetchRequest) as! [NSManagedObject]
+        var tempCropsArr : [AH] = []
+        for tempCrop in Crops as! [CropsManagedObject] {
+            let cropsManageObjectArrTemp = AH(baseID: 0,userID: 0,time: 0,value: 0,dataID: 0,cropsID: 0)
+            cropsManageObjectArrTemp.cropsID = tempCrop.crops_ID
+            tempCropsArr.append(cropsManageObjectArrTemp)
+        }
+        
+        
+        var dataIDExisted : [Int64] = []
+        var timeExisted : [Int64] = []
+        var valueExisted : [Double] = []
+        for i in 0..<100 {
+            //数据ID
+            var data_ID = Int64(arc4random())
+            for temp in dataIDExisted {
+                while temp == data_ID{
+                    data_ID = Int64(arc4random())
+                }
+            }
+            dataIDExisted.append(data_ID)
+            //时间
+            var time = Int64(arc4random_uniform(1500000000)+1400000000)
+            for temp in timeExisted {
+                while temp == time{
+                    time = Int64(arc4random_uniform(1500000000)+1400000000)
+                }
+            }
+            timeExisted.append(time)
+            //数值
+            var value = Double(arc4random_uniform(50))
+            for temp in valueExisted {
+                while temp == value{
+                    value = Double(arc4random_uniform(50))
+                }
+            }
+            valueExisted.append(Double(value))
+            
+            let entity = NSEntityDescription.insertNewObject(forEntityName: "AirHumidity", into: context) as! AirHumidityManagedObject
+            if i<(Base?.count)! {
+                entity.base_ID = baseManageObjectArr[i].baseID
+                entity.user_ID = baseManageObjectArr[i].userID
+            }
+            else{
+                entity.base_ID = (baseManageObjectArr.first?.baseID)!
+                entity.user_ID = (baseManageObjectArr.first?.userID)!
+            }
+            
+            if i<(Crops?.count)! {
+                entity.crops_ID = tempCropsArr[i].cropsID
+            }
+            else{
+                entity.crops_ID = (tempCropsArr.first?.cropsID)!
+            }
+            
+            entity.data_ID = data_ID
+            entity.time = time
+            entity.value = Double(value)
+            
+            
+            do {
+                try context.save()
+                print("\(i)段数据写入成功")
+                print("基地ID：\(entity.base_ID)   用户ID：\(entity.user_ID)   农作物种类ID：\(entity.crops_ID) ")
+                print("时间戳：\(entity.time)   数值：\(entity.value)      数据标识ID：\(entity.data_ID)\n")
+            } catch let error{
+                print("context can't save!, Error: \(error)")
+            }
+        }
+        print("成功写入空气湿度表")
+    }
+    
+    //删除指定实体下所有字段
+    func removeAllRecordInExplictEntity(_EntityName:String){
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.managedObjectContext
+        let entity = NSEntityDescription.entity(forEntityName: _EntityName, in: context)
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>()
+        fetchRequest.entity = entity
+        do{
+            let data = try? context.fetch(fetchRequest)
+            for temp in data! {
+                context.delete(temp as! NSManagedObject)
+                do {
+                    try context.save()
+                } catch let error{
+                    print("context can't save!, Error: \(error)")
+                }
+            }
+        }
+        print("成功删除\(_EntityName)表\n")
+
+    }
+
+
+
+
 }

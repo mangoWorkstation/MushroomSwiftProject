@@ -13,18 +13,6 @@ class EditProfilesViewController: UIViewController,UITableViewDelegate,UITableVi
     @IBOutlet weak var tableView: UITableView!
     
     @IBAction func unwindSegueForEditOtherVC(_ unwindSegue :UIStoryboardSegue){
-//        let vc = unwindSegue.sourceViewController as! EditOtherViewController
-//        let cell = vc.tableView.dequeueReusableCellWithIdentifier("InputCell")! as UITableViewCell
-//        let name = cell.viewWithTag(101) as! UITextField
-//        if(vc.selectedRow == "昵称"){
-//            GLOBAL_UserProfile.nickName = vc.newName
-//            print("\(GLOBAL_UserProfile.nickName!)")
-//            print("\(vc.newName)")
-//
-//        }
-//        if(vc.selectedRow == "性别"){
-//            GLOBAL_UserProfile.sex = vc.newSex!
-//        }
         self.tableView.reloadData()
     }
     
@@ -69,7 +57,7 @@ class EditProfilesViewController: UIViewController,UITableViewDelegate,UITableVi
         }
         if((indexPath as NSIndexPath).row > 0){
             cell = self.tableView.dequeueReusableCell(withIdentifier: "GeneralCell",for: indexPath)
-            let labels = ["昵称","用户ID","性别","地区"]
+            let labels = ["昵称","用户ID","权限级别","性别","地区"]
             let label = cell.viewWithTag(201) as! UILabel
             let detail = cell.viewWithTag(202) as! UILabel
             label.text = labels[(indexPath as NSIndexPath).row - 1]
@@ -80,6 +68,13 @@ class EditProfilesViewController: UIViewController,UITableViewDelegate,UITableVi
                 detail.text = GLOBAL_UserProfile.nickName
             case "用户ID":
                 detail.text = "\(GLOBAL_UserProfile.id!)"
+            case "权限级别":
+                if GLOBAL_UserProfile.root == 1{
+                    detail.text = "游客"
+                }
+                else{
+                    detail.text = "农场主"
+                }
             case "性别":
                 if GLOBAL_UserProfile.sex == 0 {
                     detail.text = "女"
@@ -93,7 +88,7 @@ class EditProfilesViewController: UIViewController,UITableViewDelegate,UITableVi
                 detail.text = ""
             }
             
-            if label.text == "用户ID" {
+            if (label.text == "用户ID"||label.text == "权限级别") {
                 cell.accessoryType = UITableViewCellAccessoryType.none
             }
             else{
@@ -108,7 +103,7 @@ class EditProfilesViewController: UIViewController,UITableViewDelegate,UITableVi
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
-        return 5
+        return 6
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
@@ -119,7 +114,7 @@ class EditProfilesViewController: UIViewController,UITableViewDelegate,UITableVi
         if((indexPath as NSIndexPath).row == 1){
             performSegue(withIdentifier: "EditOtherSegue", sender: "昵称")
         }
-        if((indexPath as NSIndexPath).row == 3){
+        if((indexPath as NSIndexPath).row == 4){
             performSegue(withIdentifier: "EditOtherSegue", sender: "性别")
         }
 //        if(indexPath.row == 4){

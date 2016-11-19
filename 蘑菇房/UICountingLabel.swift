@@ -58,7 +58,7 @@ class UICountingLabel : UILabel
             self.progress = self.totalTime
         }
         self.text = NSString(format:"%.0lf", Double(self.currentValue())) as String
-        self.text = self.text! + "℃"
+        self.text = self.text!
     }
     
     func currentValue()->CGFloat

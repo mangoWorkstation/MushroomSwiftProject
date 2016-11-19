@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     lazy var managedObjectModel: NSManagedObjectModel = {
         // The managed object model for the application. This property is not optional. It is a fatal error for the application not to be able to find and load its model.
-        let modelURL = Bundle.main.url(forResource: "Database", withExtension: "momd")!
+        let modelURL = Bundle.main.url(forResource: "DataBase", withExtension: "momd")!
         return NSManagedObjectModel(contentsOf: modelURL)!
     }()
     
@@ -86,12 +86,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GLOBAL_deviceModel = UIDevice().modelName
         //获取设备型号
         
+        print(NSHomeDirectory())
+        
+        
         let userInfoDefault = UserDefaults()
         if (userInfoDefault.object(forKey: "UserInfoModel")) != nil{
             let userInfoModelData = userInfoDefault.object(forKey: "UserInfoModel") as! NSData
             let userInfoModel = NSKeyedUnarchiver.unarchiveObject(with: userInfoModelData as Data) as! UserProfiles
-            GLOBAL_UserProfile = UserProfiles(face: userInfoModel.face as NSData, nickName: userInfoModel.nickName!, id: userInfoModel.id!, sex: userInfoModel.sex!, province: userInfoModel.province!, city: userInfoModel.city!, allowPushingNotification: userInfoModel.allowPushingNotification!, allowPushingNewMessageToMobile: userInfoModel.allowPushingNewMessageToMobile!, latitude: userInfoModel.latitude!, longitude: userInfoModel.longitude!)
-            print("用户数据读取成功")
+            GLOBAL_UserProfile = UserProfiles(face: userInfoModel.face as NSData, nickName: userInfoModel.nickName!, id: userInfoModel.id!, sex: userInfoModel.sex!, province: userInfoModel.province!, city: userInfoModel.city!, password: userInfoModel.password,root: userInfoModel.root!, allowPushingNotification: userInfoModel.allowPushingNotification!, allowPushingNewMessageToMobile: userInfoModel.allowPushingNewMessageToMobile!, latitude: userInfoModel.latitude!, longitude: userInfoModel.longitude!)
+            print("用户数据读取成功\n")
+            print("用户名:\(GLOBAL_UserProfile.nickName!)")
+            print("用户ID:\(GLOBAL_UserProfile.id!)")
+            print("密码（MD5）:\(GLOBAL_UserProfile.password!)\n")
 
         }
         else{
@@ -99,20 +105,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let staticFace = UIImage(named: "2")
             let staticFaceData = UIImageJPEGRepresentation(staticFace!, 100)
             let id = arc4random()
-            GLOBAL_UserProfile = UserProfiles(face: staticFaceData! as NSData, nickName: "芒果君", id: Int(id), sex: 1, province: "广西", city: "南宁",allowPushingNotification: false,allowPushingNewMessageToMobile: false,latitude: 0,longitude:0)
+            let passwordNum = arc4random()
+            let password = String(passwordNum).hmac(algorithm: .MD5, key: String(id))
+            //随机密钥
+            let root = 2
+            
+            GLOBAL_UserProfile = UserProfiles(face: staticFaceData! as NSData, nickName: "芒果君", id: Int(id), sex: 1, province: "广西", city: "南宁",password:password, root: root,allowPushingNotification: false,allowPushingNewMessageToMobile: false,latitude: 0,longitude:0)
             let userInfoModelData = NSKeyedArchiver.archivedData(withRootObject: GLOBAL_UserProfile)
             userInfoDefault.set(userInfoModelData, forKey: "UserInfoModel")
             userInfoDefault.synchronize()
             print("用户数据保存成功")
+            print("用户名:\(GLOBAL_UserProfile.nickName!)")
+            print("用户ID:\(GLOBAL_UserProfile.id!)")
+            print("密码（明文）:\(passwordNum)")
+            print("密码（MD5）:\(GLOBAL_UserProfile.password!)")
         }
 
         GLOBAL_appFont = "PingFangSC-Regular"
         
         //设置app字体
-        //编号如下:
-        //Hanzipen - HanziPenSC-W3/HanziPenSC-W5
-        //Hannotate - HannotateSC-W5/HannotateSC-W7
-        //站酷快乐体 字体编号:HappyZcool-2016
+        
         
         UINavigationBar.appearance().barTintColor = UIColor(red: 64/255, green: 151/255, blue: 32/255, alpha: 1)
         UINavigationBar.appearance().tintColor = UIColor.white

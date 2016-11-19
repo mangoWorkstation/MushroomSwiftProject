@@ -10,9 +10,7 @@ import Foundation
 import CoreGraphics
 
 class DataSource : NSObject {
-//    var roomID : String!
-//    var area: String!
-//    var level: String? //可为nil
+
      var timestamp: TimeInterval?
      var finalIdentifier: String!
      var arr_airTemperature: [CGFloat]?

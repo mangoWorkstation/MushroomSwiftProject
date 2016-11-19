@@ -15,19 +15,24 @@ class UserProfiles: NSObject {
     var sex:Int?
     var province:String?
     var city:String?
+    var password : String?
+    var root:Int?
+    //root 1:普通用户 2:农场主
     
     var allowPushingNotification:Bool?
     var allowPushingNewMessageToMobile:Bool?
     var latitude:Double?
     var longitude:Double?
     
-    init(face:NSData,nickName:String,id:Int,sex:Int,province:String,city:String,allowPushingNotification:Bool,allowPushingNewMessageToMobile:Bool?,latitude:Double?,longitude:Double?) {
+    init(face:NSData,nickName:String,id:Int,sex:Int,province:String,city:String,password: String?,root: Int?,allowPushingNotification:Bool,allowPushingNewMessageToMobile:Bool?,latitude:Double?,longitude:Double?) {
         self.face = face as Data
         self.nickName = nickName
         self.id = id
         self.sex = sex
         self.province = province
         self.city = city
+        self.password = password
+        self.root = root
         self.allowPushingNewMessageToMobile = allowPushingNewMessageToMobile
         self.allowPushingNotification = allowPushingNotification
         if latitude != nil || longitude != nil{
@@ -47,6 +52,8 @@ class UserProfiles: NSObject {
         self.sex = aDecoder.decodeObject(forKey: "sex") as? Int
         self.province = aDecoder.decodeObject(forKey: "province") as? String
         self.city = aDecoder.decodeObject(forKey: "city") as? String
+        self.password = aDecoder.decodeObject(forKey: "password") as? String
+        self.root = aDecoder.decodeObject(forKey: "root") as? Int
         self.allowPushingNotification = aDecoder.decodeObject(forKey: "allowPushingNotification") as? Bool
         self.allowPushingNewMessageToMobile = aDecoder.decodeObject(forKey: "allowPushingNewMessageToMobile") as? Bool
         self.latitude = aDecoder.decodeObject(forKey: "latitude") as? Double
@@ -60,6 +67,8 @@ class UserProfiles: NSObject {
         aCoder.encode(sex,forKey:"sex")
         aCoder.encode(province,forKey:"province")
         aCoder.encode(city,forKey:"city")
+        aCoder.encode(password,forKey:"password")
+        aCoder.encode(root,forKey:"root")
         aCoder.encode(allowPushingNotification,forKey:"allowPushingNotification")
         aCoder.encode(allowPushingNewMessageToMobile,forKey:"allowPushingNewMessageToMobile")
         aCoder.encode(latitude,forKey:"latitude")

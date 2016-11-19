@@ -30,6 +30,66 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
         // Dispose of any resources that can be recreated.
     }
     
+    //MARK: - Cache Management
+    func fileSizeOfCache()-> Int {
+        
+        // 取出cache文件夹目录 缓存文件都在这个目录下
+        let cachePath = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.cachesDirectory, FileManager.SearchPathDomainMask.userDomainMask, true).first
+        //缓存目录路径
+        print(cachePath!)
+        
+        // 取出文件夹下所有文件数组
+        let fileArr = FileManager.default.subpaths(atPath: cachePath!)
+        
+        print(fileArr!)
+        
+        //快速枚举出所有文件名 计算文件大小
+        var size = 0
+        for file in fileArr! {
+            
+            // 把文件名拼接到路径中
+            let path = cachePath?.appending("/"+file)
+            // 取出文件属性
+            let folder = try! FileManager.default.attributesOfItem(atPath: path!)
+            // 用元组取出文件大小属性
+            for (abc, bcd) in folder {
+                // 累加文件大小
+                if abc == FileAttributeKey.size {
+                    size += (bcd as AnyObject).integerValue
+                }
+            }
+        }
+        
+        let mm = size / 1024 / 1024
+        
+        return mm
+    }
+    
+    func clearCache() {
+        
+        // 取出cache文件夹目录 缓存文件都在这个目录下
+        let cachePath = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.cachesDirectory, FileManager.SearchPathDomainMask.userDomainMask, true).first
+        
+        // 取出文件夹下所有文件数组
+        let fileArr = FileManager.default.subpaths(atPath: cachePath!)
+        
+        // 遍历删除
+        for file in fileArr! {
+            
+            let path = cachePath?.appending("/"+file)
+            if FileManager.default.fileExists(atPath: path!) {
+                
+                do {
+                    try FileManager.default.removeItem(atPath: path!)
+                } catch {
+                    
+                }
+            }
+        }
+        print(FileManager.default.subpaths(atPath: cachePath!)!)
+    }
+    
+    
     //MARK: - UITableViewDelegate
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
         let section = (indexPath as NSIndexPath).section
@@ -73,8 +133,9 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
                 cell = self.tableView.dequeueReusableCell(withIdentifier: "CacheCell")!
                 let label = cell.viewWithTag(2001) as! UILabel
                 let label_1 = cell.viewWithTag(2002) as! UILabel
+                let cacheFile = self.fileSizeOfCache()
                 label.text = "清除缓存"
-                label_1.text = "1.23 MB"  //显示缓存大小 2016.7.15/7:08
+                label_1.text = String(Double(cacheFile)*0.0)+"MB"
                 label.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
                 label_1.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
 
@@ -85,9 +146,9 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
                 let label = cell.viewWithTag(1001) as! UILabel
                 label.text = "退出登录"
                 label.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
-                label.textAlignment = NSTextAlignment.center      //居中 2016.7.15／1:13a.m
+                label.textAlignment = NSTextAlignment.center
                 label.textColor = UIColor.red
-                cell.accessoryType = UITableViewCellAccessoryType.none   //无箭头指示器ii
+                cell.accessoryType = UITableViewCellAccessoryType.none
             }
         }
         
@@ -194,15 +255,15 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
         if((indexPath as NSIndexPath).section == 2){
             let cell = self.tableView.cellForRow(at: indexPath)
             let detail = cell?.viewWithTag(2002) as! UILabel
-            if detail.text != "0.00MB"{
-//                let sheet = UIActionSheet(title: "将要清除所有缓存", delegate: self, cancelButtonTitle: "取消", destructiveButtonTitle: "确定")
-//                sheet.show(in: self.view)
+            if detail.text != "0.0MB"{
                 let sheet = UIAlertController(title: "将要清除所有缓存", message: nil, preferredStyle: .actionSheet)
                 sheet.addAction(UIAlertAction(title: "确定", style: .destructive, handler: {
                     (action)-> Void in
                     let cell = self.tableView.cellForRow(at: indexPath)
                     let detail = cell?.viewWithTag(2002) as! UILabel
-                    detail.text = "0.00MB"
+                    self.clearCache()
+                    let cacheFile = self.fileSizeOfCache()
+                    detail.text = String(Double(cacheFile)*0.0)+"MB"
                 }))
                 sheet.addAction(UIAlertAction(title: "取消", style: .cancel, handler: {
                     (action)-> Void in

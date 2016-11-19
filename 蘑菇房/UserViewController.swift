@@ -29,7 +29,7 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         configUserInfo()
         
-        staticItems_section_2 = [StaticItem(iconName:"MyHouse",label:"我家的蘑菇房"),StaticItem(iconName:"MyFollow",label:"我关注的蘑菇房"),StaticItem(iconName:"Nearby",label:"附近的基地"),StaticItem(iconName:"MyProfiles",label:"我的资料"),StaticItem(iconName:"Inform",label:"消息与通知")]
+        staticItems_section_2 = [StaticItem(iconName:"MyHouse",label:"我管理的基地"),StaticItem(iconName:"MyFollow",label:"授权查看的基地"),StaticItem(iconName:"Nearby",label:"附近的基地"),StaticItem(iconName:"MyProfiles",label:"我的资料"),StaticItem(iconName:"Inform",label:"消息与通知")]
         staticItems_section_3 = [StaticItem(iconName:"Setup",label:"设置"),StaticItem(iconName:"About",label: "关于")]
         //初始化静态固定图标
 //        self.tableView.showsVerticalScrollIndicator = true
@@ -162,7 +162,9 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             let sign = cell!.viewWithTag(201) as! UIImageView
             let notification = cell!.viewWithTag(202) as! UILabel
             sign.image = UIImage(named: "Alert")
-            notification.text = "2016-7-6 南宁市气象局发布暴雨红色预警，请注意强对流天气"
+            let currrentMeg = GLOBAL_NotificationCache.last!
+            let time = timeStampToString(currrentMeg.timestamp!)
+            notification.text = "\(time)  "+"\(currrentMeg.prelabel!)"
             notification.font = UIFont(name: GLOBAL_appFont!, size: 12.0)
             notification.textColor = UIColor.black
 

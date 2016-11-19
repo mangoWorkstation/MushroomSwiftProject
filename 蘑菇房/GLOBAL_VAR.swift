@@ -15,7 +15,7 @@ public var GLOBAL_deviceModel:String?{
         let filePath = NSHomeDirectory() + "/Documents/deviceModel.plist"
         let arr = NSArray(object: GLOBAL_deviceModel!)
         arr.write(toFile: filePath, atomically: true)
-        print("写入成功！")
+        print("成功获取设备型号：\(GLOBAL_deviceModel!)\n")
         //测试通过 2016.8.27
     }
 }
