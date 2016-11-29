@@ -243,6 +243,7 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
                     performSegue(withIdentifier: "FeedBackSegue", sender: nil)
                 }
             }
+            
         }
         if(self.selectedRow == 1){
             if((indexPath as NSIndexPath).section == 0){
@@ -274,6 +275,56 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
             }
             else{
                 self.tableView.deselectRow(at: indexPath, animated: true)
+            }
+        }
+            
+        if self.selectedRow == 0{
+            if indexPath.section == 3 {
+                let sheet = UIAlertController(title: "将要注销当前账户", message: "您的本地用户信息将被删除", preferredStyle: .alert)
+                sheet.addAction(UIAlertAction(title: "确定", style: .destructive, handler: {
+                    (action)-> Void in
+                    self.tableView.deselectRow(at: indexPath, animated: true)
+                    self.dismiss(animated: true, completion:nil)
+                    let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+                    let vc = storyboard.instantiateViewController(withIdentifier: "loginVC") as! LoginViewController
+                    vc.hidesBottomBarWhenPushed = false
+                    let vcNav = UINavigationController(rootViewController: vc)
+                    let appDel = UIApplication.shared.delegate as! AppDelegate
+                    appDel.window?.rootViewController = vcNav
+                    appDel.window?.makeKeyAndVisible()
+                    let path_1 = NSHomeDirectory() + "/Documents/UserProfile/profile.plist"
+                    let path_2 = NSHomeDirectory() + "/Documents/UserProfile/loginID.plist"
+                    try?FileManager.default.removeItem(atPath: path_1)
+                    try?FileManager.default.removeItem(atPath: path_2)
+                    let userDefaultInfo = UserDefaults()
+                    userDefaultInfo.removeObject(forKey: "UserInfoModel")
+                    userDefaultInfo.removeObject(forKey: "loginID")
+//                    userDefaultInfo.set(nil, forKey: "UserInfoModel")
+//                    userDefaultInfo.set(nil,forKey: "id")
+//                    userDefaultInfo.set(nil,forKey: "face")
+//                    userDefaultInfo.set(nil,forKey: "nickName")
+//                    userDefaultInfo.set(nil,forKey: "root")
+//                    userDefaultInfo.set(nil,forKey: "password")
+//                    userDefaultInfo.set(nil,forKey: "sex")
+//                    userDefaultInfo.set(nil,forKey: "province")
+//                    userDefaultInfo.set(nil,forKey: "city")
+//                    userDefaultInfo.set(nil,forKey: "allowPushingNotification")
+//                    userDefaultInfo.set(nil,forKey: "allowPushingNewMessageToMobile")
+//                    userDefaultInfo.set(nil,forKey: "latitude")
+//                    userDefaultInfo.set(nil,forKey: "longitude")
+                    userDefaultInfo.synchronize()
+//                    GLOBAL_UserProfile = nil
+//                    let filePath = NSHomeDirectory() + "/Documents/loginID.plist"
+//                    try? FileManager.default.removeItem(atPath: filePath)
+                }))
+                sheet.addAction(UIAlertAction(title: "取消", style: .cancel, handler: {
+                    (action)-> Void in
+                    self.tableView.deselectRow(at: indexPath, animated: true)
+                }))
+                
+                present(sheet, animated: true, completion: {
+                    self.tableView.deselectRow(at: indexPath, animated: true)
+                })
             }
         }
         else{

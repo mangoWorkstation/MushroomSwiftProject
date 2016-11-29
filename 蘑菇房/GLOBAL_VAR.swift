@@ -10,17 +10,12 @@ import Foundation
 import CoreData
 import UIKit
 
-public var GLOBAL_deviceModel:String?{
-    didSet{
-        let filePath = NSHomeDirectory() + "/Documents/deviceModel.plist"
-        let arr = NSArray(object: GLOBAL_deviceModel!)
-        arr.write(toFile: filePath, atomically: true)
-        print("成功获取设备型号：\(GLOBAL_deviceModel!)\n")
-        //测试通过 2016.8.27
-    }
-}
+//系统字体
+var GLOBAL_appFont:String? = "PingFangSC-Regular"
 
-var GLOBAL_appFont:String?
+//寄存当前登录用户资料
+var GLOBAL_UserProfile : UserProfiles!
+
 
 var GLOBAL_NotificationCache : [NotificationPreview] = [NotificationPreview(messageID: 123456,preImage: "Hello", prelabel:"南宁市未来三天高温将继续持续",isRead: true,timestamp: 1468682458),
                                                         NotificationPreview(messageID: 123457,preImage: "MyName", prelabel:"您的蘑菇房高温警报",isRead: false,timestamp: 1468682459),
@@ -30,37 +25,6 @@ var GLOBAL_NotificationCache : [NotificationPreview] = [NotificationPreview(mess
                                                         NotificationPreview(messageID: 123461,preImage: "LiKeqiang", prelabel:"本周蘑菇房的监测分析报告出来啦！快点开瞧瞧吧～",isRead: false,timestamp: 1468882458)]
 
 var GLOBAL_UnreadMessage : [NotificationPreview] = unreadMessageFilter(GLOBAL_NotificationCache)
-
-var GLOBAL_UserProfile : UserProfiles!{
-    didSet{
-        let userInfoDefault = UserDefaults()
-        let saveData = NSKeyedArchiver.archivedData(withRootObject: GLOBAL_UserProfile)
-        userInfoDefault.set(saveData, forKey: "UserInfoModel")
-        userInfoDefault.synchronize()
-    }
-}
-//    = UserProfiles(face: "2", nickName: "芒果君", id: 123456, sex: 1, province: "广西", city: "南宁",allowPushingNotification: false,allowPushingNewMessageToMobile: false,latitude: 0,longitude:0){
-//    didSet{
-//        let userInfo = UserDefaults()
-//        let face = UIImage(named: GLOBAL_UserProfile.face!)
-//        let faceGraphData = UIImageJPEGRepresentation(face!, 100)
-//        userInfo.register(defaults:[
-//            "face" : faceGraphData,
-//            "nickName" : GLOBAL_UserProfile.nickName!,
-//            "id" : GLOBAL_UserProfile.id!,
-//            "sex" : GLOBAL_UserProfile.sex,
-//            "province" : GLOBAL_UserProfile.province!,
-//            "city" : GLOBAL_UserProfile.city!,
-//            "allowPushingNotification" : GLOBAL_UserProfile.allowPushingNotification,
-//            "allowPushingNewMessageToMobile" : GLOBAL_UserProfile.allowPushingNewMessageToMobile,
-//            "latitude" : GLOBAL_UserProfile.latitude,
-//            "longitude" : GLOBAL_UserProfile.longitude
-//            ]
-//        )
-//        userInfo.synchronize()
-//        print("用户数据保存成功")
-//    }
-//}
 
 
 var GLOBAL_RoomInfo  : Dictionary<String,RoomInfoModel> = [

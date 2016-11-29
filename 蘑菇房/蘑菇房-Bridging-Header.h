@@ -3,3 +3,6 @@
 //
 
 #import <CommonCrypto/CommonHMAC.h>
+
+#include <stdint.h>
+extern uint64_t dispatch_benchmark(size_t count, void (^block)(void));

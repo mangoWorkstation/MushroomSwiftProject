@@ -20,7 +20,7 @@ class NewMessageWebViewController: UIViewController,UIWebViewDelegate{
         super.viewDidLoad()
         webView.delegate = self
         let url = NSURL(string: "http://weibo.com")
-        webView.loadRequest(URLRequest(url: url as! URL))
+        webView.loadRequest(URLRequest(url: url as! URL, cachePolicy: URLRequest.CachePolicy.reloadIgnoringLocalCacheData, timeoutInterval: 30))
         setProgressView()
 
         // Do any additional setup after loading the view.
@@ -66,14 +66,5 @@ class NewMessageWebViewController: UIViewController,UIWebViewDelegate{
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

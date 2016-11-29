@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Foundation
+import CoreData
 
 class SetupProfileViewController: UIViewController,UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIAdaptivePresentationControllerDelegate{
     
@@ -22,6 +24,8 @@ class SetupProfileViewController: UIViewController,UITextFieldDelegate,UIImagePi
     @IBOutlet weak var submit: UIButton!
     
     @IBOutlet weak var titleLabel: UILabel!
+    
+    var receivedPhoneNUM : String!
     
     @IBAction func changeFace(sender:UIButton,forEvent:UIEvent?){
         let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -56,6 +60,31 @@ class SetupProfileViewController: UIViewController,UITextFieldDelegate,UIImagePi
         //泡泡模式，针对iPad使用。不用加判别设备类型，因为iPhone不care这两行代码
         present(sheet, animated: true, completion: nil)
         
+    }
+    
+    @IBAction func resaveUserProfile(sender:UIButton,forEvent:UIEvent?){
+        if self.nickNameInput.text != nil && self.password.text != nil{
+            let appDel = UIApplication.shared.delegate as! AppDelegate
+            let context = appDel.managedObjectContext
+            let entity = NSEntityDescription.insertNewObject(forEntityName: "UserProperties", into: context) as! UserPropertiesManagedObject
+            let encodedPassword = password.text?.hmac(algorithm: .MD5, key: self.receivedPhoneNUM)
+            
+            entity.id = Int64(self.receivedPhoneNUM)!
+            entity.password = encodedPassword!
+            entity.root = Int64(0)
+            entity.sex = Int64(self.gender.selectedSegmentIndex)
+            entity.province = nil
+            entity.city = nil
+            entity.allowPushingNewMessageToMobile = true
+            entity.allowPushingNotification = true
+            
+            do {
+                try context.save()
+            } catch let error{
+                print("context can't save!, Error: \(error)")
+            }
+        
+        }
     }
     
     override func viewDidLoad() {
@@ -104,6 +133,7 @@ class SetupProfileViewController: UIViewController,UITextFieldDelegate,UIImagePi
         submit.clipsToBounds = true
         submit.layer.masksToBounds = true
         submit.layer.cornerRadius = 7
+        submit.addTarget(self, action: #selector(SetupProfileViewController.resaveUserProfile(sender:forEvent:)), for: .touchUpInside)
         
         
         // Do any additional setup after loading the view.

@@ -9,7 +9,7 @@
 import UIKit
 
 class FaceShowViewController: UIViewController,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIPopoverPresentationControllerDelegate{
-
+    
     let userDefault = UserDefaults()
     
     @IBOutlet weak var face: UIImageView!
@@ -26,52 +26,43 @@ class FaceShowViewController: UIViewController,UIActionSheetDelegate,UIImagePick
                 imagePickerVC.delegate = self
                 self.present(imagePickerVC, animated: true, completion: nil)
             }
-
+            
         }))
         sheet.addAction(UIAlertAction(title: "从手机相册选择", style: .default, handler: {
             (action)->Void in
-            if ((GLOBAL_deviceModel?.contains("iPhone")) != nil){
-                if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
-                    let imagePickerVC = UIImagePickerController()
-                    imagePickerVC.allowsEditing = false
-                    imagePickerVC.sourceType = .photoLibrary
-                    imagePickerVC.delegate = self
-                    self.present(imagePickerVC, animated: true, completion: nil)
-                }
-            }
-            else if ((GLOBAL_deviceModel?.contains("iPad")) != nil){
-//                if UIImagePickerController.isSourceTypeAvailable(.PhotoLibrary){
-//                    let imagePickerVC = UIImagePickerController()
-//                    imagePickerVC.allowsEditing = false
-//                    imagePickerVC.sourceType = .PhotoLibrary
-//                    imagePickerVC.delegate = self
-//                }
-//                
-                
+            if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
+                let imagePickerVC = UIImagePickerController()
+                imagePickerVC.allowsEditing = false
+                imagePickerVC.sourceType = .photoLibrary
+                imagePickerVC.delegate = self
+                self.present(imagePickerVC, animated: true, completion: nil)
             }
             
         }))
         sheet.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
+        sheet.popoverPresentationController?.sourceView = self.view
+        sheet.popoverPresentationController?.sourceRect = CGRect(x: self.face.center.x, y: self.face.center.y, width: 100, height: 50)
+        sheet.popoverPresentationController?.permittedArrowDirections = .up
         
         present(sheet, animated: true, completion: nil)
-
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.black
-        face.image = UIImage(data: GLOBAL_UserProfile.face as Data)
+        face.image = UIImage(data: GLOBAL_UserProfile.face! as Data)
         face.contentMode = .scaleToFill
         let rightItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(FaceShowViewController.headToSystemPhotoLibrary(_: forEvent: )))
         self.navigationItem.rightBarButtonItem = rightItem
         // Do any additional setup after loading the view.
     }
     
-//    override func viewDidDisappear(_ animated: Bool) {
-//        saveImage(self.face.image!)
-//        print("图片已保存")
-//    }
-
+    //    override func viewDidDisappear(_ animated: Bool) {
+    //        saveImage(self.face.image!)
+    //        print("图片已保存")
+    //    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -82,7 +73,6 @@ class FaceShowViewController: UIViewController,UIActionSheetDelegate,UIImagePick
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]){
         face.image = info[UIImagePickerControllerOriginalImage] as? UIImage
         face.contentMode = .scaleToFill
-//        let userDefault = UserDefaults()
         let faceData = UIImageJPEGRepresentation(face.image!, 100)
         GLOBAL_UserProfile.face = faceData!
         dismiss(animated: true, completion: nil)
@@ -98,6 +88,6 @@ class FaceShowViewController: UIViewController,UIActionSheetDelegate,UIImagePick
     func imageSavedInspector(_ image:UIImage,didFinishSavingWithError:NSError,contextInfo:AnyObject?){
         
     }
-
-//    //MARK: - NavigationSegue
+    
+    //    //MARK: - NavigationSegue
 }

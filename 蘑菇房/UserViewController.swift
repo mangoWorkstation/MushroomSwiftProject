@@ -7,6 +7,7 @@
 //
 
 import UIKit
+//import DominantColor
 
 class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
     
@@ -26,9 +27,7 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         tableView.dataSource = self
         
         self.navigationController?.navigationBar.isTranslucent = false
-        
-        configUserInfo()
-        
+                
         staticItems_section_2 = [StaticItem(iconName:"MyHouse",label:"我管理的基地"),StaticItem(iconName:"MyFollow",label:"授权查看的基地"),StaticItem(iconName:"Nearby",label:"附近的基地"),StaticItem(iconName:"MyProfiles",label:"我的资料"),StaticItem(iconName:"Inform",label:"消息与通知")]
         staticItems_section_3 = [StaticItem(iconName:"Setup",label:"设置"),StaticItem(iconName:"About",label: "关于")]
         //初始化静态固定图标
@@ -48,23 +47,6 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     
-    private func configUserInfo(){
-//        UserInfoColumn.image = UIImage(named: "Background")
-//        UserInfoColumn.contentMode = .scaleAspectFill
-//        print(UserInfoColumn.center.x)
-//        print(UserInfoColumn.center.y)
-//        
-//        print(UserInfoColumn.frame.width)
-//        print(UserInfoColumn.frame.height)
-//        let face = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
-//        face.image = UIImage(named: GLOBAL_UserProfile.face!)
-//        face.layer.masksToBounds = true
-//        face.layer.borderWidth = 3
-//        face.layer.borderColor = UIColor.white.cgColor
-//        face.layer.cornerRadius = 25
-//        face.clipsToBounds = true
-//        UserInfoColumn.addSubview(face)
-    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -131,29 +113,40 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             let icon = cell!.viewWithTag(1011) as! UIImageView
             let nameLabel = cell!.viewWithTag(1012) as! UILabel
             let background = cell!.viewWithTag(102) as! UIImageView
-            icon.image = UIImage(data: GLOBAL_UserProfile.face)
+            icon.image = UIImage(data: GLOBAL_UserProfile.face!)
 //            icon.bounds = CGRectMake((icon.bounds.size.width-60)/2, (icon.bounds.size.height-60)/2-150, 60, 60)
 //            icon.frame = CGRectMake((icon.bounds.size.width - 60)/2, (icon.bounds.size.height-60)/2-150, 60,60)
-            icon.layer.cornerRadius = 25
+            icon.layer.cornerRadius = 40
             //注意:cornerRadius必须是storyBoard中，宽度的1/2;
             //在storyBoard中设置imageView时，高度必须是宽度的1/4才能磨成圆形
             //2016.7.27
             icon.layer.masksToBounds = true
             icon.layer.borderWidth = 3
-            icon.layer.borderColor = UIColor.white.cgColor
+            icon.layer.borderColor = UIColor.lightGray.cgColor
             icon.clipsToBounds = true     //制作圆形的头像
             nameLabel.text = GLOBAL_UserProfile.nickName
-            nameLabel.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
+            nameLabel.font = UIFont(name: GLOBAL_appFont!, size: 20.0)
             nameLabel.textColor = UIColor.white
             
             //黑科技，将头像高斯模糊化，作为背景 2016.10.17
-            let ciImage = CIImage(image: UIImage(data: GLOBAL_UserProfile.face)!)
+            let ciImage = CIImage(image: UIImage(data: GLOBAL_UserProfile.face!)!)
             let filterMirror = CIFilter(name: "CIGaussianBlur")
             filterMirror?.setValue(ciImage, forKey: kCIInputImageKey)
             let filterImage = filterMirror?.value(forKey: kCIOutputImageKey)
             let context = CIContext(options: nil)
             let cgImage = context.createCGImage(filterImage as! CIImage, from: (cell?.frame)!)
             background.image = UIImage(cgImage: cgImage!)
+            
+//            let _image = background.image
+//            let domainColors = _image.dominantColors() as! [UIColor]
+//            let mainColor = domainColors[0]
+//            if isDarkRGB(color: mainColor){
+//                nameLabel.textColor = UIColor.white
+//            }
+//            else{
+//                nameLabel.textColor = UIColor.black
+//            }
+            
             
         }
         if ((indexPath as NSIndexPath).section == 1){
@@ -162,9 +155,15 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             let sign = cell!.viewWithTag(201) as! UIImageView
             let notification = cell!.viewWithTag(202) as! UILabel
             sign.image = UIImage(named: "Alert")
-            let currrentMeg = GLOBAL_NotificationCache.last!
-            let time = timeStampToString(currrentMeg.timestamp!)
-            notification.text = "\(time)  "+"\(currrentMeg.prelabel!)"
+            if !GLOBAL_NotificationCache.isEmpty{
+                let currrentMeg = GLOBAL_NotificationCache.last!
+                let time = timeStampToString(currrentMeg.timestamp!)
+                notification.text = "\(time)  "+"\(currrentMeg.prelabel!)"
+            }
+            else{
+                notification.text = "暂无新消息"
+            }
+            
             notification.font = UIFont(name: GLOBAL_appFont!, size: 12.0)
             notification.textColor = UIColor.black
 
@@ -274,4 +273,19 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
     }
     
+}
+
+func isDarkRGB(color:UIColor)->Bool{
+    let components = color.cgColor.components
+    let red = Double((components?[0])!)
+    let green = Double((components?[1])!)
+    let blue = Double((components?[2])!)
+    let grayLevel = Int(red * 256 * 0.299 + green * 255 * 0.587 + blue * 255 * 0.114)
+    print("grayLevel","\(grayLevel)")
+    if grayLevel >= 192{
+        return false
+    }
+    else{
+        return true
+    }
 }

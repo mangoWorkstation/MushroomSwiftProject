@@ -30,10 +30,14 @@
 		0D3FC0EA1DD760A200D12860 /* SoilTemperatureManagedObject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3FC0E81DD760A200D12860 /* SoilTemperatureManagedObject+CoreDataClass.swift */; };
 		0D3FC0EB1DD760A200D12860 /* SoilTemperatureManagedObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3FC0E91DD760A200D12860 /* SoilTemperatureManagedObject+CoreDataProperties.swift */; };
 		0D3FC0F41DD7653E00D12860 /* HASH_Encrypt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3FC0F31DD7653E00D12860 /* HASH_Encrypt.swift */; };
+		0D42EEEB1DE09DB100CFD734 /* UserDistrictPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D42EEEA1DE09DB100CFD734 /* UserDistrictPickerViewController.swift */; };
 		0D4406A51D81BB4A00E045AA /* 蘑菇背景1.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D4406A41D81BB4A00E045AA /* 蘑菇背景1.png */; };
 		0D4406A71D81BEAA00E045AA /* 蘑菇背景.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D4406A61D81BEAA00E045AA /* 蘑菇背景.png */; };
 		0D450AF51DD73F270026C2C0 /* DataBase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0D450AF31DD73F270026C2C0 /* DataBase.xcdatamodeld */; };
 		0D49900A1D48B8BD0007D99B /* PresentRoomDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4990091D48B8BD0007D99B /* PresentRoomDetailViewController.swift */; };
+		0D5369EC1DE40ACB00AC33C6 /* MonitoringDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D5369EB1DE40ACB00AC33C6 /* MonitoringDataSource.swift */; };
+		0D5369F31DE43AAA00AC33C6 /* UserPropertiesManagedObject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D5369F11DE43AAA00AC33C6 /* UserPropertiesManagedObject+CoreDataClass.swift */; };
+		0D5369F41DE43AAA00AC33C6 /* UserPropertiesManagedObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D5369F21DE43AAA00AC33C6 /* UserPropertiesManagedObject+CoreDataProperties.swift */; };
 		0D7262B01D3755AC00ACB2B9 /* StaticItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7262AF1D3755AC00ACB2B9 /* StaticItemModel.swift */; };
 		0D7262B41D37E6BA00ACB2B9 /* GeneralDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7262B31D37E6BA00ACB2B9 /* GeneralDetailController.swift */; };
 		0D7403951D782A0E006A88E7 /* DataSourceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7403941D782A0E006A88E7 /* DataSourceViewController.swift */; };
@@ -62,6 +66,7 @@
 		0D8606A81D62BF8E00CE3905 /* Page_1_MushRoom.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D8606A61D62BF8E00CE3905 /* Page_1_MushRoom.storyboard */; };
 		0D8606AB1D62BFCC00CE3905 /* Page_2_Weather.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D8606A91D62BFCC00CE3905 /* Page_2_Weather.storyboard */; };
 		0D8606AE1D62C02300CE3905 /* Page_3_User.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D8606AC1D62C02300CE3905 /* Page_3_User.storyboard */; };
+		0D8B65AA1DE4A1930081AC90 /* romPreWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8B65A91DE4A1930081AC90 /* romPreWriter.swift */; };
 		0D9CE9851D40548F004E1B27 /* PublicStaticMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9CE9841D40548F004E1B27 /* PublicStaticMethods.swift */; };
 		0D9CE9871D419F6F004E1B27 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9CE9861D419F6F004E1B27 /* AccountViewController.swift */; };
 		0D9CE9891D41AE6F004E1B27 /* EditProfilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9CE9881D41AE6F004E1B27 /* EditProfilesViewController.swift */; };
@@ -82,6 +87,8 @@
 		0DC26BF81D941C7600A35048 /* ESRefreshComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC26BF01D941C7600A35048 /* ESRefreshComponent.swift */; };
 		0DC26BF91D941C7600A35048 /* ESRefreshProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC26BF11D941C7600A35048 /* ESRefreshProtocol.swift */; };
 		0DC5263E1D61F88600B30F87 /* icon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0DC5263D1D61F88600B30F87 /* icon.jpg */; };
+		0DCE114D1DE14A5F00308699 /* provinces.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0DCE114B1DE14A5F00308699 /* provinces.plist */; };
+		0DCE114E1DE14A5F00308699 /* provinces_dic.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0DCE114C1DE14A5F00308699 /* provinces_dic.plist */; };
 		0DD895FA1DB3C4CF00D91C04 /* GLOBAL_VAR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DD895F91DB3C4CF00D91C04 /* GLOBAL_VAR.swift */; };
 		0DD895FC1DB3CE0E00D91C04 /* NewMessageWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DD895FB1DB3CE0E00D91C04 /* NewMessageWebViewController.swift */; };
 		0DF373F81D6DA81100AC5E6B /* ShowMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF373F71D6DA81100AC5E6B /* ShowMapViewController.swift */; };
@@ -145,10 +152,14 @@
 		0D3FC0E91DD760A200D12860 /* SoilTemperatureManagedObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "SoilTemperatureManagedObject+CoreDataProperties.swift"; path = "DataBaseManagedClass/SoilTemperatureManagedObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		0D3FC0F01DD764FD00D12860 /* 蘑菇房-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "蘑菇房-Bridging-Header.h"; sourceTree = "<group>"; };
 		0D3FC0F31DD7653E00D12860 /* HASH_Encrypt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HASH_Encrypt.swift; sourceTree = "<group>"; };
+		0D42EEEA1DE09DB100CFD734 /* UserDistrictPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDistrictPickerViewController.swift; sourceTree = "<group>"; };
 		0D4406A41D81BB4A00E045AA /* 蘑菇背景1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "蘑菇背景1.png"; sourceTree = "<group>"; };
 		0D4406A61D81BEAA00E045AA /* 蘑菇背景.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "蘑菇背景.png"; sourceTree = "<group>"; };
 		0D450AF41DD73F270026C2C0 /* DataBase.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataBase.xcdatamodel; sourceTree = "<group>"; };
 		0D4990091D48B8BD0007D99B /* PresentRoomDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentRoomDetailViewController.swift; sourceTree = "<group>"; };
+		0D5369EB1DE40ACB00AC33C6 /* MonitoringDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonitoringDataSource.swift; sourceTree = "<group>"; };
+		0D5369F11DE43AAA00AC33C6 /* UserPropertiesManagedObject+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UserPropertiesManagedObject+CoreDataClass.swift"; path = "DataBaseManagedClass/UserPropertiesManagedObject+CoreDataClass.swift"; sourceTree = "<group>"; };
+		0D5369F21DE43AAA00AC33C6 /* UserPropertiesManagedObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UserPropertiesManagedObject+CoreDataProperties.swift"; path = "DataBaseManagedClass/UserPropertiesManagedObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		0D7262AF1D3755AC00ACB2B9 /* StaticItemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticItemModel.swift; sourceTree = "<group>"; };
 		0D7262B31D37E6BA00ACB2B9 /* GeneralDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralDetailController.swift; sourceTree = "<group>"; };
 		0D7403941D782A0E006A88E7 /* DataSourceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSourceViewController.swift; sourceTree = "<group>"; };
@@ -177,6 +188,7 @@
 		0D8606A71D62BF8E00CE3905 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Page_1_MushRoom.storyboard; sourceTree = "<group>"; };
 		0D8606AA1D62BFCC00CE3905 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Page_2_Weather.storyboard; sourceTree = "<group>"; };
 		0D8606AD1D62C02300CE3905 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Page_3_User.storyboard; sourceTree = "<group>"; };
+		0D8B65A91DE4A1930081AC90 /* romPreWriter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = romPreWriter.swift; sourceTree = "<group>"; };
 		0D9CE9841D40548F004E1B27 /* PublicStaticMethods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicStaticMethods.swift; sourceTree = "<group>"; };
 		0D9CE9861D419F6F004E1B27 /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		0D9CE9881D41AE6F004E1B27 /* EditProfilesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfilesViewController.swift; sourceTree = "<group>"; };
@@ -197,6 +209,8 @@
 		0DC26BF01D941C7600A35048 /* ESRefreshComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ESRefreshComponent.swift; sourceTree = "<group>"; };
 		0DC26BF11D941C7600A35048 /* ESRefreshProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ESRefreshProtocol.swift; sourceTree = "<group>"; };
 		0DC5263D1D61F88600B30F87 /* icon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = icon.jpg; sourceTree = "<group>"; };
+		0DCE114B1DE14A5F00308699 /* provinces.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = provinces.plist; sourceTree = "<group>"; };
+		0DCE114C1DE14A5F00308699 /* provinces_dic.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = provinces_dic.plist; sourceTree = "<group>"; };
 		0DD895F91DB3C4CF00D91C04 /* GLOBAL_VAR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GLOBAL_VAR.swift; sourceTree = "<group>"; };
 		0DD895FB1DB3CE0E00D91C04 /* NewMessageWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewMessageWebViewController.swift; sourceTree = "<group>"; };
 		0DF373F71D6DA81100AC5E6B /* ShowMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowMapViewController.swift; sourceTree = "<group>"; };
@@ -234,6 +248,8 @@
 		0D3FC0EC1DD760AB00D12860 /* ManagedModels */ = {
 			isa = PBXGroup;
 			children = (
+				0D5369F11DE43AAA00AC33C6 /* UserPropertiesManagedObject+CoreDataClass.swift */,
+				0D5369F21DE43AAA00AC33C6 /* UserPropertiesManagedObject+CoreDataProperties.swift */,
 				0D3FC0E81DD760A200D12860 /* SoilTemperatureManagedObject+CoreDataClass.swift */,
 				0D3FC0E91DD760A200D12860 /* SoilTemperatureManagedObject+CoreDataProperties.swift */,
 				0D3FC0E41DD7608B00D12860 /* SoilHumidityManagedObject+CoreDataClass.swift */,
@@ -273,6 +289,23 @@
 				0D1AF4AA1DE06EB500D1787C /* pageScrollWebViewController.swift */,
 			);
 			name = Controllers;
+			sourceTree = "<group>";
+		};
+		0D5369E81DE40A2D00AC33C6 /* PropertyListResources */ = {
+			isa = PBXGroup;
+			children = (
+				0DCE114B1DE14A5F00308699 /* provinces.plist */,
+				0DCE114C1DE14A5F00308699 /* provinces_dic.plist */,
+			);
+			name = PropertyListResources;
+			sourceTree = "<group>";
+		};
+		0D5369EA1DE40A7000AC33C6 /* UnmangedModels */ = {
+			isa = PBXGroup;
+			children = (
+				0D5369EB1DE40ACB00AC33C6 /* MonitoringDataSource.swift */,
+			);
+			name = UnmangedModels;
 			sourceTree = "<group>";
 		};
 		0D7262B11D37563000ACB2B9 /* Models */ = {
@@ -324,6 +357,7 @@
 				0D9CE9881D41AE6F004E1B27 /* EditProfilesViewController.swift */,
 				0DF689A01D41E6A9001FC45A /* FaceShowViewController.swift */,
 				0DF689A21D41EFEF001FC45A /* EditOtherViewController.swift */,
+				0D42EEEA1DE09DB100CFD734 /* UserDistrictPickerViewController.swift */,
 			);
 			name = UserProfileVCs;
 			sourceTree = "<group>";
@@ -367,14 +401,16 @@
 		0D7FBC361CE80A6800775FCA /* 蘑菇房 */ = {
 			isa = PBXGroup;
 			children = (
+				0D7FBC371CE80A6800775FCA /* AppDelegate.swift */,
 				0D450AF31DD73F270026C2C0 /* DataBase.xcdatamodeld */,
-				0D3FC0EC1DD760AB00D12860 /* ManagedModels */,
-				0DB3ABEE1D7164320072E5F0 /* Frameworks */,
 				0D8606AF1D62C0FF00CE3905 /* Storyboards */,
 				0DB4CE331DDCB88E000CC534 /* Main */,
 				0D7FBC681CE80B7A00775FCA /* Page_1_MushRoom */,
 				0D7FBC691CE80BA000775FCA /* Page_2_Weather */,
 				0D7FBC6B1CE80BDA00775FCA /* Page_3_User */,
+				0D5369EA1DE40A7000AC33C6 /* UnmangedModels */,
+				0D3FC0EC1DD760AB00D12860 /* ManagedModels */,
+				0DB3ABEE1D7164320072E5F0 /* Frameworks */,
 				0D7FBC671CE80AAB00775FCA /* Supporting Files */,
 				0D7FBC401CE80A6900775FCA /* Assets.xcassets */,
 				0DC5263D1D61F88600B30F87 /* icon.jpg */,
@@ -388,10 +424,11 @@
 		0D7FBC671CE80AAB00775FCA /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				0D8B65A81DE4A13B0081AC90 /* ROM Pre-Writer */,
+				0D5369E81DE40A2D00AC33C6 /* PropertyListResources */,
 				0D3FC0F01DD764FD00D12860 /* 蘑菇房-Bridging-Header.h */,
 				0D3FC0F31DD7653E00D12860 /* HASH_Encrypt.swift */,
 				0DD895F91DB3C4CF00D91C04 /* GLOBAL_VAR.swift */,
-				0D7FBC371CE80A6800775FCA /* AppDelegate.swift */,
 				0D9CE9841D40548F004E1B27 /* PublicStaticMethods.swift */,
 			);
 			name = "Supporting Files";
@@ -446,11 +483,19 @@
 			children = (
 				0D7FBC421CE80A6900775FCA /* LaunchScreen.storyboard */,
 				0D7FBC3D1CE80A6900775FCA /* Main.storyboard */,
-				0D8606AC1D62C02300CE3905 /* Page_3_User.storyboard */,
-				0D8606A91D62BFCC00CE3905 /* Page_2_Weather.storyboard */,
 				0D8606A61D62BF8E00CE3905 /* Page_1_MushRoom.storyboard */,
+				0D8606A91D62BFCC00CE3905 /* Page_2_Weather.storyboard */,
+				0D8606AC1D62C02300CE3905 /* Page_3_User.storyboard */,
 			);
 			name = Storyboards;
+			sourceTree = "<group>";
+		};
+		0D8B65A81DE4A13B0081AC90 /* ROM Pre-Writer */ = {
+			isa = PBXGroup;
+			children = (
+				0D8B65A91DE4A1930081AC90 /* romPreWriter.swift */,
+			);
+			name = "ROM Pre-Writer";
 			sourceTree = "<group>";
 		};
 		0DB357BC1D7900A2002A7D85 /* PDChart */ = {
@@ -676,9 +721,11 @@
 				0DC5263E1D61F88600B30F87 /* icon.jpg in Resources */,
 				0D7FBC411CE80A6900775FCA /* Assets.xcassets in Resources */,
 				0D844AED1D94DB0300F1F086 /* Info.plist in Resources */,
+				0DCE114D1DE14A5F00308699 /* provinces.plist in Resources */,
 				0D844AE51D94DADF00F1F086 /* Info.plist in Resources */,
 				0D8606AE1D62C02300CE3905 /* Page_3_User.storyboard in Resources */,
 				0D7FBC3F1CE80A6900775FCA /* Main.storyboard in Resources */,
+				0DCE114E1DE14A5F00308699 /* provinces_dic.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -713,12 +760,14 @@
 				0DD895FC1DB3CE0E00D91C04 /* NewMessageWebViewController.swift in Sources */,
 				0D3FC0E71DD7608B00D12860 /* SoilHumidityManagedObject+CoreDataProperties.swift in Sources */,
 				0DC26BF31D941C7600A35048 /* ESRefreshHeaderAnimator.swift in Sources */,
+				0D5369F31DE43AAA00AC33C6 /* UserPropertiesManagedObject+CoreDataClass.swift in Sources */,
 				0D3FC0D31DD75FD600D12860 /* AirHumidityManagedObject+CoreDataProperties.swift in Sources */,
 				0DF373F81D6DA81100AC5E6B /* ShowMapViewController.swift in Sources */,
 				0D7785921D534B7400A74A30 /* NearbyViewController.swift in Sources */,
 				0D3FC0DA1DD7602D00D12860 /* BaseManagedObject+CoreDataClass.swift in Sources */,
 				0DB357C81D7900A2002A7D85 /* PDChartAxesComponent.swift in Sources */,
 				0D75A0FD1DD61263001FD6F9 /* CoreDataDAO.swift in Sources */,
+				0D8B65AA1DE4A1930081AC90 /* romPreWriter.swift in Sources */,
 				0D8197261CEC8E3600CE0211 /* RoomInfoModel.swift in Sources */,
 				0D1017831D981A45005BCE84 /* TabbarViewController.swift in Sources */,
 				0DC26BF91D941C7600A35048 /* ESRefreshProtocol.swift in Sources */,
@@ -753,13 +802,16 @@
 				0DF6899F1D41BD3C001FC45A /* UserProfileModel.swift in Sources */,
 				0D1AF4AB1DE06EB500D1787C /* pageScrollWebViewController.swift in Sources */,
 				0DC26BF21D941C7600A35048 /* ESRefreshFooterAnimator.swift in Sources */,
+				0D5369F41DE43AAA00AC33C6 /* UserPropertiesManagedObject+CoreDataProperties.swift in Sources */,
 				0D3FC0F41DD7653E00D12860 /* HASH_Encrypt.swift in Sources */,
 				0DC26BF81D941C7600A35048 /* ESRefreshComponent.swift in Sources */,
 				0DC26BF51D941C7600A35048 /* ESPullToRefresh+Manager.swift in Sources */,
 				0D7FBC3A1CE80A6800775FCA /* MushroomViewController.swift in Sources */,
 				0D7403951D782A0E006A88E7 /* DataSourceViewController.swift in Sources */,
+				0D5369EC1DE40ACB00AC33C6 /* MonitoringDataSource.swift in Sources */,
 				0D3FC0E31DD7606B00D12860 /* CropsManagedObject+CoreDataProperties.swift in Sources */,
 				0D3FC0DB1DD7602D00D12860 /* BaseManagedObject+CoreDataProperties.swift in Sources */,
+				0D42EEEB1DE09DB100CFD734 /* UserDistrictPickerViewController.swift in Sources */,
 				0D3FC0D21DD75FD600D12860 /* AirHumidityManagedObject+CoreDataClass.swift in Sources */,
 				0D9CE9891D41AE6F004E1B27 /* EditProfilesViewController.swift in Sources */,
 				0D3FC0EA1DD760A200D12860 /* SoilTemperatureManagedObject+CoreDataClass.swift in Sources */,

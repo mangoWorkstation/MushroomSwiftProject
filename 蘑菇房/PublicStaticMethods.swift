@@ -155,6 +155,7 @@ func distanceCalc(_ lat_1:Double,lng_1:Double,lat_2:Double,lng_2:Double)->Double
     return s
 }
 
+//高耦合度，需改进
 func nearbyRoomFilter(_ rawData: Dictionary<String,RoomInfoModel>)->[RoomInfoModel]{
     var filterData : [RoomInfoModel] = []
     var differences : Dictionary<String,Double> = [:]

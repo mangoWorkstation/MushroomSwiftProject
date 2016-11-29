@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import CoreData
+import Foundation
 
-class EditProfilesViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class EditProfilesViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIPopoverPresentationControllerDelegate{
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -30,8 +32,48 @@ class EditProfilesViewController: UIViewController,UITableViewDelegate,UITableVi
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         self.tableView.reloadData()
+        //同步到用户配置
+        let userDefault = UserDefaults()
+        let userSaved = NSKeyedArchiver.archivedData(withRootObject: GLOBAL_UserProfile)
+        userDefault.set(userSaved, forKey: "UserInfoModel")
+        userDefault.synchronize()
+        
+        //同步到数据库
+        let currentID = userDefault.object(forKey: "loginID") as! Int
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.managedObjectContext
+        let entity = NSEntityDescription.entity(forEntityName: "UserProperties", in: context)
+        if entity != nil{
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>()
+            fetchRequest.entity = entity
+            do{
+                let data = try? context.fetch(fetchRequest) as! [UserPropertiesManagedObject]
+                for temp in data! {
+                    if temp.id == Int64(currentID){
+                        temp.allowPushingNewMessageToMobile = GLOBAL_UserProfile.allowPushingNewMessageToMobile!
+                        temp.allowPushingNotification = GLOBAL_UserProfile.allowPushingNotification!
+                        temp.city = GLOBAL_UserProfile.city
+                        temp.province = GLOBAL_UserProfile.province as String!
+                        temp.sex = Int64(GLOBAL_UserProfile.sex!)
+                        break
+                    }
+                }
+//                print(GLOBAL_UserProfile.city!)
+//                print(GLOBAL_UserProfile.province!)
+            }
+            do {
+                try context.save()
+                print("当前用户资料成功保存到数据库")
+            } catch let error{
+                print("context can't save!, Error: \(error)")
+            }
+
+        }
+
+
+
     }
     
     //MARK: - UITableViewDelegate
@@ -52,8 +94,13 @@ class EditProfilesViewController: UIViewController,UITableViewDelegate,UITableVi
             let icon = cell.viewWithTag(102) as! UIImageView
             label.text = "头像"
             label.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
-            icon.image = UIImage(data: (GLOBAL_UserProfile.face as NSData) as Data)
+            icon.image = UIImage(data: (GLOBAL_UserProfile.face! as Data))
             icon.contentMode = .scaleToFill
+            icon.clipsToBounds = true
+            icon.layer.masksToBounds = true
+            icon.layer.cornerRadius = 40
+            icon.layer.borderColor = UIColor.lightGray.cgColor
+            icon.layer.borderWidth = 3.0
         }
         if((indexPath as NSIndexPath).row > 0){
             cell = self.tableView.dequeueReusableCell(withIdentifier: "GeneralCell",for: indexPath)
@@ -83,7 +130,12 @@ class EditProfilesViewController: UIViewController,UITableViewDelegate,UITableVi
                     detail.text = "男"
                 }
             case "地区":
-                detail.text = GLOBAL_UserProfile.province! + " " + GLOBAL_UserProfile.city!
+                if GLOBAL_UserProfile.province == nil || GLOBAL_UserProfile.city == nil {
+                   detail.text = "点击设置省份城市"
+                }
+                else{
+                    detail.text = GLOBAL_UserProfile.province! + " " + GLOBAL_UserProfile.city!
+                }
             default:
                 detail.text = ""
             }
@@ -117,9 +169,35 @@ class EditProfilesViewController: UIViewController,UITableViewDelegate,UITableVi
         if((indexPath as NSIndexPath).row == 4){
             performSegue(withIdentifier: "EditOtherSegue", sender: "性别")
         }
-//        if(indexPath.row == 4){
-//            performSegueWithIdentifier("EditOtherSegue", sender: "地区")
-//        }
+        if(indexPath.row == 5){
+
+            let storyboard : UIStoryboard = UIStoryboard(name: "Page_3_User", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "UserDistrictPicker")
+            vc.modalPresentationStyle = UIModalPresentationStyle.popover
+            let popover: UIPopoverPresentationController = vc.popoverPresentationController!
+            popover.delegate = self
+            popover.barButtonItem = UINavigationItem.init().backBarButtonItem
+            popover.sourceView = self.view
+            popover.sourceRect = CGRect(x: 0, y: 0, width: 300, height: 200)
+            present(vc, animated: true, completion:nil)
+        }
+    }
+    
+    //MARK: - UIPopoverPresentationCotrollerDelegate
+    
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+        return UIModalPresentationStyle.popover
+    }
+    
+    func presentationController(_ controller: UIPresentationController, viewControllerForAdaptivePresentationStyle style: UIModalPresentationStyle) -> UIViewController? {
+        let navigationController = UINavigationController(rootViewController: controller.presentedViewController)
+        let btnDone = UIBarButtonItem(title: "保存", style: .done, target: self, action: #selector(EditProfilesViewController.dismissPopo))
+        navigationController.topViewController!.navigationItem.rightBarButtonItem = btnDone
+        return navigationController
+    }
+    
+    func dismissPopo() {
+        self.dismiss(animated: true, completion: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -137,6 +215,7 @@ class EditProfilesViewController: UIViewController,UITableViewDelegate,UITableVi
             vc.selectedRow = rowName
             vc.navigationItem.title = rowName
         }
+        
     }
     
 

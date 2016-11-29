@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class EnrollmentViewController: UIViewController,UITextFieldDelegate {
     
@@ -55,14 +56,38 @@ class EnrollmentViewController: UIViewController,UITextFieldDelegate {
             phoneNumInput.resignFirstResponder()
         }
         if progressView.isAnimating == false{
-            //if 验证码正确{
-            let alert = UIAlertController(title: "验证成功", message: "进入下一步完善你的资料", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "好", style: .default, handler: {
-                (action)->Void in
-                self.performSegue(withIdentifier: "SetupProfile", sender: nil)
-            }))
-            present(alert, animated: true, completion: nil)
-            //接受网络数据，解析结果，以后需要加一个判断，默认成功
+            let appDel = UIApplication.shared.delegate as! AppDelegate
+            let context = appDel.managedObjectContext
+            let entity = NSEntityDescription.entity(forEntityName: "UserProperties", in: context)
+            var count = 1
+            if entity != nil{
+                let fetchRequest = NSFetchRequest<NSFetchRequestResult>()
+                fetchRequest.entity = entity
+                let data = try? context.fetch(fetchRequest) as! [UserPropertiesManagedObject]
+                for temp in data!{
+                    if temp.id == Int64(self.phoneNumInput.text!)!{
+                        break
+                    }
+                    count += 1
+                }
+                //防止重复处理
+                if count <= (data?.count)!{
+                    let alert = UIAlertController(title: "注册失败", message: "该手机号已被注册", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "好", style: .cancel, handler: nil))
+                    present(alert, animated: true, completion: nil)
+
+                }
+                else{
+                    //接受网络数据，解析结果，以后需要加一个判断，默认成功
+                    let alert = UIAlertController(title: "验证成功", message: "进入下一步完善你的资料", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "好", style: .default, handler: {
+                        (action)->Void in
+                        self.performSegue(withIdentifier: "SetupProfile", sender: nil)
+                    }))
+                    present(alert, animated: true, completion: nil)
+                }
+            }
+
         }
     }
     
@@ -213,6 +238,7 @@ class EnrollmentViewController: UIViewController,UITextFieldDelegate {
         progressView.clipsToBounds = true   //磨成圆角
         self.view.addSubview(progressView)
         progressView.startAnimating()
+        progressView.becomeFirstResponder()
         
     }
     
@@ -220,6 +246,7 @@ class EnrollmentViewController: UIViewController,UITextFieldDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "SetupProfile"{
             let vc = segue.destination as! SetupProfileViewController
+            vc.receivedPhoneNUM = phoneNumInput.text!
         }
     }
     

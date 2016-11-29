@@ -9,6 +9,7 @@
 
 import UIKit
 import CoreData
+import Foundation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -83,45 +84,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        GLOBAL_deviceModel = UIDevice().modelName
-        //获取设备型号
+        let userInfoDefault = UserDefaults()
+
+        let deviceModel = UIDevice().modelName
+        userInfoDefault.register(defaults: [
+            "deviceModel":deviceModel
+            ])
+        //获取设备型号,测试通过
         
+
         print(NSHomeDirectory())
         
         
-        let userInfoDefault = UserDefaults()
-        if (userInfoDefault.object(forKey: "UserInfoModel")) != nil{
-            let userInfoModelData = userInfoDefault.object(forKey: "UserInfoModel") as! NSData
-            let userInfoModel = NSKeyedUnarchiver.unarchiveObject(with: userInfoModelData as Data) as! UserProfiles
-            GLOBAL_UserProfile = UserProfiles(face: userInfoModel.face as NSData, nickName: userInfoModel.nickName!, id: userInfoModel.id!, sex: userInfoModel.sex!, province: userInfoModel.province!, city: userInfoModel.city!, password: userInfoModel.password,root: userInfoModel.root!, allowPushingNotification: userInfoModel.allowPushingNotification!, allowPushingNewMessageToMobile: userInfoModel.allowPushingNewMessageToMobile!, latitude: userInfoModel.latitude!, longitude: userInfoModel.longitude!)
-            print("用户数据读取成功\n")
-            print("用户名:\(GLOBAL_UserProfile.nickName!)")
-            print("用户ID:\(GLOBAL_UserProfile.id!)")
-            print("密码（MD5）:\(GLOBAL_UserProfile.password!)\n")
-
+        
+        if userInfoDefault.object(forKey: "UserInfoModel") != nil{
+            let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+            let vc = storyboard.instantiateViewController(withIdentifier: "MainTabbarVC") as! UITabBarController
+            vc.hidesBottomBarWhenPushed = false
+            self.window?.rootViewController = vc
+            self.window?.makeKeyAndVisible()
+//            vc.performSegue(withIdentifier: "directlyToMain", sender: nil)
         }
         else{
-            //预留测试数据，未来功能是弹出登陆页面 2016.10.19
-            let staticFace = UIImage(named: "2")
-            let staticFaceData = UIImageJPEGRepresentation(staticFace!, 100)
-            let id = arc4random()
-            let passwordNum = arc4random()
-            let password = String(passwordNum).hmac(algorithm: .MD5, key: String(id))
-            //随机密钥
-            let root = 2
-            
-            GLOBAL_UserProfile = UserProfiles(face: staticFaceData! as NSData, nickName: "芒果君", id: Int(id), sex: 1, province: "广西", city: "南宁",password:password, root: root,allowPushingNotification: false,allowPushingNewMessageToMobile: false,latitude: 0,longitude:0)
-            let userInfoModelData = NSKeyedArchiver.archivedData(withRootObject: GLOBAL_UserProfile)
-            userInfoDefault.set(userInfoModelData, forKey: "UserInfoModel")
-            userInfoDefault.synchronize()
-            print("用户数据保存成功")
-            print("用户名:\(GLOBAL_UserProfile.nickName!)")
-            print("用户ID:\(GLOBAL_UserProfile.id!)")
-            print("密码（明文）:\(passwordNum)")
-            print("密码（MD5）:\(GLOBAL_UserProfile.password!)")
+            let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+            let vc = storyboard.instantiateViewController(withIdentifier: "loginVC") as! LoginViewController
+            let vcNav = UINavigationController(rootViewController: vc)
+            vcNav.hidesBottomBarWhenPushed = false
+            self.window?.rootViewController = vcNav
+            self.window?.makeKeyAndVisible()
         }
-
-        GLOBAL_appFont = "PingFangSC-Regular"
         
         //设置app字体
         
@@ -152,9 +143,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         UITabBar.appearance().tintColor = UIColor(red: 64/255, green: 151/255, blue: 32/255, alpha: 1)
-//        UITabBar.appearance().selectionIndicatorImage = UIImage(named: "tabitem-selected")?.withRenderingMode(.alwaysOriginal)
         
-//        UITabBar.appearance().barTintColor = UIColor.clear
+        UITabBar.appearance().barTintColor = UIColor.black
         
         application.statusBarStyle = .lightContent
         
@@ -201,6 +191,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         userInfoDefault.set(saveData, forKey: "UserInfoModel")
         userInfoDefault.synchronize()
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+    
+    func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+        if shortcutItem.type == "popMyBaseInfo"{
+            let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+            let vc = storyboard.instantiateViewController(withIdentifier: "loginVC") as! LoginViewController
+            let vcNav = UINavigationController(rootViewController: vc)
+            vcNav.hidesBottomBarWhenPushed = false
+            self.window?.rootViewController = vcNav
+            self.window?.makeKeyAndVisible()
+            vc.performSegue(withIdentifier: "Main", sender: nil)
+        }
+        
+        
+        
     }
 
 

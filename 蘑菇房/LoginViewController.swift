@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class LoginViewController: UIViewController,UITextFieldDelegate{
     
@@ -26,8 +27,42 @@ class LoginViewController: UIViewController,UITextFieldDelegate{
     
     @IBAction func click(sender:UIButton,forEvent:UIEvent?){
         if sender.tag == 1000 {
+            let appdelegate = UIApplication.shared.delegate as! AppDelegate
+            let context = appdelegate.managedObjectContext
+            let entity = NSEntityDescription.entity(forEntityName: "UserProperties", in: context)
+            
             if userNameInput.text?.isEmpty == false && passwordInput.text?.isEmpty == false{
-                performSegue(withIdentifier: "Main", sender: nil)
+                let encodedPassword = passwordInput.text?.hmac(algorithm: .MD5, key: userNameInput.text!)
+                if entity != nil{
+                    let fetchRequest = NSFetchRequest<NSFetchRequestResult>()
+                    fetchRequest.entity = entity
+                    do{
+                        let data = try? context.fetch(fetchRequest) as! [UserPropertiesManagedObject]
+                        var count = 0
+                        for temp in data! {
+                            if (temp.id == Int64(userNameInput.text!)!) && (temp.password == encodedPassword!){
+                                let alert = UIAlertController(title: "登录成功", message: nil, preferredStyle: .alert)
+                                alert.addAction(UIAlertAction(title: "好", style: .cancel, handler: {
+                                    (action)->Void in
+                                    let userDefault = UserDefaults()
+                                    userDefault.set(Int(self.userNameInput.text!), forKey: "loginID")
+                                    userDefault.synchronize()
+                                    self.dismiss(animated: true, completion: nil)
+                                    self.performSegue(withIdentifier: "Main", sender: nil)
+                                }))
+                                present(alert, animated: true, completion: nil)
+                                break
+                            }
+                            count += 1
+                        }
+                        if count >= (data?.count)!{
+                            let alert = UIAlertController(title: "验证失败", message: "用户名不存在或密码错误", preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "好", style: .cancel, handler: nil))
+                            present(alert, animated: true, completion: nil)
+                        }
+
+                    }
+                }
             }
             else {
                 let alert = UIAlertController(title: "登录错误", message: "用户名和密码不能为空", preferredStyle: .alert)
@@ -36,7 +71,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate{
             }
         }
         if sender.tag == 1004{
-            performSegue(withIdentifier: "Main", sender: nil)
+//            performSegue(withIdentifier: "Main", sender: nil)
         }
         if sender.tag == 1005{
             performSegue(withIdentifier: "Enroll", sender: nil)
@@ -44,13 +79,18 @@ class LoginViewController: UIViewController,UITextFieldDelegate{
     }
     
     @IBAction func unwindSegueToLogin(segue:UIStoryboardSegue){
-        
+        let source = segue.source as! SetupProfileViewController
+        userNameInput.text = source.receivedPhoneNUM
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         userNameInput.delegate = self
         passwordInput.delegate = self
+        
+//        let _ = romWriter().removeAllRecordInExplictEntity("UserProperties")
+//        romWriter().insertNewRecordForUserProperties()
+//        let _ = romWriter().displayEntity(name: "UserProperties")
         
         //输入框
         userNameInput.placeholder = "请输入用户ID/手机"
@@ -110,7 +150,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate{
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "Main"{
-            let _ = segue.destination as! TabbarViewController
+            _ = segue.destination as! TabbarViewController
         }
         
         if segue.identifier == "Enroll"{
@@ -119,6 +159,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate{
             vc.navigationItem.title = "注册"
         }
     }
+    
     
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

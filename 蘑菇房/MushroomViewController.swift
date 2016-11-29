@@ -14,6 +14,8 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
     
     var chosenArea :String? = "选择区域" //保存选择的区域 2016.8.2
     
+//    private var loginID : String!
+    
     //后台的数据原型
     //2016.8.27
     var backgroundData : [RoomInfoModel] = Array(GLOBAL_RoomInfo.values)
@@ -43,12 +45,6 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
     
     private var pageScrollTitle:UILabel!
     
-
-    
-    //与滚动横幅配套的页面控制器
-    //暂时被覆盖在view的最底层，原因不明
-    //若无法解决，则忽略
-    //2016.7.1/12:43
     
     //列表 
     //2016.7.1/12:43
@@ -94,14 +90,8 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.removeAllRecordInExplictEntity(_EntityName: "Base")
-//        self.insertNewRecordForBases()
-////        self.displayAllBase()
-//        self.removeAllRecordInExplictEntity(_EntityName: "Crops")
-//        self.insertNewRecordForCrops()
-//        self.removeAllRecordInExplictEntity(_EntityName: "AirHumidity")
-//        self.insertNewRecordForAirHumidity()
         
+        self.configUserInfo()
         clickOnButton.setTitle("选择区域", for: UIControlState())
         clickOnButton.titleLabel?.font = UIFont(name: GLOBAL_appFont!, size: 17.5)
         
@@ -109,7 +99,7 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         
         prepareForScrollPages() //加载轮播图
         
-        NotificationCenter.default.addObserver(self, selector: #selector(MushroomViewController.refresh(_notification:)), name: NSNotification.Name(rawValue: "homeRefresh"), object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(MushroomViewController.refresh(_notification:)), name: NSNotification.Name(rawValue: "homeRefresh"), object: nil)
         
         //点击tabbar后刷新页面
         
@@ -227,7 +217,7 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         performSegue(withIdentifier: "officialWeb", sender: nil)
     }
     
-    //加载轮播图
+    //MARK: - 加载轮播图
     fileprivate func prepareForScrollPages(){
         for i in 1..<4 {
             let image = UIImage(named: "\(i).jpg")!
@@ -267,6 +257,88 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         //将三个点加载scrollView的父类视图上才能固定
         
         addTimer()
+    }
+    
+    //MARK: - 处理用户资料
+    private func configUserInfo(){
+        
+        let userInfoDefault = UserDefaults()
+
+        var userInfoModelData : UserPropertiesManagedObject!
+        
+        let staticFace = UIImage(named: "2")
+        let staticFaceData = UIImageJPEGRepresentation(staticFace!, 100)
+
+        //如果账户已经处于登录过的状态,获取UserDefault上保存的数据
+        if userInfoDefault.object(forKey: "UserInfoModel") != nil{
+            let content = userInfoDefault.object(forKey: "UserInfoModel") as! Data
+            GLOBAL_UserProfile = NSKeyedUnarchiver.unarchiveObject(with: content as Data) as! UserProfiles
+        }
+            
+            
+        //如果该账户是首次在客户端上登录，或者是新注册的用户，读取大数据库中的用户数据，寄存在全局变量GLOBAL_UserProfile上，并写入UserDefault中
+        else{
+            
+            let appDel = UIApplication.shared.delegate as! AppDelegate
+            let context = appDel.managedObjectContext
+            let entity = NSEntityDescription.entity(forEntityName: "UserProperties", in: context)
+            let loginID = userInfoDefault.object(forKey: "loginID") as! Int
+            
+            if entity != nil{
+                let fetchRequest = NSFetchRequest<NSFetchRequestResult>()
+                fetchRequest.entity = entity
+                do{
+                    let data = try? context.fetch(fetchRequest) as! [UserPropertiesManagedObject]
+                    for temp in data! {
+                        if temp.id == Int64(loginID){
+                            userInfoModelData = temp
+                            break
+                        }
+                    }
+                }
+            }
+            GLOBAL_UserProfile = UserProfiles(face: Data(), nickName: nil, id: 0, sex: 0, province: nil, city: nil, password: "", root: 0, allowPushingNotification: true, allowPushingNewMessageToMobile: true, latitude: 0, longitude: 0)
+            //默认初始化
+
+
+            GLOBAL_UserProfile.face = staticFaceData! as Data
+            GLOBAL_UserProfile.nickName = "芒果君"
+            
+            
+            GLOBAL_UserProfile.id = Int(userInfoModelData.id)
+            GLOBAL_UserProfile.sex = Int(userInfoModelData.sex)
+
+            if GLOBAL_UserProfile.root != nil{
+                GLOBAL_UserProfile.root = Int(userInfoModelData.root)
+            }
+            else{
+                GLOBAL_UserProfile.root = 1
+            }
+            if GLOBAL_UserProfile.province != nil{
+                GLOBAL_UserProfile.province = userInfoModelData.province!
+            }
+//            else{
+//                GLOBAL_UserProfile.province = "未设置省份"
+//            }
+            if GLOBAL_UserProfile.city != nil{
+                GLOBAL_UserProfile.city = userInfoModelData.city!
+            }
+//            else{
+//                GLOBAL_UserProfile.city = "未设置城市"
+//            }
+            GLOBAL_UserProfile.password = userInfoModelData.password
+            GLOBAL_UserProfile.allowPushingNotification = userInfoModelData.allowPushingNotification
+            GLOBAL_UserProfile.allowPushingNewMessageToMobile = userInfoModelData.allowPushingNewMessageToMobile
+            
+            let userSaved = NSKeyedArchiver.archivedData(withRootObject: GLOBAL_UserProfile)
+            userInfoDefault.set(userSaved, forKey: "UserInfoModel")
+            userInfoDefault.synchronize()
+            
+        }
+
+        print("当前UID:\(GLOBAL_UserProfile.id)")
+        print("密码（MD5）:\(GLOBAL_UserProfile.password!)\n")
+
     }
     
     //滚动横幅的视图
@@ -415,241 +487,6 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         }
     }
     
-    
-    //MARK: - 固件预置数据库读写
-    
-    //MARK: - 基地表100段
-    func insertNewRecordForBases(){
-        var main_user : [Int64] = []
-        var main_base : [Int64] = []
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.managedObjectContext
-        
-
-        let currentUser_ID = GLOBAL_UserProfile.id!
-        let currentBase_ID = arc4random()
-        main_user.append(Int64(currentUser_ID))
-        main_base.append(Int64(currentBase_ID))
-        let current_base_entity = NSEntityDescription.insertNewObject(forEntityName: "Base", into: context) as! BaseManagedObject
-        current_base_entity.user_ID = Int64(currentUser_ID)
-        current_base_entity.base_ID = Int64(currentBase_ID)
-        do {
-            try context.save()
-            print("当前用户与基地ID成功写入缓存")
-        } catch let error{
-            print("context can't save!, Error: \(error)")
-        }
-        
-        
-        for _ in 0..<100 {
-            var temp_user_ID = Int64(arc4random())
-            for temp in main_user{
-                while temp == temp_user_ID {
-                    temp_user_ID = Int64(arc4random())
-                }
-            }
-            var temp_base_ID = Int64(arc4random())
-            for temp in main_base{
-                while temp == temp_base_ID {
-                    temp_base_ID = Int64(arc4random())
-                }
-            }
-            main_user.append(temp_user_ID)
-            main_base.append(temp_base_ID)
-            
-            let temp_base_entity = NSEntityDescription.insertNewObject(forEntityName: "Base", into: context) as! BaseManagedObject
-            temp_base_entity.user_ID = temp_user_ID
-            temp_base_entity.base_ID = temp_base_ID
-            
-            do {
-                try context.save()
-            } catch let error{
-                print("context can't save!, Error: \(error)")
-            }
-        }
-        print("成功写入基地表\n")
-
-    }
-
-    
-    func displayAllBase(){
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.managedObjectContext
-        let entity = NSEntityDescription.entity(forEntityName: "Base", in: context)
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>()
-        fetchRequest.entity = entity
-        do{
-            let data = try? context.fetch(fetchRequest) as! [NSManagedObject]
-            for temp in data! as! [BaseManagedObject] {
-                print("用户ID：\(temp.user_ID)     基地ID：\(temp.base_ID)")
-            }
-        }
-    }
-    
-    //MARK: - 农作物表4段
-    func insertNewRecordForCrops(){
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.managedObjectContext
-        
-        var mainKeys : [Int64] = []
-        let cropsTypeName = ["蘑菇","芒果","甘蔗","葡萄"]
-        for i in 0..<4 {
-            var crops_ID = Int64(arc4random())
-            for temp in mainKeys {
-                while temp == crops_ID{
-                    crops_ID = Int64(arc4random())
-                }
-            }
-            mainKeys.append(crops_ID)
-            let entity = NSEntityDescription.insertNewObject(forEntityName: "Crops", into: context) as! CropsManagedObject
-            entity.crops_ID = crops_ID
-            entity.crops_name = cropsTypeName[i]
-            do {
-                try context.save()
-            } catch let error{
-                print("context can't save!, Error: \(error)")
-            }
-        }
-        print("成功写入农作物表")
-    }
-
-    
-    //MARK: - 空气湿度表100段
-    func insertNewRecordForAirHumidity(){
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.managedObjectContext
-        
-        //一个内部类，用来寄存数据而已
-        class AH{
-            var baseID:Int64
-            var userID:Int64
-            var time:Int64
-            var value:Double
-            var dataID:Int64
-            var cropsID:Int64
-            
-            init(baseID:Int64,userID:Int64,time:Int64,value:Double,dataID:Int64,cropsID:Int64) {
-                self.baseID = baseID
-                self.userID = userID
-                self.time = time
-                self.dataID = dataID
-                self.value = value
-                self.cropsID = cropsID
-            }
-            
-        }
-
-        //取基地表
-        var entity = NSEntityDescription.entity(forEntityName: "Base", in: context)
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>()
-        fetchRequest.entity = entity
-        let Base = try? context.fetch(fetchRequest) as! [NSManagedObject]
-        var baseManageObjectArr : [AH] = []
-        for tempBase in Base as! [BaseManagedObject]{
-            let baseManageObjectArrTemp = AH(baseID: 0,userID: 0,time: 0,value: 0,dataID: 0,cropsID: 0)
-            baseManageObjectArrTemp.baseID = tempBase.base_ID
-            baseManageObjectArrTemp.userID = tempBase.user_ID
-            baseManageObjectArr.append(baseManageObjectArrTemp)
-        }
-        
-        //取农作物表
-        entity = NSEntityDescription.entity(forEntityName: "Crops", in: context)
-        fetchRequest.entity = entity
-        let Crops = try? context.fetch(fetchRequest) as! [NSManagedObject]
-        var tempCropsArr : [AH] = []
-        for tempCrop in Crops as! [CropsManagedObject] {
-            let cropsManageObjectArrTemp = AH(baseID: 0,userID: 0,time: 0,value: 0,dataID: 0,cropsID: 0)
-            cropsManageObjectArrTemp.cropsID = tempCrop.crops_ID
-            tempCropsArr.append(cropsManageObjectArrTemp)
-        }
-        
-        
-        var dataIDExisted : [Int64] = []
-        var timeExisted : [Int64] = []
-        var valueExisted : [Double] = []
-        for i in 0..<100 {
-            //数据ID
-            var data_ID = Int64(arc4random())
-            for temp in dataIDExisted {
-                while temp == data_ID{
-                    data_ID = Int64(arc4random())
-                }
-            }
-            dataIDExisted.append(data_ID)
-            //时间
-            var time = Int64(arc4random_uniform(1500000000)+1400000000)
-            for temp in timeExisted {
-                while temp == time{
-                    time = Int64(arc4random_uniform(1500000000)+1400000000)
-                }
-            }
-            timeExisted.append(time)
-            //数值
-            var value = Double(arc4random_uniform(50))
-            for temp in valueExisted {
-                while temp == value{
-                    value = Double(arc4random_uniform(50))
-                }
-            }
-            valueExisted.append(Double(value))
-            
-            let entity = NSEntityDescription.insertNewObject(forEntityName: "AirHumidity", into: context) as! AirHumidityManagedObject
-            if i<(Base?.count)! {
-                entity.base_ID = baseManageObjectArr[i].baseID
-                entity.user_ID = baseManageObjectArr[i].userID
-            }
-            else{
-                entity.base_ID = (baseManageObjectArr.first?.baseID)!
-                entity.user_ID = (baseManageObjectArr.first?.userID)!
-            }
-            
-            if i<(Crops?.count)! {
-                entity.crops_ID = tempCropsArr[i].cropsID
-            }
-            else{
-                entity.crops_ID = (tempCropsArr.first?.cropsID)!
-            }
-            
-            entity.data_ID = data_ID
-            entity.time = time
-            entity.value = Double(value)
-            
-            
-            do {
-                try context.save()
-                print("\(i)段数据写入成功")
-                print("基地ID：\(entity.base_ID)   用户ID：\(entity.user_ID)   农作物种类ID：\(entity.crops_ID) ")
-                print("时间戳：\(entity.time)   数值：\(entity.value)      数据标识ID：\(entity.data_ID)\n")
-            } catch let error{
-                print("context can't save!, Error: \(error)")
-            }
-        }
-        print("成功写入空气湿度表")
-    }
-    
-    //删除指定实体下所有字段
-    func removeAllRecordInExplictEntity(_EntityName:String){
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.managedObjectContext
-        let entity = NSEntityDescription.entity(forEntityName: _EntityName, in: context)
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>()
-        fetchRequest.entity = entity
-        do{
-            let data = try? context.fetch(fetchRequest)
-            for temp in data! {
-                context.delete(temp as! NSManagedObject)
-                do {
-                    try context.save()
-                } catch let error{
-                    print("context can't save!, Error: \(error)")
-                }
-            }
-        }
-        print("成功删除\(_EntityName)表\n")
-
-    }
-
-
 
 
 }

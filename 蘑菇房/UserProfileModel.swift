@@ -9,7 +9,7 @@
 import Foundation
 
 class UserProfiles: NSObject {
-    var face:Data
+    var face:Data?
     var nickName:String?
     var id:Int?
     var sex:Int?
@@ -24,8 +24,8 @@ class UserProfiles: NSObject {
     var latitude:Double?
     var longitude:Double?
     
-    init(face:NSData,nickName:String,id:Int,sex:Int,province:String,city:String,password: String?,root: Int?,allowPushingNotification:Bool,allowPushingNewMessageToMobile:Bool?,latitude:Double?,longitude:Double?) {
-        self.face = face as Data
+    init(face:Data?,nickName:String?,id:Int,sex:Int,province:String?,city:String?,password: String,root: Int,allowPushingNotification:Bool?,allowPushingNewMessageToMobile:Bool?,latitude:Double?,longitude:Double?) {
+        self.face = face! as Data
         self.nickName = nickName
         self.id = id
         self.sex = sex
@@ -46,7 +46,7 @@ class UserProfiles: NSObject {
     }
     
     init(coder aDecoder:NSCoder!){
-        self.face = aDecoder.decodeObject(forKey: "face") as! Data
+        self.face = (aDecoder.decodeObject(forKey: "face") as! Data)
         self.nickName = aDecoder.decodeObject(forKey: "nickName") as? String
         self.id = aDecoder.decodeObject(forKey: "id") as? Int
         self.sex = aDecoder.decodeObject(forKey: "sex") as? Int
