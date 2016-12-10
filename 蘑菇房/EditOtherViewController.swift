@@ -12,8 +12,18 @@ class EditOtherViewController: UIViewController,UITableViewDelegate,UITableViewD
     
     @IBOutlet weak var tableView: UITableView!
     
+    var nameInputPointer : UITextField!
+    
+    @IBAction func saveButton(_ sender: UIBarButtonItem) {
+        if self.nameInputPointer.text == ""{
+            let sheet = UIAlertController(title: "昵称不能为空", message: nil, preferredStyle: .actionSheet)
+            sheet.addAction(UIAlertAction(title: "好", style: .cancel, handler: nil))
+            present(sheet, animated: true, completion: nil)
+        }
+    }
+    
     var selectedRow : String?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
@@ -21,7 +31,7 @@ class EditOtherViewController: UIViewController,UITableViewDelegate,UITableViewD
         tableView.keyboardDismissMode = .onDrag
         // Do any additional setup after loading the view.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -90,7 +100,7 @@ class EditOtherViewController: UIViewController,UITableViewDelegate,UITableViewD
             let cell = self.tableView.cellForRow(at: indexPath)
             var cells = self.tableView.visibleCells
             for i in 0 ..< cells.count {
-                let _cell = cells[i] 
+                let _cell = cells[i]
                 _cell.accessoryType = UITableViewCellAccessoryType.none
             }
             cell!.accessoryType = UITableViewCellAccessoryType.checkmark
@@ -117,7 +127,7 @@ class EditOtherViewController: UIViewController,UITableViewDelegate,UITableViewD
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool{
         print("textFieldShouldEndEditing")
         return true
-    }    
+    }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool{
         print("textFieldShouldReturn")
         textField.resignFirstResponder()
@@ -125,8 +135,9 @@ class EditOtherViewController: UIViewController,UITableViewDelegate,UITableViewD
     }
     func textFieldDidEndEditing(_ textField: UITextField){
         print("textFieldDidEndEditing")
+        self.nameInputPointer = textField
         GLOBAL_UserProfile.nickName = textField.text
-
+        
     }
     
 }

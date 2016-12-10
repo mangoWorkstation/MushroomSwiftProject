@@ -16,7 +16,6 @@ var GLOBAL_appFont:String? = "PingFangSC-Regular"
 //寄存当前登录用户资料
 var GLOBAL_UserProfile : UserProfiles!
 
-
 var GLOBAL_NotificationCache : [NotificationPreview] = [NotificationPreview(messageID: 123456,preImage: "Hello", prelabel:"南宁市未来三天高温将继续持续",isRead: true,timestamp: 1468682458),
                                                         NotificationPreview(messageID: 123457,preImage: "MyName", prelabel:"您的蘑菇房高温警报",isRead: false,timestamp: 1468682459),
                                                         NotificationPreview(messageID: 123458,preImage: "IsNot", prelabel:"您的蘑菇房二氧化碳浓度偏高",isRead: false,timestamp: 1469682458),

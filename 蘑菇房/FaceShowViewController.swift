@@ -51,17 +51,13 @@ class FaceShowViewController: UIViewController,UIActionSheetDelegate,UIImagePick
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.black
-        face.image = UIImage(data: GLOBAL_UserProfile.face! as Data)
+        let facePath = NSHomeDirectory() + GLOBAL_UserProfile.facePath!
+        face.image = UIImage(contentsOfFile: facePath)
         face.contentMode = .scaleToFill
         let rightItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(FaceShowViewController.headToSystemPhotoLibrary(_: forEvent: )))
         self.navigationItem.rightBarButtonItem = rightItem
         // Do any additional setup after loading the view.
     }
-    
-    //    override func viewDidDisappear(_ animated: Bool) {
-    //        saveImage(self.face.image!)
-    //        print("图片已保存")
-    //    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -73,8 +69,9 @@ class FaceShowViewController: UIViewController,UIActionSheetDelegate,UIImagePick
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]){
         face.image = info[UIImagePickerControllerOriginalImage] as? UIImage
         face.contentMode = .scaleToFill
-        let faceData = UIImageJPEGRepresentation(face.image!, 100)
-        GLOBAL_UserProfile.face = faceData!
+        let faceData = UIImageJPEGRepresentation(face.image!, 0.4)
+        try?FileManager.default.removeItem(atPath: NSHomeDirectory() + "/Documents/UserCache/\(GLOBAL_UserProfile.id!).jpg")
+        try?faceData?.write(to: NSURL(fileURLWithPath: NSHomeDirectory() + "/Documents/UserCache/\(GLOBAL_UserProfile.id!).jpg", isDirectory: false) as URL)
         dismiss(animated: true, completion: nil)
     }
     

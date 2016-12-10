@@ -10,10 +10,11 @@
 import UIKit
 import CoreData
 import Foundation
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
     var window: UIWindow?
     
     
@@ -25,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     lazy var managedObjectModel: NSManagedObjectModel = {
         // The managed object model for the application. This property is not optional. It is a fatal error for the application not to be able to find and load its model.
-        let modelURL = Bundle.main.url(forResource: "DataBase", withExtension: "momd")!
+        let modelURL = Bundle.main.url(forResource: "CacheDB", withExtension: "momd")!
         return NSManagedObjectModel(contentsOf: modelURL)!
     }()
     
@@ -33,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // The persistent store coordinator for the application. This implementation creates and returns a coordinator, having added the store for the application to it. This property is optional since there are legitimate error conditions that could cause the creation of the store to fail.
         // Create the coordinator and store
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
-        let url = self.applicationDocumentsDirectory.appendingPathComponent("SingleViewCoreData.sqlite")
+        let url = self.applicationDocumentsDirectory.appendingPathComponent("CacheDB.sqlite")
         var failureReason = "There was an error creating or loading the application's saved data."
         do {
             try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: nil)
@@ -77,7 +78,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-
+    
     //数码测色说明：
     //统一使用“普通RGB”数值进行测色
     
@@ -85,14 +86,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         let userInfoDefault = UserDefaults()
-
+        
         let deviceModel = UIDevice().modelName
-        userInfoDefault.register(defaults: [
-            "deviceModel":deviceModel
-            ])
+        userInfoDefault.set(deviceModel, forKey: "deviceModel")
         //获取设备型号,测试通过
         
-
+        
         print(NSHomeDirectory())
         
         
@@ -103,7 +102,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             vc.hidesBottomBarWhenPushed = false
             self.window?.rootViewController = vc
             self.window?.makeKeyAndVisible()
-//            vc.performSegue(withIdentifier: "directlyToMain", sender: nil)
+            //            vc.performSegue(withIdentifier: "directlyToMain", sender: nil)
         }
         else{
             let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
@@ -120,7 +119,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().barTintColor = UIColor(red: 64/255, green: 151/255, blue: 32/255, alpha: 1)
         UINavigationBar.appearance().tintColor = UIColor.white
         //#409720
-
+        
         
         //设置标题栏的字体 2016.8.25
         if let barFont = UIFont(name: GLOBAL_appFont!, size: 17.5) {
@@ -134,62 +133,86 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let barFont = UIFont(name: "PingFangSC-Regular", size: 10){
             UITabBarItem.appearance().setTitleTextAttributes(
                 [
-//                    NSForegroundColorAttributeName:UIColor(red: 64/255, green: 151/255, blue: 32/255, alpha: 1),
-//                    NSBackgroundColorAttributeName:UIColor(red: 159/255, green: 159/255, blue: 159/255, alpha: 1),
+                    //                    NSForegroundColorAttributeName:UIColor(red: 64/255, green: 151/255, blue: 32/255, alpha: 1),
+                    //                    NSBackgroundColorAttributeName:UIColor(red: 159/255, green: 159/255, blue: 159/255, alpha: 1),
                     NSFontAttributeName:barFont
                 ],
                 for: UIControlState()
             )
         }
         
-        UITabBar.appearance().tintColor = UIColor(red: 64/255, green: 151/255, blue: 32/255, alpha: 1)
+        //        UITabBar.appearance().tintColor = UIColor(red: 64/255, green: 151/255, blue: 32/255, alpha: 1)
+        UITabBar.appearance().tintColor = UIColor(red: 255/255, green: 233/255, blue: 169/255, alpha: 1)
+        
         
         UITabBar.appearance().barTintColor = UIColor.black
         
+        UITabBar.appearance().alpha = 0.9
+        
         application.statusBarStyle = .lightContent
+        
+        if #available(iOS 10.0, *) {
+            UNUserNotificationCenter.current().requestAuthorization(options: [.alert,.sound,.badge], completionHandler: {
+                (granted,error)->Void in
+                if granted {
+                    print("允许推送")
+                }
+                else{
+                    print("不允许推送")
+                }
+            })
+        } else {
+            // Fallback on earlier versions
+        }
         
         Thread.sleep(forTimeInterval: 1.0)
         //设置启动页的停留时间
         
-//        用来查找自定义字体编号,需要时取消注释状态 2016.8.25
-//        let fontFamilyNames = UIFont.familyNames()
-//        for familyName in fontFamilyNames{
-//            let fontNames = UIFont.fontNamesForFamilyName(familyName)
-//            for fontName in fontNames {
-//                print("\tFont : "+"\(fontName.utf8)"+" \n")
-//            }
-//        }
-//        
+        //        用来查找自定义字体编号,需要时取消注释状态 2016.8.25
+        //        let fontFamilyNames = UIFont.familyNames()
+        //        for familyName in fontFamilyNames{
+        //            let fontNames = UIFont.fontNamesForFamilyName(familyName)
+        //            for fontName in fontNames {
+        //                print("\tFont : "+"\(fontName.utf8)"+" \n")
+        //            }
+        //        }
+        //
         return true
     }
-
+    
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
     }
-
+    
     func applicationDidEnterBackground(_ application: UIApplication) {
         let userInfoDefault = UserDefaults()
-        let saveData = NSKeyedArchiver.archivedData(withRootObject: GLOBAL_UserProfile)
-        userInfoDefault.set(saveData, forKey: "UserInfoModel")
-        userInfoDefault.synchronize()
+        let loginID = userInfoDefault.object(forKey: "loginID") as? String
+        if loginID != nil {
+            let saveData = NSKeyedArchiver.archivedData(withRootObject: GLOBAL_UserProfile)
+            userInfoDefault.set(saveData, forKey: "UserInfoModel")
+            userInfoDefault.synchronize()
+        }
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     }
-
+    
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     }
-
+    
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     }
-
+    
     func applicationWillTerminate(_ application: UIApplication) {
         let userInfoDefault = UserDefaults()
-        let saveData = NSKeyedArchiver.archivedData(withRootObject: GLOBAL_UserProfile)
-        userInfoDefault.set(saveData, forKey: "UserInfoModel")
-        userInfoDefault.synchronize()
+        let loginID = userInfoDefault.object(forKey: "loginID") as? String
+        if loginID != nil {
+            let saveData = NSKeyedArchiver.archivedData(withRootObject: GLOBAL_UserProfile)
+            userInfoDefault.set(saveData, forKey: "UserInfoModel")
+            userInfoDefault.synchronize()
+        }
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
@@ -207,8 +230,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
     }
-
-
+    
+    
 }
 
 //说明:获取设备的型号

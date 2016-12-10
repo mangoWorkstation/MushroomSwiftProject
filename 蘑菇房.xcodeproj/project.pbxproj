@@ -15,29 +15,26 @@
 		0D2B9B2F1D3887A9006559F1 /* NotificationPreviewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2B9B2E1D3887A9006559F1 /* NotificationPreviewModel.swift */; };
 		0D32FEAE1D3DBC99008E79CD /* NewMessageInformViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D32FEAD1D3DBC99008E79CD /* NewMessageInformViewController.swift */; };
 		0D32FEB01D3DD0A2008E79CD /* FeedBackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D32FEAF1D3DD0A2008E79CD /* FeedBackViewController.swift */; };
-		0D3FC0D21DD75FD600D12860 /* AirHumidityManagedObject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3FC0D01DD75FD600D12860 /* AirHumidityManagedObject+CoreDataClass.swift */; };
-		0D3FC0D31DD75FD600D12860 /* AirHumidityManagedObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3FC0D11DD75FD600D12860 /* AirHumidityManagedObject+CoreDataProperties.swift */; };
-		0D3FC0D61DD7600600D12860 /* AirTemperatureManagedObject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3FC0D41DD7600600D12860 /* AirTemperatureManagedObject+CoreDataClass.swift */; };
-		0D3FC0D71DD7600600D12860 /* AirTemperatureManagedObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3FC0D51DD7600600D12860 /* AirTemperatureManagedObject+CoreDataProperties.swift */; };
-		0D3FC0DA1DD7602D00D12860 /* BaseManagedObject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3FC0D81DD7602D00D12860 /* BaseManagedObject+CoreDataClass.swift */; };
-		0D3FC0DB1DD7602D00D12860 /* BaseManagedObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3FC0D91DD7602D00D12860 /* BaseManagedObject+CoreDataProperties.swift */; };
-		0D3FC0DE1DD7604F00D12860 /* CO2ManagedObject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3FC0DC1DD7604F00D12860 /* CO2ManagedObject+CoreDataClass.swift */; };
-		0D3FC0DF1DD7604F00D12860 /* CO2ManagedObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3FC0DD1DD7604F00D12860 /* CO2ManagedObject+CoreDataProperties.swift */; };
-		0D3FC0E21DD7606B00D12860 /* CropsManagedObject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3FC0E01DD7606B00D12860 /* CropsManagedObject+CoreDataClass.swift */; };
-		0D3FC0E31DD7606B00D12860 /* CropsManagedObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3FC0E11DD7606B00D12860 /* CropsManagedObject+CoreDataProperties.swift */; };
-		0D3FC0E61DD7608B00D12860 /* SoilHumidityManagedObject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3FC0E41DD7608B00D12860 /* SoilHumidityManagedObject+CoreDataClass.swift */; };
-		0D3FC0E71DD7608B00D12860 /* SoilHumidityManagedObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3FC0E51DD7608B00D12860 /* SoilHumidityManagedObject+CoreDataProperties.swift */; };
-		0D3FC0EA1DD760A200D12860 /* SoilTemperatureManagedObject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3FC0E81DD760A200D12860 /* SoilTemperatureManagedObject+CoreDataClass.swift */; };
-		0D3FC0EB1DD760A200D12860 /* SoilTemperatureManagedObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3FC0E91DD760A200D12860 /* SoilTemperatureManagedObject+CoreDataProperties.swift */; };
 		0D3FC0F41DD7653E00D12860 /* HASH_Encrypt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3FC0F31DD7653E00D12860 /* HASH_Encrypt.swift */; };
 		0D42EEEB1DE09DB100CFD734 /* UserDistrictPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D42EEEA1DE09DB100CFD734 /* UserDistrictPickerViewController.swift */; };
 		0D4406A51D81BB4A00E045AA /* 蘑菇背景1.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D4406A41D81BB4A00E045AA /* 蘑菇背景1.png */; };
 		0D4406A71D81BEAA00E045AA /* 蘑菇背景.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D4406A61D81BEAA00E045AA /* 蘑菇背景.png */; };
-		0D450AF51DD73F270026C2C0 /* DataBase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0D450AF31DD73F270026C2C0 /* DataBase.xcdatamodeld */; };
 		0D49900A1D48B8BD0007D99B /* PresentRoomDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4990091D48B8BD0007D99B /* PresentRoomDetailViewController.swift */; };
 		0D5369EC1DE40ACB00AC33C6 /* MonitoringDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D5369EB1DE40ACB00AC33C6 /* MonitoringDataSource.swift */; };
-		0D5369F31DE43AAA00AC33C6 /* UserPropertiesManagedObject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D5369F11DE43AAA00AC33C6 /* UserPropertiesManagedObject+CoreDataClass.swift */; };
-		0D5369F41DE43AAA00AC33C6 /* UserPropertiesManagedObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D5369F21DE43AAA00AC33C6 /* UserPropertiesManagedObject+CoreDataProperties.swift */; };
+		0D68E0521DFB9D2800F548AD /* CacheDB.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 0D68E0511DFB9D2800F548AD /* CacheDB.xcdatamodel */; };
+		0D68E0601DFB9D4700F548AD /* UserPropertiesManagedObject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D68E0541DFB9D4700F548AD /* UserPropertiesManagedObject+CoreDataClass.swift */; };
+		0D68E0611DFB9D4700F548AD /* UserPropertiesManagedObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D68E0551DFB9D4700F548AD /* UserPropertiesManagedObject+CoreDataProperties.swift */; };
+		0D68E0621DFB9D4700F548AD /* TemperatureManagedObject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D68E0561DFB9D4700F548AD /* TemperatureManagedObject+CoreDataClass.swift */; };
+		0D68E0631DFB9D4700F548AD /* TemperatureManagedObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D68E0571DFB9D4700F548AD /* TemperatureManagedObject+CoreDataProperties.swift */; };
+		0D68E0641DFB9D4700F548AD /* HumidityManagedObject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D68E0581DFB9D4700F548AD /* HumidityManagedObject+CoreDataClass.swift */; };
+		0D68E0651DFB9D4700F548AD /* HumidityManagedObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D68E0591DFB9D4700F548AD /* HumidityManagedObject+CoreDataProperties.swift */; };
+		0D68E0661DFB9D4700F548AD /* CropsManagedObject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D68E05A1DFB9D4700F548AD /* CropsManagedObject+CoreDataClass.swift */; };
+		0D68E0671DFB9D4700F548AD /* CropsManagedObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D68E05B1DFB9D4700F548AD /* CropsManagedObject+CoreDataProperties.swift */; };
+		0D68E0681DFB9D4700F548AD /* CO2ManagedObject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D68E05C1DFB9D4700F548AD /* CO2ManagedObject+CoreDataClass.swift */; };
+		0D68E0691DFB9D4700F548AD /* CO2ManagedObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D68E05D1DFB9D4700F548AD /* CO2ManagedObject+CoreDataProperties.swift */; };
+		0D68E06A1DFB9D4700F548AD /* BaseManagedObject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D68E05E1DFB9D4700F548AD /* BaseManagedObject+CoreDataClass.swift */; };
+		0D68E06B1DFB9D4700F548AD /* BaseManagedObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D68E05F1DFB9D4700F548AD /* BaseManagedObject+CoreDataProperties.swift */; };
+		0D68E06F1DFBA14100F548AD /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D68E06D1DFBA14100F548AD /* SwiftyJSON.swift */; };
 		0D7262B01D3755AC00ACB2B9 /* StaticItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7262AF1D3755AC00ACB2B9 /* StaticItemModel.swift */; };
 		0D7262B41D37E6BA00ACB2B9 /* GeneralDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7262B31D37E6BA00ACB2B9 /* GeneralDetailController.swift */; };
 		0D7403951D782A0E006A88E7 /* DataSourceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7403941D782A0E006A88E7 /* DataSourceViewController.swift */; };
@@ -136,30 +133,28 @@
 		0D2B9B2E1D3887A9006559F1 /* NotificationPreviewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationPreviewModel.swift; sourceTree = "<group>"; };
 		0D32FEAD1D3DBC99008E79CD /* NewMessageInformViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewMessageInformViewController.swift; sourceTree = "<group>"; };
 		0D32FEAF1D3DD0A2008E79CD /* FeedBackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedBackViewController.swift; sourceTree = "<group>"; };
-		0D3FC0D01DD75FD600D12860 /* AirHumidityManagedObject+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "AirHumidityManagedObject+CoreDataClass.swift"; path = "DataBaseManagedClass/AirHumidityManagedObject+CoreDataClass.swift"; sourceTree = "<group>"; };
-		0D3FC0D11DD75FD600D12860 /* AirHumidityManagedObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "AirHumidityManagedObject+CoreDataProperties.swift"; path = "DataBaseManagedClass/AirHumidityManagedObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		0D3FC0D41DD7600600D12860 /* AirTemperatureManagedObject+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "AirTemperatureManagedObject+CoreDataClass.swift"; path = "DataBaseManagedClass/AirTemperatureManagedObject+CoreDataClass.swift"; sourceTree = "<group>"; };
-		0D3FC0D51DD7600600D12860 /* AirTemperatureManagedObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "AirTemperatureManagedObject+CoreDataProperties.swift"; path = "DataBaseManagedClass/AirTemperatureManagedObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		0D3FC0D81DD7602D00D12860 /* BaseManagedObject+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "BaseManagedObject+CoreDataClass.swift"; path = "DataBaseManagedClass/BaseManagedObject+CoreDataClass.swift"; sourceTree = "<group>"; };
-		0D3FC0D91DD7602D00D12860 /* BaseManagedObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "BaseManagedObject+CoreDataProperties.swift"; path = "DataBaseManagedClass/BaseManagedObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		0D3FC0DC1DD7604F00D12860 /* CO2ManagedObject+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CO2ManagedObject+CoreDataClass.swift"; path = "DataBaseManagedClass/CO2ManagedObject+CoreDataClass.swift"; sourceTree = "<group>"; };
-		0D3FC0DD1DD7604F00D12860 /* CO2ManagedObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CO2ManagedObject+CoreDataProperties.swift"; path = "DataBaseManagedClass/CO2ManagedObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		0D3FC0E01DD7606B00D12860 /* CropsManagedObject+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CropsManagedObject+CoreDataClass.swift"; path = "DataBaseManagedClass/CropsManagedObject+CoreDataClass.swift"; sourceTree = "<group>"; };
-		0D3FC0E11DD7606B00D12860 /* CropsManagedObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CropsManagedObject+CoreDataProperties.swift"; path = "DataBaseManagedClass/CropsManagedObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		0D3FC0E41DD7608B00D12860 /* SoilHumidityManagedObject+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "SoilHumidityManagedObject+CoreDataClass.swift"; path = "DataBaseManagedClass/SoilHumidityManagedObject+CoreDataClass.swift"; sourceTree = "<group>"; };
-		0D3FC0E51DD7608B00D12860 /* SoilHumidityManagedObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "SoilHumidityManagedObject+CoreDataProperties.swift"; path = "DataBaseManagedClass/SoilHumidityManagedObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		0D3FC0E81DD760A200D12860 /* SoilTemperatureManagedObject+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "SoilTemperatureManagedObject+CoreDataClass.swift"; path = "DataBaseManagedClass/SoilTemperatureManagedObject+CoreDataClass.swift"; sourceTree = "<group>"; };
-		0D3FC0E91DD760A200D12860 /* SoilTemperatureManagedObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "SoilTemperatureManagedObject+CoreDataProperties.swift"; path = "DataBaseManagedClass/SoilTemperatureManagedObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		0D3FC0F01DD764FD00D12860 /* 蘑菇房-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "蘑菇房-Bridging-Header.h"; sourceTree = "<group>"; };
 		0D3FC0F31DD7653E00D12860 /* HASH_Encrypt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HASH_Encrypt.swift; sourceTree = "<group>"; };
 		0D42EEEA1DE09DB100CFD734 /* UserDistrictPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDistrictPickerViewController.swift; sourceTree = "<group>"; };
 		0D4406A41D81BB4A00E045AA /* 蘑菇背景1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "蘑菇背景1.png"; sourceTree = "<group>"; };
 		0D4406A61D81BEAA00E045AA /* 蘑菇背景.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "蘑菇背景.png"; sourceTree = "<group>"; };
-		0D450AF41DD73F270026C2C0 /* DataBase.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataBase.xcdatamodel; sourceTree = "<group>"; };
 		0D4990091D48B8BD0007D99B /* PresentRoomDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentRoomDetailViewController.swift; sourceTree = "<group>"; };
 		0D5369EB1DE40ACB00AC33C6 /* MonitoringDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonitoringDataSource.swift; sourceTree = "<group>"; };
-		0D5369F11DE43AAA00AC33C6 /* UserPropertiesManagedObject+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UserPropertiesManagedObject+CoreDataClass.swift"; path = "DataBaseManagedClass/UserPropertiesManagedObject+CoreDataClass.swift"; sourceTree = "<group>"; };
-		0D5369F21DE43AAA00AC33C6 /* UserPropertiesManagedObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UserPropertiesManagedObject+CoreDataProperties.swift"; path = "DataBaseManagedClass/UserPropertiesManagedObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		0D68E0511DFB9D2800F548AD /* CacheDB.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CacheDB.xcdatamodel; sourceTree = "<group>"; };
+		0D68E0541DFB9D4700F548AD /* UserPropertiesManagedObject+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserPropertiesManagedObject+CoreDataClass.swift"; sourceTree = "<group>"; };
+		0D68E0551DFB9D4700F548AD /* UserPropertiesManagedObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserPropertiesManagedObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		0D68E0561DFB9D4700F548AD /* TemperatureManagedObject+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TemperatureManagedObject+CoreDataClass.swift"; sourceTree = "<group>"; };
+		0D68E0571DFB9D4700F548AD /* TemperatureManagedObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TemperatureManagedObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		0D68E0581DFB9D4700F548AD /* HumidityManagedObject+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HumidityManagedObject+CoreDataClass.swift"; sourceTree = "<group>"; };
+		0D68E0591DFB9D4700F548AD /* HumidityManagedObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HumidityManagedObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		0D68E05A1DFB9D4700F548AD /* CropsManagedObject+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CropsManagedObject+CoreDataClass.swift"; sourceTree = "<group>"; };
+		0D68E05B1DFB9D4700F548AD /* CropsManagedObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CropsManagedObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		0D68E05C1DFB9D4700F548AD /* CO2ManagedObject+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CO2ManagedObject+CoreDataClass.swift"; sourceTree = "<group>"; };
+		0D68E05D1DFB9D4700F548AD /* CO2ManagedObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CO2ManagedObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		0D68E05E1DFB9D4700F548AD /* BaseManagedObject+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BaseManagedObject+CoreDataClass.swift"; sourceTree = "<group>"; };
+		0D68E05F1DFB9D4700F548AD /* BaseManagedObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BaseManagedObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		0D68E06D1DFBA14100F548AD /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
+		0D68E06E1DFBA14100F548AD /* SwiftyJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwiftyJSON.h; sourceTree = "<group>"; };
 		0D7262AF1D3755AC00ACB2B9 /* StaticItemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticItemModel.swift; sourceTree = "<group>"; };
 		0D7262B31D37E6BA00ACB2B9 /* GeneralDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralDetailController.swift; sourceTree = "<group>"; };
 		0D7403941D782A0E006A88E7 /* DataSourceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSourceViewController.swift; sourceTree = "<group>"; };
@@ -245,29 +240,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0D3FC0EC1DD760AB00D12860 /* ManagedModels */ = {
-			isa = PBXGroup;
-			children = (
-				0D5369F11DE43AAA00AC33C6 /* UserPropertiesManagedObject+CoreDataClass.swift */,
-				0D5369F21DE43AAA00AC33C6 /* UserPropertiesManagedObject+CoreDataProperties.swift */,
-				0D3FC0E81DD760A200D12860 /* SoilTemperatureManagedObject+CoreDataClass.swift */,
-				0D3FC0E91DD760A200D12860 /* SoilTemperatureManagedObject+CoreDataProperties.swift */,
-				0D3FC0E41DD7608B00D12860 /* SoilHumidityManagedObject+CoreDataClass.swift */,
-				0D3FC0E51DD7608B00D12860 /* SoilHumidityManagedObject+CoreDataProperties.swift */,
-				0D3FC0E01DD7606B00D12860 /* CropsManagedObject+CoreDataClass.swift */,
-				0D3FC0E11DD7606B00D12860 /* CropsManagedObject+CoreDataProperties.swift */,
-				0D3FC0DC1DD7604F00D12860 /* CO2ManagedObject+CoreDataClass.swift */,
-				0D3FC0DD1DD7604F00D12860 /* CO2ManagedObject+CoreDataProperties.swift */,
-				0D3FC0D81DD7602D00D12860 /* BaseManagedObject+CoreDataClass.swift */,
-				0D3FC0D91DD7602D00D12860 /* BaseManagedObject+CoreDataProperties.swift */,
-				0D3FC0D41DD7600600D12860 /* AirTemperatureManagedObject+CoreDataClass.swift */,
-				0D3FC0D51DD7600600D12860 /* AirTemperatureManagedObject+CoreDataProperties.swift */,
-				0D3FC0D01DD75FD600D12860 /* AirHumidityManagedObject+CoreDataClass.swift */,
-				0D3FC0D11DD75FD600D12860 /* AirHumidityManagedObject+CoreDataProperties.swift */,
-			);
-			name = ManagedModels;
-			sourceTree = "<group>";
-		};
 		0D46331B1D2825D80070A0AF /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -306,6 +278,43 @@
 				0D5369EB1DE40ACB00AC33C6 /* MonitoringDataSource.swift */,
 			);
 			name = UnmangedModels;
+			sourceTree = "<group>";
+		};
+		0D68E0501DFB9D1200F548AD /* CacheDB */ = {
+			isa = PBXGroup;
+			children = (
+				0D68E0531DFB9D3600F548AD /* ManagedClass */,
+				0D68E0511DFB9D2800F548AD /* CacheDB.xcdatamodel */,
+			);
+			name = CacheDB;
+			sourceTree = "<group>";
+		};
+		0D68E0531DFB9D3600F548AD /* ManagedClass */ = {
+			isa = PBXGroup;
+			children = (
+				0D68E0541DFB9D4700F548AD /* UserPropertiesManagedObject+CoreDataClass.swift */,
+				0D68E0551DFB9D4700F548AD /* UserPropertiesManagedObject+CoreDataProperties.swift */,
+				0D68E0561DFB9D4700F548AD /* TemperatureManagedObject+CoreDataClass.swift */,
+				0D68E0571DFB9D4700F548AD /* TemperatureManagedObject+CoreDataProperties.swift */,
+				0D68E0581DFB9D4700F548AD /* HumidityManagedObject+CoreDataClass.swift */,
+				0D68E0591DFB9D4700F548AD /* HumidityManagedObject+CoreDataProperties.swift */,
+				0D68E05A1DFB9D4700F548AD /* CropsManagedObject+CoreDataClass.swift */,
+				0D68E05B1DFB9D4700F548AD /* CropsManagedObject+CoreDataProperties.swift */,
+				0D68E05C1DFB9D4700F548AD /* CO2ManagedObject+CoreDataClass.swift */,
+				0D68E05D1DFB9D4700F548AD /* CO2ManagedObject+CoreDataProperties.swift */,
+				0D68E05E1DFB9D4700F548AD /* BaseManagedObject+CoreDataClass.swift */,
+				0D68E05F1DFB9D4700F548AD /* BaseManagedObject+CoreDataProperties.swift */,
+			);
+			name = ManagedClass;
+			sourceTree = "<group>";
+		};
+		0D68E06C1DFBA12A00F548AD /* SwifttJSON */ = {
+			isa = PBXGroup;
+			children = (
+				0D68E06D1DFBA14100F548AD /* SwiftyJSON.swift */,
+				0D68E06E1DFBA14100F548AD /* SwiftyJSON.h */,
+			);
+			name = SwifttJSON;
 			sourceTree = "<group>";
 		};
 		0D7262B11D37563000ACB2B9 /* Models */ = {
@@ -402,14 +411,13 @@
 			isa = PBXGroup;
 			children = (
 				0D7FBC371CE80A6800775FCA /* AppDelegate.swift */,
-				0D450AF31DD73F270026C2C0 /* DataBase.xcdatamodeld */,
+				0D68E0501DFB9D1200F548AD /* CacheDB */,
 				0D8606AF1D62C0FF00CE3905 /* Storyboards */,
 				0DB4CE331DDCB88E000CC534 /* Main */,
 				0D7FBC681CE80B7A00775FCA /* Page_1_MushRoom */,
 				0D7FBC691CE80BA000775FCA /* Page_2_Weather */,
 				0D7FBC6B1CE80BDA00775FCA /* Page_3_User */,
 				0D5369EA1DE40A7000AC33C6 /* UnmangedModels */,
-				0D3FC0EC1DD760AB00D12860 /* ManagedModels */,
 				0DB3ABEE1D7164320072E5F0 /* Frameworks */,
 				0D7FBC671CE80AAB00775FCA /* Supporting Files */,
 				0D7FBC401CE80A6900775FCA /* Assets.xcassets */,
@@ -545,6 +553,7 @@
 		0DB3ABEE1D7164320072E5F0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0D68E06C1DFBA12A00F548AD /* SwifttJSON */,
 				0D75A0FB1DD6121B001FD6F9 /* CoreDataDAO */,
 				0DC26BE81D941C7600A35048 /* ESRefresh */,
 				0D7A7A8B1D7AB5BA009A3A1D /* UICountingLabel */,
@@ -751,71 +760,68 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D68E0661DFB9D4700F548AD /* CropsManagedObject+CoreDataClass.swift in Sources */,
 				0D7FBC3C1CE80A6800775FCA /* WeatherViewController.swift in Sources */,
 				0D32FEB01D3DD0A2008E79CD /* FeedBackViewController.swift in Sources */,
+				0D68E06F1DFBA14100F548AD /* SwiftyJSON.swift in Sources */,
+				0D68E06A1DFB9D4700F548AD /* BaseManagedObject+CoreDataClass.swift in Sources */,
+				0D68E0681DFB9D4700F548AD /* CO2ManagedObject+CoreDataClass.swift in Sources */,
 				0DF689A11D41E6A9001FC45A /* FaceShowViewController.swift in Sources */,
 				0D844AE31D94DADF00F1F086 /* ___Tests.swift in Sources */,
 				0D7FBC6F1CE80C7000775FCA /* UserViewController.swift in Sources */,
 				0D7FBC751CE8152200775FCA /* ChooseAreaModel.swift in Sources */,
 				0DD895FC1DB3CE0E00D91C04 /* NewMessageWebViewController.swift in Sources */,
-				0D3FC0E71DD7608B00D12860 /* SoilHumidityManagedObject+CoreDataProperties.swift in Sources */,
+				0D68E0641DFB9D4700F548AD /* HumidityManagedObject+CoreDataClass.swift in Sources */,
+				0D68E06B1DFB9D4700F548AD /* BaseManagedObject+CoreDataProperties.swift in Sources */,
 				0DC26BF31D941C7600A35048 /* ESRefreshHeaderAnimator.swift in Sources */,
-				0D5369F31DE43AAA00AC33C6 /* UserPropertiesManagedObject+CoreDataClass.swift in Sources */,
-				0D3FC0D31DD75FD600D12860 /* AirHumidityManagedObject+CoreDataProperties.swift in Sources */,
 				0DF373F81D6DA81100AC5E6B /* ShowMapViewController.swift in Sources */,
 				0D7785921D534B7400A74A30 /* NearbyViewController.swift in Sources */,
-				0D3FC0DA1DD7602D00D12860 /* BaseManagedObject+CoreDataClass.swift in Sources */,
+				0D68E0631DFB9D4700F548AD /* TemperatureManagedObject+CoreDataProperties.swift in Sources */,
 				0DB357C81D7900A2002A7D85 /* PDChartAxesComponent.swift in Sources */,
 				0D75A0FD1DD61263001FD6F9 /* CoreDataDAO.swift in Sources */,
 				0D8B65AA1DE4A1930081AC90 /* romPreWriter.swift in Sources */,
 				0D8197261CEC8E3600CE0211 /* RoomInfoModel.swift in Sources */,
+				0D68E0601DFB9D4700F548AD /* UserPropertiesManagedObject+CoreDataClass.swift in Sources */,
 				0D1017831D981A45005BCE84 /* TabbarViewController.swift in Sources */,
+				0D68E0521DFB9D2800F548AD /* CacheDB.xcdatamodel in Sources */,
 				0DC26BF91D941C7600A35048 /* ESRefreshProtocol.swift in Sources */,
 				0DB4CE351DDCBA93000CC534 /* SetupProfileViewController.swift in Sources */,
-				0D3FC0D71DD7600600D12860 /* AirTemperatureManagedObject+CoreDataProperties.swift in Sources */,
 				0DC26BF61D941C7600A35048 /* ESPullToRefresh.swift in Sources */,
 				0DB357CC1D79047E002A7D85 /* DataSourceModel.swift in Sources */,
-				0D3FC0EB1DD760A200D12860 /* SoilTemperatureManagedObject+CoreDataProperties.swift in Sources */,
-				0D450AF51DD73F270026C2C0 /* DataBase.xcdatamodeld in Sources */,
+				0D68E0621DFB9D4700F548AD /* TemperatureManagedObject+CoreDataClass.swift in Sources */,
 				0D49900A1D48B8BD0007D99B /* PresentRoomDetailViewController.swift in Sources */,
 				0D19B05D1DDA08B900A4747C /* LoginViewController.swift in Sources */,
+				0D68E0611DFB9D4700F548AD /* UserPropertiesManagedObject+CoreDataProperties.swift in Sources */,
 				0D7262B41D37E6BA00ACB2B9 /* GeneralDetailController.swift in Sources */,
-				0D3FC0DE1DD7604F00D12860 /* CO2ManagedObject+CoreDataClass.swift in Sources */,
 				0DB357CA1D7900A2002A7D85 /* PDPieChart.swift in Sources */,
 				0D7262B01D3755AC00ACB2B9 /* StaticItemModel.swift in Sources */,
 				0DB357C91D7900A2002A7D85 /* PDLineChart.swift in Sources */,
 				0DB4CE321DDC51BE000CC534 /* EnrollmentViewController.swift in Sources */,
 				0DF689A31D41EFEF001FC45A /* EditOtherViewController.swift in Sources */,
-				0D3FC0E61DD7608B00D12860 /* SoilHumidityManagedObject+CoreDataClass.swift in Sources */,
 				0DB357C61D7900A2002A7D85 /* PDBarChart.swift in Sources */,
 				0D32FEAE1D3DBC99008E79CD /* NewMessageInformViewController.swift in Sources */,
+				0D68E0671DFB9D4700F548AD /* CropsManagedObject+CoreDataProperties.swift in Sources */,
 				0DC26BF71D941C7600A35048 /* ESRefreshAnimator.swift in Sources */,
-				0D3FC0D61DD7600600D12860 /* AirTemperatureManagedObject+CoreDataClass.swift in Sources */,
 				0D2B80BD1D3C70B2007FBB8A /* AboutUsViewController.swift in Sources */,
 				0D2B9B2F1D3887A9006559F1 /* NotificationPreviewModel.swift in Sources */,
+				0D68E0691DFB9D4700F548AD /* CO2ManagedObject+CoreDataProperties.swift in Sources */,
 				0D9CE9871D419F6F004E1B27 /* AccountViewController.swift in Sources */,
 				0D7FBC731CE814EB00775FCA /* ChooseAreaViewController.swift in Sources */,
-				0D3FC0E21DD7606B00D12860 /* CropsManagedObject+CoreDataClass.swift in Sources */,
 				0DD895FA1DB3C4CF00D91C04 /* GLOBAL_VAR.swift in Sources */,
 				0D2B9B2C1D387723006559F1 /* NotificationViewController.swift in Sources */,
 				0D7FBC381CE80A6800775FCA /* AppDelegate.swift in Sources */,
 				0DF6899F1D41BD3C001FC45A /* UserProfileModel.swift in Sources */,
+				0D68E0651DFB9D4700F548AD /* HumidityManagedObject+CoreDataProperties.swift in Sources */,
 				0D1AF4AB1DE06EB500D1787C /* pageScrollWebViewController.swift in Sources */,
 				0DC26BF21D941C7600A35048 /* ESRefreshFooterAnimator.swift in Sources */,
-				0D5369F41DE43AAA00AC33C6 /* UserPropertiesManagedObject+CoreDataProperties.swift in Sources */,
 				0D3FC0F41DD7653E00D12860 /* HASH_Encrypt.swift in Sources */,
 				0DC26BF81D941C7600A35048 /* ESRefreshComponent.swift in Sources */,
 				0DC26BF51D941C7600A35048 /* ESPullToRefresh+Manager.swift in Sources */,
 				0D7FBC3A1CE80A6800775FCA /* MushroomViewController.swift in Sources */,
 				0D7403951D782A0E006A88E7 /* DataSourceViewController.swift in Sources */,
 				0D5369EC1DE40ACB00AC33C6 /* MonitoringDataSource.swift in Sources */,
-				0D3FC0E31DD7606B00D12860 /* CropsManagedObject+CoreDataProperties.swift in Sources */,
-				0D3FC0DB1DD7602D00D12860 /* BaseManagedObject+CoreDataProperties.swift in Sources */,
 				0D42EEEB1DE09DB100CFD734 /* UserDistrictPickerViewController.swift in Sources */,
-				0D3FC0D21DD75FD600D12860 /* AirHumidityManagedObject+CoreDataClass.swift in Sources */,
 				0D9CE9891D41AE6F004E1B27 /* EditProfilesViewController.swift in Sources */,
-				0D3FC0EA1DD760A200D12860 /* SoilTemperatureManagedObject+CoreDataClass.swift in Sources */,
-				0D3FC0DF1DD7604F00D12860 /* CO2ManagedObject+CoreDataProperties.swift in Sources */,
 				0D7A7A8D1D7AB8EC009A3A1D /* UICountingLabel.swift in Sources */,
 				0D844AEA1D94DB0300F1F086 /* ___UITests.swift in Sources */,
 				0D9CE9851D40548F004E1B27 /* PublicStaticMethods.swift in Sources */,
@@ -1132,19 +1138,6 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		0D450AF31DD73F270026C2C0 /* DataBase.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				0D450AF41DD73F270026C2C0 /* DataBase.xcdatamodel */,
-			);
-			currentVersion = 0D450AF41DD73F270026C2C0 /* DataBase.xcdatamodel */;
-			path = DataBase.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 0D7FBC2C1CE80A6800775FCA /* Project object */;
 }

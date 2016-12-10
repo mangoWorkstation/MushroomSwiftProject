@@ -15,6 +15,8 @@ class SetupProfileViewController: UIViewController,UITextFieldDelegate,UIImagePi
     
     @IBOutlet weak var face: UIButton!
     
+    private var facePath:String?
+    
     @IBOutlet weak var nickNameInput: UITextField!
     
     @IBOutlet weak var gender: UISegmentedControl!
@@ -69,6 +71,8 @@ class SetupProfileViewController: UIViewController,UITextFieldDelegate,UIImagePi
             let entity = NSEntityDescription.insertNewObject(forEntityName: "UserProperties", into: context) as! UserPropertiesManagedObject
             let encodedPassword = password.text?.hmac(algorithm: .MD5, key: self.receivedPhoneNUM)
             
+            entity.facePath = self.facePath!
+            entity.nickName = self.nickNameInput.text!
             entity.id = Int64(self.receivedPhoneNUM)!
             entity.password = encodedPassword!
             entity.root = Int64(0)
@@ -83,7 +87,7 @@ class SetupProfileViewController: UIViewController,UITextFieldDelegate,UIImagePi
             } catch let error{
                 print("context can't save!, Error: \(error)")
             }
-        
+            
         }
     }
     
@@ -103,6 +107,12 @@ class SetupProfileViewController: UIViewController,UITextFieldDelegate,UIImagePi
         face.layer.borderWidth = 3
         face.layer.borderColor = UIColor.lightGray.cgColor
         face.addTarget(self, action: #selector(SetupProfileViewController.changeFace(sender:forEvent:)), for: .touchUpInside)
+        let faceData = UIImageJPEGRepresentation(face.currentImage!, 0.4)
+        
+        let path = NSURL(fileURLWithPath: NSHomeDirectory() + "/Documents/UserCache", isDirectory: true)
+        try?FileManager.default.createDirectory(at: path as URL, withIntermediateDirectories: false, attributes: nil)
+        try?faceData?.write(to: NSURL(fileURLWithPath: NSHomeDirectory() + "/Documents/UserCache/\(self.receivedPhoneNUM!).jpg", isDirectory: false) as URL)
+        self.facePath = "/Documents/UserCache/\(self.receivedPhoneNUM!).jpg"
         
         gender.setTitle("女", forSegmentAt: 0)
         gender.setTitle("男", forSegmentAt: 1)
@@ -155,6 +165,12 @@ class SetupProfileViewController: UIViewController,UITextFieldDelegate,UIImagePi
         let image = info[UIImagePickerControllerOriginalImage] as? UIImage
         face.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
         face.contentMode = .scaleToFill
+        let faceData = UIImageJPEGRepresentation(face.currentImage!, 0.4)
+        try?FileManager.default.removeItem(atPath: NSHomeDirectory()+"/Documents/UserCache/\(self.receivedPhoneNUM!).jpg")
+        let path = NSURL(fileURLWithPath: NSHomeDirectory() + "/Documents/UserCache", isDirectory: true)
+        try?FileManager.default.createDirectory(at: path as URL, withIntermediateDirectories: false, attributes: nil)
+        try?faceData?.write(to: NSURL(fileURLWithPath: NSHomeDirectory() + "/Documents/UserCache/\(self.receivedPhoneNUM!).jpg", isDirectory: false) as URL)
+        self.facePath = "/Documents/UserCache/\(self.receivedPhoneNUM!).jpg"
         dismiss(animated: true, completion: nil)
     }
     

@@ -14,7 +14,7 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
     
     var chosenArea :String? = "选择区域" //保存选择的区域 2016.8.2
     
-//    private var loginID : String!
+    //    private var loginID : String!
     
     //后台的数据原型
     //2016.8.27
@@ -46,7 +46,7 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
     private var pageScrollTitle:UILabel!
     
     
-    //列表 
+    //列表
     //2016.7.1/12:43
     @IBOutlet weak var tableView: UITableView!
     
@@ -58,8 +58,8 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
     
     private var viewIsOnceLoaded = true
     
-
-
+    
+    
     
     //unwindSegue
     //用于“选择地区”视图完成之后，刷新当前前台数据
@@ -78,8 +78,8 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
     
     //上拉加载数据
     //测试于2016.8.27通过
-
-
+    
+    
     //unwindSegue
     //简单地返回到本页面
     //测试于2016.8.24通过
@@ -99,7 +99,7 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         
         prepareForScrollPages() //加载轮播图
         
-//        NotificationCenter.default.addObserver(self, selector: #selector(MushroomViewController.refresh(_notification:)), name: NSNotification.Name(rawValue: "homeRefresh"), object: nil)
+        //        NotificationCenter.default.addObserver(self, selector: #selector(MushroomViewController.refresh(_notification:)), name: NSNotification.Name(rawValue: "homeRefresh"), object: nil)
         
         //点击tabbar后刷新页面
         
@@ -107,18 +107,18 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         tableView.dataSource = self
         tableView.reloadData()
         
-//        tableView.backgroundColor = UIColor(red: 142/255, green: 164/255, blue: 182/255, alpha: 1)
-//        //16进制码:#8EA4B6 (142,164,182)
+        //        tableView.backgroundColor = UIColor(red: 142/255, green: 164/255, blue: 182/255, alpha: 1)
+        //        //16进制码:#8EA4B6 (142,164,182)
         
-//        tableView.backgroundColor = UIColor(red: 131/255, green: 175/255, blue: 155/255, alpha: 1)
+        //        tableView.backgroundColor = UIColor(red: 131/255, green: 175/255, blue: 155/255, alpha: 1)
         
         let background = UIImageView(image: UIImage(named: "Background_1"))
         tableView.backgroundView = background
         
-        tableView.separatorColor = UIColor(white: 1, alpha: 1)    //设置分割线颜色
+        tableView.separatorColor = UIColor(white: 0, alpha: 1)    //设置分割线颜色
         
         configurateHeaderAndFooter() //设置表头和表尾
-
+        
         self.tableView.es_addPullToRefresh(animator: header) {
             [weak self] in
             self?.refresh()
@@ -130,13 +130,14 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
             self?.loadMore()
         }
         
-        // Do any additional setup after loading the view, typically from a nib.
-
+        //        //3DTouch
+        //        if traitCollection.forceTouchCapability == .available {
+        //            registerForPreviewing(with: self, sourceView: view)
+        //        }
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        print(viewIsOnceLoaded)
-        print("viewDidAppear执行了")
         if viewIsOnceLoaded {
             super.viewDidAppear(animated)
             self.tableView.es_startPullToRefresh()
@@ -212,7 +213,7 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
             }
         }
     }
-
+    
     @IBAction func openWebView(sender:UIButton,forEvent:UIEvent?){
         performSegue(withIdentifier: "officialWeb", sender: nil)
     }
@@ -263,12 +264,12 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
     private func configUserInfo(){
         
         let userInfoDefault = UserDefaults()
-
+        
         var userInfoModelData : UserPropertiesManagedObject!
         
-        let staticFace = UIImage(named: "2")
-        let staticFaceData = UIImageJPEGRepresentation(staticFace!, 100)
-
+        //        let staticFace = UIImage(named: "2")
+        //        let staticFaceData = UIImageJPEGRepresentation(staticFace!, 100)
+        
         //如果账户已经处于登录过的状态,获取UserDefault上保存的数据
         if userInfoDefault.object(forKey: "UserInfoModel") != nil{
             let content = userInfoDefault.object(forKey: "UserInfoModel") as! Data
@@ -276,7 +277,7 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         }
             
             
-        //如果该账户是首次在客户端上登录，或者是新注册的用户，读取大数据库中的用户数据，寄存在全局变量GLOBAL_UserProfile上，并写入UserDefault中
+            //如果该账户是首次在客户端上登录，或者是新注册的用户，读取大数据库中的用户数据，寄存在全局变量GLOBAL_UserProfile上，并写入UserDefault中
         else{
             
             let appDel = UIApplication.shared.delegate as! AppDelegate
@@ -297,35 +298,28 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
                     }
                 }
             }
-            GLOBAL_UserProfile = UserProfiles(face: Data(), nickName: nil, id: 0, sex: 0, province: nil, city: nil, password: "", root: 0, allowPushingNotification: true, allowPushingNewMessageToMobile: true, latitude: 0, longitude: 0)
+            GLOBAL_UserProfile = UserProfiles(facePath: nil, nickName: nil, id: 0, sex: 0, province: nil, city: nil, password: "", root: 0, allowPushingNotification: true, allowPushingNewMessageToMobile: true, latitude: 0, longitude: 0)
             //默认初始化
-
-
-            GLOBAL_UserProfile.face = staticFaceData! as Data
-            GLOBAL_UserProfile.nickName = "芒果君"
             
-            
+            GLOBAL_UserProfile.facePath = userInfoModelData.facePath!
+            GLOBAL_UserProfile.nickName = userInfoModelData.nickName!
             GLOBAL_UserProfile.id = Int(userInfoModelData.id)
             GLOBAL_UserProfile.sex = Int(userInfoModelData.sex)
-
+            
             if GLOBAL_UserProfile.root != nil{
                 GLOBAL_UserProfile.root = Int(userInfoModelData.root)
             }
             else{
                 GLOBAL_UserProfile.root = 1
             }
-            if GLOBAL_UserProfile.province != nil{
+            if userInfoModelData.province != nil{
                 GLOBAL_UserProfile.province = userInfoModelData.province!
             }
-//            else{
-//                GLOBAL_UserProfile.province = "未设置省份"
-//            }
-            if GLOBAL_UserProfile.city != nil{
+            
+            if userInfoModelData.city != nil{
                 GLOBAL_UserProfile.city = userInfoModelData.city!
             }
-//            else{
-//                GLOBAL_UserProfile.city = "未设置城市"
-//            }
+            
             GLOBAL_UserProfile.password = userInfoModelData.password
             GLOBAL_UserProfile.allowPushingNotification = userInfoModelData.allowPushingNotification
             GLOBAL_UserProfile.allowPushingNewMessageToMobile = userInfoModelData.allowPushingNewMessageToMobile
@@ -335,10 +329,9 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
             userInfoDefault.synchronize()
             
         }
-
         print("当前UID:\(GLOBAL_UserProfile.id)")
         print("密码（MD5）:\(GLOBAL_UserProfile.password!)\n")
-
+        
     }
     
     //滚动横幅的视图
@@ -359,24 +352,24 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         //        self.tableView.fixedPullToRefreshViewForDidScroll()
         
     }
-
+    
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         removeTimer()
     }
-
+    
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         addTimer()
     }
-
+    
     //时间控制器，控制滚动
     func addTimer() {
         timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(MushroomViewController.nextImage), userInfo: nil, repeats: true)
     }
-
+    
     func removeTimer() {
         timer.invalidate()
     }
-
+    
     //控制视图跳转
     func nextImage() {
         var pageIndex = pageDots.currentPage
@@ -386,23 +379,25 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         else{
             pageIndex += 1
         }
-    
+        
         let offsetX = CGFloat(pageIndex) * self.view.frame.width
         pageScroller.setContentOffset(CGPoint(x: offsetX, y: 0), animated: true)
     }
-
+    
     
     
     //MARK:- UITableViewDelegate,UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         return 1
+        
+        
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return self.foregroundShownData.count
     }
     
-
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 120
     }
@@ -451,10 +446,8 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
         let cell = self.tableView.cellForRow(at: indexPath)!
-        self.tableView.deselectRow(at: indexPath, animated: true)
         let name = cell.viewWithTag(2) as! UILabel
         performSegue(withIdentifier: "ShowDetailSegue", sender: name)
-        print("didSelectRowAtIndexPath执行了")
     }
     
     //MARK: - UIStoryBoardSegue
@@ -487,6 +480,31 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         }
     }
     
-
-
+    //    //MARK:- UIViewControllerPreviewingDelegate - 3DTouch
+    //    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+    //        show(viewControllerToCommit, sender: self)
+    //    }
+    //
+    //    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+    //        guard let indexPath = tableView.indexPathForRow(at: location) else{
+    //            return nil
+    //        }
+    //        let cell = tableView.cellForRow(at: indexPath)
+    //        previewingContext.sourceRect = (cell?.frame)!
+    //        let storyBoard = UIStoryboard.init(name: "Page_1_MushRoom", bundle: Bundle.main)
+    //        guard let vc = storyBoard.instantiateViewController(withIdentifier: "PresentRoomDetailViewController") as? PresentRoomDetailViewController else{
+    //            return nil
+    //        }
+    //
+    //        let room = self.foregroundShownData[indexPath.row]
+    //        vc.currentArea = self.clickOnButton.currentTitle
+    //        vc.roomName = room.name!
+    //        vc.navigationItem.title = room.name!
+    //        vc.navigationItem.backBarButtonItem?.title = self.clickOnButton.currentTitle!
+    //        
+    //        return vc
+    //    }
+    
+    
+    
 }

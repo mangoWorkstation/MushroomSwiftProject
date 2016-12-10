@@ -11,7 +11,7 @@ import UIKit
 class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate {
     
     var selectedRow : Int?
-
+    
     @IBOutlet weak var tableView: UITableView!
     
     @IBAction func close(_ segue:UIStoryboardSegue){
@@ -24,7 +24,7 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
         tableView.dataSource = self
         // Do any additional setup after loading the view.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -127,7 +127,7 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
                 let labelGroup = ["新消息通知","帮助与反馈"]
                 label.text = labelGroup[(indexPath as NSIndexPath).row]
                 label.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
-
+                
             }
             else if(2 == section){
                 cell = self.tableView.dequeueReusableCell(withIdentifier: "CacheCell")!
@@ -138,7 +138,7 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
                 label_1.text = String(Double(cacheFile)*0.0)+"MB"
                 label.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
                 label_1.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
-
+                
                 cell.accessoryType = UITableViewCellAccessoryType.none
             }
             else if(3 == section){
@@ -147,7 +147,6 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
                 label.text = "退出登录"
                 label.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
                 label.textAlignment = NSTextAlignment.center
-                label.textColor = UIColor.red
                 cell.accessoryType = UITableViewCellAccessoryType.none
             }
         }
@@ -179,7 +178,7 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
                 appName.font = UIFont(name: GLOBAL_appFont!, size: 24.0)
                 copyRight.text = "Copyright © 2016 MushRoom Workstation \n All Rights Reserved \n 广西大学 蘑菇房工作室 出品"
                 copyRight.font = UIFont(name: GLOBAL_appFont!, size: 12.0)
-
+                
                 copyRight.lineBreakMode = NSLineBreakMode.byWordWrapping
                 copyRight.numberOfLines = 0
             }
@@ -202,14 +201,14 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         if(0 == self.selectedRow){
             switch section {
-                case 0:
-                    return 1
-                case 1:
-                    return 2
-                case 2:
-                    return 1
-                default:
-                    return 1
+            case 0:
+                return 1
+            case 1:
+                return 2
+            case 2:
+                return 1
+            default:
+                return 1
             }
         }
         else if(1 == self.selectedRow) {
@@ -277,10 +276,10 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
                 self.tableView.deselectRow(at: indexPath, animated: true)
             }
         }
-            
+        
         if self.selectedRow == 0{
             if indexPath.section == 3 {
-                let sheet = UIAlertController(title: "将要注销当前账户", message: "您的本地用户信息将被删除", preferredStyle: .alert)
+                let sheet = UIAlertController(title: "将要注销当前账户", message: nil, preferredStyle: .actionSheet)
                 sheet.addAction(UIAlertAction(title: "确定", style: .destructive, handler: {
                     (action)-> Void in
                     self.tableView.deselectRow(at: indexPath, animated: true)
@@ -292,30 +291,14 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
                     let appDel = UIApplication.shared.delegate as! AppDelegate
                     appDel.window?.rootViewController = vcNav
                     appDel.window?.makeKeyAndVisible()
-                    let path_1 = NSHomeDirectory() + "/Documents/UserProfile/profile.plist"
-                    let path_2 = NSHomeDirectory() + "/Documents/UserProfile/loginID.plist"
-                    try?FileManager.default.removeItem(atPath: path_1)
-                    try?FileManager.default.removeItem(atPath: path_2)
                     let userDefaultInfo = UserDefaults()
                     userDefaultInfo.removeObject(forKey: "UserInfoModel")
                     userDefaultInfo.removeObject(forKey: "loginID")
-//                    userDefaultInfo.set(nil, forKey: "UserInfoModel")
-//                    userDefaultInfo.set(nil,forKey: "id")
-//                    userDefaultInfo.set(nil,forKey: "face")
-//                    userDefaultInfo.set(nil,forKey: "nickName")
-//                    userDefaultInfo.set(nil,forKey: "root")
-//                    userDefaultInfo.set(nil,forKey: "password")
-//                    userDefaultInfo.set(nil,forKey: "sex")
-//                    userDefaultInfo.set(nil,forKey: "province")
-//                    userDefaultInfo.set(nil,forKey: "city")
-//                    userDefaultInfo.set(nil,forKey: "allowPushingNotification")
-//                    userDefaultInfo.set(nil,forKey: "allowPushingNewMessageToMobile")
-//                    userDefaultInfo.set(nil,forKey: "latitude")
-//                    userDefaultInfo.set(nil,forKey: "longitude")
                     userDefaultInfo.synchronize()
-//                    GLOBAL_UserProfile = nil
-//                    let filePath = NSHomeDirectory() + "/Documents/loginID.plist"
-//                    try? FileManager.default.removeItem(atPath: filePath)
+                    //                    try?FileManager.default.removeItem(atPath: NSHomeDirectory() + "/Documents/UserCache/")
+                    //                    try?FileManager.default.removeItem(atPath: NSHomeDirectory() + "/Documents/UserCache/\(GLOBAL_UserProfile.id!).jpg")
+                    //临时性的解决方案,暂不删除图像
+                    self.dismiss(animated: true, completion: nil)
                 }))
                 sheet.addAction(UIAlertAction(title: "取消", style: .cancel, handler: {
                     (action)-> Void in

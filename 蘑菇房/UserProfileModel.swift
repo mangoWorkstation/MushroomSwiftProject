@@ -9,7 +9,8 @@
 import Foundation
 
 class UserProfiles: NSObject {
-    var face:Data?
+    //    var face:Data?
+    var facePath:String?
     var nickName:String?
     var id:Int?
     var sex:Int?
@@ -17,15 +18,16 @@ class UserProfiles: NSObject {
     var city:String?
     var password : String?
     var root:Int?
-    //root 1:普通用户 2:农场主
+    //root 0:普通用户 1:农场主
     
     var allowPushingNotification:Bool?
     var allowPushingNewMessageToMobile:Bool?
     var latitude:Double?
     var longitude:Double?
     
-    init(face:Data?,nickName:String?,id:Int,sex:Int,province:String?,city:String?,password: String,root: Int,allowPushingNotification:Bool?,allowPushingNewMessageToMobile:Bool?,latitude:Double?,longitude:Double?) {
-        self.face = face! as Data
+    init(facePath:String?,nickName:String?,id:Int,sex:Int,province:String?,city:String?,password: String,root: Int,allowPushingNotification:Bool?,allowPushingNewMessageToMobile:Bool?,latitude:Double?,longitude:Double?) {
+        //        self.face = face! as Data
+        self.facePath = facePath
         self.nickName = nickName
         self.id = id
         self.sex = sex
@@ -46,7 +48,8 @@ class UserProfiles: NSObject {
     }
     
     init(coder aDecoder:NSCoder!){
-        self.face = (aDecoder.decodeObject(forKey: "face") as! Data)
+        //        self.face = (aDecoder.decodeObject(forKey: "face") as! Data)
+        self.facePath = aDecoder.decodeObject(forKey: "facePath") as? String
         self.nickName = aDecoder.decodeObject(forKey: "nickName") as? String
         self.id = aDecoder.decodeObject(forKey: "id") as? Int
         self.sex = aDecoder.decodeObject(forKey: "sex") as? Int
@@ -61,7 +64,8 @@ class UserProfiles: NSObject {
     }
     
     func encodeWithCoder(_ aCoder:NSCoder!){
-        aCoder.encode(face,forKey:"face")
+        //        aCoder.encode(face,forKey:"face")
+        aCoder.encode(facePath, forKey: "facePath")
         aCoder.encode(nickName,forKey:"nickName")
         aCoder.encode(id,forKey:"id")
         aCoder.encode(sex,forKey:"sex")
@@ -73,6 +77,6 @@ class UserProfiles: NSObject {
         aCoder.encode(allowPushingNewMessageToMobile,forKey:"allowPushingNewMessageToMobile")
         aCoder.encode(latitude,forKey:"latitude")
         aCoder.encode(longitude,forKey:"longitude")
-
+        
     }
 }

@@ -13,7 +13,7 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     
     @IBOutlet weak var tableView: UITableView!
-
+    
     @IBOutlet weak var UserInfoColumn: UIImageView!
     
     var staticItems_section_3 : [StaticItem] = [] //数组：用于存放静态状态图标
@@ -27,20 +27,20 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         tableView.dataSource = self
         
         self.navigationController?.navigationBar.isTranslucent = false
-                
+        
         staticItems_section_2 = [StaticItem(iconName:"MyHouse",label:"我管理的基地"),StaticItem(iconName:"MyFollow",label:"授权查看的基地"),StaticItem(iconName:"Nearby",label:"附近的基地"),StaticItem(iconName:"MyProfiles",label:"我的资料"),StaticItem(iconName:"Inform",label:"消息与通知")]
         staticItems_section_3 = [StaticItem(iconName:"Setup",label:"设置"),StaticItem(iconName:"About",label: "关于")]
         //初始化静态固定图标
-//        self.tableView.showsVerticalScrollIndicator = true
-//        self.tableView.backgroundColor = UIColor(red: 142/255, green: 164/255, blue: 182/255, alpha: 1)
+        //        self.tableView.showsVerticalScrollIndicator = true
+        //        self.tableView.backgroundColor = UIColor(red: 142/255, green: 164/255, blue: 182/255, alpha: 1)
         self.tableView.separatorColor = UIColor(white: 0.9, alpha: 1)
         
         let background = UIImageView(image: UIImage(named: "Background_1"))
         self.tableView.backgroundView = background
         self.tableView.sectionHeaderHeight = 0
         self.tableView.tableFooterView = UIView(frame: CGRect.zero)
-
-
+        
+        
         // Do any additional setup after loading the view, typically from a nib.
         self.tableView.reloadData()
         
@@ -72,7 +72,7 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             else {
                 return 30
             }
-        
+            
         }
         else if((indexPath as NSIndexPath).section == 2){//选项栏1 2016.7.12
             return 50
@@ -109,27 +109,24 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         var cell:UITableViewCell? = UITableViewCell()
         
         if ((indexPath as NSIndexPath).section == 0){
+            let facePath = GLOBAL_UserProfile.facePath
+            
             cell = self.tableView!.dequeueReusableCell(withIdentifier: "UserInfo")!
             let icon = cell!.viewWithTag(1011) as! UIImageView
             let nameLabel = cell!.viewWithTag(1012) as! UILabel
             let background = cell!.viewWithTag(102) as! UIImageView
-            icon.image = UIImage(data: GLOBAL_UserProfile.face!)
-//            icon.bounds = CGRectMake((icon.bounds.size.width-60)/2, (icon.bounds.size.height-60)/2-150, 60, 60)
-//            icon.frame = CGRectMake((icon.bounds.size.width - 60)/2, (icon.bounds.size.height-60)/2-150, 60,60)
+            icon.image = UIImage(contentsOfFile: NSHomeDirectory() + facePath!)
             icon.layer.cornerRadius = 40
-            //注意:cornerRadius必须是storyBoard中，宽度的1/2;
-            //在storyBoard中设置imageView时，高度必须是宽度的1/4才能磨成圆形
-            //2016.7.27
             icon.layer.masksToBounds = true
             icon.layer.borderWidth = 3
-            icon.layer.borderColor = UIColor.lightGray.cgColor
+            icon.layer.borderColor = UIColor.white.cgColor
             icon.clipsToBounds = true     //制作圆形的头像
             nameLabel.text = GLOBAL_UserProfile.nickName
             nameLabel.font = UIFont(name: GLOBAL_appFont!, size: 20.0)
             nameLabel.textColor = UIColor.white
             
             //黑科技，将头像高斯模糊化，作为背景 2016.10.17
-            let ciImage = CIImage(image: UIImage(data: GLOBAL_UserProfile.face!)!)
+            let ciImage = CIImage(image: UIImage(contentsOfFile: NSHomeDirectory() + facePath!)!)
             let filterMirror = CIFilter(name: "CIGaussianBlur")
             filterMirror?.setValue(ciImage, forKey: kCIInputImageKey)
             let filterImage = filterMirror?.value(forKey: kCIOutputImageKey)
@@ -137,15 +134,15 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             let cgImage = context.createCGImage(filterImage as! CIImage, from: (cell?.frame)!)
             background.image = UIImage(cgImage: cgImage!)
             
-//            let _image = background.image
-//            let domainColors = _image.dominantColors() as! [UIColor]
-//            let mainColor = domainColors[0]
-//            if isDarkRGB(color: mainColor){
-//                nameLabel.textColor = UIColor.white
-//            }
-//            else{
-//                nameLabel.textColor = UIColor.black
-//            }
+            //            let _image = background.image
+            //            let domainColors = _image.dominantColors() as! [UIColor]
+            //            let mainColor = domainColors[0]
+            //            if isDarkRGB(color: mainColor){
+            //                nameLabel.textColor = UIColor.white
+            //            }
+            //            else{
+            //                nameLabel.textColor = UIColor.black
+            //            }
             
             
         }
@@ -166,7 +163,7 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             
             notification.font = UIFont(name: GLOBAL_appFont!, size: 12.0)
             notification.textColor = UIColor.black
-
+            
             
         }
         else if((indexPath as NSIndexPath).section == 2){
@@ -188,7 +185,7 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             Title.text = _staticItem.label
             Title.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
             Title.textColor = UIColor.black
-
+            
         }
         if (indexPath as NSIndexPath).section != 0 {
             cell!.backgroundColor = UIColor(white: 0.6, alpha: 0.4)
@@ -267,9 +264,9 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             vc.navigationItem.title = ""
         }
         if(segue.identifier == "EditProfilesSegue"){
-                let vc = segue.destination as! EditProfilesViewController
-                vc.navigationItem.backBarButtonItem?.title = self.navigationItem.title
-                vc.navigationItem.title = "个人资料"
+            let vc = segue.destination as! EditProfilesViewController
+            vc.navigationItem.backBarButtonItem?.title = self.navigationItem.title
+            vc.navigationItem.title = "个人资料"
         }
     }
     

@@ -11,7 +11,9 @@ import CoreData
 import Foundation
 
 class EditProfilesViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIPopoverPresentationControllerDelegate{
-
+    
+    var isOnceLoaded : Bool? = true
+    
     @IBOutlet weak var tableView: UITableView!
     
     @IBAction func unwindSegueForEditOtherVC(_ unwindSegue :UIStoryboardSegue){
@@ -26,7 +28,7 @@ class EditProfilesViewController: UIViewController,UITableViewDelegate,UITableVi
         self.tabBarController?.tabBar.isHidden = true
         // Do any additional setup after loading the view.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -34,46 +36,17 @@ class EditProfilesViewController: UIViewController,UITableViewDelegate,UITableVi
     
     override func viewWillAppear(_ animated: Bool) {
         self.tableView.reloadData()
-        //同步到用户配置
-        let userDefault = UserDefaults()
-        let userSaved = NSKeyedArchiver.archivedData(withRootObject: GLOBAL_UserProfile)
-        userDefault.set(userSaved, forKey: "UserInfoModel")
-        userDefault.synchronize()
-        
-        //同步到数据库
-        let currentID = userDefault.object(forKey: "loginID") as! Int
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.managedObjectContext
-        let entity = NSEntityDescription.entity(forEntityName: "UserProperties", in: context)
-        if entity != nil{
-            let fetchRequest = NSFetchRequest<NSFetchRequestResult>()
-            fetchRequest.entity = entity
-            do{
-                let data = try? context.fetch(fetchRequest) as! [UserPropertiesManagedObject]
-                for temp in data! {
-                    if temp.id == Int64(currentID){
-                        temp.allowPushingNewMessageToMobile = GLOBAL_UserProfile.allowPushingNewMessageToMobile!
-                        temp.allowPushingNotification = GLOBAL_UserProfile.allowPushingNotification!
-                        temp.city = GLOBAL_UserProfile.city
-                        temp.province = GLOBAL_UserProfile.province as String!
-                        temp.sex = Int64(GLOBAL_UserProfile.sex!)
-                        break
-                    }
-                }
-//                print(GLOBAL_UserProfile.city!)
-//                print(GLOBAL_UserProfile.province!)
-            }
-            do {
-                try context.save()
-                print("当前用户资料成功保存到数据库")
-            } catch let error{
-                print("context can't save!, Error: \(error)")
-            }
-
+        if self.isOnceLoaded == true{
+            super.viewWillAppear(animated)
+            self.isOnceLoaded = false
         }
-
-
-
+        else{
+            //保存到用户配置
+            syncUserProfilesToUserDefault()
+            
+            //保存到本地数据库，以后换成网络连接
+            syncUserProfileToLocalSqliteDB()
+        }
     }
     
     //MARK: - UITableViewDelegate
@@ -94,7 +67,8 @@ class EditProfilesViewController: UIViewController,UITableViewDelegate,UITableVi
             let icon = cell.viewWithTag(102) as! UIImageView
             label.text = "头像"
             label.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
-            icon.image = UIImage(data: (GLOBAL_UserProfile.face! as Data))
+            let facePath = GLOBAL_UserProfile.facePath
+            icon.image = UIImage(contentsOfFile: NSHomeDirectory() + facePath!)
             icon.contentMode = .scaleToFill
             icon.clipsToBounds = true
             icon.layer.masksToBounds = true
@@ -130,8 +104,8 @@ class EditProfilesViewController: UIViewController,UITableViewDelegate,UITableVi
                     detail.text = "男"
                 }
             case "地区":
-                if GLOBAL_UserProfile.province == nil || GLOBAL_UserProfile.city == nil {
-                   detail.text = "点击设置省份城市"
+                if (GLOBAL_UserProfile.province == nil) || (GLOBAL_UserProfile.city == nil) {
+                    detail.text = "点击设置省份城市"
                 }
                 else{
                     detail.text = GLOBAL_UserProfile.province! + " " + GLOBAL_UserProfile.city!
@@ -170,7 +144,7 @@ class EditProfilesViewController: UIViewController,UITableViewDelegate,UITableVi
             performSegue(withIdentifier: "EditOtherSegue", sender: "性别")
         }
         if(indexPath.row == 5){
-
+            
             let storyboard : UIStoryboard = UIStoryboard(name: "Page_3_User", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "UserDistrictPicker")
             vc.modalPresentationStyle = UIModalPresentationStyle.popover
@@ -218,5 +192,52 @@ class EditProfilesViewController: UIViewController,UITableViewDelegate,UITableVi
         
     }
     
+    
+}
 
+
+
+func syncUserProfilesToUserDefault(){
+    //同步到用户配置
+    let userDefault = UserDefaults()
+    let userSaved = NSKeyedArchiver.archivedData(withRootObject: GLOBAL_UserProfile)
+    userDefault.removeObject(forKey: "UserInfoModel")
+    userDefault.set(userSaved, forKey: "UserInfoModel")
+    userDefault.synchronize()
+}
+
+func syncUserProfileToLocalSqliteDB(){
+    //同步到数据库
+    let userDefault = UserDefaults()
+    let currentID = userDefault.object(forKey: "loginID") as! Int
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    let context = appDelegate.managedObjectContext
+    let entity = NSEntityDescription.entity(forEntityName: "UserProperties", in: context)
+    if entity != nil{
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>()
+        fetchRequest.entity = entity
+        do{
+            let data = try? context.fetch(fetchRequest) as! [UserPropertiesManagedObject]
+            for temp in data! {
+                if temp.id == Int64(currentID){
+                    temp.allowPushingNewMessageToMobile = GLOBAL_UserProfile.allowPushingNewMessageToMobile!
+                    temp.allowPushingNotification = GLOBAL_UserProfile.allowPushingNotification!
+                    temp.city = GLOBAL_UserProfile.city
+                    temp.province = GLOBAL_UserProfile.province as String!
+                    temp.sex = Int64(GLOBAL_UserProfile.sex!)
+                    temp.nickName = GLOBAL_UserProfile.nickName!
+                    break
+                }
+            }
+            
+        }
+        do {
+            try context.save()
+            print("当前用户资料成功保存到数据库")
+        } catch let error{
+            print("context can't save!, Error: \(error)")
+        }
+        
+    }
+    
 }

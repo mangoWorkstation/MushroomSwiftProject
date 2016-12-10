@@ -10,19 +10,19 @@ import UIKit
 import AudioToolbox
 
 class NotificationViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate{
-
+    
     @IBOutlet weak var InfoType: UISegmentedControl!
     
     @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var trashButton: UIBarButtonItem!
     
-//    var isPlaying = false
+    //    var isPlaying = false
     
     @IBAction func SegmentOnChanged(_ sender: AnyObject) {
         self.whichKindOfInfoType = InfoType.selectedSegmentIndex
         self.tableView.reloadData() //重要！！刷新表格数据！！ 2016.7.16/10:58
-                                    //triggered when user click on different segments
+        //triggered when user click on different segments
     }
     
     @IBAction func TrashAllMessage(_ sender: UIBarButtonItem) {
@@ -69,13 +69,13 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
                 present(sheet, animated: true, completion: nil)
             }
         }
-
+        
     }
     var whichKindOfInfoType = 0 //should be initialized! 2016.7.16/11:42
     
     var isThereAnythingNew : Bool = true   //identify if unread messages exist 2016.7.16/11:41 // Need to be updated later
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
@@ -85,12 +85,14 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
             self.isThereAnythingNew = false
         }
         InfoType.setTitleTextAttributes([NSFontAttributeName: UIFont(name: GLOBAL_appFont!, size: 12.0)!
-], for: UIControlState())
+            ], for: UIControlState())
         
         self.tableView.reloadData()
+        
+        tableView.tableFooterView = UIView(frame: CGRect.zero)
         // Do any additional setup after loading the view.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -116,7 +118,7 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
             }
         }
         else {
-          return 0
+            return 0
         }
     }
     
@@ -135,7 +137,7 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
                 return 1
             }
             else {
-//                let UnreadMessage = unreadMessageFilter(self.notificationCache)
+                //                let UnreadMessage = unreadMessageFilter(self.notificationCache)
                 return GLOBAL_UnreadMessage.count //返回未读信息数 2016.7.17/9:40
             }
         }
@@ -179,7 +181,7 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
                 preLabel.font = UIFont(name: GLOBAL_appFont!, size: 13.0)
                 timeLabel.text = timeStampToString(preview.timestamp!)
                 timeLabel.font = UIFont(name: GLOBAL_appFont!, size: 12.0)
-
+                
                 //返回未读信息 2016.7.17/9:40
             }
         }
@@ -205,7 +207,7 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
         return cell!
     }
     
-//单元格被选中后的效果，排除信箱空的情况 2016.7.17
+    //单元格被选中后的效果，排除信箱空的情况 2016.7.17
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
         self.tableView.deselectRow(at: indexPath, animated: true) //点击后取消被选中状态 2016.7.17
         if(self.whichKindOfInfoType == 0){
@@ -221,7 +223,7 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
         }
     }
     
-//控制哪一些单元格可以向右滑动，排除信箱空的情况 2016.7.17
+    //控制哪一些单元格可以向右滑动，排除信箱空的情况 2016.7.17
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool{
         var deleteSwitch: Bool = false
         if(self.whichKindOfInfoType == 0){
@@ -240,12 +242,12 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
         return deleteSwitch
     }
     
-//向右滑动的编辑形式:删除 2016.7.17
+    //向右滑动的编辑形式:删除 2016.7.17
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle{
         return UITableViewCellEditingStyle.delete
     }
     
-//向右滑动产生的结果 2016.7.17
+    //向右滑动产生的结果 2016.7.17
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath){
         let row = (indexPath as NSIndexPath).row
         if(self.whichKindOfInfoType == 0){
@@ -260,8 +262,8 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
         }//删除信息 2016.7.18
         
     }
-
-//设置向右滑动删除时显示的标签 2016.7.17
+    
+    //设置向右滑动删除时显示的标签 2016.7.17
     func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String?{
         var label:String?
         if(self.whichKindOfInfoType == 0){

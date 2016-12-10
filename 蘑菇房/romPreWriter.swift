@@ -156,7 +156,7 @@ class romWriter: NSObject {
             }
             valueExisted.append(Double(value))
             
-            let entity = NSEntityDescription.insertNewObject(forEntityName: "AirHumidity", into: context) as! AirHumidityManagedObject
+            let entity = NSEntityDescription.insertNewObject(forEntityName: "Humidity", into: context) as! HumidityManagedObject
             if i<(Base?.count)! {
                 entity.base_ID = baseManageObjectArr[i].baseID
                 entity.user_ID = baseManageObjectArr[i].userID
@@ -302,5 +302,5 @@ class romWriter: NSObject {
         
     }
     
-
+    
 }
