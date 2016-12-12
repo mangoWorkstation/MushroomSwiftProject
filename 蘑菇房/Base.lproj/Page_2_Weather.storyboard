@@ -9,38 +9,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Weather View Controller-->
-        <scene sceneID="Inn-p3-Vgt">
-            <objects>
-                <viewController id="3XN-SR-TEp" customClass="WeatherViewController" customModule="蘑菇房" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="r31-q2-OA2"/>
-                        <viewControllerLayoutGuide type="bottom" id="Nu6-V5-Qe9"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="6um-lJ-KzG">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="edU-Bq-KyZ">
-                        <nil key="title"/>
-                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="1Kg-fx-hdx">
-                            <rect key="frame" x="116" y="7" width="144" height="30"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <segments>
-                                <segment title="今日天气"/>
-                                <segment title="历史天气"/>
-                            </segments>
-                        </segmentedControl>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="selectedPage" destination="1Kg-fx-hdx" id="OWZ-5N-JDU"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="YsT-rX-NXU" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1466" y="760"/>
-        </scene>
         <!--天气-->
         <scene sceneID="vW5-6Q-wgq">
             <objects>
@@ -54,12 +22,56 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="3XN-SR-TEp" kind="relationship" relationship="rootViewController" id="s0G-2A-Q7L"/>
+                        <segue destination="rJV-6B-uiZ" kind="relationship" relationship="rootViewController" id="5Ri-Cp-VNt"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bEy-kx-rJa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="750" y="760"/>
+        </scene>
+        <!--Weather View Controller-->
+        <scene sceneID="Y5f-rz-Tug">
+            <objects>
+                <viewController id="rJV-6B-uiZ" customClass="WeatherViewController" customModule="蘑菇房" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="UA2-VK-ZV2"/>
+                        <viewControllerLayoutGuide type="bottom" id="m7V-S2-eJh"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="q5I-Zb-sMC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tAW-f1-Eyx">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="tAW-f1-Eyx" secondAttribute="bottom" id="KVE-gD-ojx"/>
+                            <constraint firstItem="tAW-f1-Eyx" firstAttribute="leading" secondItem="q5I-Zb-sMC" secondAttribute="leading" id="Qyc-O7-p4C"/>
+                            <constraint firstAttribute="trailing" secondItem="tAW-f1-Eyx" secondAttribute="trailing" id="SNR-8i-bia"/>
+                            <constraint firstItem="tAW-f1-Eyx" firstAttribute="top" secondItem="q5I-Zb-sMC" secondAttribute="top" id="oEk-ba-g5v"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="f3V-VA-IGz">
+                        <nil key="title"/>
+                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="ybC-hF-WKY">
+                            <rect key="frame" x="116" y="7" width="144" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="今日天气"/>
+                                <segment title="未来天气"/>
+                            </segments>
+                        </segmentedControl>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="pageScroller" destination="tAW-f1-Eyx" id="nP9-1o-POB"/>
+                        <outlet property="selectedPage" destination="ybC-hF-WKY" id="t2Q-lo-FNq"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sr3-X1-AAM" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1527" y="760"/>
         </scene>
     </scenes>
     <resources>

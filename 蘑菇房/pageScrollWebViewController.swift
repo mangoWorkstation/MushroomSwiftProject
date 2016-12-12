@@ -37,7 +37,7 @@ class pageScrollWebViewController: UIViewController,UIWebViewDelegate{
         progressView.backgroundColor = UIColor.lightGray
         progressView.layer.masksToBounds = true
         progressView.layer.cornerRadius = 20
-        progressView.clipsToBounds = true
+        progressView.clipsToBounds = true 
         self.view.addSubview(progressView)
         progressView.startAnimating()
     }
@@ -60,8 +60,8 @@ class pageScrollWebViewController: UIViewController,UIWebViewDelegate{
     func webView(_ webView: UIWebView, didFailLoadWithError error: Error){
         print(error.localizedDescription)
         progressView.stopAnimating()
-        let alert = UIAlertController(title: "网络连接超时", message: "请检查手机是否已连接互联网🤔", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "好", style: .cancel, handler: nil))
+        let alert = UIAlertController(title: "网络连接失败", message: "请检查手机是否打开数据网络或Wi-Fi🤔", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "我知道啦", style: .cancel, handler: nil))
         present(alert, animated: true, completion: nil)
     }
 }

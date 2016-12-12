@@ -75,7 +75,7 @@ class EnrollmentViewController: UIViewController,UITextFieldDelegate {
                     let alert = UIAlertController(title: "注册失败", message: "该手机号已被注册", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "好", style: .cancel, handler: nil))
                     present(alert, animated: true, completion: nil)
-
+                    
                 }
                 else{
                     //接受网络数据，解析结果，以后需要加一个判断，默认成功
@@ -87,7 +87,7 @@ class EnrollmentViewController: UIViewController,UITextFieldDelegate {
                     present(alert, animated: true, completion: nil)
                 }
             }
-
+            
         }
     }
     

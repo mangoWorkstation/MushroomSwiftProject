@@ -60,7 +60,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate{
                             alert.addAction(UIAlertAction(title: "好", style: .cancel, handler: nil))
                             present(alert, animated: true, completion: nil)
                         }
-
+                        
                     }
                 }
             }
@@ -71,7 +71,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate{
             }
         }
         if sender.tag == 1004{
-//            performSegue(withIdentifier: "Main", sender: nil)
+            //            performSegue(withIdentifier: "Main", sender: nil)
         }
         if sender.tag == 1005{
             performSegue(withIdentifier: "Enroll", sender: nil)
@@ -88,9 +88,9 @@ class LoginViewController: UIViewController,UITextFieldDelegate{
         userNameInput.delegate = self
         passwordInput.delegate = self
         
-//        let _ = romWriter().removeAllRecordInExplictEntity("UserProperties")
-//        romWriter().insertNewRecordForUserProperties()
-//        let _ = romWriter().displayEntity(name: "UserProperties")
+        //        let _ = romWriter().removeAllRecordInExplictEntity("UserProperties")
+        //        romWriter().insertNewRecordForUserProperties()
+        //        let _ = romWriter().displayEntity(name: "UserProperties")
         
         //输入框
         userNameInput.placeholder = "请输入用户ID/手机"

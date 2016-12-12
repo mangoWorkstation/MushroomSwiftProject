@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11542" systemVersion="16B2555" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="AirHumidity" representedClassName="AirHumidityManagedObject" syncable="YES">
+    <entity name="Base" representedClassName="BaseManagedObject" syncable="YES" codeGenerationType="class">
+        <attribute name="base_ID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="user_ID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+    </entity>
+    <entity name="CO2" representedClassName="CO2ManagedObject" syncable="YES" codeGenerationType="class">
         <attribute name="base_ID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="crops_ID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="data_ID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -8,31 +12,11 @@
         <attribute name="user_ID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="value" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
     </entity>
-    <entity name="AirTemperature" representedClassName="AirTemperatureManagedObject" syncable="YES">
-        <attribute name="base_ID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="crops_ID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="data_ID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="time" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="user_ID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="value" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
-    </entity>
-    <entity name="Base" representedClassName="BaseManagedObject" syncable="YES">
-        <attribute name="base_ID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="user_ID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-    </entity>
-    <entity name="CO2" representedClassName="CO2ManagedObject" syncable="YES">
-        <attribute name="base_ID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="crops_ID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="data_ID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="time" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="user_ID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="value" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
-    </entity>
-    <entity name="Crops" representedClassName="CropsManagedObject" syncable="YES">
+    <entity name="Crops" representedClassName="CropsManagedObject" syncable="YES" codeGenerationType="class">
         <attribute name="crops_ID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="crops_name" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="SoilHumidity" representedClassName="SoilHumidityManagedObject" syncable="YES">
+    <entity name="Humidity" representedClassName="HumidityManagedObject" syncable="YES" codeGenerationType="class">
         <attribute name="base_ID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="crops_ID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="data_ID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -40,7 +24,7 @@
         <attribute name="user_ID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="value" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
     </entity>
-    <entity name="SoilTemperature" representedClassName="SoilTemperatureManagedObject" syncable="YES">
+    <entity name="Temperature" representedClassName="TemperatureManagedObject" syncable="YES" codeGenerationType="class">
         <attribute name="base_ID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="crops_ID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="data_ID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -48,7 +32,7 @@
         <attribute name="user_ID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="value" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
     </entity>
-    <entity name="UserProperties" representedClassName="UserPropertiesManagedObject" syncable="YES">
+    <entity name="UserProperties" representedClassName="UserPropertiesManagedObject" syncable="YES" codeGenerationType="class">
         <attribute name="allowPushingNewMessageToMobile" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="allowPushingNotification" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
@@ -61,13 +45,11 @@
         <attribute name="sex" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
     </entity>
     <elements>
-        <element name="AirHumidity" positionX="-74" positionY="-36" width="101" height="135"/>
-        <element name="AirTemperature" positionX="106" positionY="225" width="128" height="135"/>
-        <element name="Base" positionX="189" positionY="51" width="128" height="75"/>
-        <element name="CO2" positionX="-72" positionY="306" width="128" height="135"/>
-        <element name="Crops" positionX="-135" positionY="153" width="128" height="75"/>
-        <element name="SoilHumidity" positionX="-254" positionY="63" width="128" height="135"/>
-        <element name="SoilTemperature" positionX="-254" positionY="225" width="128" height="135"/>
-        <element name="UserProperties" positionX="115" positionY="141" width="128" height="195"/>
+        <element name="Crops" positionX="-63" positionY="-18" width="128" height="75"/>
+        <element name="UserProperties" positionX="-54" positionY="-9" width="128" height="195"/>
+        <element name="Base" positionX="-36" positionY="9" width="128" height="75"/>
+        <element name="Humidity" positionX="-18" positionY="27" width="128" height="135"/>
+        <element name="Temperature" positionX="0" positionY="45" width="128" height="135"/>
+        <element name="CO2" positionX="18" positionY="63" width="128" height="135"/>
     </elements>
 </model>

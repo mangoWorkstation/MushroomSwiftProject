@@ -31,11 +31,12 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
     }
     
     //MARK: - Cache Management
-    func fileSizeOfCache()-> Int {
+    func fileSizeOfCache()-> Double {
         
         // 取出cache文件夹目录 缓存文件都在这个目录下
-        let cachePath = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.cachesDirectory, FileManager.SearchPathDomainMask.userDomainMask, true).first
+        var cachePath = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.cachesDirectory, FileManager.SearchPathDomainMask.userDomainMask, true).first
         //缓存目录路径
+        cachePath = cachePath! + "/Weather"
         print(cachePath!)
         
         // 取出文件夹下所有文件数组
@@ -51,25 +52,23 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
             let path = cachePath?.appending("/"+file)
             // 取出文件属性
             let folder = try! FileManager.default.attributesOfItem(atPath: path!)
-            // 用元组取出文件大小属性
-            for (abc, bcd) in folder {
-                // 累加文件大小
-                if abc == FileAttributeKey.size {
-                    size += (bcd as AnyObject).integerValue
-                }
-            }
+            let fs = folder[FileAttributeKey.size] as! Int
+            print(fs)
+            size += fs
         }
+        print(size)
         
-        let mm = size / 1024 / 1024
+        let mm = Double(size) / 1024
         
         return mm
+        //KB
     }
     
     func clearCache() {
         
         // 取出cache文件夹目录 缓存文件都在这个目录下
-        let cachePath = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.cachesDirectory, FileManager.SearchPathDomainMask.userDomainMask, true).first
-        
+        var cachePath = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.cachesDirectory, FileManager.SearchPathDomainMask.userDomainMask, true).first
+        cachePath = cachePath! + "/Weather"
         // 取出文件夹下所有文件数组
         let fileArr = FileManager.default.subpaths(atPath: cachePath!)
         
@@ -135,7 +134,12 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
                 let label_1 = cell.viewWithTag(2002) as! UILabel
                 let cacheFile = self.fileSizeOfCache()
                 label.text = "清除缓存"
-                label_1.text = String(Double(cacheFile)*0.0)+"MB"
+                if cacheFile>1024{
+                    label_1.text = String(Double(cacheFile/1024))+"MB"
+                }
+                else{
+                    label_1.text = String(Int(cacheFile))+"KB"
+                }
                 label.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
                 label_1.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
                 
@@ -255,7 +259,7 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
         if((indexPath as NSIndexPath).section == 2){
             let cell = self.tableView.cellForRow(at: indexPath)
             let detail = cell?.viewWithTag(2002) as! UILabel
-            if detail.text != "0.0MB"{
+            if detail.text != "0.0KB"{
                 let sheet = UIAlertController(title: "将要清除所有缓存", message: nil, preferredStyle: .actionSheet)
                 sheet.addAction(UIAlertAction(title: "确定", style: .destructive, handler: {
                     (action)-> Void in
@@ -263,7 +267,7 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
                     let detail = cell?.viewWithTag(2002) as! UILabel
                     self.clearCache()
                     let cacheFile = self.fileSizeOfCache()
-                    detail.text = String(Double(cacheFile)*0.0)+"MB"
+                    detail.text = String(Double(cacheFile)*0.0)+"KB"
                 }))
                 sheet.addAction(UIAlertAction(title: "取消", style: .cancel, handler: {
                     (action)-> Void in

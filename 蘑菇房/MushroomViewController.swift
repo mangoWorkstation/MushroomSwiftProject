@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import Foundation
+import UserNotifications
 
 class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource{
     
@@ -107,15 +108,11 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         tableView.dataSource = self
         tableView.reloadData()
         
-        //        tableView.backgroundColor = UIColor(red: 142/255, green: 164/255, blue: 182/255, alpha: 1)
-        //        //16进制码:#8EA4B6 (142,164,182)
-        
-        //        tableView.backgroundColor = UIColor(red: 131/255, green: 175/255, blue: 155/255, alpha: 1)
         
         let background = UIImageView(image: UIImage(named: "Background_1"))
         tableView.backgroundView = background
         
-        tableView.separatorColor = UIColor(white: 0, alpha: 1)    //设置分割线颜色
+        tableView.separatorColor = UIColor(white: 1, alpha: 1)    //设置分割线颜色
         
         configurateHeaderAndFooter() //设置表头和表尾
         
@@ -130,6 +127,24 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
             self?.loadMore()
         }
         
+        //请求推送通知
+        if #available(iOS 10.0, *) {
+            UNUserNotificationCenter.current().requestAuthorization(options: [.alert,.sound,.badge], completionHandler: {
+                (granted,error)->Void in
+                if granted {
+                    print("允许推送")
+                    let setting = UIUserNotificationSettings(types: [.badge,.alert,.sound], categories: nil)
+                    UIApplication.shared.registerUserNotificationSettings(setting)
+                }
+                else{
+                    print("不允许推送")
+                }
+            })
+        } else {
+            // Fallback on earlier versions
+        }
+        
+        
         //        //3DTouch
         //        if traitCollection.forceTouchCapability == .available {
         //            registerForPreviewing(with: self, sourceView: view)
@@ -143,6 +158,23 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
             self.tableView.es_startPullToRefresh()
             self.viewIsOnceLoaded = false
         }
+        
+        //推送本地通知，未成功
+        //        let pushNotification = UILocalNotification()
+        //        pushNotification.userInfo = ["00001":"1111"]
+        //        pushNotification.fireDate = Date(timeIntervalSinceNow: 10)
+        //        // 设置时区
+        //        pushNotification.timeZone = NSTimeZone.default
+        //        // 通知上显示的主题内容
+        //        pushNotification.alertBody = "通知上显示的提示内容"
+        //        // 收到通知时播放的声音，默认消息声音
+        //        pushNotification.soundName = UILocalNotificationDefaultSoundName
+        //        //待机界面的滑动动作提示
+        //        pushNotification.alertAction = "打开应用"
+        //        // 应用程序图标右上角显示的消息数
+        //        pushNotification.applicationIconBadgeNumber = 1
+        //        // 添加通知到系统队列中，系统会在指定的时间触发
+        //        UIApplication.shared.scheduleLocalNotification(pushNotification)
     }
     
     override func didReceiveMemoryWarning() {
