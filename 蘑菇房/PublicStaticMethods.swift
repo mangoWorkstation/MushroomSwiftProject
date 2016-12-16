@@ -8,11 +8,11 @@
 
 import Foundation
 /**
- * @Description 时间戳转日期📅 2016.7.17
+ * @Description 时间戳转日期,精确到秒
  * @Param timeStamp : String
  * @Return String
  */
-public func timeStampToString(_ timeStamp:String)->String {
+public func timeStampToSpecificTime(_ timeStamp:String)->String {
     
     let string = NSString(string: timeStamp)
     
@@ -25,6 +25,45 @@ public func timeStampToString(_ timeStamp:String)->String {
     //    print(dfmatter.stringFromDate(date))
     return dfmatter.string(from: date)
 }
+
+/**
+ * @Description 时间戳转日期
+ * @Param timeStamp : String
+ * @Return String
+ */
+public func timeStampToDate(_ timeStamp:String)->String {
+    
+    let string = NSString(string: timeStamp)
+    
+    let timeSta:TimeInterval = string.doubleValue
+    let dfmatter = DateFormatter()
+    dfmatter.dateFormat="yyyy年MM月dd日"
+    
+    let date = Date(timeIntervalSince1970: timeSta)
+    
+    //    print(dfmatter.stringFromDate(date))
+    return dfmatter.string(from: date)
+}
+
+/**
+ * @Description 时间戳转时间，只有小时
+ * @Param timeStamp : String
+ * @Return String
+ */
+public func timeStampToTime(_ timeStamp:String)->String {
+    
+    let string = NSString(string: timeStamp)
+    
+    let timeSta:TimeInterval = string.doubleValue
+    let dfmatter = DateFormatter()
+    dfmatter.dateFormat="HH:mm:ss"
+    
+    let date = Date(timeIntervalSince1970: timeSta)
+    
+    //    print(dfmatter.stringFromDate(date))
+    return dfmatter.string(from: date)
+}
+
 
 
 /**

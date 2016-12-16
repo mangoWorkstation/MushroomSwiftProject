@@ -20,6 +20,7 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var staticItems_section_2 : [StaticItem] = [] //数组：用于存放静态状态图标
     
     
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -39,6 +40,8 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         self.tableView.backgroundView = background
         self.tableView.sectionHeaderHeight = 0
         self.tableView.tableFooterView = UIView(frame: CGRect.zero)
+        drawUserColumn()
+        
         
         
         // Do any additional setup after loading the view, typically from a nib.
@@ -53,17 +56,56 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewWillLayoutSubviews() {
+    override func viewWillAppear(_ animated: Bool) {
         self.tableView.reloadData()
+        
+        let icon = self.UserInfoColumn.viewWithTag(1000) as? UIButton
+        let nameLabel = self.UserInfoColumn.viewWithTag(1001) as? UILabel
+        if (icon != nil || nameLabel != nil){
+            icon?.removeFromSuperview()
+            nameLabel?.removeFromSuperview()
+        }
+        self.drawUserColumn()
+    }
+    
+    private func drawUserColumn(){
+        
+        let bac = UIImage(contentsOfFile: NSHomeDirectory() + GLOBAL_UserProfile.facePath!)
+        let bacImage = bac?.applyBlur(withRadius: 10, tintColor: UIColor(white: 0.3, alpha: 0.3), saturationDeltaFactor: 1.8)
+        self.UserInfoColumn.image = bacImage
+        
+        let icon = UIButton(frame: CGRect(x: 0, y: 0, width: 80, height: 80))
+        icon.center.x = self.UserInfoColumn.center.x
+        icon.center.y = self.UserInfoColumn.center.y
+        icon.setImage(UIImage(contentsOfFile: NSHomeDirectory() + GLOBAL_UserProfile.facePath!), for: .normal)
+        icon.layer.cornerRadius = 40
+        icon.layer.masksToBounds = true
+        icon.layer.borderWidth = 3
+        icon.layer.borderColor = UIColor.white.cgColor
+        icon.clipsToBounds = true     //制作圆形的头像
+        icon.tag = 1000
+        self.UserInfoColumn.addSubview(icon)
+        
+        let nameLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 30))
+        nameLabel.center.x = icon.center.x
+        nameLabel.center.y = icon.center.y + 70
+        nameLabel.textColor = UIColor.white
+        nameLabel.text = GLOBAL_UserProfile.nickName!
+        nameLabel.textAlignment = .center
+        nameLabel.font = UIFont(name: GLOBAL_appFont!, size: 25)
+        nameLabel.tag = 1001
+        self.UserInfoColumn.addSubview(nameLabel)
+        
+        
     }
     
     //MARK: - UITableViewDataSource
     //设置每一行的高度
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if (indexPath as NSIndexPath).section == 0{
-            return 300
-        }
-        if((indexPath as NSIndexPath).section == 1){//滚动信息栏 2016.7.5
+//        if (indexPath as NSIndexPath).section == 0{
+//            return 300
+//        }
+        if((indexPath as NSIndexPath).section == 0){//滚动信息栏 2016.7.5
             let cell = self.tableView!.dequeueReusableCell(withIdentifier: "Notification")! as UITableViewCell
             let notification = cell.viewWithTag(202) as! UILabel
             if(notification.text!.characters.count < 27){    //自适应表格宽度 2016.7.6
@@ -74,10 +116,10 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             }
             
         }
-        else if((indexPath as NSIndexPath).section == 2){//选项栏1 2016.7.12
+        else if((indexPath as NSIndexPath).section == 1){//选项栏1 2016.7.12
             return 50
         }
-        else if((indexPath as NSIndexPath).section == 3){//选项栏2 2016.7.12
+        else if((indexPath as NSIndexPath).section == 2){//选项栏2 2016.7.12
             return 50
         }
             
@@ -89,10 +131,10 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     //设置每个部分分别有多少行
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         switch section{
+//        case 0:return 1
         case 0:return 1
-        case 1:return 1
-        case 2:return staticItems_section_2.count
-        case 3:return staticItems_section_3.count
+        case 1:return staticItems_section_2.count
+        case 2:return staticItems_section_3.count
         default:
             return 1
         }
@@ -100,7 +142,7 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     //设置部分（section）的数量
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
+        return 3
     }
     
     //绑定数据
@@ -108,45 +150,50 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         var cell:UITableViewCell? = UITableViewCell()
         
+//        if ((indexPath as NSIndexPath).section == 0){
+//            let facePath = GLOBAL_UserProfile.facePath
+//            
+//            cell = self.tableView!.dequeueReusableCell(withIdentifier: "UserInfo")!
+//            let icon = cell!.viewWithTag(1011) as! UIImageView
+//            let nameLabel = cell!.viewWithTag(1012) as! UILabel
+//            let background = cell!.viewWithTag(102) as! UIImageView
+//            icon.image = UIImage(contentsOfFile: NSHomeDirectory() + facePath!)
+//            icon.layer.cornerRadius = 40
+//            icon.layer.masksToBounds = true
+//            icon.layer.borderWidth = 3
+//            icon.layer.borderColor = UIColor.white.cgColor
+//            icon.clipsToBounds = true     //制作圆形的头像
+//            nameLabel.text = GLOBAL_UserProfile.nickName
+//            nameLabel.font = UIFont(name: GLOBAL_appFont!, size: 20.0)
+//            nameLabel.textColor = UIColor.white
+//            
+////            //黑科技，将头像高斯模糊化，作为背景 2016.10.17
+//            let ciImage = CIImage(image: UIImage(contentsOfFile: NSHomeDirectory() + facePath!)!)
+//            let filterMirror = CIFilter(name: "CIGaussianBlur")
+//            filterMirror?.setValue(ciImage, forKey: kCIInputImageKey)
+//            let filterImage = filterMirror?.value(forKey: kCIOutputImageKey)
+//            let context = CIContext(options: nil)
+//            let cgImage = context.createCGImage(filterImage as! CIImage, from: (cell?.frame)!)
+//            background.image = UIImage(cgImage: cgImage!)
+//            
+//            
+////真机测试GPU、内存过载
+////            let bacImage = icon.image!.applyBlur(withRadius: 10, tintColor: UIColor(white: 0.3, alpha: 0.3), saturationDeltaFactor: 1.8)
+////            background.image = self.backgroundImage
+//            
+//            //            let _image = background.image
+//            //            let domainColors = _image.dominantColors() as! [UIColor]
+//            //            let mainColor = domainColors[0]
+//            //            if isDarkRGB(color: mainColor){
+//            //                nameLabel.textColor = UIColor.white
+//            //            }
+//            //            else{
+//            //                nameLabel.textColor = UIColor.black
+//            //            }
+//            
+//            
+//        }
         if ((indexPath as NSIndexPath).section == 0){
-            let facePath = GLOBAL_UserProfile.facePath
-            
-            cell = self.tableView!.dequeueReusableCell(withIdentifier: "UserInfo")!
-            let icon = cell!.viewWithTag(1011) as! UIImageView
-            let nameLabel = cell!.viewWithTag(1012) as! UILabel
-            let background = cell!.viewWithTag(102) as! UIImageView
-            icon.image = UIImage(contentsOfFile: NSHomeDirectory() + facePath!)
-            icon.layer.cornerRadius = 40
-            icon.layer.masksToBounds = true
-            icon.layer.borderWidth = 3
-            icon.layer.borderColor = UIColor.white.cgColor
-            icon.clipsToBounds = true     //制作圆形的头像
-            nameLabel.text = GLOBAL_UserProfile.nickName
-            nameLabel.font = UIFont(name: GLOBAL_appFont!, size: 20.0)
-            nameLabel.textColor = UIColor.white
-            
-            //黑科技，将头像高斯模糊化，作为背景 2016.10.17
-            let ciImage = CIImage(image: UIImage(contentsOfFile: NSHomeDirectory() + facePath!)!)
-            let filterMirror = CIFilter(name: "CIGaussianBlur")
-            filterMirror?.setValue(ciImage, forKey: kCIInputImageKey)
-            let filterImage = filterMirror?.value(forKey: kCIOutputImageKey)
-            let context = CIContext(options: nil)
-            let cgImage = context.createCGImage(filterImage as! CIImage, from: (cell?.frame)!)
-            background.image = UIImage(cgImage: cgImage!)
-            
-            //            let _image = background.image
-            //            let domainColors = _image.dominantColors() as! [UIColor]
-            //            let mainColor = domainColors[0]
-            //            if isDarkRGB(color: mainColor){
-            //                nameLabel.textColor = UIColor.white
-            //            }
-            //            else{
-            //                nameLabel.textColor = UIColor.black
-            //            }
-            
-            
-        }
-        if ((indexPath as NSIndexPath).section == 1){
             
             cell = self.tableView!.dequeueReusableCell(withIdentifier: "Notification")!
             let sign = cell!.viewWithTag(201) as! UIImageView
@@ -154,7 +201,7 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             sign.image = UIImage(named: "Alert")
             if !GLOBAL_NotificationCache.isEmpty{
                 let currrentMeg = GLOBAL_NotificationCache.last!
-                let time = timeStampToString(currrentMeg.timestamp!)
+                let time = timeStampToSpecificTime(currrentMeg.timestamp!)
                 notification.text = "\(time)  "+"\(currrentMeg.prelabel!)"
             }
             else{
@@ -164,9 +211,8 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             notification.font = UIFont(name: GLOBAL_appFont!, size: 12.0)
             notification.textColor = UIColor.black
             
-            
         }
-        else if((indexPath as NSIndexPath).section == 2){
+        else if((indexPath as NSIndexPath).section == 1){
             cell = self.tableView.dequeueReusableCell(withIdentifier: "Inform",for: indexPath)
             let icon = cell?.viewWithTag(3001) as! UIImageView
             let label = cell?.viewWithTag(3002) as! UILabel
@@ -176,7 +222,7 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             label.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
             label.textColor = UIColor.black
         }
-        else if ((indexPath as NSIndexPath).section == 3){
+        else if ((indexPath as NSIndexPath).section == 2){
             cell = self.tableView.dequeueReusableCell(withIdentifier: "General",for: indexPath)
             let Icon = cell!.contentView.viewWithTag(3001) as! UIImageView
             let Title = cell!.contentView.viewWithTag(3002) as! UILabel
@@ -187,12 +233,10 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             Title.textColor = UIColor.black
             
         }
-        if (indexPath as NSIndexPath).section != 0 {
-            cell!.backgroundColor = UIColor(white: 0.6, alpha: 0.4)
-            cell!.layer.masksToBounds = true
-            cell?.layer.cornerRadius = 10
-            cell?.clipsToBounds = true
-        }
+        cell!.backgroundColor = UIColor(white: 0.6, alpha: 0.4)
+        cell!.layer.masksToBounds = true
+        cell?.layer.cornerRadius = 10
+        cell?.clipsToBounds = true
         
         return cell!
     }
@@ -209,9 +253,9 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         else if(2 == section){
             return 5
         }
-        else if 3 == section{
-            return 5
-        }
+//        else if 3 == section{
+//            return 5
+//        }
         else {
             return 100
         }
@@ -219,7 +263,7 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
         self.tableView.deselectRow(at: indexPath, animated: true) //点击后取消被选中状态 2016.7.17
-        if((indexPath as NSIndexPath).section == 2){
+        if((indexPath as NSIndexPath).section == 1){
             if (indexPath as NSIndexPath).row == 2 {
                 performSegue(withIdentifier: "NearbySegue", sender: nil)
             }

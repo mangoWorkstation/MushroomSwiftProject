@@ -177,7 +177,7 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
                 preImage.image = UIImage(named: preview.preImage!)
                 preLabel.text = preview.prelabel!
                 preLabel.font = UIFont(name: GLOBAL_appFont!, size: 13.0)
-                timeLabel.text = timeStampToString(preview.timestamp!)
+                timeLabel.text = timeStampToSpecificTime(preview.timestamp!)
                 timeLabel.font = UIFont(name: GLOBAL_appFont!, size: 12.0)
 
                 //返回未读信息 2016.7.17/9:40
@@ -199,7 +199,7 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
                 let preview = GLOBAL_NotificationCache[(indexPath as NSIndexPath).row]
                 preImage.image = UIImage(named: preview.preImage!)
                 preLabel.text = preview.prelabel!
-                timeLabel.text = timeStampToString(preview.timestamp!)
+                timeLabel.text = timeStampToSpecificTime(preview.timestamp!)
             }
         }
         return cell!

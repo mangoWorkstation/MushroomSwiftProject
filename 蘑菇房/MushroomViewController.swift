@@ -145,6 +145,7 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         }
         
         
+        
         //        //3DTouch
         //        if traitCollection.forceTouchCapability == .available {
         //            registerForPreviewing(with: self, sourceView: view)
@@ -157,6 +158,10 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
             super.viewDidAppear(animated)
             self.tableView.es_startPullToRefresh()
             self.viewIsOnceLoaded = false
+        }
+        let indexPath = self.tableView.indexPathForSelectedRow
+        if indexPath != nil{
+            self.tableView.deselectRow(at: indexPath!, animated: true)
         }
         
         //推送本地通知，未成功

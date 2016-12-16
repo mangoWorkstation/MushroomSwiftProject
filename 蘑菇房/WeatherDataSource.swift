@@ -28,6 +28,29 @@ class WeatherDataSource:NSObject{
         self.windDirection = windDirection
         self.type = type
     }
+    
+    init(coder aDecoder:NSCoder!){
+        self.windLevel = aDecoder.decodeObject(forKey: "windLevel") as? String
+        self.currentTemp = aDecoder.decodeObject(forKey: "currentTemp") as? String
+        self.week = aDecoder.decodeObject(forKey: "week") as? String
+        self.date = aDecoder.decodeObject(forKey: "date") as? String
+        self.highTemp = aDecoder.decodeObject(forKey: "highTemp") as? String
+        self.lowTemp = aDecoder.decodeObject(forKey: "lowTemp") as? String
+        self.windDirection = aDecoder.decodeObject(forKey: "windDirection") as? String
+        self.type = aDecoder.decodeObject(forKey: "type") as? String
+    }
+    
+    func encodeWithCoder(_ aCoder:NSCoder!){
+        aCoder.encode(windLevel, forKey: "windLevel")
+        aCoder.encode(currentTemp,forKey:"currentTemp")
+        aCoder.encode(week,forKey:"week")
+        aCoder.encode(date,forKey:"date")
+        aCoder.encode(highTemp,forKey:"highTemp")
+        aCoder.encode(lowTemp,forKey:"lowTemp")
+        aCoder.encode(windDirection,forKey:"windDirection")
+        aCoder.encode(type,forKey:"type")        
+    }
+
 }
 
 //返回的JSON样例
