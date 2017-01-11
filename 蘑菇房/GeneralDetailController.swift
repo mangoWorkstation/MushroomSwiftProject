@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import MessageUI
+import SafariServices
 
-class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate {
+class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,MFMailComposeViewControllerDelegate,SFSafariViewControllerDelegate {
     
     var selectedRow : Int?
     
@@ -160,7 +162,7 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
             if(0 == section){
                 cell = self.tableView.dequeueReusableCell(withIdentifier: "GeneralCell",for: indexPath)
                 let label = cell.viewWithTag(1001) as! UILabel
-                let labels = ["关于我们","给蘑菇房来个好评吧😊"]
+                let labels = ["关于我们","给蘑菇房来个好评吧😊","联系我们"]
                 label.text = labels[(indexPath as NSIndexPath).row]
                 label.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
                 cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
@@ -218,7 +220,7 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
         else if(1 == self.selectedRow) {
             switch section {
             case 0:
-                return 2
+                return 3
             default:
                 return 1
             }
@@ -253,6 +255,40 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
                 if((indexPath as NSIndexPath).row == 0){
                     self.tableView.deselectRow(at: indexPath, animated: true)
                     performSegue(withIdentifier: "AboutUsSegue",sender: nil)
+                }
+                if indexPath.row == 1{
+                    let url = NSURL(string: "http://www.apple.com/cn/")
+                    let vc = SFSafariViewController(url: url as! URL, entersReaderIfAvailable: true)
+                    present(vc, animated: true, completion: nil)
+                }
+                if indexPath.row == 2{
+                    if MFMailComposeViewController.canSendMail(){
+                        let controller = MFMailComposeViewController()
+                        controller.navigationItem.backBarButtonItem?.title = "返回"
+                        //设置代理
+                        controller.mailComposeDelegate = self
+                        //设置主题
+                        controller.setSubject("用户\(GLOBAL_UserProfile.nickName!)的意见反馈")
+                        //设置收件人
+                        controller.setToRecipients(["ryanhowe@qq.com"])
+                        //设置抄送人
+                        //                        controller.setCcRecipients(["b1@hangge.com","b2@hangge.com"])
+                        //                        //设置密送人
+                        //                        controller.setBccRecipients(["c1@hangge.com","c2@hangge.com"])
+                        
+                        //添加图片附件
+                        //                        let path = NSBundle.mainBundle().pathForResource("hangge.png", ofType: "")
+                        //                        let myData = NSData(contentsOfFile: path!)
+                        //                        controller.addAttachmentData(myData!, mimeType: "image/png", fileName: "swift.png")
+                        
+                        //设置邮件正文内容（支持html）
+                        controller.setMessageBody("我遇到了这样的问题：\n\n", isHTML: false)
+                        
+                        //打开界面
+                        self.present(controller, animated: true, completion: nil)
+                    }else{
+                        print("本设备不能发送邮件")
+                    }
                 }
             }
         }
@@ -345,6 +381,30 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
             vc.navigationItem.title = "账号与安全"
         }
         
+    }
+    
+    //MARK : -MFMailComposeControllerDelegate
+    func mailComposeController(_ controller: MFMailComposeViewController,
+                               didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: nil)
+        
+        switch result{
+        case MFMailComposeResult.sent:
+            print("邮件已发送")
+        case MFMailComposeResult.cancelled:
+            print("邮件已取消")
+        case MFMailComposeResult.saved:
+            print("邮件已保存")
+        case MFMailComposeResult.failed:
+            print("邮件发送失败")
+        default:
+            break
+        }
+    }
+    
+    //MARK : - SFSafariControllerDelegate
+    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+        controller.dismiss(animated: true, completion: nil)
     }
     
 }

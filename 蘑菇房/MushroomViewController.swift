@@ -164,6 +164,10 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
             self.tableView.deselectRow(at: indexPath!, animated: true)
         }
         
+        let frame = CGRect(x: 0, y: 0, width: 200, height: 100)
+        let alertView = MGNotificationView(frame: frame , labelText: "hello", textColor: UIColor.white, duration: 3, doneImage: nil)
+        alertView.backgroundColor = .green
+        alertView.stroke(in: self.view)
         //推送本地通知，未成功
         //        let pushNotification = UILocalNotification()
         //        pushNotification.userInfo = ["00001":"1111"]

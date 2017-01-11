@@ -32,8 +32,12 @@ class WeatherViewController: UIViewController,UIScrollViewDelegate {
     
     private var updateTime:Int?
     
+    private var isOnceLoaded = true
+    
     //缓存需要过期时间：目前暂定为10秒，便于测试
-    private let expireTime:Int! = 10
+    private let expireTime:Int! = 900
+    
+    private var forecastChart : Chart!
     
     //MARK: - @IBAction
     @IBAction func segmentedDidChange(sender:UISegmentedControl,forEvent:UIEvent?){
@@ -54,7 +58,7 @@ class WeatherViewController: UIViewController,UIScrollViewDelegate {
         let timeStamp = Int(timeInterval)
         self.updateTime = timeStamp
         updateTimeLabel.text = "更新时间：" + timeStampToSpecificTime(String(Int(self.updateTime!)))
-//        updatePage_today()
+        //        updatePage_today()
         
     }
     
@@ -71,7 +75,7 @@ class WeatherViewController: UIViewController,UIScrollViewDelegate {
         createPage_today()
         setDefaultValue_today()
         
-        createPage_forecast()
+        createAndUpdatePage_forecast()
         
     }
     
@@ -91,6 +95,7 @@ class WeatherViewController: UIViewController,UIScrollViewDelegate {
             let lastUpdateTimeStamp = Int(lastUpdateFileName!)
             self.updateTime = Int(lastUpdateFileName!)
             
+            
             //设置缓存过期时间，防止多次不必要的刷新
             if timeStamp - lastUpdateTimeStamp! > self.expireTime{
                 SwiftSpinner.show("正在刷新天气...", animated: true)
@@ -98,6 +103,9 @@ class WeatherViewController: UIViewController,UIScrollViewDelegate {
                     self.requestForWeather(httpUrl: self.forecast_url, httpArg: self.cityNameID)
                     SwiftSpinner.hide()
                 })
+            }
+            else{
+                setDefaultValue_today()
             }
         }
         else{
@@ -125,10 +133,10 @@ class WeatherViewController: UIViewController,UIScrollViewDelegate {
     
     
     private func prepareForScrollPages(){
-        let backgroundName = ["","Beach.JPG","StoneRidges.JPG"]
+        let backgroundName = ["","Beach.JPG","Bliss.JPG"]
         for i in 1..<3 {
-            let image = UIImage(named: backgroundName[i])?.applyBlur(withRadius: 10, tintColor: UIColor(white: 0.3, alpha: 0.3), saturationDeltaFactor: 1.8)
             //模糊化处理
+            let image = (UIImage(named: backgroundName[i])?.applyBlur(withRadius: 10, tintColor: UIColor(white: 0.3, alpha: 0.3), saturationDeltaFactor: 1.8))!
             let x = CGFloat(i - 1) * self.view.frame.width
             let backImage = UIImageView(frame: CGRect(x: x, y: 0, width: self.view.frame.width, height: (pageScroller.bounds.height)))
             backImage.contentMode = .scaleToFill
@@ -150,8 +158,8 @@ class WeatherViewController: UIViewController,UIScrollViewDelegate {
         pageScroller.contentSize = CGSize(width: (self.view.frame.width * CGFloat(i - 1)), height: 0)
         pageDots = UIPageControl(frame: CGRect(x: UIScreen.main.bounds.midX - 25, y: self.view.frame.maxY - 100, width: 50, height: 50))
         pageDots.numberOfPages = i - 1
-        pageDots.currentPageIndicatorTintColor = UIColor.lightGray
-        pageDots.pageIndicatorTintColor = UIColor.white
+        pageDots.currentPageIndicatorTintColor = UIColor.white
+        pageDots.pageIndicatorTintColor = UIColor.lightGray
         pageDots.addTarget(self, action: #selector(WeatherViewController.pageDotsDidChange(sender:forEvent:)), for: .touchUpInside)
         pageScroller.superview?.addSubview(pageDots)
     }
@@ -183,7 +191,7 @@ class WeatherViewController: UIViewController,UIScrollViewDelegate {
         updateTimeLabel.center.y = refreshButton.center.y
         updateTimeLabel.textColor = UIColor.white
         
-
+        
         updateTimeLabel.font = UIFont(name: "AvenirNext-Regular", size: 11)
         self.pageScroller.addSubview(updateTimeLabel)
         updateTimeLabel.tag = 1000
@@ -279,23 +287,23 @@ class WeatherViewController: UIViewController,UIScrollViewDelegate {
         windDirectionLabel.tag = 1008
         self.pageScroller.addSubview(windDirectionLabel)
         
-//        tag汇总
-//        1000：刷新时间
-//        1001：天气类型标记
-//        1002：天气类型
-//        1003：当前温度
-//        1004：最高温
-//        1005：最低温
-//        1006：日期
-//        1007：风力
-//        1008：风向
+        //        tag汇总
+        //        1000：刷新时间
+        //        1001：天气类型标记
+        //        1002：天气类型
+        //        1003：当前温度
+        //        1004：最高温
+        //        1005：最低温
+        //        1006：日期
+        //        1007：风力
+        //        1008：风向
         
     }
     
     private func setDefaultValue_today(){
         let userDefault = UserDefaults()
-        if userDefault.object(forKey: "LatestWeatherCache") != nil{
-            let content = userDefault.object(forKey: "LatestWeatherCache") as! Data
+        if userDefault.object(forKey: "LatestTodayWeatherCache") != nil{
+            let content = userDefault.object(forKey: "LatestTodayWeatherCache") as! Data
             self.today_DataSource = NSKeyedUnarchiver.unarchiveObject(with: content as Data) as! WeatherDataSource
             self.updateTime = userDefault.object(forKey: "LatestWeatherUpdateTime") as! Int?
             updatePage_today()
@@ -331,7 +339,7 @@ class WeatherViewController: UIViewController,UIScrollViewDelegate {
         let time = timeStampToTime((String(Int(self.updateTime!)))).components(separatedBy: ":")
         let hour = Int(time.first!)
         var hourIndicator = ""
-        if hour!>=7 && hour!<=18{
+        if hour!>7 && hour!<18{
             hourIndicator = "day_"
         }
         else{
@@ -421,24 +429,326 @@ class WeatherViewController: UIViewController,UIScrollViewDelegate {
             weatherImageFileName = hourIndicator.appending(String(typeCode))
         }
         let weatherTypeImageView = self.pageScroller.viewWithTag(1001) as! UIImageView
-        weatherTypeImageView.image = UIImage(named: "\(weatherImageFileName).png")
         let curTempNUM = self.pageScroller.viewWithTag(1003) as! UILabel
-        curTempNUM.text = "\(self.today_DataSource.currentTemp!)"
         let lowTempNUM = self.pageScroller.viewWithTag(1005) as! UILabel
-        lowTempNUM.text = "\(self.today_DataSource.lowTemp!)"
         let highTempNUM = self.pageScroller.viewWithTag(1004) as! UILabel
-        highTempNUM.text = "\(self.today_DataSource.highTemp!)"
         let date = self.pageScroller.viewWithTag(1006) as! UILabel
-        date.text = timeStampToDate(String(Int(self.updateTime!)))
         let windLevelLabel = self.pageScroller.viewWithTag(1007) as! UILabel
-        windLevelLabel.text = "\(self.today_DataSource.windLevel!)"
         let windDirectionLabel = self.pageScroller.viewWithTag(1008) as! UILabel
-        windDirectionLabel.text = "\(self.today_DataSource.windDirection!)"
+        
+        //动画更新UI
+        DispatchQueue.global().async {
+            
+            DispatchQueue.main.async {
+                
+                weatherTypeImageView.alpha = 1
+                curTempNUM.alpha = 1
+                lowTempNUM.alpha = 1
+                highTempNUM.alpha = 1
+                date.alpha = 1
+                windLevelLabel.alpha = 1
+                windDirectionLabel.alpha = 1
+                
+                UIView.animate(withDuration: 4, delay: 2, options: .curveEaseInOut, animations: {
+                    weatherTypeImageView.alpha = 0
+                    curTempNUM.alpha = 0
+                    lowTempNUM.alpha = 0
+                    highTempNUM.alpha = 0
+                    date.alpha = 0
+                    windLevelLabel.alpha = 0
+                    windDirectionLabel.alpha = 0
+                })
+                
+                UIView.animate(withDuration: 2, delay: 2, options: .curveEaseIn, animations: {
+                }, completion: {
+                    (finished)->Void in
+                    UIView.animate(withDuration: 2, animations: {
+                        weatherTypeImageView.image = UIImage(named: "\(weatherImageFileName).png")
+                        weatherTypeImageView.alpha = 1
+                        curTempNUM.text = "\(self.today_DataSource.currentTemp!)"
+                        curTempNUM.alpha = 1
+                        lowTempNUM.text = "\(self.today_DataSource.lowTemp!)"
+                        lowTempNUM.alpha = 1
+                        highTempNUM.text = "\(self.today_DataSource.highTemp!)"
+                        highTempNUM.alpha = 1
+                        date.text = timeStampToDate(String(Int(self.updateTime!)))
+                        date.alpha = 1
+                        windLevelLabel.text = "\(self.today_DataSource.windLevel!)"
+                        windLevelLabel.alpha = 1
+                        windDirectionLabel.text = "\(self.today_DataSource.windDirection!)"
+                        windDirectionLabel.alpha = 1
+                        
+                        
+                    })
+                })
+            }
+        }
         
     }
     
-    private func createPage_forecast(){
+    private func createAndUpdatePage_forecast(){
+        self.pageOffSetOriginX = CGFloat(1) * self.view.frame.width
+        let xx = self.pageOffSetOriginX!
         
+        let labelSettings = ChartLabelSettings(font: UIFont(name: "AvenirNext-Regular", size: 14)!,fontColor:UIColor.white)
+        //反转数据符号用,临时
+        func convertSign(_ num:Double)->Double{
+            return -num
+        }
+        
+        var barsData:[(title: String, min: Double, max: Double)] = []
+        if self.forcast_DataSource.isEmpty == false{
+            //获取月份
+            var month = self.today_DataSource.date?.components(separatedBy: "-")[1]
+            //去“0”操作
+            if Int(month!)! < 10{
+                month = month?.replacingOccurrences(of: "0", with: "")
+            }
+            var count = 0
+            for singleDay in self.forcast_DataSource{
+                var label = month! + "月" + singleDay.date!
+                if count == 0{
+                    label = "今天"
+                }
+                let barData = (label, convertSign(Double(singleDay.lowTemp!.replacingOccurrences(of: "℃", with: ""))!), Double(singleDay.highTemp!.replacingOccurrences(of: "℃", with: ""))!)
+                barsData.append(barData as (title: String, min: Double, max: Double))
+                count += 1
+            }
+        }
+        else{
+            let userDefault = UserDefaults()
+            if userDefault.object(forKey: "LatestForecastWeatherCache") != nil{
+                let content = userDefault.object(forKey: "LatestForecastWeatherCache") as! Data
+                self.forcast_DataSource = NSKeyedUnarchiver.unarchiveObject(with: content as Data) as! [WeatherDataSource]
+                //获取月份
+                var month = self.today_DataSource.date?.components(separatedBy: "-")[1]
+                //去“0”操作
+                if Int(month!)! < 10{
+                    month = month?.replacingOccurrences(of: "0", with: "")
+                }
+                var count = 0
+                for singleDay in self.forcast_DataSource{
+                    var label = month! + "月" + singleDay.date!
+                    if count == 0{
+                        label = "今天"
+                    }
+                    let barData = (label, convertSign(Double(singleDay.lowTemp!.replacingOccurrences(of: "℃", with: ""))!), Double(singleDay.highTemp!.replacingOccurrences(of: "℃", with: ""))!)
+                    barsData.append(barData as (title: String, min: Double, max: Double))
+                    count += 1
+                }
+                
+            }
+        }
+        
+        let posColor = UIColor(red: 64/255, green: 204/255, blue: 32/255, alpha: 0.7)
+        let negColor = UIColor(red: 88/255, green: 188/255, blue: 241/255, alpha: 0.7)
+        let zero = ChartAxisValueDouble(0)
+        let bars: [ChartBarModel] = barsData.enumerated().flatMap {index, tuple in
+            [
+                ChartBarModel(constant: ChartAxisValueDouble(index), axisValue1: zero, axisValue2: ChartAxisValueDouble(tuple.min), bgColor: negColor),
+                ChartBarModel(constant: ChartAxisValueDouble(index), axisValue1: zero, axisValue2: ChartAxisValueDouble(tuple.max), bgColor: posColor)
+            ]
+        }
+        
+        
+        let yValues = stride(from: (-40), through: 40, by: 5).map {ChartAxisValueDouble(Double($0), labelSettings: labelSettings)}
+        let xValues =
+            [ChartAxisValueString(order: -1)] +
+                barsData.enumerated().map {index, tuple in ChartAxisValueString(tuple.0, order: index, labelSettings: labelSettings)} +
+                [ChartAxisValueString(order: barsData.count)]
+        
+        
+        let xModel = ChartAxisModel(axisValues: xValues, axisTitleLabel: ChartAxisLabel(text: "未来4天气温", settings: labelSettings))
+        let yModel = ChartAxisModel(axisValues: yValues, axisTitleLabel: ChartAxisLabel(text: "温度", settings: labelSettings.defaultVertical()))
+        
+        let chartFrame = CGRect(x: xx + UIScreen.main.bounds.midX - 210, y: UIScreen.main.bounds.minY + 40, width: self.view.frame.width, height: self.view.frame.midY + 100)
+        
+        let chartSettings = ChartSettings()
+        chartSettings.leading = 10
+        chartSettings.top = 10
+        chartSettings.trailing = 10
+        chartSettings.bottom = 10
+        chartSettings.labelsToAxisSpacingX = 5
+        chartSettings.labelsToAxisSpacingY = 5
+        chartSettings.axisTitleLabelsToLabelsSpacing = 4
+        chartSettings.axisStrokeWidth = 0.2
+        chartSettings.spacingBetweenAxesX = 8
+        chartSettings.spacingBetweenAxesY = 8
+        
+        let coordsSpace = ChartCoordsSpaceLeftBottomSingleAxis(chartSettings: chartSettings, chartFrame: chartFrame, xModel: xModel, yModel: yModel)
+        let (xAxis, yAxis, innerFrame) = (coordsSpace.xAxis, coordsSpace.yAxis, coordsSpace.chartInnerFrame)
+        
+        let barsLayer = ChartBarsLayer(xAxis: xAxis, yAxis: yAxis, innerFrame: innerFrame, bars: bars, horizontal: false, barWidth: 20, animDuration: 0.5)
+        // labels layer
+        // create chartpoints for the top and bottom of the bars, where we will show the labels
+        let labelChartPoints = bars.map {bar in
+            ChartPoint(x: bar.constant, y: bar.axisValue2)
+        }
+        let formatter = NumberFormatter()
+        formatter.maximumFractionDigits = 2
+        let labelsLayer = ChartPointsViewsLayer(xAxis: xAxis, yAxis: yAxis, innerFrame: innerFrame, chartPoints: labelChartPoints, viewGenerator: {(chartPointModel, layer, chart) -> UIView? in
+            let label = HandlingLabel()
+            let posOffset: CGFloat = 10
+            
+            let pos = chartPointModel.chartPoint.y.scalar > 0
+            
+            let yOffset = pos ? -posOffset : posOffset
+            label.text = "\(formatter.string(from: NSNumber(value: abs(chartPointModel.chartPoint.y.scalar)))!)℃"
+            label.font = UIFont(name: "AvenirNext-Regular", size: 14)
+            label.sizeToFit()
+            label.center = CGPoint(x: chartPointModel.screenLoc.x, y: pos ? innerFrame.origin.y : innerFrame.origin.y + innerFrame.size.height)
+            label.alpha = 0
+            label.textColor = UIColor.white
+            
+            label.movedToSuperViewHandler = {[weak label] in
+                UIView.animate(withDuration: 0.3, animations: {
+                    label?.alpha = 1
+                    label?.center.y = chartPointModel.screenLoc.y + yOffset
+                })
+            }
+            
+            return label
+            
+        }, displayDelay: 0.6) // show after bars animation
+        
+        
+        // show a gap between positive and negative bar
+        let dummyZeroYChartPoint = ChartPoint(x: ChartAxisValueDouble(0), y: ChartAxisValueDouble(0))
+        let yZeroGapLayer = ChartPointsViewsLayer(xAxis: xAxis, yAxis: yAxis, innerFrame: innerFrame, chartPoints: [dummyZeroYChartPoint], viewGenerator: {(chartPointModel, layer, chart) -> UIView? in
+            let height: CGFloat = 1
+            let v = UIView(frame: CGRect(x: innerFrame.origin.x + 2, y: chartPointModel.screenLoc.y - height / 2, width: coordsSpace.xAxis.length, height: height))
+            v.backgroundColor = UIColor.darkGray
+            return v
+        })
+        
+        let chart = Chart(
+            frame: chartFrame,
+            layers: [
+                xAxis,
+                //                yAxis,
+                barsLayer,
+                labelsLayer,
+                yZeroGapLayer,
+                ]
+        )
+        self.pageScroller.addSubview(chart.view)
+        self.forecastChart = chart
+        
+        if self.forcast_DataSource.isEmpty == false{
+            var forecastTypes : [String] = []
+            for forecast in self.forcast_DataSource{
+                let type = forecast.type
+                forecastTypes.append(type!)
+            }
+            
+            let time = timeStampToTime((String(Int(self.updateTime!)))).components(separatedBy: ":")
+            let hour = Int(time.first!)
+            var hourIndicator = ""
+            if hour!>7 && hour!<18{
+                hourIndicator = "day_"
+            }
+            else{
+                hourIndicator = "night_"
+            }
+            
+            for i in 1..<5{
+                let type = forecastTypes[i-1]
+                var typeCode = 0
+                switch type {
+                case self.weatherType[0]:
+                    typeCode = 0
+                case self.weatherType[1]:
+                    typeCode = 1
+                case self.weatherType[2]:
+                    typeCode = 2
+                case self.weatherType[3]:
+                    typeCode = 3
+                case self.weatherType[4]:
+                    typeCode = 4
+                case self.weatherType[5]:
+                    typeCode = 5
+                case self.weatherType[6]:
+                    typeCode = 6
+                case self.weatherType[7]:
+                    typeCode = 7
+                case self.weatherType[8]:
+                    typeCode = 8
+                case self.weatherType[9]:
+                    typeCode = 9
+                case self.weatherType[10]:
+                    typeCode = 10
+                case self.weatherType[11]:
+                    typeCode = 11
+                case self.weatherType[12]:
+                    typeCode = 12
+                case self.weatherType[13]:
+                    typeCode = 13
+                case self.weatherType[14]:
+                    typeCode = 14
+                case self.weatherType[15]:
+                    typeCode = 15
+                case self.weatherType[16]:
+                    typeCode = 16
+                case self.weatherType[17]:
+                    typeCode = 17
+                case self.weatherType[18]:
+                    typeCode = 18
+                case self.weatherType[19]:
+                    typeCode = 19
+                case self.weatherType[20]:
+                    typeCode = 20
+                case self.weatherType[21]:
+                    typeCode = 21
+                case self.weatherType[22]:
+                    typeCode = 22
+                case self.weatherType[23]:
+                    typeCode = 23
+                case self.weatherType[24]:
+                    typeCode = 24
+                case self.weatherType[25]:
+                    typeCode = 25
+                case self.weatherType[26]:
+                    typeCode = 26
+                case self.weatherType[27]:
+                    typeCode = 27
+                case self.weatherType[28]:
+                    typeCode = 28
+                case self.weatherType[29]:
+                    typeCode = 29
+                case self.weatherType[30]:
+                    typeCode = 30
+                case self.weatherType[31]:
+                    typeCode = 31
+                case self.weatherType[32]:
+                    typeCode = 32
+                default:
+                    typeCode = -1
+                    
+                }
+                var weatherImageFileName:String
+                if typeCode == -1{
+                    weatherImageFileName = "dunno"
+                }
+                else{
+                    weatherImageFileName = hourIndicator.appending(String(typeCode))
+                }
+                
+                
+                let weatherTypeImage = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+                weatherTypeImage.image = UIImage(named: weatherImageFileName)
+                weatherTypeImage.center.x = innerFrame.minX + CGFloat(3 + (i*60))
+                weatherTypeImage.center.y = innerFrame.maxY - 60
+                let typeLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 60))
+                typeLabel.center.x = weatherTypeImage.center.x
+                typeLabel.center.y = weatherTypeImage.center.y + 38
+                typeLabel.text = forecastTypes[i-1]
+                typeLabel.textAlignment = .center
+                typeLabel.textColor = UIColor.white
+                typeLabel.font = UIFont(name: "AvenirNext-Regular", size: 14)
+                chart.addSubview(typeLabel)
+                chart.addSubview(weatherTypeImage)
+            }
+        }
     }
     
     
@@ -449,13 +759,69 @@ class WeatherViewController: UIViewController,UIScrollViewDelegate {
         req.httpMethod = "GET"
         req.addValue(baiduAPIKey, forHTTPHeaderField: "apikey")
         
+        //结果反馈提示框（动画显示），“成功”和”超时“公用
+        let alertView = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 100))
+        alertView.backgroundColor = UIColor(white: 0.6, alpha: 1)
+        alertView.alpha = 0.95
+        alertView.center.x = UIScreen.main.bounds.midX
+        alertView.center.y = UIScreen.main.bounds.midY - 20
+        alertView.layer.cornerRadius = 20
+        alertView.layer.masksToBounds = true
+        alertView.clipsToBounds = true
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: alertView.bounds.width , height: alertView.bounds.height/2 + 20))
+        label.text = "刷新成功"
+        label.font = UIFont(name: "AvenirNext-Regular", size: 18)
+        label.textColor = UIColor.white
+        label.textAlignment = .center
+        let loading = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: alertView.bounds.width/10, height: alertView.bounds.height/5))
+        loading.center.x = label.center.x
+        loading.center.y = label.center.y + 30
+        loading.startAnimating()
+        let doneImage = UIImageView(frame: loading.frame)
+        doneImage.image = UIImage(named: "tick_outline_128px")?.withRenderingMode(.alwaysOriginal)
+        doneImage.contentMode = .scaleToFill
+        alertView.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
+        alertView.backgroundColor = UIColor(red: 64/255, green: 151/255, blue: 32/255, alpha: 1)
+        
+        
         let session = URLSession.shared
         let dataTask = session.dataTask(with: req,completionHandler: {
             (data, response, error) -> Void in
             if error != nil{
-                let sheet = UIAlertController(title: "天气信息请求超时", message: error?.localizedDescription, preferredStyle: .alert)
-                sheet.addAction(UIAlertAction(title: "好", style: .cancel, handler: nil))
-                self.present(sheet, animated: true, completion: nil)
+                
+                DispatchQueue.global().async {
+                    
+                    DispatchQueue.main.async {
+                        doneImage.image = UIImage(named: "cross_circle_128px")
+                        label.text = error?.localizedDescription.replacingOccurrences(of: "。", with: "")
+                        if (label.text?.characters.count)! > 10{
+                            label.font = UIFont(name: "AvenirNext-Regular", size: 15)
+                        }
+                        alertView.addSubview(label)
+                        alertView.addSubview(loading)
+                        self.view.addSubview(alertView)
+                        
+                        UIView.animate(withDuration: 0.2, animations: {
+                            alertView.transform = CGAffineTransform(scaleX: 1, y: 1)
+                            alertView.alpha = 1
+                            
+                        }, completion: {
+                            (finished)->Void in
+                            UIView.animate(withDuration: 0.2, delay: 2.0, options: .transitionCurlUp, animations: {
+                                loading.stopAnimating()
+                                alertView.addSubview(doneImage)
+                                alertView.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
+                                alertView.alpha = 0
+                            }, completion: {
+                                (com)->Void in
+                                alertView.removeFromSuperview()
+                            })
+                        })
+                        
+                    }
+                    
+                }
+                
                 
             }else{
                 let cachePath = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.cachesDirectory, FileManager.SearchPathDomainMask.userDomainMask, true).first
@@ -490,6 +856,7 @@ class WeatherViewController: UIViewController,UIScrollViewDelegate {
                 //对预报JSON数据进行解析,4天？
                 let forcast_rawData = json["retData"]["forecast"]
                 let forcast_Array = forcast_rawData.array! as [JSON]
+                self.forcast_DataSource.removeAll()
                 for day_dic in forcast_Array{
                     let fengli = day_dic["fengli"].stringValue
                     let date = day_dic["date"].stringValue
@@ -501,13 +868,39 @@ class WeatherViewController: UIViewController,UIScrollViewDelegate {
                     
                     let newElement = WeatherDataSource(windLevel: fengli, currentTemp: nil, week: week, date: date, highTemp: hightemp, lowTemp: lowtemp, windDirection: fengxiang, type: type)
                     self.forcast_DataSource.append(newElement)
+                }
+                
+                //动画显示"刷新成功"提示框
+                
+                DispatchQueue.global().async {
                     
+                    DispatchQueue.main.async {
+                        
+                        alertView.addSubview(label)
+                        alertView.addSubview(loading)
+                        self.view.addSubview(alertView)
+                        
+                        UIView.animate(withDuration: 0.2, animations: {
+                            alertView.transform = CGAffineTransform(scaleX: 1, y: 1)
+                            alertView.alpha = 0.8
+                            
+                        }, completion: {
+                            (finished)->Void in
+                            UIView.animate(withDuration: 0.2, delay: 2.0, options: .transitionCurlUp, animations: {
+                                loading.stopAnimating()
+                                alertView.addSubview(doneImage)
+                                alertView.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
+                                alertView.alpha = 0
+                            }, completion: {
+                                (com)->Void in
+                                alertView.removeFromSuperview()
+                            })
+                        })
+                        
+                    }
                     
                 }
                 
-//                let sheet = UIAlertController(title: "今日南宁天气",message: "日期：\(self.today_DataSource.date!)\n类型：\(self.today_DataSource.type!)\n当前温度：\(self.today_DataSource.currentTemp!)\n最高温度：\(self.today_DataSource.highTemp!)\n最低温度：\(self.today_DataSource.lowTemp!)\n风力：\(self.today_DataSource.windLevel!)\n风向：\(self.today_DataSource.windDirection!)", preferredStyle: .alert)
-//                sheet.addAction(UIAlertAction(title: "好", style: .cancel, handler: nil))
-//                self.present(sheet, animated: true, completion: nil)
                 
             }
         }) as URLSessionTask
@@ -516,15 +909,29 @@ class WeatherViewController: UIViewController,UIScrollViewDelegate {
         
         if self.today_DataSource != nil{
             let userDefault = UserDefaults()
-            userDefault.removeObject(forKey: "LatestWeatherCache")
+            userDefault.removeObject(forKey: "LatestTodayWeatherCache")
             userDefault.removeObject(forKey: "LatestWeatherUpdateTime")
             let userSaved = NSKeyedArchiver.archivedData(withRootObject: self.today_DataSource)
-            userDefault.set(userSaved, forKey: "LatestWeatherCache")
+            userDefault.set(userSaved, forKey: "LatestTodayWeatherCache")
             userDefault.set(self.updateTime, forKey: "LatestWeatherUpdateTime")
             userDefault.synchronize()
             self.updatePage_today()
+            
         }
-
+        
+        if self.forcast_DataSource.isEmpty == false{
+            let userDefault = UserDefaults()
+            userDefault.removeObject(forKey: "LatestWeatherForecastCache")
+            let userSaved = NSKeyedArchiver.archivedData(withRootObject: self.forcast_DataSource)
+            userDefault.set(userSaved, forKey: "LatestWeatherForecastCache")
+            userDefault.synchronize()
+            
+            self.forecastChart.view.removeFromSuperview()
+            self.createAndUpdatePage_forecast()
+        }
+        
+        
+        
     }
     //MARK: - UIScrollViewDelegate
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -535,8 +942,15 @@ class WeatherViewController: UIViewController,UIScrollViewDelegate {
         switch pageDots.currentPage {
         case 0:
             self.selectedPage.selectedSegmentIndex = 0
+            if offsetX == CGFloat(0) * self.view.frame.width{
+                forecastChart.clearView()
+            }
         case 1:
             self.selectedPage.selectedSegmentIndex = 1
+            if offsetX == CGFloat(1) * self.view.frame.width{
+                self.forecastChart.clearView()
+                createAndUpdatePage_forecast()
+            }
         default:
             self.selectedPage.selectedSegmentIndex = 1
             

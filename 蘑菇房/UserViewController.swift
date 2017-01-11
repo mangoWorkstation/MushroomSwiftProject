@@ -46,6 +46,7 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         // Do any additional setup after loading the view, typically from a nib.
         self.tableView.reloadData()
+        self.automaticallyAdjustsScrollViewInsets = false
         
     }
     
@@ -76,7 +77,7 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         let icon = UIButton(frame: CGRect(x: 0, y: 0, width: 80, height: 80))
         icon.center.x = self.UserInfoColumn.center.x
-        icon.center.y = self.UserInfoColumn.center.y
+        icon.center.y = self.UserInfoColumn.center.y + 30
         icon.setImage(UIImage(contentsOfFile: NSHomeDirectory() + GLOBAL_UserProfile.facePath!), for: .normal)
         icon.layer.cornerRadius = 40
         icon.layer.masksToBounds = true
@@ -102,9 +103,9 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     //MARK: - UITableViewDataSource
     //设置每一行的高度
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        if (indexPath as NSIndexPath).section == 0{
-//            return 300
-//        }
+        //        if (indexPath as NSIndexPath).section == 0{
+        //            return 300
+        //        }
         if((indexPath as NSIndexPath).section == 0){//滚动信息栏 2016.7.5
             let cell = self.tableView!.dequeueReusableCell(withIdentifier: "Notification")! as UITableViewCell
             let notification = cell.viewWithTag(202) as! UILabel
@@ -131,7 +132,7 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     //设置每个部分分别有多少行
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         switch section{
-//        case 0:return 1
+        //        case 0:return 1
         case 0:return 1
         case 1:return staticItems_section_2.count
         case 2:return staticItems_section_3.count
@@ -150,49 +151,49 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         var cell:UITableViewCell? = UITableViewCell()
         
-//        if ((indexPath as NSIndexPath).section == 0){
-//            let facePath = GLOBAL_UserProfile.facePath
-//            
-//            cell = self.tableView!.dequeueReusableCell(withIdentifier: "UserInfo")!
-//            let icon = cell!.viewWithTag(1011) as! UIImageView
-//            let nameLabel = cell!.viewWithTag(1012) as! UILabel
-//            let background = cell!.viewWithTag(102) as! UIImageView
-//            icon.image = UIImage(contentsOfFile: NSHomeDirectory() + facePath!)
-//            icon.layer.cornerRadius = 40
-//            icon.layer.masksToBounds = true
-//            icon.layer.borderWidth = 3
-//            icon.layer.borderColor = UIColor.white.cgColor
-//            icon.clipsToBounds = true     //制作圆形的头像
-//            nameLabel.text = GLOBAL_UserProfile.nickName
-//            nameLabel.font = UIFont(name: GLOBAL_appFont!, size: 20.0)
-//            nameLabel.textColor = UIColor.white
-//            
-////            //黑科技，将头像高斯模糊化，作为背景 2016.10.17
-//            let ciImage = CIImage(image: UIImage(contentsOfFile: NSHomeDirectory() + facePath!)!)
-//            let filterMirror = CIFilter(name: "CIGaussianBlur")
-//            filterMirror?.setValue(ciImage, forKey: kCIInputImageKey)
-//            let filterImage = filterMirror?.value(forKey: kCIOutputImageKey)
-//            let context = CIContext(options: nil)
-//            let cgImage = context.createCGImage(filterImage as! CIImage, from: (cell?.frame)!)
-//            background.image = UIImage(cgImage: cgImage!)
-//            
-//            
-////真机测试GPU、内存过载
-////            let bacImage = icon.image!.applyBlur(withRadius: 10, tintColor: UIColor(white: 0.3, alpha: 0.3), saturationDeltaFactor: 1.8)
-////            background.image = self.backgroundImage
-//            
-//            //            let _image = background.image
-//            //            let domainColors = _image.dominantColors() as! [UIColor]
-//            //            let mainColor = domainColors[0]
-//            //            if isDarkRGB(color: mainColor){
-//            //                nameLabel.textColor = UIColor.white
-//            //            }
-//            //            else{
-//            //                nameLabel.textColor = UIColor.black
-//            //            }
-//            
-//            
-//        }
+        //        if ((indexPath as NSIndexPath).section == 0){
+        //            let facePath = GLOBAL_UserProfile.facePath
+        //
+        //            cell = self.tableView!.dequeueReusableCell(withIdentifier: "UserInfo")!
+        //            let icon = cell!.viewWithTag(1011) as! UIImageView
+        //            let nameLabel = cell!.viewWithTag(1012) as! UILabel
+        //            let background = cell!.viewWithTag(102) as! UIImageView
+        //            icon.image = UIImage(contentsOfFile: NSHomeDirectory() + facePath!)
+        //            icon.layer.cornerRadius = 40
+        //            icon.layer.masksToBounds = true
+        //            icon.layer.borderWidth = 3
+        //            icon.layer.borderColor = UIColor.white.cgColor
+        //            icon.clipsToBounds = true     //制作圆形的头像
+        //            nameLabel.text = GLOBAL_UserProfile.nickName
+        //            nameLabel.font = UIFont(name: GLOBAL_appFont!, size: 20.0)
+        //            nameLabel.textColor = UIColor.white
+        //
+        ////            //黑科技，将头像高斯模糊化，作为背景 2016.10.17
+        //            let ciImage = CIImage(image: UIImage(contentsOfFile: NSHomeDirectory() + facePath!)!)
+        //            let filterMirror = CIFilter(name: "CIGaussianBlur")
+        //            filterMirror?.setValue(ciImage, forKey: kCIInputImageKey)
+        //            let filterImage = filterMirror?.value(forKey: kCIOutputImageKey)
+        //            let context = CIContext(options: nil)
+        //            let cgImage = context.createCGImage(filterImage as! CIImage, from: (cell?.frame)!)
+        //            background.image = UIImage(cgImage: cgImage!)
+        //
+        //
+        ////真机测试GPU、内存过载
+        ////            let bacImage = icon.image!.applyBlur(withRadius: 10, tintColor: UIColor(white: 0.3, alpha: 0.3), saturationDeltaFactor: 1.8)
+        ////            background.image = self.backgroundImage
+        //
+        //            //            let _image = background.image
+        //            //            let domainColors = _image.dominantColors() as! [UIColor]
+        //            //            let mainColor = domainColors[0]
+        //            //            if isDarkRGB(color: mainColor){
+        //            //                nameLabel.textColor = UIColor.white
+        //            //            }
+        //            //            else{
+        //            //                nameLabel.textColor = UIColor.black
+        //            //            }
+        //
+        //
+        //        }
         if ((indexPath as NSIndexPath).section == 0){
             
             cell = self.tableView!.dequeueReusableCell(withIdentifier: "Notification")!
@@ -253,9 +254,9 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         else if(2 == section){
             return 5
         }
-//        else if 3 == section{
-//            return 5
-//        }
+            //        else if 3 == section{
+            //            return 5
+            //        }
         else {
             return 100
         }
