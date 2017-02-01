@@ -14,7 +14,7 @@ class MGNotificationView: UIView {
     
     open var textColor:UIColor?
     
-    open var duration:Double!
+    open var duration:TimeInterval!
     
     open var doneImage:UIImage?
     
@@ -47,16 +47,17 @@ class MGNotificationView: UIView {
         self.addSubview(alertView)
     }
     
-    init(frame: CGRect,labelText:String?,textColor:UIColor?,duration:Double,doneImage:UIImage?) {
+    init(frame: CGRect,labelText:String?,textColor:UIColor?,duration:Double,doneImage:UIImage?,backgroundColor: UIColor) {
         super.init(frame: frame)
         alertView = UIView(frame: frame)
-        alertView.backgroundColor = UIColor(white: 0.6, alpha: 1)
         alertView.alpha = 0.95
         alertView.center.x = UIScreen.main.bounds.midX
         alertView.center.y = UIScreen.main.bounds.midY - 20
         alertView.layer.cornerRadius = 20
         alertView.layer.masksToBounds = true
         alertView.clipsToBounds = true
+        alertView.backgroundColor = backgroundColor
+        alertView.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
         label = UILabel(frame: CGRect(x: 0, y: 0, width: alertView.bounds.width , height: alertView.bounds.height/2 + 20))
         label.font = UIFont(name: "AvenirNext-Regular", size: 18)
         label.textAlignment = .center
@@ -68,12 +69,12 @@ class MGNotificationView: UIView {
         doneImageView = UIImageView(frame: loading.frame)
         doneImageView.image = doneImage
         doneImageView.contentMode = .scaleToFill
-        alertView.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
         
         self.labelText = labelText
         self.textColor = textColor
         self.duration = duration
         self.doneImage = doneImage
+        self.backgroundColor = backgroundColor
         
         alertView.addSubview(label)
         alertView.addSubview(loading)
@@ -81,17 +82,21 @@ class MGNotificationView: UIView {
 
     }
     
-    func addFeatures(labelText:String?,textColor:UIColor?,duration:Double,doneImage:UIImage?){
+    func addFeatures(labelText:String?,textColor:UIColor?,duration:Double,doneImage:UIImage?,backgroundColor: UIColor){
         self.labelText = labelText
         self.textColor = textColor
         self.duration = duration
         self.doneImage = doneImage
+        self.backgroundColor = backgroundColor
     }
     
     func stroke(in inputView:UIView){
+        
+        
         DispatchQueue.global().async {
             
             DispatchQueue.main.async {
+                
                 if self.doneImage == nil{
                     self.doneImageView.image = UIImage(named: "cross_circle_128px")?.withRenderingMode(.alwaysOriginal)
                 }
@@ -109,27 +114,38 @@ class MGNotificationView: UIView {
                     self.label.text = "ExampleView"
                 }
                 else{
-                    self.label.text = self.labelText
+                    self.label.text = self.labelText!
                 }
                 
                 if (self.label.text?.characters.count)! > 10{
                     self.label.font = UIFont(name: "AvenirNext-Regular", size: 15)
                 }
+                else{
+                    self.label.font = UIFont(name: "AvenirNext-Regular", size: 18)
+                }
+                
+                
                 self.alertView.addSubview(self.label)
                 self.alertView.addSubview(self.loading)
                 inputView.addSubview(self.alertView)
                 
                 UIView.animate(withDuration: 0.2, animations: {
                     self.alertView.transform = CGAffineTransform(scaleX: 1, y: 1)
+                    self.label.alpha = 1
                     self.alertView.alpha = 1
+                    self.loading.alpha = 1
                     
                 }, completion: {
                     (finished)->Void in
                     UIView.animate(withDuration: 0.2, delay: self.duration, options: .transitionCurlUp, animations: {
                         self.loading.stopAnimating()
+                        self.loading.removeFromSuperview()
                         self.alertView.addSubview(self.doneImageView)
                         self.alertView.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
                         self.alertView.alpha = 0
+                        self.label.alpha = 0
+                        self.alertView.alpha = 0
+                        self.loading.alpha = 0
                     }, completion: {
                         (com)->Void in
                         self.alertView.removeFromSuperview()

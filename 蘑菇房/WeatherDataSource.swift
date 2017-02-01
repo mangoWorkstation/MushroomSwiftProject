@@ -9,6 +9,8 @@
 import Foundation
 
 class WeatherDataSource:NSObject{
+    var code_day:String?
+    var code_night:String?
     var windLevel:String?
     var currentTemp:String?
     var week:String?
@@ -16,9 +18,10 @@ class WeatherDataSource:NSObject{
     var highTemp:String?
     var lowTemp:String?
     var windDirection:String?
-    var type:String?
+    var type_day:String?
+    var type_night:String?
     
-    init(windLevel:String?,currentTemp:String?,week:String?,date:String?,highTemp:String?,lowTemp:String?,windDirection:String?,type:String?) {
+    init(windLevel:String?,currentTemp:String?,week:String?,date:String?,highTemp:String?,lowTemp:String?,windDirection:String?,type_day:String?,type_night:String?,code_day:String?,code_night:String?) {
         self.windLevel = windLevel
         self.currentTemp = currentTemp
         self.week = week
@@ -26,7 +29,24 @@ class WeatherDataSource:NSObject{
         self.highTemp = highTemp
         self.lowTemp = lowTemp
         self.windDirection = windDirection
-        self.type = type
+        self.type_day = type_day
+        self.type_night = type_night
+        self.code_night = code_night
+        self.code_day = code_day
+    }
+    
+    override init() {
+        self.windLevel = "0"
+        self.currentTemp = "0"
+        self.week = "0"
+        self.date = "0"
+        self.highTemp = "0"
+        self.lowTemp = "0"
+        self.windDirection = "0"
+        self.type_day = "0"
+        self.type_night = "0"
+        self.code_night = "0"
+        self.code_day = "0"
     }
     
     init(coder aDecoder:NSCoder!){
@@ -37,7 +57,11 @@ class WeatherDataSource:NSObject{
         self.highTemp = aDecoder.decodeObject(forKey: "highTemp") as? String
         self.lowTemp = aDecoder.decodeObject(forKey: "lowTemp") as? String
         self.windDirection = aDecoder.decodeObject(forKey: "windDirection") as? String
-        self.type = aDecoder.decodeObject(forKey: "type") as? String
+        self.type_day = aDecoder.decodeObject(forKey: "type_day") as? String
+        self.type_night = aDecoder.decodeObject(forKey: "type_night") as? String
+        self.code_night = aDecoder.decodeObject(forKey: "code_night") as? String
+        self.code_day = aDecoder.decodeObject(forKey: "code_day") as? String
+
     }
     
     func encodeWithCoder(_ aCoder:NSCoder!){
@@ -48,7 +72,12 @@ class WeatherDataSource:NSObject{
         aCoder.encode(highTemp,forKey:"highTemp")
         aCoder.encode(lowTemp,forKey:"lowTemp")
         aCoder.encode(windDirection,forKey:"windDirection")
-        aCoder.encode(type,forKey:"type")        
+        aCoder.encode(type_day,forKey:"type_day")
+        aCoder.encode(type_night,forKey:"type_night")
+        aCoder.encode(code_day,forKey:"code_day")
+        aCoder.encode(code_night,forKey:"code_night")
+
+
     }
 
 }

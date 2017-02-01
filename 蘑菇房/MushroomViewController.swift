@@ -165,8 +165,7 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         }
         
         let frame = CGRect(x: 0, y: 0, width: 200, height: 100)
-        let alertView = MGNotificationView(frame: frame , labelText: "hello", textColor: UIColor.white, duration: 3, doneImage: nil)
-        alertView.backgroundColor = .green
+        let alertView = MGNotificationView(frame: frame , labelText: "hello", textColor: UIColor.black, duration: 3, doneImage: nil, backgroundColor:UIColor.white)
         alertView.stroke(in: self.view)
         //推送本地通知，未成功
         //        let pushNotification = UILocalNotification()
@@ -184,7 +183,42 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         //        pushNotification.applicationIconBadgeNumber = 1
         //        // 添加通知到系统队列中，系统会在指定的时间触发
         //        UIApplication.shared.scheduleLocalNotification(pushNotification)
+//        requestForWeather()
+        
     }
+    
+    private func requestForWeather(){
+        let url = "https://api.thinkpage.cn/v3/weather/daily.json?key=lrpn5sdf3kotqfk5&location=nanning&language=zh-Hans&unit=c&start=0"
+        var req = URLRequest(url: NSURL(string: url)! as URL)
+        req.timeoutInterval = 4.0
+        req.httpMethod = "GET"
+        
+        let session = URLSession.shared
+        let dataTask = session.dataTask(with: req,completionHandler: {
+            (data, response, error) -> Void in
+            if error != nil{
+            }
+            else{
+                let json = JSON(data: data!)
+                print(json)
+                let cachePath = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.cachesDirectory, FileManager.SearchPathDomainMask.userDomainMask, true).first
+                let path = NSURL(fileURLWithPath: cachePath! + "/Weather", isDirectory: true)
+                
+                try?FileManager.default.createDirectory(at: path as URL, withIntermediateDirectories: false, attributes: nil)
+                
+                let timeInterval:TimeInterval = NSDate().timeIntervalSince1970
+                let timeStamp = Int(timeInterval)
+                
+                //按刷新的时间戳命名，写入缓存plist
+                let newPath = path.appendingPathComponent("\(timeStamp).plist")
+                NSDictionary(dictionary: json.dictionaryObject!).write(to: newPath! as URL, atomically: true)
+
+            }
+        }) as URLSessionTask
+        
+        dataTask.resume()
+    }
+
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

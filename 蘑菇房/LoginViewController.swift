@@ -88,10 +88,6 @@ class LoginViewController: UIViewController,UITextFieldDelegate{
         userNameInput.delegate = self
         passwordInput.delegate = self
         
-        //        let _ = romWriter().removeAllRecordInExplictEntity("UserProperties")
-        //        romWriter().insertNewRecordForUserProperties()
-        //        let _ = romWriter().displayEntity(name: "UserProperties")
-        
         //输入框
         userNameInput.placeholder = "请输入用户ID/手机"
         userNameInput.font = UIFont(name: GLOBAL_appFont!, size: 16)

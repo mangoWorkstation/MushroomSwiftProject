@@ -58,15 +58,19 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.tableView.reloadData()
-        
-        let icon = self.UserInfoColumn.viewWithTag(1000) as? UIButton
-        let nameLabel = self.UserInfoColumn.viewWithTag(1001) as? UILabel
-        if (icon != nil || nameLabel != nil){
-            icon?.removeFromSuperview()
-            nameLabel?.removeFromSuperview()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+            
+            let icon = self.UserInfoColumn.viewWithTag(1000) as? UIButton
+            let nameLabel = self.UserInfoColumn.viewWithTag(1001) as? UILabel
+            if (icon != nil || nameLabel != nil){
+                icon?.removeFromSuperview()
+                nameLabel?.removeFromSuperview()
+            }
+            self.drawUserColumn()
+
         }
-        self.drawUserColumn()
+        
     }
     
     private func drawUserColumn(){
@@ -132,7 +136,6 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     //设置每个部分分别有多少行
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         switch section{
-        //        case 0:return 1
         case 0:return 1
         case 1:return staticItems_section_2.count
         case 2:return staticItems_section_3.count

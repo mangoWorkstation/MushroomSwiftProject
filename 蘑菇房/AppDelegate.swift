@@ -195,13 +195,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
         if shortcutItem.type == "popMyBaseInfo"{
-            let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-            let vc = storyboard.instantiateViewController(withIdentifier: "loginVC") as! LoginViewController
-            let vcNav = UINavigationController(rootViewController: vc)
-            vcNav.hidesBottomBarWhenPushed = false
+            let storyboard_main = UIStoryboard(name: "Main", bundle: Bundle.main)
+            let vc = storyboard_main.instantiateViewController(withIdentifier: "MainTabbarVC") as! UITabBarController
+            let storyboard_3 = UIStoryboard(name: "Page_3_User", bundle: Bundle.main)
+            let vc_1 = storyboard_3.instantiateViewController(withIdentifier: "UserViewController") as! UserViewController
+            let vcNav = UINavigationController(rootViewController: vc_1)
+            vc.addChildViewController(vc_1)
+            vc.hidesBottomBarWhenPushed = false
             self.window?.rootViewController = vcNav
             self.window?.makeKeyAndVisible()
-            vc.performSegue(withIdentifier: "Main", sender: nil)
+//            vc.performSegue(withIdentifier: "Main", sender: nil)
         }
         
         

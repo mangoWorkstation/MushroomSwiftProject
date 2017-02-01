@@ -36,29 +36,42 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
     func fileSizeOfCache()-> Double {
         
         // 取出cache文件夹目录 缓存文件都在这个目录下
-        var cachePath = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.cachesDirectory, FileManager.SearchPathDomainMask.userDomainMask, true).first
+        let cachePath = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.cachesDirectory, FileManager.SearchPathDomainMask.userDomainMask, true).first
         //缓存目录路径
-        cachePath = cachePath! + "/Weather"
+        let cachePath_1 = cachePath! + "/Weather/today"
+        let cachePath_2 = cachePath! + "/Weather/forecast"
         print(cachePath!)
         
         // 取出文件夹下所有文件数组
-        let fileArr = FileManager.default.subpaths(atPath: cachePath!)
+        var fileArr = FileManager.default.subpaths(atPath: cachePath_1)
         
-        print(fileArr!)
         
         //快速枚举出所有文件名 计算文件大小
         var size = 0
         for file in fileArr! {
             
             // 把文件名拼接到路径中
-            let path = cachePath?.appending("/"+file)
+            let path = cachePath_1.appending("/"+file)
             // 取出文件属性
-            let folder = try! FileManager.default.attributesOfItem(atPath: path!)
+            let folder = try! FileManager.default.attributesOfItem(atPath: path)
             let fs = folder[FileAttributeKey.size] as! Int
             print(fs)
             size += fs
         }
         print(size)
+        
+        fileArr = FileManager.default.subpaths(atPath: cachePath_2)
+        for file in fileArr! {
+            
+            // 把文件名拼接到路径中
+            let path = cachePath_2.appending("/"+file)
+            // 取出文件属性
+            let folder = try! FileManager.default.attributesOfItem(atPath: path)
+            let fs = folder[FileAttributeKey.size] as! Int
+            print(fs)
+            size += fs
+        }
+
         
         let mm = Double(size) / 1024
         
@@ -69,24 +82,43 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
     func clearCache() {
         
         // 取出cache文件夹目录 缓存文件都在这个目录下
-        var cachePath = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.cachesDirectory, FileManager.SearchPathDomainMask.userDomainMask, true).first
-        cachePath = cachePath! + "/Weather"
+        let cachePath = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.cachesDirectory, FileManager.SearchPathDomainMask.userDomainMask, true).first
+        
+        let cachePath_1 = cachePath! + "/Weather/today"
+        let cachePath_2 = cachePath! + "/Weather/forecast"
+
         // 取出文件夹下所有文件数组
-        let fileArr = FileManager.default.subpaths(atPath: cachePath!)
+        var fileArr = FileManager.default.subpaths(atPath: cachePath_1)
         
         // 遍历删除
         for file in fileArr! {
             
-            let path = cachePath?.appending("/"+file)
-            if FileManager.default.fileExists(atPath: path!) {
+            let path = cachePath_1.appending("/"+file)
+            if FileManager.default.fileExists(atPath: path) {
                 
                 do {
-                    try FileManager.default.removeItem(atPath: path!)
+                    try FileManager.default.removeItem(atPath: path)
                 } catch {
                     
                 }
             }
         }
+        
+        fileArr = FileManager.default.subpaths(atPath: cachePath_2)
+        for file in fileArr! {
+            
+            let path = cachePath_2.appending("/"+file)
+            if FileManager.default.fileExists(atPath: path) {
+                
+                do {
+                    try FileManager.default.removeItem(atPath: path)
+                } catch {
+                    
+                }
+            }
+        }
+
+        
         print(FileManager.default.subpaths(atPath: cachePath!)!)
     }
     
