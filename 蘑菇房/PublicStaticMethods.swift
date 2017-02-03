@@ -141,9 +141,9 @@ func regionFilter(_ chosenArea:String,rawDataArray: Dictionary<String,RoomInfoMo
  * @Param name: String 基地名称
  * @Return RoomInfoModel 基地信息
  */
-func acquireRoomInfoByName(_ name:String)->RoomInfoModel{
+func acquireRoomInfoByName(_ name:String,rawData:Dictionary<String,RoomInfoModel>)->RoomInfoModel{
     var foundOut = RoomInfoModel(district: 0, name: "0", preImage: "0", address: "0", roomID: "0",latitude: 0.0,longitude:0.0)
-    let elements = GLOBAL_RoomInfo.values
+    let elements = rawData.values
     for element in elements {
         if (element.name == name){
             foundOut = element

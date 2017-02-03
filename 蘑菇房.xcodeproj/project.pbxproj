@@ -57,6 +57,7 @@
 		0D32FEB01D3DD0A2008E79CD /* FeedBackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D32FEAF1D3DD0A2008E79CD /* FeedBackViewController.swift */; };
 		0D3FC0F41DD7653E00D12860 /* HASH_Encrypt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3FC0F31DD7653E00D12860 /* HASH_Encrypt.swift */; };
 		0D42EEEB1DE09DB100CFD734 /* UserDistrictPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D42EEEA1DE09DB100CFD734 /* UserDistrictPickerViewController.swift */; };
+		0D438D8A1E443B010029EA5C /* MGBannerIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D438D891E443B010029EA5C /* MGBannerIndicatorView.swift */; };
 		0D4406A51D81BB4A00E045AA /* 蘑菇背景1.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D4406A41D81BB4A00E045AA /* 蘑菇背景1.png */; };
 		0D4406A71D81BEAA00E045AA /* 蘑菇背景.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D4406A61D81BEAA00E045AA /* 蘑菇背景.png */; };
 		0D441A3C1DFEF9AC00DF7EB9 /* wind_mill_128px.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D441A391DFEF9AC00DF7EB9 /* wind_mill_128px.png */; };
@@ -292,6 +293,7 @@
 		0D3FC0F01DD764FD00D12860 /* 蘑菇房-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "蘑菇房-Bridging-Header.h"; sourceTree = "<group>"; };
 		0D3FC0F31DD7653E00D12860 /* HASH_Encrypt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HASH_Encrypt.swift; sourceTree = "<group>"; };
 		0D42EEEA1DE09DB100CFD734 /* UserDistrictPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDistrictPickerViewController.swift; sourceTree = "<group>"; };
+		0D438D891E443B010029EA5C /* MGBannerIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MGBannerIndicatorView.swift; sourceTree = "<group>"; };
 		0D4406A41D81BB4A00E045AA /* 蘑菇背景1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "蘑菇背景1.png"; sourceTree = "<group>"; };
 		0D4406A61D81BEAA00E045AA /* 蘑菇背景.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "蘑菇背景.png"; sourceTree = "<group>"; };
 		0D441A391DFEF9AC00DF7EB9 /* wind_mill_128px.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wind_mill_128px.png; sourceTree = "<group>"; };
@@ -1033,6 +1035,7 @@
 			isa = PBXGroup;
 			children = (
 				0D54EF3F1E260DBC00981D8B /* MGNotificationView.swift */,
+				0D438D891E443B010029EA5C /* MGBannerIndicatorView.swift */,
 				0D54EEA31E260BC500981D8B /* ischeutz - SwiftChart */,
 				0D441A3F1DFEFF5E00DF7EB9 /* ImageHelper */,
 				0D68A87A1DFEE1590023C47B /* SwiftSnipper */,
@@ -1322,6 +1325,7 @@
 				0D54EEFF1E260BF000981D8B /* ChartAxisYLayerDefault.swift in Sources */,
 				0D54EF231E260BF000981D8B /* ChartPointsLayer.swift in Sources */,
 				0D54EEF81E260BF000981D8B /* ChartAxisLayerDefault.swift in Sources */,
+				0D438D8A1E443B010029EA5C /* MGBannerIndicatorView.swift in Sources */,
 				0DB357C81D7900A2002A7D85 /* PDChartAxesComponent.swift in Sources */,
 				0D68A8781DFEE0720023C47B /* WeatherDataSource.swift in Sources */,
 				0D75A0FD1DD61263001FD6F9 /* CoreDataDAO.swift in Sources */,

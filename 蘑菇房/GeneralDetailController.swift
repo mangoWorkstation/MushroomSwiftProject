@@ -327,7 +327,7 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
         if((indexPath as NSIndexPath).section == 2){
             let cell = self.tableView.cellForRow(at: indexPath)
             let detail = cell?.viewWithTag(2002) as! UILabel
-            if detail.text != "0.0KB"{
+            if detail.text != "0KB"{
                 let sheet = UIAlertController(title: "将要清除所有缓存", message: nil, preferredStyle: .actionSheet)
                 sheet.addAction(UIAlertAction(title: "确定", style: .destructive, handler: {
                     (action)-> Void in
@@ -335,7 +335,11 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
                     let detail = cell?.viewWithTag(2002) as! UILabel
                     self.clearCache()
                     let cacheFile = self.fileSizeOfCache()
-                    detail.text = String(Double(cacheFile)*0.0)+"KB"
+                    detail.text = String(Int(cacheFile))+"KB"
+                    let frame = CGRect(x: 0, y: 0, width: 200, height: 100)
+                    let doneImage = UIImage(named: "tick_outline_128px")
+                    let alertView = MGNotificationView(frame: frame , labelText: "刷新成功", textColor: UIColor.white, duration: 2, doneImage: doneImage, backgroundColor:UIColor.lightGray)
+                    alertView.stroke(in: self.view)
                 }))
                 sheet.addAction(UIAlertAction(title: "取消", style: .cancel, handler: {
                     (action)-> Void in

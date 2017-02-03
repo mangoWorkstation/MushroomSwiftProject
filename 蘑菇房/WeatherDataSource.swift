@@ -20,6 +20,7 @@ class WeatherDataSource:NSObject{
     var windDirection:String?
     var type_day:String?
     var type_night:String?
+    var location:String?
     
     init(windLevel:String?,currentTemp:String?,week:String?,date:String?,highTemp:String?,lowTemp:String?,windDirection:String?,type_day:String?,type_night:String?,code_day:String?,code_night:String?) {
         self.windLevel = windLevel
@@ -47,6 +48,7 @@ class WeatherDataSource:NSObject{
         self.type_night = "0"
         self.code_night = "0"
         self.code_day = "0"
+        self.location = "0"
     }
     
     init(coder aDecoder:NSCoder!){
@@ -61,6 +63,8 @@ class WeatherDataSource:NSObject{
         self.type_night = aDecoder.decodeObject(forKey: "type_night") as? String
         self.code_night = aDecoder.decodeObject(forKey: "code_night") as? String
         self.code_day = aDecoder.decodeObject(forKey: "code_day") as? String
+        self.location = aDecoder.decodeObject(forKey: "location") as? String
+
 
     }
     
@@ -76,6 +80,8 @@ class WeatherDataSource:NSObject{
         aCoder.encode(type_night,forKey:"type_night")
         aCoder.encode(code_day,forKey:"code_day")
         aCoder.encode(code_night,forKey:"code_night")
+        aCoder.encode(location,forKey:"location")
+
 
 
     }

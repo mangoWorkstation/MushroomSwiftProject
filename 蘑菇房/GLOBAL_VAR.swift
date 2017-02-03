@@ -26,7 +26,8 @@ var GLOBAL_NotificationCache : [NotificationPreview] = [NotificationPreview(mess
 var GLOBAL_UnreadMessage : [NotificationPreview] = unreadMessageFilter(GLOBAL_NotificationCache)
 
 
-var GLOBAL_RoomInfo  : Dictionary<String,RoomInfoModel> = [
+var GLOBAL_RoomInfo  : Dictionary<String,RoomInfoModel>
+    = [
     //西乡塘区
     "00000":RoomInfoModel(district: 0, name: "广西大学", preImage: "1", address: "南宁市西乡塘区大学路100号", roomID: "00000",latitude:22.8371727422, longitude:108.2884892346),
     "00001":RoomInfoModel(district: 0, name: "广西民族大学", preImage: "2", address: "南宁市西乡塘区", roomID: "00001",latitude:22.8406188793, longitude:108.2354495692),

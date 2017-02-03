@@ -10,24 +10,24 @@ import Foundation
 import CoreGraphics
 
 class DataSource : NSObject {
-
-     var timestamp: TimeInterval?
-     var finalIdentifier: String!
-     var arr_airTemperature: [CGFloat]?
-     var arr_airHumidity: [CGFloat]?
-     var arr_soilTemperatrue: [CGFloat]?
-     var arr_soilHumidity: [CGFloat]?
     
-     fileprivate var currentAirTemperature: CGFloat?
-     fileprivate var currentAirHumidity: CGFloat?
-     fileprivate var currentSoilTemperature: CGFloat?
-     fileprivate var currentSoilHumidity: CGFloat?
+    var timestamp: TimeInterval?
+    var finalIdentifier: String!
+    var arr_airTemperature: [CGFloat]?
+    var arr_airHumidity: [CGFloat]?
+    var arr_soilTemperatrue: [CGFloat]?
+    var arr_soilHumidity: [CGFloat]?
     
-     var arr_CO2: [CGFloat]?
-     fileprivate var currentCO2: CGFloat?
+    fileprivate var currentAirTemperature: CGFloat?
+    fileprivate var currentAirHumidity: CGFloat?
+    fileprivate var currentSoilTemperature: CGFloat?
+    fileprivate var currentSoilHumidity: CGFloat?
     
-     var arr_Voltage: [CGFloat]?
-     fileprivate var currentVoltage: CGFloat?
+    var arr_CO2: [CGFloat]?
+    fileprivate var currentCO2: CGFloat?
+    
+    var arr_Voltage: [CGFloat]?
+    fileprivate var currentVoltage: CGFloat?
     
     init(roomID:String!,area:String!,level:String?,timestamp:TimeInterval!,arr_airTemperature:[CGFloat]?,arr_airHumidity:[CGFloat]?,arr_soilTemperatrue:[CGFloat]?,arr_soilHumidity:[CGFloat]?,arr_CO2:[CGFloat]?,arr_Voltage: [CGFloat]?) {
         if level != nil{
@@ -104,5 +104,5 @@ class DataSource : NSObject {
             return nil
         }
     }
-
+    
 }

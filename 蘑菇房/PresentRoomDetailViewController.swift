@@ -10,6 +10,7 @@ import UIKit
 
 class PresentRoomDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
+    var rawData:Dictionary<String,RoomInfoModel> = [:]
     
     var roomName: String?
     
@@ -30,7 +31,15 @@ class PresentRoomDetailViewController: UIViewController,UITableViewDelegate,UITa
         
         prepareForBackButton()
         
-        room = acquireRoomInfoByName(self.roomName!)
+        let path = NSHomeDirectory() + "/roomsInfo.plist"
+        let url = URL(fileURLWithPath: path)
+        let data = try! Data(contentsOf: url)
+        //解码器
+        let unarchiver = NSKeyedUnarchiver(forReadingWith: data)
+        //通过归档时设置的关键字Checklist还原lists
+        self.rawData = unarchiver.decodeObject(forKey: "roomsInfo") as! Dictionary<String, RoomInfoModel>
+        
+        room = acquireRoomInfoByName(self.roomName!,rawData: rawData)
         self.preview.image = UIImage(named: (room?.preImage)!)
         self.navigationController?.navigationBar.isTranslucent = false
         tableView.delegate = self

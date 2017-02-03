@@ -35,7 +35,7 @@ class WeatherViewController: UIViewController,UIScrollViewDelegate {
     private var isOnceLoaded = true
     
     //缓存需要过期时间：目前暂定为10秒，便于测试
-    private let expireTime:Int! = 1800
+    private let expireTime:Int! = 5
     
     private var forecastChart : Chart!
     
@@ -200,16 +200,6 @@ class WeatherViewController: UIViewController,UIScrollViewDelegate {
         weatherTypeImageView.tag = 1001
         self.pageScroller.addSubview(weatherTypeImageView)
         
-        //城市名称标签
-        let cityNameLabel = UILabel(frame: CGRect(x: xx, y: 0, width: 150, height: 100))
-        cityNameLabel.center.x = weatherTypeImageView.center.x
-        cityNameLabel.center.y = weatherTypeImageView.center.y - 120
-        cityNameLabel.text = "南宁市"
-        cityNameLabel.textColor = UIColor.white
-        cityNameLabel.textAlignment = .center
-        cityNameLabel.font = UIFont(name: "AvenirNext-Regular", size: 40)
-        self.pageScroller.addSubview(cityNameLabel)
-        
         //天气类型标签
         let typeLabel = UILabel(frame: CGRect(x: xx, y: 0, width: 150, height: 30))
         typeLabel.center.x = weatherTypeImageView.center.x
@@ -284,6 +274,17 @@ class WeatherViewController: UIViewController,UIScrollViewDelegate {
         windDirectionLabel.tag = 1008
         self.pageScroller.addSubview(windDirectionLabel)
         
+        //城市名称标签
+        let cityNameLabel = UILabel(frame: CGRect(x: xx, y: 0, width: 150, height: 100))
+        cityNameLabel.center.x = weatherTypeImageView.center.x
+        cityNameLabel.center.y = weatherTypeImageView.center.y - 120
+        cityNameLabel.tag = 1009
+        cityNameLabel.textColor = UIColor.white
+        cityNameLabel.textAlignment = .center
+        cityNameLabel.font = UIFont(name: "AvenirNext-Regular", size: 40)
+        self.pageScroller.addSubview(cityNameLabel)
+
+        
         //        tag汇总
         //        1000：刷新时间
         //        1001：天气类型标记
@@ -314,17 +315,19 @@ class WeatherViewController: UIViewController,UIScrollViewDelegate {
             let typeLabel = self.pageScroller.viewWithTag(1002) as! UILabel
             typeLabel.text = "暂无天气类型"
             let curTempNUM = self.pageScroller.viewWithTag(1003) as! UILabel
-            curTempNUM.text = "NaN"
+            curTempNUM.text = "N/A"
             let lowTempNUM = self.pageScroller.viewWithTag(1004) as! UILabel
-            lowTempNUM.text = "NaN"
+            lowTempNUM.text = "N/A"
             let highTemp = self.pageScroller.viewWithTag(1005) as! UILabel
-            highTemp.text = "NaN"
+            highTemp.text = "N/A"
             let date = self.pageScroller.viewWithTag(1006) as! UILabel
             date.text = "YYYY - mm - dd"
             let windLevelLabel = self.pageScroller.viewWithTag(1007) as! UILabel
             windLevelLabel.text = "暂无风力数据"
             let windDirectionLabel = self.pageScroller.viewWithTag(1008) as! UILabel
             windDirectionLabel.text = "暂无风向数据"
+            let cityLabel = self.pageScroller.viewWithTag(1009) as! UILabel
+            cityLabel.text = "暂未获取当前定位"
         }
     }
     
@@ -395,6 +398,9 @@ class WeatherViewController: UIViewController,UIScrollViewDelegate {
         if (windDirectionLabel.text?.characters.count)!>5{
             windDirectionLabel.font = UIFont(name: "AvenirNext-Regular", size: 15)
         }
+        
+        let cityLabel = self.pageScroller.viewWithTag(1009) as! UILabel
+        cityLabel.text = self.today_DataSource.location!
 
         
         //动画更新UI,淡入淡出效果
@@ -528,7 +534,7 @@ class WeatherViewController: UIViewController,UIScrollViewDelegate {
                 [ChartAxisValueString(order: barsData.count)]
         
         
-        let xModel = ChartAxisModel(axisValues: xValues, axisTitleLabel: ChartAxisLabel(text: "未来4天气温", settings: labelSettings))
+        let xModel = ChartAxisModel(axisValues: xValues, axisTitleLabel: ChartAxisLabel(text: "未来2天气温", settings: labelSettings))
         let yModel = ChartAxisModel(axisValues: yValues, axisTitleLabel: ChartAxisLabel(text: "温度", settings: labelSettings.defaultVertical()))
         
         let chartFrame = CGRect(x: xx - 25 , y: 0, width: self.view.frame.width, height: self.pageScroller.frame.height - 200)
@@ -598,7 +604,6 @@ class WeatherViewController: UIViewController,UIScrollViewDelegate {
             
         }, displayDelay: 0.6) // show after bars animation
         
-//        print(labelsLayer.chartPointScreenLocs)
         
         // show a gap between positive and negative bar
         let dummyZeroYChartPoint = ChartPoint(x: ChartAxisValueDouble(0), y: ChartAxisValueDouble(0))
@@ -724,11 +729,11 @@ class WeatherViewController: UIViewController,UIScrollViewDelegate {
     }
     
     
-    
+    //心知天气API文档 - http://www.thinkpage.cn/doc
     private func requestForWeather(){
-        let url_today = "https://api.thinkpage.cn/v3/weather/now.json?key=lrpn5sdf3kotqfk5&location=nanning&language=zh-Hans&unit=c"
+        let url_today = "https://api.thinkpage.cn/v3/weather/now.json?key=lrpn5sdf3kotqfk5&location=ip&language=zh-Hans&unit=c"
             
-        let url_forecast = "https://api.thinkpage.cn/v3/weather/daily.json?key=lrpn5sdf3kotqfk5&location=nanning&language=zh-Hans&unit=c&start=0"
+        let url_forecast = "https://api.thinkpage.cn/v3/weather/daily.json?key=lrpn5sdf3kotqfk5&location=ip&language=zh-Hans&unit=c&start=0"
         var req_today = URLRequest(url: NSURL(string: url_today) as! URL)
         var req_forecast = URLRequest(url: NSURL(string: url_forecast) as! URL)
         req_today.timeoutInterval = 4.0
@@ -835,6 +840,11 @@ class WeatherViewController: UIViewController,UIScrollViewDelegate {
                 self.today_DataSource.code_night = code.stringValue
                 self.today_DataSource.type_day = text.stringValue
                 self.today_DataSource.type_night = text.stringValue
+                
+                let location_rawData = json["results"][0]["location"]
+                let location_dic = location_rawData.dictionary!
+                let location = location_dic["name"]! as JSON
+                self.today_DataSource.location = location.stringValue
 
                 let userDefault = UserDefaults()
                 userDefault.removeObject(forKey: "LatestTodayWeatherCache")
@@ -929,8 +939,7 @@ class WeatherViewController: UIViewController,UIScrollViewDelegate {
                         self.today_DataSource.highTemp = hightemp
                         self.today_DataSource.windDirection = day_dic["wind_direction"].stringValue
                         self.today_DataSource.windLevel = day_dic["wind_scale"].stringValue
-//                        self.today_DataSource.code_day = day_dic["code_day"].stringValue
-//                        self.today_DataSource.code_night = day_dic["code_night"].stringValue
+
                     }
                     
                     let newElement = WeatherDataSource(windLevel: nil, currentTemp: nil, week: nil, date: date, highTemp: hightemp, lowTemp: lowtemp, windDirection: nil, type_day: type_day, type_night: type_night, code_day: code_day, code_night: code_night)

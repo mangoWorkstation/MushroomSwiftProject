@@ -19,7 +19,9 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
     
     //后台的数据原型
     //2016.8.27
-    var backgroundData : [RoomInfoModel] = Array(GLOBAL_RoomInfo.values)
+    var rawData : Dictionary<String,RoomInfoModel> = [:]
+//    var backgroundData : [RoomInfoModel] = Array(GLOBAL_RoomInfo.values)
+    var backgroundData : [RoomInfoModel] = []
     
     //前台的显示数据，是数据原型的子数组。
     //滑动到表格的底部时，从后台原型变量处拿数据，并在尾部追加，每次追加15条，直至前后台数据完全一致
@@ -69,7 +71,7 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         let index = vc.chooseAreaPickerView.selectedRow(inComponent: 0)
         self.chosenArea = vc.area[index]
         self.clickOnButton.setTitle(self.chosenArea, for: UIControlState())
-        self.backgroundData = regionFilter(self.chosenArea!, rawDataArray: GLOBAL_RoomInfo)
+        self.backgroundData = regionFilter(self.chosenArea!, rawDataArray: self.rawData)
         self.foregroundShownData = self.backgroundData
         self.tableView.es_startPullToRefresh()
         self.tableView.es_autoPullToRefresh()
@@ -91,6 +93,32 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        let data = NSMutableData()
+//        //申明一个归档处理对象
+//        let archiver = NSKeyedArchiver(forWritingWith: data)
+//        //将lists以对应Checklist关键字进行编码
+//        archiver.encode(GLOBAL_RoomInfo, forKey: "roomsInfo")
+//        //编码结束
+//        archiver.finishEncoding()
+//        //数据写入
+//        data.write(toFile: NSHomeDirectory()+"/Documents/roomsInfo.plist", atomically: true)
+        
+//        DispatchQueue.main.async {
+        let path_ = NSHomeDirectory() + "/Documents/roomsInfo.plist"
+        let url = URL(fileURLWithPath: path_)
+        let data_ = try! Data(contentsOf: url)
+        //解码器
+        let unarchiver = NSKeyedUnarchiver(forReadingWith: data_)
+        //通过归档时设置的关键字Checklist还原lists
+        self.rawData = unarchiver.decodeObject(forKey: "roomsInfo") as! Dictionary<String, RoomInfoModel>
+        unarchiver.finishDecoding()
+        self.backgroundData = Array(self.rawData.values)
+//
+//        }
+        
+        //结束解码
+        
         
         self.configUserInfo()
         clickOnButton.setTitle("选择区域", for: UIControlState())
@@ -164,9 +192,6 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
             self.tableView.deselectRow(at: indexPath!, animated: true)
         }
         
-        let frame = CGRect(x: 0, y: 0, width: 200, height: 100)
-        let alertView = MGNotificationView(frame: frame , labelText: "hello", textColor: UIColor.black, duration: 3, doneImage: nil, backgroundColor:UIColor.white)
-        alertView.stroke(in: self.view)
         //推送本地通知，未成功
         //        let pushNotification = UILocalNotification()
         //        pushNotification.userInfo = ["00001":"1111"]
@@ -187,43 +212,10 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         
     }
     
-    private func requestForWeather(){
-        let url = "https://api.thinkpage.cn/v3/weather/daily.json?key=lrpn5sdf3kotqfk5&location=nanning&language=zh-Hans&unit=c&start=0"
-        var req = URLRequest(url: NSURL(string: url)! as URL)
-        req.timeoutInterval = 4.0
-        req.httpMethod = "GET"
-        
-        let session = URLSession.shared
-        let dataTask = session.dataTask(with: req,completionHandler: {
-            (data, response, error) -> Void in
-            if error != nil{
-            }
-            else{
-                let json = JSON(data: data!)
-                print(json)
-                let cachePath = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.cachesDirectory, FileManager.SearchPathDomainMask.userDomainMask, true).first
-                let path = NSURL(fileURLWithPath: cachePath! + "/Weather", isDirectory: true)
-                
-                try?FileManager.default.createDirectory(at: path as URL, withIntermediateDirectories: false, attributes: nil)
-                
-                let timeInterval:TimeInterval = NSDate().timeIntervalSince1970
-                let timeStamp = Int(timeInterval)
-                
-                //按刷新的时间戳命名，写入缓存plist
-                let newPath = path.appendingPathComponent("\(timeStamp).plist")
-                NSDictionary(dictionary: json.dictionaryObject!).write(to: newPath! as URL, atomically: true)
-
-            }
-        }) as URLSessionTask
-        
-        dataTask.resume()
-    }
-
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        NotificationCenter.default.removeObserver(self)
-        print("removed!!!")
+//        NotificationCenter.default.removeObserver(self)
         // Dispose of any resources that can be recreated.
     }
     
@@ -254,6 +246,13 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         DispatchQueue.main.asyncAfter(deadline: .now() + loadingTimeInterval) {
             self.tableView.reloadData()
             self.tableView.es_stopPullToRefresh(completion: true)
+            
+            //刷新成功提示横幅
+            let bannerView = MGBannerIndicatorView(duration: 3.0, text: "更新成功", backgroundColor: .orange, textColor: .white)
+            bannerView.alpha = 0.8
+            bannerView.stroke(in: self.view)
+
+            
         }
     }
     

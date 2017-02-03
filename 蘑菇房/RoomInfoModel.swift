@@ -7,7 +7,6 @@
 //
 
 import Foundation
-//import HandyJSON
 
 class RoomInfoModel : NSObject{
     var districtIdentifier : Int?
@@ -27,6 +26,29 @@ class RoomInfoModel : NSObject{
         self.latitude = latitude
         self.longitude = longitude
     }
+    
+    init(coder aDecoder:NSCoder!){
+        self.districtIdentifier = aDecoder.decodeObject(forKey: "districtIdentifier") as? Int
+        self.name = aDecoder.decodeObject(forKey: "name") as? String
+        self.preImage = aDecoder.decodeObject(forKey: "preImage") as? String
+        self.address = aDecoder.decodeObject(forKey: "address") as? String
+        self.roomID = aDecoder.decodeObject(forKey: "roomID") as? String
+        self.latitude = aDecoder.decodeObject(forKey: "latitude") as? Double
+        self.longitude = aDecoder.decodeObject(forKey: "longitude") as? Double
+        
+    }
+    
+    func encodeWithCoder(_ aCoder:NSCoder!){
+        aCoder.encode(districtIdentifier, forKey: "districtIdentifier")
+        aCoder.encode(name,forKey:"name")
+        aCoder.encode(preImage,forKey:"preImage")
+        aCoder.encode(address,forKey:"address")
+        aCoder.encode(roomID,forKey:"roomID")
+        aCoder.encode(latitude,forKey:"latitude")
+        aCoder.encode(longitude,forKey:"longitude")
+
+    }
+
     
     //Identifier Dictionary
 //    0:"西乡塘区"

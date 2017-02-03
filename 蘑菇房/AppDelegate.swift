@@ -148,6 +148,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         application.statusBarStyle = .lightContent
         
+//        DispatchQueue.main.async {
+//            let path = NSHomeDirectory() + "/roomsInfo.plist"
+//            let url = URL(fileURLWithPath: path)
+//            let data = try! Data(contentsOf: url)
+//            //解码器
+//            let unarchiver = NSKeyedUnarchiver(forReadingWith: data)
+//            //通过归档时设置的关键字Checklist还原lists
+//            GLOBAL_RoomInfo = unarchiver.decodeObject(forKey: "roomsInfo") as! Dictionary
+//            //结束解码
+//            unarchiver.finishDecoding()
+//        }
+        
         Thread.sleep(forTimeInterval: 1.0)
         //设置启动页的停留时间
         
@@ -159,7 +171,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //                print("\tFont : "+"\(fontName.utf8)"+" \n")
 //            }
 //        }
-//        
+//      
+        
+        
+//        let data = NSMutableData()
+//        //申明一个归档处理对象
+//        let archiver = NSKeyedArchiver(forWritingWith: data)
+//        //将lists以对应Checklist关键字进行编码
+//        archiver.encode(GLOBAL_RoomInfo, forKey: "roomsInfo")
+//        //编码结束
+//        archiver.finishEncoding()
+//        //数据写入
+//        data.write(toFile: NSHomeDirectory()+"/roomsInfo.plist", atomically: true)
+        
+//        let path = NSHomeDirectory() + "/roomsInfo.plist"
+//        let url = URL(fileURLWithPath: path)
+//        let data = try! Data(contentsOf: url)
+//        //解码器
+//        let unarchiver = NSKeyedUnarchiver(forReadingWith: data)
+//        //通过归档时设置的关键字Checklist还原lists
+//        GLOBAL_RoomInfo = unarchiver.decodeObject(forKey: "roomsInfo") as! Dictionary
+//        //结束解码
+//        unarchiver.finishDecoding()
+        
+        
         return true
     }
 
