@@ -30,14 +30,15 @@ class PresentRoomDetailViewController: UIViewController,UITableViewDelegate,UITa
         super.viewDidLoad()
         
         prepareForBackButton()
-        
-        let path = NSHomeDirectory() + "/roomsInfo.plist"
-        let url = URL(fileURLWithPath: path)
-        let data = try! Data(contentsOf: url)
+
+        //读取缓存部分，现用读取固件内部预先设好的plist代替！！
+        let path_ = Bundle.main.url(forResource: "roomsInfo", withExtension: "plist")
+        let data_ = try! Data(contentsOf: path_!)
         //解码器
-        let unarchiver = NSKeyedUnarchiver(forReadingWith: data)
-        //通过归档时设置的关键字Checklist还原lists
+        let unarchiver = NSKeyedUnarchiver(forReadingWith: data_)
         self.rawData = unarchiver.decodeObject(forKey: "roomsInfo") as! Dictionary<String, RoomInfoModel>
+        unarchiver.finishDecoding()
+
         
         room = acquireRoomInfoByName(self.roomName!,rawData: rawData)
         self.preview.image = UIImage(named: (room?.preImage)!)

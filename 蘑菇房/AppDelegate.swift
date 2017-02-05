@@ -178,19 +178,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        //申明一个归档处理对象
 //        let archiver = NSKeyedArchiver(forWritingWith: data)
 //        //将lists以对应Checklist关键字进行编码
-//        archiver.encode(GLOBAL_RoomInfo, forKey: "roomsInfo")
+//        archiver.encode(GLOBAL_NotificationCache, forKey: "notificationCache")
 //        //编码结束
 //        archiver.finishEncoding()
 //        //数据写入
-//        data.write(toFile: NSHomeDirectory()+"/roomsInfo.plist", atomically: true)
+//        data.write(toFile: NSHomeDirectory()+"/Documents/notificationCache.plist", atomically: true)
         
-//        let path = NSHomeDirectory() + "/roomsInfo.plist"
-//        let url = URL(fileURLWithPath: path)
+        let path = NSHomeDirectory() + "/Documents/notificationCache.plist"
+        let url = URL(fileURLWithPath: path)
+        try?FileManager.default.removeItem(at: url)
 //        let data = try! Data(contentsOf: url)
 //        //解码器
 //        let unarchiver = NSKeyedUnarchiver(forReadingWith: data)
 //        //通过归档时设置的关键字Checklist还原lists
-//        GLOBAL_RoomInfo = unarchiver.decodeObject(forKey: "roomsInfo") as! Dictionary
+//        GLOBAL_DataSource = unarchiver.decodeObject(forKey: "cloudDataSource") as! Dictionary
 //        //结束解码
 //        unarchiver.finishDecoding()
         

@@ -16,7 +16,7 @@ class DataSourceViewController: UIViewController,UITableViewDelegate,UITableView
         
     var roomID = "00000" //暂定
     
-    private var shownDatum = GLOBAL_DataSource
+    private var shownDatum : Dictionary<String,DataSource> = [:]
     
     private let areaIndex = ["A","B","C","D"]
     
@@ -51,6 +51,16 @@ class DataSourceViewController: UIViewController,UITableViewDelegate,UITableView
     
     
     override func viewDidLoad() {
+        
+        //读取缓存部分，现用读取固件内部预先设好的plist代替！！
+        let path_ = Bundle.main.url(forResource: "cloudDataSource", withExtension: "plist")
+        let data_ = try! Data(contentsOf: path_!)
+        //解码器
+        let unarchiver = NSKeyedUnarchiver(forReadingWith: data_)
+        self.shownDatum = unarchiver.decodeObject(forKey: "cloudDataSource")as! Dictionary<String, DataSource>
+        unarchiver.finishDecoding()
+
+        
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self

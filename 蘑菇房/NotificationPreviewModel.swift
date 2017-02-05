@@ -8,10 +8,10 @@
 
 import Foundation
 class NotificationPreview: NSObject {
-    var messageID : Int
+    var messageID : Int?
     var preImage : String?
     var prelabel : String?
-    var isRead : Bool = false
+    var isRead : Bool? = false
     var timestamp : String?    // 时间戳 注意！输入是整型，输出是字符串！ 2016.7.17/7:50
     
     init(messageID:Int,preImage:String,prelabel:String,isRead:Bool,timestamp:Int) {
@@ -22,8 +22,21 @@ class NotificationPreview: NSObject {
         self.timestamp = NSString(format: "%d",timestamp) as String
     }
     
-//    func markAsReadMessage() {
-//        self.isRead = true
-//    }
+    init(coder aDecoder:NSCoder!){
+        self.messageID = aDecoder.decodeObject(forKey: "messageID") as? Int
+        self.preImage = aDecoder.decodeObject(forKey: "preImage") as? String
+        self.prelabel = aDecoder.decodeObject(forKey: "prelabel") as? String
+        self.isRead = aDecoder.decodeObject(forKey: "isRead") as? Bool
+        self.timestamp = aDecoder.decodeObject(forKey: "timestamp") as? String
+    }
+    
+    func encodeWithCoder(_ aCoder:NSCoder!){
+        aCoder.encode(messageID, forKey: "messageID")
+        aCoder.encode(preImage,forKey:"preImage")
+        aCoder.encode(prelabel,forKey:"prelabel")
+        aCoder.encode(isRead,forKey:"isRead")
+        aCoder.encode(timestamp,forKey:"timestamp")
+    }
+
     
 }

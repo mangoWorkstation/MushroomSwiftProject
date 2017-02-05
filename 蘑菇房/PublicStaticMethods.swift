@@ -77,7 +77,7 @@ func unreadMessageFilter(_ rawDataArray:[NotificationPreview])->[NotificationPre
         let info = rawDataArray[i]
         let isRead = info.isRead
         if(isRead == false){
-            filterData.append(NotificationPreview(messageID: info.messageID,preImage: info.preImage!, prelabel: info.prelabel!, isRead: false, timestamp: Int(info.timestamp!)!))
+            filterData.append(NotificationPreview(messageID: info.messageID!,preImage: info.preImage!, prelabel: info.prelabel!, isRead: false, timestamp: Int(info.timestamp!)!))
         }
     }
     return filterData
@@ -94,10 +94,10 @@ func clearAllUnreadMessage(_ rawDataArray:[NotificationPreview])->[NotificationP
         let info = rawDataArray[i]
         let isRead = info.isRead
         if(isRead == false){
-            allData.append(NotificationPreview(messageID: info.messageID,preImage: info.preImage!, prelabel: info.prelabel!, isRead: true, timestamp: Int(info.timestamp!)!))
+            allData.append(NotificationPreview(messageID: info.messageID!,preImage: info.preImage!, prelabel: info.prelabel!, isRead: true, timestamp: Int(info.timestamp!)!))
         }
         else{
-            allData.append(NotificationPreview(messageID: info.messageID,preImage: info.preImage!, prelabel: info.prelabel!, isRead: true, timestamp: Int(info.timestamp!)!))
+            allData.append(NotificationPreview(messageID: info.messageID!,preImage: info.preImage!, prelabel: info.prelabel!, isRead: true, timestamp: Int(info.timestamp!)!))
         }
     }
     return allData
@@ -158,9 +158,9 @@ func acquireRoomInfoByName(_ name:String,rawData:Dictionary<String,RoomInfoModel
  * @Param roomID: String 基地ID
  * @Return RoomInfoModel 基地信息
  */
-func acquireRoomInfoByRoomID(_ roomID:String)->RoomInfoModel{
+func acquireRoomInfoByRoomID(_ roomID:String, rawData:Dictionary<String,RoomInfoModel>)->RoomInfoModel{
     var foundOut = RoomInfoModel(district: 0, name: "0", preImage: "0", address: "0", roomID: "0",latitude: 0.0,longitude:0.0)
-    let elements = GLOBAL_RoomInfo.values
+    let elements = rawData.values
     for element in elements {
         if (element.roomID == roomID){
             foundOut = element
@@ -198,7 +198,7 @@ func distanceCalc(_ lat_1:Double,lng_1:Double,lat_2:Double,lng_2:Double)->Double
 func nearbyRoomFilter(_ rawData: Dictionary<String,RoomInfoModel>)->[RoomInfoModel]{
     var filterData : [RoomInfoModel] = []
     var differences : Dictionary<String,Double> = [:]
-    let elements = GLOBAL_RoomInfo.values
+    let elements = rawData.values
     for element in elements {
         let roomID = element.roomID
         let lat_1 = element.latitude
@@ -213,7 +213,7 @@ func nearbyRoomFilter(_ rawData: Dictionary<String,RoomInfoModel>)->[RoomInfoMod
     for i in 0 ..< 5 {
         let temp = dicArray[i]
         let roomID = temp.0
-        let tempElement = acquireRoomInfoByRoomID(roomID)
+        let tempElement = acquireRoomInfoByRoomID(roomID,rawData: rawData)
         filterData.append(tempElement)
     }
     return filterData

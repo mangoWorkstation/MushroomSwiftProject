@@ -36,10 +36,22 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
         }
     }
     
+    var rawData:Dictionary<String,RoomInfoModel> = [:]
+    
     private let geocoder = CLGeocoder()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //读取缓存部分，现用读取固件内部预先设好的plist代替！！
+        let path_ = Bundle.main.url(forResource: "roomsInfo", withExtension: "plist")
+        let data_ = try! Data(contentsOf: path_!)
+        //解码器
+        let unarchiver = NSKeyedUnarchiver(forReadingWith: data_)
+        self.rawData = unarchiver.decodeObject(forKey: "roomsInfo") as! Dictionary<String, RoomInfoModel>
+        unarchiver.finishDecoding()
+        
+        
         DispatchQueue.main.async{
             self.setProgressView()  //显示加载指示器 2016.8.21
             return
@@ -241,7 +253,7 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
             print("经度：\(locationInfo.coordinate.longitude)")
             print("纬度：\(locationInfo.coordinate.latitude)")
             print("\n")
-            self.showData = nearbyRoomFilter(GLOBAL_RoomInfo)
+            self.showData = nearbyRoomFilter(self.rawData)
             self.tableView.reloadData()
             getReadyForMap()    //为地图准备数据
             //因为是异步操作，只能在这里刷新视图，他妈的，逻辑绕死我了 2016.8.21
@@ -281,7 +293,7 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
             self.mapShow.centerCoordinate.longitude = self.mapShow.userLocation.coordinate.longitude
         }
         else{
-            let selectedLocation = nearbyRoomFilter(GLOBAL_RoomInfo)[(indexPath as NSIndexPath).row]
+            let selectedLocation = nearbyRoomFilter(rawData)[(indexPath as NSIndexPath).row]
             self.mapShow.centerCoordinate.latitude = selectedLocation.latitude!
             self.mapShow.centerCoordinate.longitude = selectedLocation.longitude!
         }
@@ -329,7 +341,7 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
         var cell = UITableViewCell()
         var showDataArray : [RoomInfoModel] = []
         if ((self.search.text?.isEmpty) != nil){
-            showDataArray = nearbyRoomFilter(GLOBAL_RoomInfo)
+            showDataArray = nearbyRoomFilter(rawData)
         }
         else{
             showDataArray = self.showData
@@ -382,7 +394,7 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
 //                    showData.append(temp)
 //                }
 //            }
-            let elements = GLOBAL_RoomInfo.values
+            let elements = rawData.values
             for element in elements{
                 if strcmp(element.name!,searchText) == 0{
                     self.showData.append(element)
@@ -395,7 +407,7 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
         }
         else{
             self.showData.removeAll()
-            self.showData = nearbyRoomFilter(GLOBAL_RoomInfo)
+            self.showData = nearbyRoomFilter(rawData)
             self.tableView.reloadData()
         }
     }
@@ -422,7 +434,7 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
         }
         
         let leftIconView = UIImageView(frame: CGRect(x: 0, y: 0, width: 53, height: 53))
-        let tempInfo = nearbyRoomFilter(GLOBAL_RoomInfo)
+        let tempInfo = nearbyRoomFilter(rawData)
         leftIconView.image = UIImage(named: tempInfo[(indexPath as IndexPath).row - 1].preImage!)
         annotationView?.leftCalloutAccessoryView = leftIconView
         return annotationView

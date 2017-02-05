@@ -17,6 +17,10 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
     
     @IBOutlet weak var trashButton: UIBarButtonItem!
     
+    var rawData: [NotificationPreview] = []
+    
+    var unreadMeg:[NotificationPreview] = []
+    
 //    var isPlaying = false
     
     @IBAction func SegmentOnChanged(_ sender: AnyObject) {
@@ -28,16 +32,16 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
     @IBAction func TrashAllMessage(_ sender: UIBarButtonItem) {
         var sheet = UIAlertController()
         if(InfoType.selectedSegmentIndex == 0){
-            if !GLOBAL_UnreadMessage.isEmpty {
+            if !unreadMeg.isEmpty {
                 sheet = UIAlertController(title: "将要把所有未读消息标记为已读？", message: nil, preferredStyle: .actionSheet)
                 sheet.addAction(UIAlertAction(title: "确定", style: .default, handler: {
                     (action)->Void in
                     if self.InfoType.selectedSegmentIndex == 0{
-                        for i in 0 ..< GLOBAL_UnreadMessage.count {
-                            let tempElement = clearAllUnreadMessage(GLOBAL_UnreadMessage)
-                            GLOBAL_NotificationCache.append(tempElement[i])// “所有信息“中有重复元素 待解决 2016.7.17
+                        for i in 0 ..< self.unreadMeg.count {
+                            let tempElement = clearAllUnreadMessage(self.unreadMeg)
+                            self.rawData.append(tempElement[i])// “所有信息“中有重复元素 待解决 2016.7.17
                         }
-                        GLOBAL_UnreadMessage.removeAll()
+                        self.unreadMeg.removeAll()
                         self.isThereAnythingNew = false
                         self.tableView.reloadData()
                         
@@ -53,11 +57,11 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
             }
         }
         else if(InfoType.selectedSegmentIndex == 1){
-            if !GLOBAL_NotificationCache.isEmpty {
+            if !self.rawData.isEmpty {
                 sheet = UIAlertController(title: "将要清空所有消息？", message: nil, preferredStyle: .actionSheet)
                 sheet.addAction(UIAlertAction(title: "确定", style: .default, handler: {
                     (action)->Void in
-                    GLOBAL_NotificationCache.removeAll()
+                    self.rawData.removeAll()
                     self.tableView.reloadData()
                 }))
                 sheet.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
@@ -77,11 +81,23 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
     
 
     override func viewDidLoad() {
+        
+        //读取缓存部分，现用读取固件内部预先设好的plist代替！！
+        let path_ = Bundle.main.url(forResource: "notificationCache", withExtension: "plist")
+        let data_ = try! Data(contentsOf: path_!)
+        //解码器
+        let unarchiver = NSKeyedUnarchiver(forReadingWith: data_)
+        self.rawData = unarchiver.decodeObject(forKey: "notificationCache") as! [NotificationPreview]
+        unarchiver.finishDecoding()
+        
+        self.unreadMeg = unreadMessageFilter(self.rawData)
+
+        
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
         //测试数据
-        if(GLOBAL_UnreadMessage.count == 0){
+        if(unreadMeg.count == 0){
             self.isThereAnythingNew = false
         }
         InfoType.setTitleTextAttributes([NSFontAttributeName: UIFont(name: GLOBAL_appFont!, size: 12.0)!
@@ -108,7 +124,7 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
             }
         }
         else if(1 == self.InfoType.selectedSegmentIndex){
-            if(GLOBAL_NotificationCache.count == 0){
+            if(self.rawData.count == 0){
                 return 420
             }
             else{
@@ -136,15 +152,15 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
             }
             else {
 //                let UnreadMessage = unreadMessageFilter(self.notificationCache)
-                return GLOBAL_UnreadMessage.count //返回未读信息数 2016.7.17/9:40
+                return unreadMeg.count //返回未读信息数 2016.7.17/9:40
             }
         }
         else if (1 == self.InfoType.selectedSegmentIndex){
-            if(GLOBAL_NotificationCache.count == 0){
+            if(self.rawData.count == 0){
                 return 1
             }
             else{
-                return GLOBAL_NotificationCache.count
+                return self.rawData.count
             }
         }
         else{
@@ -169,7 +185,7 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
             }
             else{
                 cell = self.tableView.dequeueReusableCell(withIdentifier: "MailCell",for: indexPath)
-                let UnreadMessage = GLOBAL_UnreadMessage
+                let UnreadMessage = unreadMeg
                 let preImage = cell?.viewWithTag(2001) as! UIImageView
                 let preLabel = cell?.viewWithTag(2002) as! UILabel
                 let timeLabel = cell?.viewWithTag(2003) as! UILabel
@@ -184,7 +200,7 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
             }
         }
         else if(self.whichKindOfInfoType == 1){
-            if(GLOBAL_NotificationCache.count == 0){
+            if(self.rawData.count == 0){
                 cell = self.tableView!.dequeueReusableCell(withIdentifier: "EmptyMailBoxCell")!
                 let emptyIcon = cell?.viewWithTag(1001) as! UIImageView
                 let emptySign = cell?.viewWithTag(1002) as! UILabel
@@ -196,7 +212,7 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
                 let preImage = cell?.viewWithTag(2001) as! UIImageView
                 let preLabel = cell?.viewWithTag(2002) as! UILabel
                 let timeLabel = cell?.viewWithTag(2003) as! UILabel
-                let preview = GLOBAL_NotificationCache[(indexPath as NSIndexPath).row]
+                let preview = self.rawData[(indexPath as NSIndexPath).row]
                 preImage.image = UIImage(named: preview.preImage!)
                 preLabel.text = preview.prelabel!
                 timeLabel.text = timeStampToSpecificTime(preview.timestamp!)
@@ -209,11 +225,11 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
         self.tableView.deselectRow(at: indexPath, animated: true) //点击后取消被选中状态 2016.7.17
         if(self.whichKindOfInfoType == 0){
-            if(GLOBAL_UnreadMessage.count != 0){    //加这个判断，防止“暂时没有新信息”的单元格被点击 2016.7.17
-                let tempElement = GLOBAL_UnreadMessage[(indexPath as NSIndexPath).row]
-                GLOBAL_UnreadMessage.remove(at: (indexPath as NSIndexPath).row)
-                GLOBAL_NotificationCache.append(tempElement)
-                if(GLOBAL_UnreadMessage.count == 0){
+            if(unreadMeg.count != 0){    //加这个判断，防止“暂时没有新信息”的单元格被点击 2016.7.17
+                let tempElement = unreadMeg[(indexPath as NSIndexPath).row]
+                unreadMeg.remove(at: (indexPath as NSIndexPath).row)
+                self.rawData.append(tempElement)
+                if(unreadMeg.count == 0){
                     self.isThereAnythingNew = false
                 }
                 self.tableView.reloadData()
@@ -225,12 +241,12 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool{
         var deleteSwitch: Bool = false
         if(self.whichKindOfInfoType == 0){
-            if(GLOBAL_UnreadMessage.count != 0){
+            if(unreadMeg.count != 0){
                 deleteSwitch = true
             }
         }
         else if(self.whichKindOfInfoType == 1){
-            if(GLOBAL_NotificationCache.count != 0){
+            if(self.rawData.count != 0){
                 deleteSwitch = true
             }
         }
@@ -249,13 +265,13 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath){
         let row = (indexPath as NSIndexPath).row
         if(self.whichKindOfInfoType == 0){
-            let tempElement = GLOBAL_UnreadMessage[row]
-            GLOBAL_NotificationCache.append(tempElement)
-            GLOBAL_UnreadMessage.remove(at: row)
+            let tempElement = unreadMeg[row]
+            self.rawData.append(tempElement)
+            unreadMeg.remove(at: row)
             self.tableView.reloadData()
         }//标记为已读 2016.7.18
         else if(self.whichKindOfInfoType == 1){
-            GLOBAL_NotificationCache.remove(at: row)
+            self.rawData.remove(at: row)
             self.tableView.reloadData()
         }//删除信息 2016.7.18
         
@@ -265,7 +281,7 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
     func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String?{
         var label:String?
         if(self.whichKindOfInfoType == 0){
-            if(GLOBAL_UnreadMessage.count != 0){
+            if(unreadMeg.count != 0){
                 label = "标记已读"
             }
         }

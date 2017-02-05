@@ -154,6 +154,9 @@
 		0D75A0FD1DD61263001FD6F9 /* CoreDataDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D75A0FC1DD61263001FD6F9 /* CoreDataDAO.swift */; };
 		0D77858D1D53444900A74A30 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D77858C1D53444900A74A30 /* MapKit.framework */; };
 		0D7785921D534B7400A74A30 /* NearbyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7785911D534B7400A74A30 /* NearbyViewController.swift */; };
+		0D7826331E45655B00632BA3 /* roomsInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0D7826321E45655B00632BA3 /* roomsInfo.plist */; };
+		0D7826361E45EC9B00632BA3 /* cloudDataSource.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0D7826351E45EC9B00632BA3 /* cloudDataSource.plist */; };
+		0D78263A1E45F87E00632BA3 /* notificationCache.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0D7826391E45F87E00632BA3 /* notificationCache.plist */; };
 		0D7A7A8D1D7AB8EC009A3A1D /* UICountingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7A7A8C1D7AB8EC009A3A1D /* UICountingLabel.swift */; };
 		0D7FBC381CE80A6800775FCA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7FBC371CE80A6800775FCA /* AppDelegate.swift */; };
 		0D7FBC3A1CE80A6800775FCA /* MushroomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7FBC391CE80A6800775FCA /* MushroomViewController.swift */; };
@@ -394,6 +397,9 @@
 		0D75A0FC1DD61263001FD6F9 /* CoreDataDAO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreDataDAO.swift; path = CoreDataDAO/CoreDataDAO.swift; sourceTree = "<group>"; };
 		0D77858C1D53444900A74A30 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		0D7785911D534B7400A74A30 /* NearbyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearbyViewController.swift; sourceTree = "<group>"; };
+		0D7826321E45655B00632BA3 /* roomsInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = roomsInfo.plist; sourceTree = "<group>"; };
+		0D7826351E45EC9B00632BA3 /* cloudDataSource.plist */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = cloudDataSource.plist; sourceTree = "<group>"; };
+		0D7826391E45F87E00632BA3 /* notificationCache.plist */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = notificationCache.plist; sourceTree = "<group>"; };
 		0D7A7A8C1D7AB8EC009A3A1D /* UICountingLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICountingLabel.swift; sourceTree = "<group>"; };
 		0D7FBC341CE80A6800775FCA /* 蘑菇房.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "蘑菇房.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D7FBC371CE80A6800775FCA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -858,6 +864,16 @@
 			name = NeabyVCs;
 			sourceTree = "<group>";
 		};
+		0D7826341E45EC5B00632BA3 /* Caches */ = {
+			isa = PBXGroup;
+			children = (
+				0D7826391E45F87E00632BA3 /* notificationCache.plist */,
+				0D7826321E45655B00632BA3 /* roomsInfo.plist */,
+				0D7826351E45EC9B00632BA3 /* cloudDataSource.plist */,
+			);
+			name = Caches;
+			sourceTree = "<group>";
+		};
 		0D7A7A8B1D7AB5BA009A3A1D /* UICountingLabel */ = {
 			isa = PBXGroup;
 			children = (
@@ -914,6 +930,7 @@
 			children = (
 				0D8B65A81DE4A13B0081AC90 /* ROM Pre-Writer */,
 				0D5369E81DE40A2D00AC33C6 /* PropertyListResources */,
+				0D7826341E45EC5B00632BA3 /* Caches */,
 				0D3FC0F01DD764FD00D12860 /* 蘑菇房-Bridging-Header.h */,
 				0D3FC0F31DD7653E00D12860 /* HASH_Encrypt.swift */,
 				0DD895F91DB3C4CF00D91C04 /* GLOBAL_VAR.swift */,
@@ -1212,6 +1229,7 @@
 				0D68A8941DFEE1EB0023C47B /* Cloud-Refresh.png in Resources */,
 				0D441A3D1DFEF9AC00DF7EB9 /* wind_110px.png in Resources */,
 				0D7FBC441CE80A6900775FCA /* LaunchScreen.storyboard in Resources */,
+				0D7826331E45655B00632BA3 /* roomsInfo.plist in Resources */,
 				0D4406A71D81BEAA00E045AA /* 蘑菇背景.png in Resources */,
 				0D02C5D41E3E4A9C00D7BB37 /* 09.png in Resources */,
 				0D8606AB1D62BFCC00CE3905 /* Page_2_Weather.storyboard in Resources */,
@@ -1261,6 +1279,8 @@
 				0D02C5ED1E3E4A9C00D7BB37 /* 34.png in Resources */,
 				0D8606AE1D62C02300CE3905 /* Page_3_User.storyboard in Resources */,
 				0D02C5E31E3E4A9C00D7BB37 /* 24.png in Resources */,
+				0D7826361E45EC9B00632BA3 /* cloudDataSource.plist in Resources */,
+				0D78263A1E45F87E00632BA3 /* notificationCache.plist in Resources */,
 				0D7FBC3F1CE80A6900775FCA /* Main.storyboard in Resources */,
 				0DCE114E1DE14A5F00308699 /* provinces_dic.plist in Resources */,
 				0D02C5E01E3E4A9C00D7BB37 /* 21.png in Resources */,

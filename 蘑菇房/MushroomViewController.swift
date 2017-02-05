@@ -20,7 +20,7 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
     //后台的数据原型
     //2016.8.27
     var rawData : Dictionary<String,RoomInfoModel> = [:]
-//    var backgroundData : [RoomInfoModel] = Array(GLOBAL_RoomInfo.values)
+
     var backgroundData : [RoomInfoModel] = []
     
     //前台的显示数据，是数据原型的子数组。
@@ -94,30 +94,15 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        let data = NSMutableData()
-//        //申明一个归档处理对象
-//        let archiver = NSKeyedArchiver(forWritingWith: data)
-//        //将lists以对应Checklist关键字进行编码
-//        archiver.encode(GLOBAL_RoomInfo, forKey: "roomsInfo")
-//        //编码结束
-//        archiver.finishEncoding()
-//        //数据写入
-//        data.write(toFile: NSHomeDirectory()+"/Documents/roomsInfo.plist", atomically: true)
-        
-//        DispatchQueue.main.async {
-        let path_ = NSHomeDirectory() + "/Documents/roomsInfo.plist"
-        let url = URL(fileURLWithPath: path_)
-        let data_ = try! Data(contentsOf: url)
+        //读取缓存部分，现用读取固件内部预先设好的plist代替！！
+        let path_ = Bundle.main.url(forResource: "roomsInfo", withExtension: "plist")
+        let data_ = try! Data(contentsOf: path_!)
         //解码器
         let unarchiver = NSKeyedUnarchiver(forReadingWith: data_)
-        //通过归档时设置的关键字Checklist还原lists
         self.rawData = unarchiver.decodeObject(forKey: "roomsInfo") as! Dictionary<String, RoomInfoModel>
         unarchiver.finishDecoding()
         self.backgroundData = Array(self.rawData.values)
-//
-//        }
-        
-        //结束解码
+
         
         
         self.configUserInfo()
@@ -129,8 +114,6 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         prepareForScrollPages() //加载轮播图
         
         //        NotificationCenter.default.addObserver(self, selector: #selector(MushroomViewController.refresh(_notification:)), name: NSNotification.Name(rawValue: "homeRefresh"), object: nil)
-        
-        //点击tabbar后刷新页面
         
         tableView.delegate = self
         tableView.dataSource = self

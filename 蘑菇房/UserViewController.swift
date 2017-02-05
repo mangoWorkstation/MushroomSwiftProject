@@ -19,9 +19,18 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var staticItems_section_3 : [StaticItem] = [] //数组：用于存放静态状态图标
     var staticItems_section_2 : [StaticItem] = [] //数组：用于存放静态状态图标
     
-    
+    var notificationRawData:[NotificationPreview] = []
     
     override func viewDidLoad() {
+        
+        //读取缓存部分，现用读取固件内部预先设好的plist代替！！
+        let path_ = Bundle.main.url(forResource: "notificationCache", withExtension: "plist")
+        let data_ = try! Data(contentsOf: path_!)
+        //解码器
+        let unarchiver = NSKeyedUnarchiver(forReadingWith: data_)
+        self.notificationRawData = unarchiver.decodeObject(forKey: "notificationCache") as! [NotificationPreview]
+        unarchiver.finishDecoding()
+
         
         super.viewDidLoad()
         tableView.delegate = self
@@ -203,8 +212,8 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             let sign = cell!.viewWithTag(201) as! UIImageView
             let notification = cell!.viewWithTag(202) as! UILabel
             sign.image = UIImage(named: "Alert")
-            if !GLOBAL_NotificationCache.isEmpty{
-                let currrentMeg = GLOBAL_NotificationCache.last!
+            if !self.notificationRawData.isEmpty{
+                let currrentMeg = self.notificationRawData.last!
                 let time = timeStampToSpecificTime(currrentMeg.timestamp!)
                 notification.text = "\(time)  "+"\(currrentMeg.prelabel!)"
             }
