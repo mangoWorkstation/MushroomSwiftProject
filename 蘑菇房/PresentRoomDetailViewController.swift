@@ -12,6 +12,8 @@ class PresentRoomDetailViewController: UIViewController,UITableViewDelegate,UITa
 
     var rawData:Dictionary<String,RoomInfoModel> = [:]
     
+    var cloudDataSource:Dictionary<String,DataSource> = [:]
+    
     var roomName: String?
     
     var currentArea:String?
@@ -26,6 +28,11 @@ class PresentRoomDetailViewController: UIViewController,UITableViewDelegate,UITa
     
     @IBOutlet weak var preview: UIImageView!
     
+    //测试异步下载用，kingfisher测试用
+    let imagesURLs = ["http://tupian.enterdesk.com/uploadfile/2016/0229/20160229101318786.jpg",
+                      "http://tupian.enterdesk.com/uploadfile/2015/0603/20150603110712511.jpg",
+                      "http://tupian.enterdesk.com/uploadfile/2015/0409/20150409032727732.jpg"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -39,6 +46,14 @@ class PresentRoomDetailViewController: UIViewController,UITableViewDelegate,UITa
         self.rawData = unarchiver.decodeObject(forKey: "roomsInfo") as! Dictionary<String, RoomInfoModel>
         unarchiver.finishDecoding()
 
+        //读取缓存部分，现用读取固件内部预先设好的plist代替！！
+        let path_1 = Bundle.main.url(forResource: "cloudDataSource", withExtension: "plist")
+        let data_1 = try! Data(contentsOf: path_1!)
+        //解码器
+        let unarchiver_1 = NSKeyedUnarchiver(forReadingWith: data_1)
+        self.cloudDataSource = unarchiver_1.decodeObject(forKey: "cloudDataSource")as! Dictionary<String, DataSource>
+        unarchiver.finishDecoding()
+
         
         room = acquireRoomInfoByName(self.roomName!,rawData: rawData)
         self.preview.image = UIImage(named: (room?.preImage)!)
@@ -46,6 +61,16 @@ class PresentRoomDetailViewController: UIViewController,UITableViewDelegate,UITa
         tableView.delegate = self
         tableView.dataSource = self
         configurateHeaderAndFooter()
+        
+        preview.kf.indicatorType = .activity
+        let url = URL(string: imagesURLs[Int((room?.preImage)!)!-1])
+        preview.kf.setImage(with: url, placeholder: nil, options: [.transition(ImageTransition.fade(1))], progressBlock: { receivedSize, totalSize in
+            print("\(receivedSize)/\(totalSize)")
+        }, completionHandler: { image, error, cacheType, imageURL in
+            print("done")
+            self.preview.kf.cancelDownloadTask()
+        })
+        
         self.tableView.es_addPullToRefresh(animator: header) {
             [weak self] in
             self?.refresh()
@@ -77,6 +102,9 @@ class PresentRoomDetailViewController: UIViewController,UITableViewDelegate,UITa
         DispatchQueue.main.asyncAfter(deadline: .now() + loadingTimeInterval) {
             self.tableView.reloadData()
             self.tableView.es_stopPullToRefresh(completion: true)
+            let bannerView = MGBannerIndicatorView(duration: 3.0, text: "更新成功", backgroundColor: .orange, textColor: .white)
+            bannerView.alpha = 0.8
+            bannerView.stroke(in: self.view)
         }
     }
     
@@ -104,7 +132,7 @@ class PresentRoomDetailViewController: UIViewController,UITableViewDelegate,UITa
             performSegue(withIdentifier: "ShowMapSegue", sender: self.room)
         }
         if (indexPath as NSIndexPath).section == 1 && (indexPath as NSIndexPath).row == 0{
-            if (GLOBAL_DataSource[(self.room?.roomID)! + "A0"] != nil){
+            if (self.cloudDataSource[(self.room?.roomID)! + "A0"] != nil){
                 performSegue(withIdentifier: "ShowDataSourceSegue", sender: self.room)
             }
             else {

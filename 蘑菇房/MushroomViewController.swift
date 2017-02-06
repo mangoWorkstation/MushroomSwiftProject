@@ -11,7 +11,7 @@ import CoreData
 import Foundation
 import UserNotifications
 
-class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource{
+class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,UITableViewDataSourcePrefetching{
     
     var chosenArea :String? = "选择区域" //保存选择的区域 2016.8.2
     
@@ -62,6 +62,10 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
     private var viewIsOnceLoaded = true
     
     
+    //测试异步下载用，kingfisher测试用
+    let imagesURLs = ["http://tupian.enterdesk.com/uploadfile/2016/0229/20160229101318786.jpg",
+                      "http://tupian.enterdesk.com/uploadfile/2015/0603/20150603110712511.jpg",
+                      "http://tupian.enterdesk.com/uploadfile/2015/0409/20150409032727732.jpg"]
     
     
     //unwindSegue
@@ -174,7 +178,6 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         if indexPath != nil{
             self.tableView.deselectRow(at: indexPath!, animated: true)
         }
-        
         //推送本地通知，未成功
         //        let pushNotification = UILocalNotification()
         //        pushNotification.userInfo = ["00001":"1111"]
@@ -227,6 +230,9 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
     
     private func refresh() {
         DispatchQueue.main.asyncAfter(deadline: .now() + loadingTimeInterval) {
+            KingfisherManager.shared.cache.clearDiskCache()
+            KingfisherManager.shared.cache.clearMemoryCache()
+
             self.tableView.reloadData()
             self.tableView.es_stopPullToRefresh(completion: true)
             
@@ -278,10 +284,16 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
     //MARK: - 加载轮播图
     fileprivate func prepareForScrollPages(){
         for i in 1..<4 {
-            let image = UIImage(named: "\(i).jpg")!
+//            let image = UIImage(named: "\(i).jpg")!
             let x = CGFloat(i - 1) * self.view.frame.width
             let button = UIButton(frame: CGRect(x: x, y: 0, width: self.view.frame.width, height: pageScroller.bounds.height))
-            button.setBackgroundImage(image, for: .normal)
+//            button.setBackgroundImage(image, for: .normal)
+            let url = URL(string: self.imagesURLs[i-1])
+            button.kf.setBackgroundImage(with: url, for: .normal, placeholder: nil, options: [.transition(ImageTransition.fade(1))], progressBlock: { receivedSize, totalSize in
+                print("\(receivedSize)/\(totalSize)")
+            }, completionHandler: nil)
+            
+            
             button.addTarget(self, action: #selector(MushroomViewController.openWebView(sender:forEvent:)), for: .touchUpInside)
             pageScroller.isPagingEnabled = true
             pageScroller.showsHorizontalScrollIndicator = true
@@ -477,16 +489,17 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         let image = cell.viewWithTag(1) as! UIImageView
         let name = cell.viewWithTag(2) as! UILabel
         let more = cell.viewWithTag(3) as! UILabel
-        image.image = UIImage(named: info.preImage!)
+//        image.image = UIImage(named: info.preImage!)
         
         image.layer.cornerRadius = 20
         image.layer.masksToBounds = true
         image.clipsToBounds = true
+        image.kf.indicatorType = .activity
         
         name.text = info.name
         more.text = "查看详情"
         
-        name.font = UIFont(name: GLOBAL_appFont!, size: 17.0)
+        name.font = UIFont(name: GLOBAL_appFont!, size: 17.0)!
         more.font = UIFont(name: GLOBAL_appFont!, size: 12.0)
         
         name.textColor = UIColor.black
@@ -501,10 +514,34 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         return cell
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let info = foregroundShownData[(indexPath as NSIndexPath).section] as RoomInfoModel
+        let downloadIndicator = Int(info.preImage!)
+        let url = URL(string: self.imagesURLs[downloadIndicator!-1])
+        let preImage = cell.viewWithTag(1) as! UIImageView
+        preImage.kf.setImage(with: url, placeholder: nil, options: [.transition(ImageTransition.fade(1))], progressBlock: { receivedSize, totalSize in
+            print("\(indexPath.row + 1): \(receivedSize)/\(totalSize)")
+        }, completionHandler: { image, error, cacheType, imageURL in
+            print("\(indexPath.row + 1): Finished")
+        })
+    }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let preImage = cell.viewWithTag(1) as! UIImageView
+        preImage.kf.cancelDownloadTask()
+    }
+    
+    
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
         let cell = self.tableView.cellForRow(at: indexPath)!
         let name = cell.viewWithTag(2) as! UILabel
         performSegue(withIdentifier: "ShowDetailSegue", sender: name)
+    }
+    
+    //MARK: - UITableViewDataSourcePrefetching
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        
     }
     
     //MARK: - UIStoryBoardSegue

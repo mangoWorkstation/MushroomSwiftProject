@@ -106,6 +106,10 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
         self.tableView.reloadData()
         // Do any additional setup after loading the view.
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.tableView.reloadData()
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -190,7 +194,8 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
                 let preLabel = cell?.viewWithTag(2002) as! UILabel
                 let timeLabel = cell?.viewWithTag(2003) as! UILabel
                 let preview = UnreadMessage[(indexPath as NSIndexPath).row]
-                preImage.image = UIImage(named: preview.preImage!)
+//                preImage.image = UIImage(named: preview.preImage!)
+                preImage.kf.indicatorType = .activity
                 preLabel.text = preview.prelabel!
                 preLabel.font = UIFont(name: GLOBAL_appFont!, size: 13.0)
                 timeLabel.text = timeStampToSpecificTime(preview.timestamp!)
@@ -213,12 +218,47 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
                 let preLabel = cell?.viewWithTag(2002) as! UILabel
                 let timeLabel = cell?.viewWithTag(2003) as! UILabel
                 let preview = self.rawData[(indexPath as NSIndexPath).row]
-                preImage.image = UIImage(named: preview.preImage!)
+//                preImage.image = UIImage(named: preview.preImage!)
+                preImage.kf.indicatorType = .activity
                 preLabel.text = preview.prelabel!
                 timeLabel.text = timeStampToSpecificTime(preview.timestamp!)
             }
         }
         return cell!
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if(self.whichKindOfInfoType == 0){
+            if(self.isThereAnythingNew == true){
+                let UnreadMessage = unreadMeg
+                let preview = UnreadMessage[(indexPath as NSIndexPath).row]
+                let url = preview.preImage
+                let preImage = cell.viewWithTag(2001) as! UIImageView
+                preImage.kf.setImage(with: url, placeholder: nil, options: [.transition(ImageTransition.fade(1))], progressBlock: { receivedSize, totalSize in
+                    print("\(indexPath.row + 1): \(receivedSize)/\(totalSize)")
+                }, completionHandler: { image, error, cacheType, imageURL in
+                    print("\(indexPath.row + 1): Finished")
+                })
+
+            }
+        }
+        if(self.whichKindOfInfoType == 1){
+            if(self.rawData.count != 0){
+                let preview = self.rawData[(indexPath as NSIndexPath).row]
+                let url = preview.preImage
+                let preImage = cell.viewWithTag(2001) as! UIImageView
+                preImage.kf.setImage(with: url, placeholder: nil, options: [.transition(ImageTransition.fade(1))], progressBlock: { receivedSize, totalSize in
+                    print("\(indexPath.row + 1): \(receivedSize)/\(totalSize)")
+                }, completionHandler: { image, error, cacheType, imageURL in
+                    print("\(indexPath.row + 1): Finished")
+                })
+            }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let preImage = cell.viewWithTag(2001) as! UIImageView
+        preImage.kf.cancelDownloadTask()
     }
     
 //单元格被选中后的效果，排除信箱空的情况 2016.7.17

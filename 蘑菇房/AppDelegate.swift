@@ -184,14 +184,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        //数据写入
 //        data.write(toFile: NSHomeDirectory()+"/Documents/notificationCache.plist", atomically: true)
         
-        let path = NSHomeDirectory() + "/Documents/notificationCache.plist"
-        let url = URL(fileURLWithPath: path)
-        try?FileManager.default.removeItem(at: url)
+//        let path = NSHomeDirectory() + "/Documents/notificationCache.plist"
+//        let url = URL(fileURLWithPath: path)
+//        try?FileManager.default.removeItem(at: url)
 //        let data = try! Data(contentsOf: url)
 //        //解码器
 //        let unarchiver = NSKeyedUnarchiver(forReadingWith: data)
 //        //通过归档时设置的关键字Checklist还原lists
-//        GLOBAL_DataSource = unarchiver.decodeObject(forKey: "cloudDataSource") as! Dictionary
+//        GLOBAL_NotificationCache = unarchiver.decodeObject(forKey: "notificationCache") as! Dictionary
 //        //结束解码
 //        unarchiver.finishDecoding()
         

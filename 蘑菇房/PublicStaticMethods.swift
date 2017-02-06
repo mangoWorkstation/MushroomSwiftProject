@@ -77,7 +77,7 @@ func unreadMessageFilter(_ rawDataArray:[NotificationPreview])->[NotificationPre
         let info = rawDataArray[i]
         let isRead = info.isRead
         if(isRead == false){
-            filterData.append(NotificationPreview(messageID: info.messageID!,preImage: info.preImage!, prelabel: info.prelabel!, isRead: false, timestamp: Int(info.timestamp!)!))
+            filterData.append(NotificationPreview(messageID: info.messageID!,preImage: info.preImage!.absoluteString, prelabel: info.prelabel!, isRead: false, timestamp: Int(info.timestamp!)!))
         }
     }
     return filterData
@@ -94,10 +94,10 @@ func clearAllUnreadMessage(_ rawDataArray:[NotificationPreview])->[NotificationP
         let info = rawDataArray[i]
         let isRead = info.isRead
         if(isRead == false){
-            allData.append(NotificationPreview(messageID: info.messageID!,preImage: info.preImage!, prelabel: info.prelabel!, isRead: true, timestamp: Int(info.timestamp!)!))
+            allData.append(NotificationPreview(messageID: info.messageID!,preImage: info.preImage!.absoluteString, prelabel: info.prelabel!, isRead: true, timestamp: Int(info.timestamp!)!))
         }
         else{
-            allData.append(NotificationPreview(messageID: info.messageID!,preImage: info.preImage!, prelabel: info.prelabel!, isRead: true, timestamp: Int(info.timestamp!)!))
+            allData.append(NotificationPreview(messageID: info.messageID!,preImage: info.preImage!.absoluteString, prelabel: info.prelabel!, isRead: true, timestamp: Int(info.timestamp!)!))
         }
     }
     return allData

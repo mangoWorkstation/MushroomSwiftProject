@@ -9,14 +9,14 @@
 import Foundation
 class NotificationPreview: NSObject {
     var messageID : Int?
-    var preImage : String?
+    var preImage : URL?
     var prelabel : String?
     var isRead : Bool? = false
     var timestamp : String?    // 时间戳 注意！输入是整型，输出是字符串！ 2016.7.17/7:50
     
     init(messageID:Int,preImage:String,prelabel:String,isRead:Bool,timestamp:Int) {
         self.messageID = messageID
-        self.preImage = preImage
+        self.preImage = URL(string: preImage)
         self.prelabel = prelabel
         self.isRead = isRead
         self.timestamp = NSString(format: "%d",timestamp) as String
@@ -24,7 +24,7 @@ class NotificationPreview: NSObject {
     
     init(coder aDecoder:NSCoder!){
         self.messageID = aDecoder.decodeObject(forKey: "messageID") as? Int
-        self.preImage = aDecoder.decodeObject(forKey: "preImage") as? String
+        self.preImage = aDecoder.decodeObject(forKey: "preImage") as? URL
         self.prelabel = aDecoder.decodeObject(forKey: "prelabel") as? String
         self.isRead = aDecoder.decodeObject(forKey: "isRead") as? Bool
         self.timestamp = aDecoder.decodeObject(forKey: "timestamp") as? String

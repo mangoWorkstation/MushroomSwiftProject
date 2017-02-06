@@ -40,6 +40,7 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
         //缓存目录路径
         let cachePath_1 = cachePath! + "/Weather/today"
         let cachePath_2 = cachePath! + "/Weather/forecast"
+        let cachePath_3 = cachePath! + "/com.onevcat.Kingfisher.ImageCache.default"
         print(cachePath!)
         
         // 取出文件夹下所有文件数组
@@ -65,6 +66,18 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
             
             // 把文件名拼接到路径中
             let path = cachePath_2.appending("/"+file)
+            // 取出文件属性
+            let folder = try! FileManager.default.attributesOfItem(atPath: path)
+            let fs = folder[FileAttributeKey.size] as! Int
+            print(fs)
+            size += fs
+        }
+        
+        fileArr = FileManager.default.subpaths(atPath: cachePath_3)
+        for file in fileArr! {
+            
+            // 把文件名拼接到路径中
+            let path = cachePath_3.appending("/"+file)
             // 取出文件属性
             let folder = try! FileManager.default.attributesOfItem(atPath: path)
             let fs = folder[FileAttributeKey.size] as! Int
@@ -169,7 +182,7 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
                 let cacheFile = self.fileSizeOfCache()
                 label.text = "清除缓存"
                 if cacheFile>1024{
-                    label_1.text = String(Double(cacheFile/1024))+"MB"
+                    label_1.text = String(Int(cacheFile/1024))+"MB"
                 }
                 else{
                     label_1.text = String(Int(cacheFile))+"KB"
@@ -334,6 +347,7 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
                     let cell = self.tableView.cellForRow(at: indexPath)
                     let detail = cell?.viewWithTag(2002) as! UILabel
                     self.clearCache()
+                    KingfisherManager.shared.cache.clearDiskCache()
                     let cacheFile = self.fileSizeOfCache()
                     detail.text = String(Int(cacheFile))+"KB"
                     let frame = CGRect(x: 0, y: 0, width: 200, height: 100)
