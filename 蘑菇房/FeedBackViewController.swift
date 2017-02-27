@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FeedBackViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UITextViewDelegate{
+class FeedBackViewController: UIViewController{
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -17,7 +17,7 @@ class FeedBackViewController: UIViewController,UITableViewDelegate,UITableViewDa
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-//        tableView.keyboardDismissMode = .OnDrag //滑动收键盘 和 func scrollViewDidScroll(scrollView: UIScrollView) 作用相同，只留其一
+        tableView.keyboardDismissMode = .onDrag //滑动收键盘 和 func scrollViewDidScroll(scrollView: UIScrollView) 作用相同，只留其一
         // Do any additional setup after loading the view.
     }
 
@@ -26,8 +26,30 @@ class FeedBackViewController: UIViewController,UITableViewDelegate,UITableViewDa
         // Dispose of any resources that can be recreated.
     }
     
+    
+    
+    //滑动收键盘
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.view.endEditing(true)
+    }
+    
+//    -(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString*)text
+//    {
+//    if ([text isEqualToString:@"\n"]) {
+//    [textView resignFirstResponder];
+//    return NO;
+//    }
+//    return YES;
+//    }
+    
+    
+}
+
+extension FeedBackViewController:UITableViewDelegate,UITableViewDataSource,UITextViewDelegate{
+    
+    //MARK: - UITableViewDelegate,UITableViewDataSource
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
-//        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        //        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
         if((indexPath as NSIndexPath).section == 1){
             
         }
@@ -82,7 +104,8 @@ class FeedBackViewController: UIViewController,UITableViewDelegate,UITableViewDa
         }
     }
     
-//回车收键盘 2016.7.21
+    //MARK: - UITextViewDelegate
+    //回车收键盘 2016.7.21
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool{
         if(text == "\n"){
             textView.resignFirstResponder()
@@ -90,24 +113,7 @@ class FeedBackViewController: UIViewController,UITableViewDelegate,UITableViewDa
         }
         return true
     }
-    
-    //滑动收键盘
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        self.view.endEditing(true)
-    }
-    
-//    -(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString*)text
-//    {
-//    if ([text isEqualToString:@"\n"]) {
-//    [textView resignFirstResponder];
-//    return NO;
-//    }
-//    return YES;
-//    }
-    
-    
+
 }
-
-
 
 

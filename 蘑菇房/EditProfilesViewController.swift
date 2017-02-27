@@ -146,7 +146,10 @@ class EditProfilesViewController: UIViewController,UITableViewDelegate,UITableVi
         if(indexPath.row == 5){
             
             let storyboard : UIStoryboard = UIStoryboard(name: "Page_3_User", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "UserDistrictPicker")
+            let vc = UINavigationController(rootViewController: storyboard.instantiateViewController(withIdentifier: "UserDistrictPicker"))
+            vc.navigationBar.tintColor = .white
+            vc.navigationItem.backBarButtonItem?.title = "取消"
+            vc.navigationItem.rightBarButtonItem?.title = "确定"
             vc.modalPresentationStyle = UIModalPresentationStyle.popover
             let popover: UIPopoverPresentationController = vc.popoverPresentationController!
             popover.delegate = self

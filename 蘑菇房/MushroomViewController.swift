@@ -238,7 +238,7 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
             
             //刷新成功提示横幅
             let bannerView = MGBannerIndicatorView(duration: 3.0, text: "更新成功", backgroundColor: .orange, textColor: .white)
-            bannerView.alpha = 0.8
+            bannerView.alpha = 0.95
             bannerView.stroke(in: self.view)
 
             

@@ -27,6 +27,10 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
         // Do any additional setup after loading the view.
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        UIApplication.shared.statusBarStyle = .lightContent
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -207,7 +211,7 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
             if(0 == section){
                 cell = self.tableView.dequeueReusableCell(withIdentifier: "GeneralCell",for: indexPath)
                 let label = cell.viewWithTag(1001) as! UILabel
-                let labels = ["关于我们","给蘑菇房来个好评吧😊","联系我们"]
+                let labels = ["关于我们","给蘑菇房来个好评吧😊","联系我们","致谢"]
                 label.text = labels[(indexPath as NSIndexPath).row]
                 label.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
                 cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
@@ -265,7 +269,7 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
         else if(1 == self.selectedRow) {
             switch section {
             case 0:
-                return 3
+                return 4
             default:
                 return 1
             }
@@ -304,12 +308,17 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
                 if indexPath.row == 1{
                     let url = NSURL(string: "http://www.apple.com/cn/")
                     let vc = SFSafariViewController(url: url as! URL, entersReaderIfAvailable: true)
-                    present(vc, animated: true, completion: nil)
+                    present(vc, animated: true, completion: {
+                        UIApplication.shared.statusBarStyle = .default
+                    })
                 }
                 if indexPath.row == 2{
                     if MFMailComposeViewController.canSendMail(){
                         let controller = MFMailComposeViewController()
                         controller.navigationItem.backBarButtonItem?.title = "返回"
+                        controller.navigationItem.rightBarButtonItem?.tintColor = .white
+                        controller.navigationItem.backBarButtonItem?.tintColor = .white
+                        controller.navigationBar.tintColor = UIColor.white
                         //设置代理
                         controller.mailComposeDelegate = self
                         //设置主题
@@ -332,8 +341,14 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
                         //打开界面
                         self.present(controller, animated: true, completion: nil)
                     }else{
-                        print("本设备不能发送邮件")
+                        let sheet = UIAlertController(title: "邮件应用设置错误", message: "请前往“邮件”应用检查相关设置", preferredStyle: .alert)
+                        sheet.addAction(UIAlertAction(title: "好", style: .cancel, handler: nil))
+                        present(sheet, animated: true, completion: nil)
                     }
+                }
+                
+                if indexPath.row == 3{
+                    performSegue(withIdentifier: "AcknowledgementsSegue", sender: nil)
                 }
             }
         }
@@ -429,6 +444,12 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
             let vc = segue.destination as! AccountViewController
             vc.navigationItem.backBarButtonItem?.title = self.navigationItem.title
             vc.navigationItem.title = "账号与安全"
+        }
+        
+        if segue.identifier == "AcknowledgementsSegue"{
+            let vc = segue.destination as! AcknowledgementsTableViewController
+            vc.navigationItem.backBarButtonItem?.title = self.navigationItem.title
+            vc.navigationItem.title = "致谢开源组件"
         }
         
     }

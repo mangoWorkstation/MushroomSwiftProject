@@ -74,6 +74,7 @@
 		0D2B80BD1D3C70B2007FBB8A /* AboutUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2B80BC1D3C70B2007FBB8A /* AboutUsViewController.swift */; };
 		0D2B9B2C1D387723006559F1 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2B9B2B1D387723006559F1 /* NotificationViewController.swift */; };
 		0D2B9B2F1D3887A9006559F1 /* NotificationPreviewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2B9B2E1D3887A9006559F1 /* NotificationPreviewModel.swift */; };
+		0D321C501E63003F00ED3BC0 /* AcknowledgementsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D321C4F1E63003F00ED3BC0 /* AcknowledgementsTableViewController.swift */; };
 		0D32FEAE1D3DBC99008E79CD /* NewMessageInformViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D32FEAD1D3DBC99008E79CD /* NewMessageInformViewController.swift */; };
 		0D32FEB01D3DD0A2008E79CD /* FeedBackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D32FEAF1D3DD0A2008E79CD /* FeedBackViewController.swift */; };
 		0D3FC0F41DD7653E00D12860 /* HASH_Encrypt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3FC0F31DD7653E00D12860 /* HASH_Encrypt.swift */; };
@@ -334,6 +335,7 @@
 		0D2B80BC1D3C70B2007FBB8A /* AboutUsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutUsViewController.swift; sourceTree = "<group>"; };
 		0D2B9B2B1D387723006559F1 /* NotificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		0D2B9B2E1D3887A9006559F1 /* NotificationPreviewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationPreviewModel.swift; sourceTree = "<group>"; };
+		0D321C4F1E63003F00ED3BC0 /* AcknowledgementsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AcknowledgementsTableViewController.swift; sourceTree = "<group>"; };
 		0D32FEAD1D3DBC99008E79CD /* NewMessageInformViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewMessageInformViewController.swift; sourceTree = "<group>"; };
 		0D32FEAF1D3DD0A2008E79CD /* FeedBackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedBackViewController.swift; sourceTree = "<group>"; };
 		0D3FC0F01DD764FD00D12860 /* 蘑菇房-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "蘑菇房-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -911,6 +913,7 @@
 				0D2B9B2B1D387723006559F1 /* NotificationViewController.swift */,
 				0D32FEAF1D3DD0A2008E79CD /* FeedBackViewController.swift */,
 				0D2B80BC1D3C70B2007FBB8A /* AboutUsViewController.swift */,
+				0D321C4F1E63003F00ED3BC0 /* AcknowledgementsTableViewController.swift */,
 			);
 			name = GeneralSetupVCs;
 			sourceTree = "<group>";
@@ -1475,6 +1478,7 @@
 				0D54EF3B1E260BF000981D8B /* InfoBubble.swift in Sources */,
 				0D54EF2F1E260BF000981D8B /* ChartAreasView.swift in Sources */,
 				0D0A2A241E476E5400EA2F00 /* Kingfisher.swift in Sources */,
+				0D321C501E63003F00ED3BC0 /* AcknowledgementsTableViewController.swift in Sources */,
 				0D54EF021E260BF000981D8B /* ChartAxisValueDate.swift in Sources */,
 				0DB357C61D7900A2002A7D85 /* PDBarChart.swift in Sources */,
 				0D54EF351E260BF000981D8B /* ChartPointViewBar.swift in Sources */,

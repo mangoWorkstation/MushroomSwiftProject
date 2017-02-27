@@ -333,6 +333,10 @@
 	<array>
 		<string>拉萨市</string>
 	</array>
+	<key>请选择省份</key>
+	<array>
+		<string>请选择城市</string>
+	</array>
 	<key>贵州省</key>
 	<array>
 		<string>贵阳市</string>

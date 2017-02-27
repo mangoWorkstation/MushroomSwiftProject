@@ -295,6 +295,7 @@
                         <outlet property="tableView" destination="y4R-VT-gtC" id="2DZ-Js-WdF"/>
                         <segue destination="4bY-98-mdj" kind="show" identifier="ShowMapSegue" id="gtf-Mi-PBk"/>
                         <segue destination="5gs-4A-bPs" kind="show" identifier="ShowDataSourceSegue" id="kIT-rD-mBh"/>
+                        <segue destination="mzh-J2-ju9" kind="show" id="zB6-5d-sGd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bMy-7d-oMk" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -458,6 +459,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="muU-fR-pqJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2228" y="664"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="NU5-iy-AdK">
+            <objects>
+                <viewController id="mzh-J2-ju9" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="VEx-Yf-Iaw"/>
+                        <viewControllerLayoutGuide type="bottom" id="J6j-E1-ETd"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="wfh-R7-Lop">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pld-pw-2ry" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2969" y="663"/>
         </scene>
         <!--Show Map View Controller-->
         <scene sceneID="8dL-Zs-d59">

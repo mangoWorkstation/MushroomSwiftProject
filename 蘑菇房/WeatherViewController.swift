@@ -35,7 +35,7 @@ class WeatherViewController: UIViewController,UIScrollViewDelegate {
     private var isOnceLoaded = true
     
     //缓存需要过期时间：目前暂定为10秒，便于测试
-    private let expireTime:Int! = 5
+    private let expireTime:Int! = 1800
     
     private var forecastChart : Chart!
     
@@ -379,13 +379,13 @@ class WeatherViewController: UIViewController,UIScrollViewDelegate {
         typeLabel.text = self.today_DataSource.type_day
         
         let curTempNUM = self.pageScroller.viewWithTag(1003) as! UILabel
-        curTempNUM.text = "\(self.today_DataSource.currentTemp!)℃"
+        curTempNUM.text = "\(self.today_DataSource.currentTemp!)º"
 
         let lowTempNUM = self.pageScroller.viewWithTag(1005) as! UILabel
-        lowTempNUM.text = "\(self.today_DataSource.lowTemp!)℃"
+        lowTempNUM.text = "\(self.today_DataSource.lowTemp!)º"
 
         let highTempNUM = self.pageScroller.viewWithTag(1004) as! UILabel
-        highTempNUM.text = "\(self.today_DataSource.highTemp!)℃"
+        highTempNUM.text = "\(self.today_DataSource.highTemp!)º"
 
         let date = self.pageScroller.viewWithTag(1006) as! UILabel
         date.text = timeStampToDate(String(Int(self.updateTime!)))
