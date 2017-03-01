@@ -15,10 +15,18 @@ class EditOtherViewController: UIViewController,UITableViewDelegate,UITableViewD
     var nameInputPointer : UITextField!
     
     @IBAction func saveButton(_ sender: UIBarButtonItem) {
-        if self.nameInputPointer.text == ""{
-            let sheet = UIAlertController(title: "昵称不能为空", message: nil, preferredStyle: .actionSheet)
-            sheet.addAction(UIAlertAction(title: "好", style: .cancel, handler: nil))
-            present(sheet, animated: true, completion: nil)
+        if selectedRow == "昵称"{
+            if self.nameInputPointer.text == ""{
+                let sheet = UIAlertController(title: "昵称不能为空", message: nil, preferredStyle: .alert)
+                sheet.addAction(UIAlertAction(title: "好", style: .cancel, handler: nil))
+                present(sheet, animated: true, completion: nil)
+            }
+            else{
+                performSegue(withIdentifier: "backToEditProfiles", sender: nil)
+            }
+        }
+        else{
+            performSegue(withIdentifier: "backToEditProfiles", sender: nil)
         }
     }
     
@@ -56,6 +64,7 @@ class EditOtherViewController: UIViewController,UITableViewDelegate,UITableViewD
         if(self.selectedRow == "昵称"){
             cell = self.tableView.dequeueReusableCell(withIdentifier: "InputCell")!
             let name = cell.viewWithTag(101) as! UITextField
+            self.nameInputPointer = name
             name.delegate = self
             name.text = GLOBAL_UserProfile.nickName
             name.font = UIFont(name: GLOBAL_appFont!, size: 16.0)
@@ -138,6 +147,12 @@ class EditOtherViewController: UIViewController,UITableViewDelegate,UITableViewD
         self.nameInputPointer = textField
         GLOBAL_UserProfile.nickName = textField.text
         
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "backToEditProfiles"{
+            let vc = segue.destination as! EditProfilesViewController
+        }
     }
     
 }

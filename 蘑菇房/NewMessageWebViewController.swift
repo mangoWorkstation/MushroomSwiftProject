@@ -60,8 +60,8 @@ class NewMessageWebViewController: UIViewController,UIWebViewDelegate{
     
     func webView(_ webView: UIWebView, didFailLoadWithError error: Error){
         progressView.stopAnimating()
-        let alert = UIAlertController(title: "网络连接失败啦", message: "请检查手机是否打开数据网络或Wi-Fi🤔", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "我知道啦😊", style: .cancel, handler: nil))
+        let alert = UIAlertController(title: "网络连接失败", message: error.localizedDescription, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "好", style: .cancel, handler: nil))
         present(alert, animated: true, completion: nil)
     }
     

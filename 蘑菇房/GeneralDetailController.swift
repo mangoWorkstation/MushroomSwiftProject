@@ -13,6 +13,8 @@ import SafariServices
 class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,MFMailComposeViewControllerDelegate,SFSafariViewControllerDelegate {
     
     var selectedRow : Int?
+    //0:用户点击了“设置”
+    //1:用户点击了“关于”
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -29,6 +31,11 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
     
     override func viewDidAppear(_ animated: Bool) {
         UIApplication.shared.statusBarStyle = .lightContent
+        let indexPath = self.tableView.indexPathForSelectedRow
+        if indexPath != nil{
+            self.tableView.deselectRow(at: indexPath!, animated: true)
+        }
+
     }
     
     override func didReceiveMemoryWarning() {
@@ -41,6 +48,8 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
         
         // 取出cache文件夹目录 缓存文件都在这个目录下
         let cachePath = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.cachesDirectory, FileManager.SearchPathDomainMask.userDomainMask, true).first
+        
+        
         //缓存目录路径
         let cachePath_1 = cachePath! + "/Weather/today"
         let cachePath_2 = cachePath! + "/Weather/forecast"
@@ -49,6 +58,10 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
         
         // 取出文件夹下所有文件数组
         var fileArr = FileManager.default.subpaths(atPath: cachePath_1)
+        
+        if fileArr == nil{
+            return 0.0
+        }
         
         
         //快速枚举出所有文件名 计算文件大小
@@ -283,17 +296,17 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
         if(self.selectedRow == 0){
             if((indexPath as NSIndexPath).section == 0){
                 if((indexPath as NSIndexPath).row == 0){
-                    self.tableView.deselectRow(at: indexPath, animated: true)
+//                    self.tableView.deselectRow(at: indexPath, animated: true)
                     performSegue(withIdentifier: "AccountSegue", sender: nil)
                 }
             }
             if((indexPath as NSIndexPath).section == 1){
                 if((indexPath as NSIndexPath).row == 0){
-                    self.tableView.deselectRow(at: indexPath, animated: true)
+//                    self.tableView.deselectRow(at: indexPath, animated: true)
                     performSegue(withIdentifier: "NewMessageInformSegue", sender: nil)
                 }
                 if((indexPath as NSIndexPath).row == 1){
-                    self.tableView.deselectRow(at: indexPath, animated: true)
+//                    self.tableView.deselectRow(at: indexPath, animated: true)
                     performSegue(withIdentifier: "FeedBackSegue", sender: nil)
                 }
             }
@@ -302,7 +315,7 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
         if(self.selectedRow == 1){
             if((indexPath as NSIndexPath).section == 0){
                 if((indexPath as NSIndexPath).row == 0){
-                    self.tableView.deselectRow(at: indexPath, animated: true)
+//                    self.tableView.deselectRow(at: indexPath, animated: true)
                     performSegue(withIdentifier: "AboutUsSegue",sender: nil)
                 }
                 if indexPath.row == 1{
@@ -342,14 +355,22 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
                         self.present(controller, animated: true, completion: nil)
                     }else{
                         let sheet = UIAlertController(title: "邮件应用设置错误", message: "请前往“邮件”应用检查相关设置", preferredStyle: .alert)
-                        sheet.addAction(UIAlertAction(title: "好", style: .cancel, handler: nil))
+                        sheet.addAction(UIAlertAction(title: "好", style: .cancel, handler:{
+                            (action)-> Void in
+                                self.tableView.deselectRow(at: indexPath, animated: true)
+                        }))
                         present(sheet, animated: true, completion: nil)
+                        
                     }
                 }
                 
                 if indexPath.row == 3{
                     performSegue(withIdentifier: "AcknowledgementsSegue", sender: nil)
                 }
+            }
+            
+            if indexPath.section == 1 {
+                self.tableView.deselectRow(at: indexPath, animated: true)
             }
         }
         if((indexPath as NSIndexPath).section == 2){
@@ -416,7 +437,7 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
             }
         }
         else{
-            self.tableView.deselectRow(at: indexPath, animated: true)
+//            self.tableView.deselectRow(at: indexPath, animated: true)
         }
     }
     
@@ -449,7 +470,7 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
         if segue.identifier == "AcknowledgementsSegue"{
             let vc = segue.destination as! AcknowledgementsTableViewController
             vc.navigationItem.backBarButtonItem?.title = self.navigationItem.title
-            vc.navigationItem.title = "致谢开源组件"
+            vc.navigationItem.title = "致谢"
         }
         
     }

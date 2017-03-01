@@ -92,6 +92,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             ])
         //获取设备型号,测试通过
         
+//        let launchVC = UIStoryboard(name: "LaunchScreen", bundle: Bundle.main).instantiateViewController(withIdentifier: "launchVC")
+//        let launchView = launchVC.view
+//        let iconImage = launchView?.viewWithTag(102) as! UIImageView
+//        iconImage.clipsToBounds = true
+//        iconImage.layer.cornerRadius = 100
+//        iconImage.layer.masksToBounds = true
+        
+//        let imageview = UIImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+////        imageview.center = CGPoint(x: 100, y: 100)
+//        imageview.image = UIImage(named: "icon")
+//        backgroundImage.addSubview(imageview)
+//        launchView?.frame = (self.window?.frame)!
+//        self.window?.addSubview(launchView!)
+//        self.window?.rootViewController = launchVC
+//        self.window?.makeKeyAndVisible()
+//        Thread.sleep(forTimeInterval: 2.0)
 
         print(NSHomeDirectory())
         

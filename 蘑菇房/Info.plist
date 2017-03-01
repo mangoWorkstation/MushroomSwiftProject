@@ -38,13 +38,13 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>蘑菇房需要使用相机才能获取您的美美自拍😊</string>
+	<string>蘑菇云需要使用相机获取头像</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>定位服务将一直运行，电量会蹭蹭掉的哟</string>
+	<string>定位服务将一直运行，很耗电噢</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>蘑菇房需要您开启定位服务才能获得更好的体验，仅在应用运行期间开启，不会消耗过多资源哒</string>
+	<string>蘑菇云仅在应用运行期间开启定位服务</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>蘑菇房需要访问相册来获取您的新头像哟😉</string>
+	<string>蘑菇云需要访问相册获取新头像</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>方正清刻本悦宋简体.TTF</string>

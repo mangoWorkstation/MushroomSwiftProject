@@ -20,7 +20,7 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var staticItems_section_2 : [StaticItem] = [] //数组：用于存放静态状态图标
     
     var notificationRawData:[NotificationPreview] = []
-    
+        
     override func viewDidLoad() {
         
         //读取缓存部分，现用读取固件内部预先设好的plist代替！！
@@ -38,12 +38,12 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         self.navigationController?.navigationBar.isTranslucent = false
         
-        staticItems_section_2 = [StaticItem(iconName:"我管理的基地128px",label:"我管理的基地"),StaticItem(iconName:"授权查看的基地128px",label:"授权查看的基地"),StaticItem(iconName:"Nearby",label:"附近的基地"),StaticItem(iconName:"MyProfiles",label:"我的资料"),StaticItem(iconName:"Inform",label:"消息与通知")]
+        staticItems_section_2 = [StaticItem(iconName:"我管理的基地128px",label:"我管理的基地"),StaticItem(iconName:"授权查看的基地128px",label:"授权查看的基地"),StaticItem(iconName:"附近的基地128px",label:"附近的基地"),StaticItem(iconName:"我的资料128px",label:"我的资料"),StaticItem(iconName:"消息128px",label:"消息与通知")]
         staticItems_section_3 = [StaticItem(iconName:"Setup",label:"设置"),StaticItem(iconName:"About",label: "关于")]
         //初始化静态固定图标
         //        self.tableView.showsVerticalScrollIndicator = true
         //        self.tableView.backgroundColor = UIColor(red: 142/255, green: 164/255, blue: 182/255, alpha: 1)
-        self.tableView.separatorColor = UIColor(white: 0.9, alpha: 1)
+//        self.tableView.separatorColor = UIColor(white: 0.9, alpha: 1)
         
 //        let background = UIImageView(image: UIImage(named: "Background_1"))
 //        self.tableView.backgroundView = background
@@ -77,6 +77,11 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 nameLabel?.removeFromSuperview()
             }
             self.drawUserColumn()
+            
+            let indexPath = self.tableView.indexPathForSelectedRow
+            if indexPath != nil{
+                self.tableView.deselectRow(at: indexPath!, animated: true)
+            }
 
         }
         
@@ -232,8 +237,21 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
-        self.tableView.deselectRow(at: indexPath, animated: true) //点击后取消被选中状态 2016.7.17
+        if indexPath.section == 0{
+            if !self.notificationRawData.isEmpty{
+                performSegue(withIdentifier: "showLatestNotificationSegue", sender: nil)
+            }
+            else{
+                let frame = CGRect(x: 0, y: 0, width: 200, height: 100)
+                let alertView = MGNotificationView(frame: frame , labelText: "暂时没有新消息哟", textColor: UIColor.black, duration: 3, doneImage: nil, backgroundColor:.white)
+                alertView.stroke(in: self.view)
+                self.tableView.deselectRow(at: indexPath, animated: true)
+            }
+        }
         if((indexPath as NSIndexPath).section == 1){
+            if indexPath.row == 0 || indexPath.row == 1{
+                performSegue(withIdentifier: "MyBasesSegue", sender: nil)
+            }
             if (indexPath as NSIndexPath).row == 2 {
                 performSegue(withIdentifier: "NearbySegue", sender: nil)
             }
@@ -249,6 +267,26 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     //MARK - UIStoryBoardSegue
     //segue 跳转页面
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "showLatestNotificationSegue"{
+            let vc = segue.destination as! NewMessageWebViewController
+            vc.navigationItem.backBarButtonItem?.title = "我"
+            vc.navigationItem.title = "新消息"
+            vc.hidesBottomBarWhenPushed = true
+        }
+        
+        if segue.identifier == "MyBasesSegue"{
+            let indexPath = self.tableView.indexPathForSelectedRow
+            let vc = segue.destination as! MyBasesTableViewController
+            vc.hidesBottomBarWhenPushed = true
+            if indexPath?.row == 0{
+                vc.title = "我管理的基地"
+            }
+            else{
+                vc.title = "授权查看的基地"
+            }
+        }
+        
         if segue.identifier == "NearbySegue"{
             let vc = segue.destination as! NearbyViewController
             vc.navigationItem.backBarButtonItem?.title = "我"

@@ -10,8 +10,8 @@ import UIKit
 
 class UserDistrictPickerViewController: UIViewController,UIPickerViewDelegate,UIPickerViewDataSource {
     
-    @IBOutlet weak var province: UILabel!
-    @IBOutlet weak var city: UILabel!
+//    @IBOutlet weak var province: UILabel!
+//    @IBOutlet weak var city: UILabel!
     
     @IBOutlet weak var pick: UIPickerView!
     
@@ -75,12 +75,12 @@ class UserDistrictPickerViewController: UIViewController,UIPickerViewDelegate,UI
         let content_2 = NSDictionary(contentsOf: filePath_2!)
         dic = content_2 as! Dictionary<String, [String]>
         
-        province.text = "省份"
-        province.font = UIFont(name: GLOBAL_appFont!, size: 20)
-        province.textAlignment = .center
-        city.text = "城市"
-        city.font = UIFont(name: GLOBAL_appFont!, size: 20)
-        city.textAlignment = .center
+//        province.text = "省份"
+//        province.font = UIFont(name: GLOBAL_appFont!, size: 20)
+//        province.textAlignment = .center
+//        city.text = "城市"
+//        city.font = UIFont(name: GLOBAL_appFont!, size: 20)
+//        city.textAlignment = .center
         
         try?FileManager.default.removeItem(at: URL(string: NSHomeDirectory() + "/Documents/provinces.plist")!)
         try?FileManager.default.removeItem(at: URL(string: NSHomeDirectory() + "/Documents/provinces_dic.plist")!)

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AudioToolbox
 
 class NotificationViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate{
 
@@ -109,6 +108,10 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
     
     override func viewWillAppear(_ animated: Bool) {
         self.tableView.reloadData()
+        let indexPath = self.tableView.indexPathForSelectedRow
+        if indexPath != nil{
+            self.tableView.deselectRow(at: indexPath!, animated: true)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -263,7 +266,6 @@ class NotificationViewController: UIViewController,UITableViewDelegate,UITableVi
     
 //单元格被选中后的效果，排除信箱空的情况 2016.7.17
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
-        self.tableView.deselectRow(at: indexPath, animated: true) //点击后取消被选中状态 2016.7.17
         if(self.whichKindOfInfoType == 0){
             if(unreadMeg.count != 0){    //加这个判断，防止“暂时没有新信息”的单元格被点击 2016.7.17
                 let tempElement = unreadMeg[(indexPath as NSIndexPath).row]

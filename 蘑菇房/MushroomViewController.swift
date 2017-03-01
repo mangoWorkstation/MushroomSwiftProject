@@ -230,7 +230,7 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
     
     private func refresh() {
         DispatchQueue.main.asyncAfter(deadline: .now() + loadingTimeInterval) {
-            KingfisherManager.shared.cache.clearDiskCache()
+//            KingfisherManager.shared.cache.clearDiskCache()
             KingfisherManager.shared.cache.clearMemoryCache()
 
             self.tableView.reloadData()

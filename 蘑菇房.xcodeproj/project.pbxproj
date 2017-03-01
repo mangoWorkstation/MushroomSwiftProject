@@ -201,6 +201,7 @@
 		0D8606A81D62BF8E00CE3905 /* Page_1_MushRoom.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D8606A61D62BF8E00CE3905 /* Page_1_MushRoom.storyboard */; };
 		0D8606AB1D62BFCC00CE3905 /* Page_2_Weather.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D8606A91D62BFCC00CE3905 /* Page_2_Weather.storyboard */; };
 		0D8606AE1D62C02300CE3905 /* Page_3_User.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D8606AC1D62C02300CE3905 /* Page_3_User.storyboard */; };
+		0D897FEB1E66FFDF00E8D990 /* MyBasesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D897FEA1E66FFDF00E8D990 /* MyBasesTableViewController.swift */; };
 		0D8B65AA1DE4A1930081AC90 /* romPreWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8B65A91DE4A1930081AC90 /* romPreWriter.swift */; };
 		0D9CE9851D40548F004E1B27 /* PublicStaticMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9CE9841D40548F004E1B27 /* PublicStaticMethods.swift */; };
 		0D9CE9871D419F6F004E1B27 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9CE9861D419F6F004E1B27 /* AccountViewController.swift */; };
@@ -467,6 +468,7 @@
 		0D8606A71D62BF8E00CE3905 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Page_1_MushRoom.storyboard; sourceTree = "<group>"; };
 		0D8606AA1D62BFCC00CE3905 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Page_2_Weather.storyboard; sourceTree = "<group>"; };
 		0D8606AD1D62C02300CE3905 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Page_3_User.storyboard; sourceTree = "<group>"; };
+		0D897FEA1E66FFDF00E8D990 /* MyBasesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyBasesTableViewController.swift; sourceTree = "<group>"; };
 		0D8B65A91DE4A1930081AC90 /* romPreWriter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = romPreWriter.swift; sourceTree = "<group>"; };
 		0D9CE9841D40548F004E1B27 /* PublicStaticMethods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicStaticMethods.swift; sourceTree = "<group>"; };
 		0D9CE9861D419F6F004E1B27 /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
@@ -890,6 +892,7 @@
 			isa = PBXGroup;
 			children = (
 				0D7FBC6E1CE80C7000775FCA /* UserViewController.swift */,
+				0D897FEA1E66FFDF00E8D990 /* MyBasesTableViewController.swift */,
 				0DD895FB1DB3CE0E00D91C04 /* NewMessageWebViewController.swift */,
 				0D7785891D53436300A74A30 /* NeabyVCs */,
 				0D7785881D5342F900A74A30 /* UserProfileVCs */,
@@ -1245,7 +1248,7 @@
 				);
 				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0810;
-				ORGANIZATIONNAME = "蘑菇房工作室";
+				ORGANIZATIONNAME = "蘑菇云工作室";
 				TargetAttributes = {
 					0D7FBC331CE80A6800775FCA = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -1448,6 +1451,7 @@
 				0D0A2A1F1E476E5400EA2F00 /* Resource.swift in Sources */,
 				0DC26BF61D941C7600A35048 /* ESPullToRefresh.swift in Sources */,
 				0D68A8801DFEE1840023C47B /* SwiftyJSON.swift in Sources */,
+				0D897FEB1E66FFDF00E8D990 /* MyBasesTableViewController.swift in Sources */,
 				0D54EF281E260BF000981D8B /* ChartPointsTouchHighlightLayer.swift in Sources */,
 				0DB357CC1D79047E002A7D85 /* DataSourceModel.swift in Sources */,
 				0D0A2A231E476E5400EA2F00 /* KingfisherManager.swift in Sources */,
