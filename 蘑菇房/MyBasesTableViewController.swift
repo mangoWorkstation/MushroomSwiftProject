@@ -71,9 +71,7 @@ class MyBasesTableViewController: UITableViewController {
         
         name.textColor = UIColor.black
         more.textColor = UIColor.black
-        
-//        cell.backgroundColor = UIColor(white: 0.6, alpha: 0.4)
-        
+                
         cell.layer.masksToBounds = true
         cell.layer.cornerRadius = 15
         cell.clipsToBounds = true

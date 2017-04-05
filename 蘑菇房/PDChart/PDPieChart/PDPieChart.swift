@@ -23,7 +23,7 @@ class PDPieChartDataItem {
     //optional
     var animationDur: CGFloat = 1.0
     var clockWise: Bool = true
-    var chartStartAngle: CGFloat = CGFloat(-M_PI / 2)
+    var chartStartAngle: CGFloat = CGFloat(-CGFloat.pi / 2)
     var pieTipFontSize: CGFloat = 12.0
     var pieTipTextColor: UIColor = UIColor.white
     var pieMargin: CGFloat = 0
@@ -87,11 +87,11 @@ class PDPieChart: PDChart {
         for i in 0..<self.dataItem.dataArray.count {
             //data
             let dataItem: PieDataItem = self.dataItem.dataArray[i]
-            let startAngle: CGFloat = CGFloat(M_PI * 2.0) * totalPercentage + self.dataItem.chartStartAngle
-            let endAngle: CGFloat = startAngle + dataItem.percentage * CGFloat(M_PI * 2)
+            let startAngle: CGFloat = CGFloat(CGFloat.pi * 2.0) * totalPercentage + self.dataItem.chartStartAngle
+            let endAngle: CGFloat = startAngle + dataItem.percentage * CGFloat(CGFloat.pi * 2)
             
             //pie center point
-            let angle: Float = Float(dataItem.percentage) * Float(M_PI) * Float(2.0) / 2.0 + Float(totalPercentage) * Float(M_PI * 2.0)
+            let angle: Float = Float(dataItem.percentage) * Float(Float.pi) * Float(2.0) / 2.0 + Float(totalPercentage) * Float(Float.pi * 2.0)
             
             let pieCenterPointX: CGFloat = center.x + radius * CGFloat(sinf(angle))
             let pieCenterPointY: CGFloat = center.y - radius * CGFloat(cosf(angle))
@@ -108,8 +108,8 @@ class PDPieChart: PDChart {
         //mask
         let maskCenter: CGPoint = CGPoint(x: self.frame.size.width / 2.0, y: self.frame.size.height / 2)
         let maskRadius: CGFloat = self.frame.size.width / 2 - self.dataItem.pieMargin - self.dataItem.pieWidth / 2
-        let maskStartAngle: CGFloat = -CGFloat(M_PI) / 2
-        let maskEndAngle: CGFloat = CGFloat(M_PI) * 2 - CGFloat(M_PI) / 2
+        let maskStartAngle: CGFloat = -CGFloat(CGFloat.pi) / 2
+        let maskEndAngle: CGFloat = CGFloat(CGFloat.pi) * 2 - CGFloat(CGFloat.pi) / 2
         let maskLayer: CAShapeLayer = self.getShapeLayerWithARCPath(UIColor.white, lineWidth: self.dataItem.pieWidth, center: maskCenter, radius: maskRadius, startAngle: maskStartAngle, endAngle: maskEndAngle, clockWise: true)
         maskLayer.strokeStart = 0.0
         maskLayer.strokeEnd = 1.0

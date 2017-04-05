@@ -320,7 +320,7 @@ class GeneralDetailController: UIViewController,UITableViewDelegate,UITableViewD
                 }
                 if indexPath.row == 1{
                     let url = NSURL(string: "http://www.apple.com/cn/")
-                    let vc = SFSafariViewController(url: url as! URL, entersReaderIfAvailable: true)
+                    let vc = SFSafariViewController(url: url! as URL, entersReaderIfAvailable: true)
                     present(vc, animated: true, completion: {
                         UIApplication.shared.statusBarStyle = .default
                     })

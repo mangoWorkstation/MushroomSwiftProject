@@ -110,8 +110,8 @@ class ShowMapViewController: UIViewController,MKMapViewDelegate,CLLocationManage
                 alertView.addAction(UIAlertAction(title: "设置", style: .default, handler: {
                     (action)->Void in
                     let settingUrl = NSURL(string: UIApplicationOpenSettingsURLString)
-                    if UIApplication.shared.canOpenURL(settingUrl as! URL){
-                        UIApplication.shared.openURL(settingUrl as! URL)
+                    if UIApplication.shared.canOpenURL(settingUrl! as URL){
+                        UIApplication.shared.openURL(settingUrl! as URL)
                     }
                 }))
                 self.present(alertView, animated: true, completion: nil)
@@ -140,8 +140,8 @@ class ShowMapViewController: UIViewController,MKMapViewDelegate,CLLocationManage
                 alertView.addAction(UIAlertAction(title: "设置", style: .default, handler: {
                     (action)->Void in
                     let settingUrl = NSURL(string: UIApplicationOpenSettingsURLString)
-                    if UIApplication.shared.canOpenURL(settingUrl as! URL){
-                        UIApplication.shared.openURL(settingUrl as! URL)
+                    if UIApplication.shared.canOpenURL(settingUrl! as URL){
+                        UIApplication.shared.openURL(settingUrl! as URL)
                     }
                 }))
                 alertView.addAction(UIAlertAction(title: "好", style: .default, handler: nil))
@@ -206,8 +206,8 @@ class ShowMapViewController: UIViewController,MKMapViewDelegate,CLLocationManage
         alertView.addAction(UIAlertAction(title: "设置", style: .default, handler: {
             (action)->Void in
             let settingUrl = NSURL(string: UIApplicationOpenSettingsURLString)
-            if UIApplication.shared.canOpenURL(settingUrl as! URL){
-                UIApplication.shared.openURL(settingUrl as! URL)
+            if UIApplication.shared.canOpenURL(settingUrl! as URL){
+                UIApplication.shared.openURL(settingUrl! as URL)
             }
         }))
         self.present(alertView, animated: true, completion: nil)

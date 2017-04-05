@@ -151,7 +151,7 @@ class EditOtherViewController: UIViewController,UITableViewDelegate,UITableViewD
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "backToEditProfiles"{
-            let vc = segue.destination as! EditProfilesViewController
+            _ = segue.destination as! EditProfilesViewController
         }
     }
     

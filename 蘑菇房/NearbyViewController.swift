@@ -138,8 +138,8 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
                 alertView.addAction(UIAlertAction(title: "设置", style: .default, handler: {
                     (action)->Void in
                     let settingUrl = NSURL(string: UIApplicationOpenSettingsURLString)
-                    if UIApplication.shared.canOpenURL(settingUrl as! URL){
-                        UIApplication.shared.openURL(settingUrl as! URL)
+                    if UIApplication.shared.canOpenURL(settingUrl! as URL){
+                        UIApplication.shared.openURL(settingUrl! as URL)
                     }
                 }))
                 self.present(alertView, animated: true, completion: nil)
@@ -169,8 +169,8 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
                 alertView.addAction(UIAlertAction(title: "设置", style: .default, handler: {
                     (action)->Void in
                     let settingUrl = NSURL(string: UIApplicationOpenSettingsURLString)
-                    if UIApplication.shared.canOpenURL(settingUrl as! URL){
-                        UIApplication.shared.openURL(settingUrl as! URL)
+                    if UIApplication.shared.canOpenURL(settingUrl! as URL){
+                        UIApplication.shared.openURL(settingUrl! as URL)
                     }
                 }))
                 self.present(alertView, animated: true, completion: nil)
@@ -235,8 +235,8 @@ class NearbyViewController: UIViewController,UITableViewDelegate,UITableViewData
         alertView.addAction(UIAlertAction(title: "设置", style: .default, handler: {
             (action)->Void in
             let settingUrl = NSURL(string: UIApplicationOpenSettingsURLString)
-            if UIApplication.shared.canOpenURL(settingUrl as! URL){
-                UIApplication.shared.openURL(settingUrl as! URL)
+            if UIApplication.shared.canOpenURL(settingUrl! as URL){
+                UIApplication.shared.openURL(settingUrl! as URL)
             }
         }))
         self.present(alertView, animated: true, completion: nil)

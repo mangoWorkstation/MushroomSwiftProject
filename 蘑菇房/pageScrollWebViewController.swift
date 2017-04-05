@@ -20,7 +20,7 @@ class pageScrollWebViewController: UIViewController,UIWebViewDelegate{
         super.viewDidLoad()
         webView.delegate = self
         let requestURL = NSURL(string: url!)
-        webView.loadRequest(URLRequest(url: requestURL as! URL, cachePolicy: URLRequest.CachePolicy.reloadIgnoringLocalCacheData, timeoutInterval: 30))
+        webView.loadRequest(URLRequest(url: requestURL! as URL, cachePolicy: URLRequest.CachePolicy.reloadIgnoringLocalCacheData, timeoutInterval: 30))
         //超时时间
         setProgressView()
     }

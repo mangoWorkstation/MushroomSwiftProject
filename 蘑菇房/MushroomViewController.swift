@@ -106,6 +106,7 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         self.rawData = unarchiver.decodeObject(forKey: "roomsInfo") as! Dictionary<String, RoomInfoModel>
         unarchiver.finishDecoding()
         self.backgroundData = Array(self.rawData.values)
+        self.automaticallyAdjustsScrollViewInsets = false
 
         
         
@@ -131,13 +132,13 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
         
         configurateHeaderAndFooter() //设置表头和表尾
         
-        self.tableView.es_addPullToRefresh(animator: header) {
+        let _ = self.tableView.es_addPullToRefresh(animator: header) {
             [weak self] in
             self?.refresh()
         }
         
         
-        self.tableView.es_addInfiniteScrolling(animator: footer) {
+        let _ = self.tableView.es_addInfiniteScrolling(animator: footer) {
             [weak self] in
             self?.loadMore()
         }
@@ -398,7 +399,7 @@ class MushroomViewController: UIViewController,UIScrollViewDelegate,UITableViewD
             userInfoDefault.synchronize()
             
         }
-        print("当前UID:\(GLOBAL_UserProfile.id)")
+        print("当前UID:\(String(describing: GLOBAL_UserProfile.id))")
         print("密码（MD5）:\(GLOBAL_UserProfile.password!)\n")
         
     }

@@ -34,7 +34,7 @@ open class ChartUtils {
      */
     open class func rotatedTextBounds(_ text: String, font: UIFont, angle: CGFloat) -> CGRect {
         let labelSize = ChartUtils.textSize(text, font: font)
-        let radians = angle * CGFloat(M_PI) / CGFloat(180)
+        let radians = angle * CGFloat(CGFloat.pi) / CGFloat(180)
         return boundingRectAfterRotatingRect(CGRect(x: 0, y: 0, width: labelSize.width, height: labelSize.height), radians: radians)
     }
     

@@ -182,7 +182,7 @@ func acquireRoomInfoByRoomID(_ roomID:String, rawData:Dictionary<String,RoomInfo
 func distanceCalc(_ lat_1:Double,lng_1:Double,lat_2:Double,lng_2:Double)->Double{
     let EARTH_RADIUS = 6378.137
     func rad(_ d:Double)->Double{
-        return d * M_PI / 180.0
+        return d * Double.pi / 180.0
     }
     let radLat_1 = rad(lat_1)
     let radLat_2 = rad(lat_2)

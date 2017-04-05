@@ -679,7 +679,7 @@ class WeatherViewController: UIViewController,UIScrollViewDelegate {
                     if name != nil{
                         if Int(name!)!<10{
                             weatherTypeImage.image = UIImage(named: "0\(name!)")
-                            print("w\(name)")
+                            print("w\(String(describing: name))")
                         }
                         else{
                             weatherTypeImage.image = UIImage(named: "\(name!)")
@@ -734,8 +734,8 @@ class WeatherViewController: UIViewController,UIScrollViewDelegate {
         let url_today = "https://api.thinkpage.cn/v3/weather/now.json?key=lrpn5sdf3kotqfk5&location=ip&language=zh-Hans&unit=c"
             
         let url_forecast = "https://api.thinkpage.cn/v3/weather/daily.json?key=lrpn5sdf3kotqfk5&location=ip&language=zh-Hans&unit=c&start=0"
-        var req_today = URLRequest(url: NSURL(string: url_today) as! URL)
-        var req_forecast = URLRequest(url: NSURL(string: url_forecast) as! URL)
+        var req_today = URLRequest(url: NSURL(string: url_today)! as URL)
+        var req_forecast = URLRequest(url: NSURL(string: url_forecast)! as URL)
         req_today.timeoutInterval = 4.0
         req_forecast.timeoutInterval = 4.0
         req_today.httpMethod = "GET"

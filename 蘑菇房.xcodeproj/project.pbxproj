@@ -68,6 +68,7 @@
 		0D0A2A2F1E476E5400EA2F00 /* CacheSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0A2A191E476E5400EA2F00 /* CacheSerializer.swift */; };
 		0D0A2A301E476E5400EA2F00 /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0A2A1A1E476E5400EA2F00 /* Box.swift */; };
 		0D0A2A311E476E5400EA2F00 /* AnimatedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0A2A1B1E476E5400EA2F00 /* AnimatedImageView.swift */; };
+		0D0DA0271E6EEAFD000B3C7B /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0D0DA0261E6EEAFD000B3C7B /* Settings.bundle */; };
 		0D1017831D981A45005BCE84 /* TabbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1017821D981A45005BCE84 /* TabbarViewController.swift */; };
 		0D19B05D1DDA08B900A4747C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D19B05C1DDA08B900A4747C /* LoginViewController.swift */; };
 		0D1AF4AB1DE06EB500D1787C /* pageScrollWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1AF4AA1DE06EB500D1787C /* pageScrollWebViewController.swift */; };
@@ -330,6 +331,7 @@
 		0D0A2A191E476E5400EA2F00 /* CacheSerializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CacheSerializer.swift; path = Kingfisher/CacheSerializer.swift; sourceTree = "<group>"; };
 		0D0A2A1A1E476E5400EA2F00 /* Box.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Box.swift; path = Kingfisher/Box.swift; sourceTree = "<group>"; };
 		0D0A2A1B1E476E5400EA2F00 /* AnimatedImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AnimatedImageView.swift; path = Kingfisher/AnimatedImageView.swift; sourceTree = "<group>"; };
+		0D0DA0261E6EEAFD000B3C7B /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		0D1017821D981A45005BCE84 /* TabbarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabbarViewController.swift; sourceTree = "<group>"; };
 		0D19B05C1DDA08B900A4747C /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		0D1AF4AA1DE06EB500D1787C /* pageScrollWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = pageScrollWebViewController.swift; sourceTree = "<group>"; };
@@ -983,6 +985,7 @@
 		0D7FBC361CE80A6800775FCA /* 蘑菇房 */ = {
 			isa = PBXGroup;
 			children = (
+				0D0DA0261E6EEAFD000B3C7B /* Settings.bundle */,
 				0D7FBC371CE80A6800775FCA /* AppDelegate.swift */,
 				0D450AF31DD73F270026C2C0 /* DataBase.xcdatamodeld */,
 				0D8606AF1D62C0FF00CE3905 /* Storyboards */,
@@ -1132,6 +1135,7 @@
 				0D0A2A041E476E3600EA2F00 /* Kingfisher */,
 				0D54EF3F1E260DBC00981D8B /* MGNotificationView.swift */,
 				0D438D891E443B010029EA5C /* MGBannerIndicatorView.swift */,
+				0DB357BC1D7900A2002A7D85 /* PDChart */,
 				0D54EEA31E260BC500981D8B /* ischeutz - SwiftChart */,
 				0D441A3F1DFEFF5E00DF7EB9 /* ImageHelper */,
 				0D68A87A1DFEE1590023C47B /* SwiftSnipper */,
@@ -1140,7 +1144,6 @@
 				0DC26BE81D941C7600A35048 /* ESRefresh */,
 				0D7A7A8B1D7AB5BA009A3A1D /* UICountingLabel */,
 				0D77858C1D53444900A74A30 /* MapKit.framework */,
-				0DB357BC1D7900A2002A7D85 /* PDChart */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1319,6 +1322,7 @@
 				0D02C5E71E3E4A9C00D7BB37 /* 28.png in Resources */,
 				0D02C5D91E3E4A9C00D7BB37 /* 14.png in Resources */,
 				0D8606A81D62BF8E00CE3905 /* Page_1_MushRoom.storyboard in Resources */,
+				0D0DA0271E6EEAFD000B3C7B /* Settings.bundle in Resources */,
 				0DBDD5E21DFFAC81004A46B0 /* Bicycle.JPG in Resources */,
 				0D68A8A71DFEE20C0023C47B /* Forest.JPG in Resources */,
 				0D02C5D61E3E4A9C00D7BB37 /* 11.png in Resources */,

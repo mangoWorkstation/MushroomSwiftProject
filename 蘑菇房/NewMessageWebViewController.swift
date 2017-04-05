@@ -20,7 +20,7 @@ class NewMessageWebViewController: UIViewController,UIWebViewDelegate{
         super.viewDidLoad()
         webView.delegate = self
         let url = NSURL(string: "http://weibo.com")
-        webView.loadRequest(URLRequest(url: url as! URL, cachePolicy: URLRequest.CachePolicy.reloadIgnoringLocalCacheData, timeoutInterval: 30))
+        webView.loadRequest(URLRequest(url: url! as URL, cachePolicy: URLRequest.CachePolicy.reloadIgnoringLocalCacheData, timeoutInterval: 30))
         setProgressView()
 
         // Do any additional setup after loading the view.

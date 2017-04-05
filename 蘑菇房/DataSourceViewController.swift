@@ -76,7 +76,7 @@ class DataSourceViewController: UIViewController,UITableViewDelegate,UITableView
         
         self.tableView.separatorColor = UIColor(white: 0.9, alpha: 1)    //设置分割线颜色
         
-        self.tableView.es_addPullToRefresh(animator: header) {
+        let _ = self.tableView.es_addPullToRefresh(animator: header) {
             [weak self] in
             self?.refresh()
         }

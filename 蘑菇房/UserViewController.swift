@@ -7,7 +7,6 @@
 //
 
 import UIKit
-//import DominantColor
 
 class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
     
@@ -233,6 +232,15 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             //        }
         else {
             return 100
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        if section == 2{
+            return 30
+        }
+        else{
+            return 5
         }
     }
     

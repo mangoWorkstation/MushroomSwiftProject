@@ -61,6 +61,14 @@ class PresentRoomDetailViewController: UIViewController,UITableViewDelegate,UITa
         tableView.delegate = self
         tableView.dataSource = self
         configurateHeaderAndFooter()
+        self.automaticallyAdjustsScrollViewInsets = true
+        
+        //设置estimatedRowHeight属性默认值
+//        self.tableView.estimatedRowHeight = 44.0;
+//        //rowHeight属性设置为UITableViewAutomaticDimension
+//        self.tableView.rowHeight = UITableViewAutomaticDimension;
+//        self.tableView.backgroundColor = UIColor(white: 0.8, alpha: 1)
+
         
         preview.kf.indicatorType = .activity
         let url = URL(string: imagesURLs[Int((room?.preImage)!)!-1])
@@ -71,11 +79,15 @@ class PresentRoomDetailViewController: UIViewController,UITableViewDelegate,UITa
             self.preview.kf.cancelDownloadTask()
         })
         
-        self.tableView.es_addPullToRefresh(animator: header) {
+        let _ = self.tableView.es_addPullToRefresh(animator: header) {
             [weak self] in
             self?.refresh()
         }
-
+        
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+        
         // Do any additional setup after loading the view.
     }
     
@@ -84,6 +96,8 @@ class PresentRoomDetailViewController: UIViewController,UITableViewDelegate,UITa
         if indexPath != nil {
             self.tableView.deselectRow(at: indexPath!, animated: true)
         }
+        
+        self.tableView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -119,11 +133,28 @@ class PresentRoomDetailViewController: UIViewController,UITableViewDelegate,UITa
     
     //MARK: - UITableViewDelegate
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
-        if (indexPath as NSIndexPath).section == 0 && (indexPath as NSIndexPath).row == 1{
-            return 40
+//        if (indexPath as NSIndexPath).section == 0 && (indexPath as NSIndexPath).row == 1{
+//            return 40
+//        }
+        
+        if indexPath.section == 2{
+//            print(UITableViewAutomaticDimension)
+            return 200
+        }
+        if indexPath.section == 3{
+            return 600
         }
         else{
-            return 50
+            return 44
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == 2{
+            return 200
+        }
+        else{
+            return 44
         }
     }
     
@@ -140,8 +171,8 @@ class PresentRoomDetailViewController: UIViewController,UITableViewDelegate,UITa
                 alertView.addAction(UIAlertAction(title: "设置", style: .default, handler: {
                     (action)->Void in
                     let settingUrl = NSURL(string: UIApplicationOpenSettingsURLString)
-                    if UIApplication.shared.canOpenURL(settingUrl as! URL){
-                        UIApplication.shared.openURL(settingUrl as! URL)
+                    if UIApplication.shared.canOpenURL(settingUrl! as URL){
+                        UIApplication.shared.openURL(settingUrl! as URL)
                     }
                 }))
                 alertView.addAction(UIAlertAction(title: "好", style: .default, handler: nil))
@@ -162,12 +193,39 @@ class PresentRoomDetailViewController: UIViewController,UITableViewDelegate,UITa
         
     }
     
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 2{
+            return 50
+        }
+        else{
+            return 5
+        }
+    }
+    
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat{
-        if section == 1 {
-            return 100
+        if section == 2{
+            return 300
         }
         else {
-            return 20
+            return 5
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if section == 2 {
+            let segment = UISegmentedControl(frame: CGRect(x: 0, y: 0, width: 200, height: 30))
+            segment.insertSegment(withTitle: "实时数据", at: 0, animated: true)
+            segment.insertSegment(withTitle: "历史数据", at: 1, animated: true)
+            segment.selectedSegmentIndex = 0
+            segment.backgroundColor = .white
+            segment.tintColor = UIColor(red: 64/255, green: 151/255, blue: 32/255, alpha: 1)
+            let view = UIView(frame: CGRect(x: 0, y: 0, width: self.tableView.bounds.width, height: 50))
+            segment.center = view.center
+            view.addSubview(segment)
+            return view
+        }
+        else{
+            return nil
         }
     }
     
@@ -181,7 +239,7 @@ class PresentRoomDetailViewController: UIViewController,UITableViewDelegate,UITa
             return 4
         }
         else{
-            return 0
+            return 1
         }
     }
     
@@ -227,17 +285,109 @@ class PresentRoomDetailViewController: UIViewController,UITableViewDelegate,UITa
             label.text = labels[(indexPath as NSIndexPath).row]
             label.font = UIFont(name: GLOBAL_appFont!, size: 17.5)
         }
+        
+        if indexPath.section == 2{
+            cell = self.tableView.dequeueReusableCell(withIdentifier: "dataMenu")!
+            let collectionView = cell.viewWithTag(100) as! UICollectionView
+            collectionView.delegate = self
+            collectionView.dataSource = self
+            collectionView.showsVerticalScrollIndicator = true
+            
+            //            DispatchQueue.main.async {
+            let flow = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+            
+            //                if UIDevice.current.userInterfaceIdiom == .pad{
+            //间隔
+            let spacing:CGFloat = 20
+            //水平间隔
+            flow.minimumInteritemSpacing = spacing
+            //垂直行间距
+            flow.minimumLineSpacing = spacing
+            
+            //列数
+            let columnsNum = 4
+            //整个view的宽度
+            let collectionViewWidth = collectionView.bounds.width
+            let leftGap = (collectionViewWidth - spacing * CGFloat(columnsNum-1)
+                - CGFloat(columnsNum) * flow.itemSize.width) / 2
+            flow.sectionInset = UIEdgeInsets(top: 5, left: leftGap + 20, bottom: 5, right: leftGap+20)
+            //                }
+            
+            //            }
+            
+        }
+        
+        if indexPath.section == 3{
+            cell = self.tableView.dequeueReusableCell(withIdentifier: "ChartCell", for: indexPath)
+            
+            
+            let chartSettings = ChartSettings()
+            chartSettings.leading = 10
+            chartSettings.top = 10
+            chartSettings.trailing = 10
+            chartSettings.bottom = 10
+            chartSettings.labelsToAxisSpacingX = 5
+            chartSettings.labelsToAxisSpacingY = 5
+            chartSettings.axisTitleLabelsToLabelsSpacing = 4
+            chartSettings.axisStrokeWidth = 0.2
+            chartSettings.spacingBetweenAxesX = 8
+            chartSettings.spacingBetweenAxesY = 8
+            
+                let labelSettings = ChartLabelSettings(font: UIFont(name: "AvenirNext-Regular", size: 14)!,fontColor:UIColor.white)
+                
+                let chartPoints = [(2, 2), (4, 4), (7, 1), (8, 11), (12, 3)].map{ChartPoint(x: ChartAxisValueDouble($0.0, labelSettings: labelSettings), y: ChartAxisValueDouble($0.1))}
+                
+                let xValues = chartPoints.map{$0.x}
+                
+                let yValues = ChartAxisValuesGenerator.generateYAxisValuesWithChartPoints(chartPoints, minSegmentCount: 10, maxSegmentCount: 20, multiple: 2, axisValueGenerator: {ChartAxisValueDouble($0, labelSettings: labelSettings)}, addPaddingSegmentIfEdge: false)
+                
+                let xModel = ChartAxisModel(axisValues: xValues, axisTitleLabel: ChartAxisLabel(text: "Axis title", settings: labelSettings))
+                let yModel = ChartAxisModel(axisValues: yValues, axisTitleLabel: ChartAxisLabel(text: "Axis title", settings: labelSettings.defaultVertical()))
+                let chartFrame = CGRect(x: 0 , y: 0, width: 200, height: 200)
+                let coordsSpace = ChartCoordsSpaceLeftBottomSingleAxis(chartSettings: chartSettings, chartFrame: chartFrame, xModel: xModel, yModel: yModel)
+                let (xAxis, yAxis, innerFrame) = (coordsSpace.xAxis, coordsSpace.yAxis, coordsSpace.chartInnerFrame)
+                
+                let lineModel = ChartLineModel(chartPoints: chartPoints, lineColor: UIColor.red, animDuration: 1, animDelay: 0)
+                let chartPointsLineLayer = ChartPointsLineLayer(xAxis: xAxis, yAxis: yAxis, innerFrame: innerFrame, lineModels: [lineModel])
+                
+                
+                let trackerLayerSettings = ChartPointsLineTrackerLayerSettings(thumbSize: 20, thumbCornerRadius: 10, thumbBorderWidth: 2, infoViewFont:UIFont(name: GLOBAL_appFont!, size: 16)!
+                    , infoViewSize: CGSize(width: 160, height: 40), infoViewCornerRadius: 15)
+                let chartPointsTrackerLayer = ChartPointsLineTrackerLayer(xAxis: xAxis, yAxis: yAxis, innerFrame: innerFrame, chartPoints: chartPoints, lineColor: UIColor.black, animDuration: 1, animDelay: 2, settings: trackerLayerSettings)
+                
+                let settings = ChartGuideLinesDottedLayerSettings(linesColor: UIColor.black, linesWidth: 0.1)
+                let guidelinesLayer = ChartGuideLinesDottedLayer(xAxis: xAxis, yAxis: yAxis, innerFrame: innerFrame, settings: settings)
+                
+                let chart = Chart(
+                    frame: chartFrame,
+                    layers: [
+                        xAxis,
+                        yAxis,
+                        guidelinesLayer,
+                        chartPointsLineLayer,
+                        chartPointsTrackerLayer
+                    ]
+                )
+            chart.view.center = cell.contentView.center
+                cell.addSubview(chart.view)
+            
+        }
         if (indexPath as NSIndexPath).section == 0 && (indexPath as NSIndexPath).row == 0{
-            cell.accessoryType = UITableViewCellAccessoryType.none
+            cell.accessoryType = .none
         }
         else {
-            cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
+            cell.accessoryType = .disclosureIndicator
         }
+        
+        if indexPath.section == 2 || indexPath.section == 3{
+            cell.accessoryType = .none
+        }
+        
         return cell
     }
     
     func numberOfSections(in tableView: UITableView) -> Int{
-        return 2
+        return 4
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -255,3 +405,56 @@ class PresentRoomDetailViewController: UIViewController,UITableViewDelegate,UITa
     }
     
 }
+
+extension PresentRoomDetailViewController:UICollectionViewDelegate{
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
+        let point = CGPoint(x: 0, y: 200)
+        self.tableView.setContentOffset(point, animated: true)
+        print("collection items did select!     \(indexPath.row)")
+
+        
+    }
+}
+
+extension PresentRoomDetailViewController:UICollectionViewDataSource{
+    
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 7
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "dataMenu", for: indexPath)
+        
+        
+        let staticIcons = [StaticItem(iconName: "Thermometer", label: "温度"),
+                           StaticItem(iconName: "water_H2O_128px", label: "湿度"),
+                           StaticItem(iconName: "我2", label: "生长量"),
+                           StaticItem(iconName: "chemistry_128px", label: "土壤酸碱度"),
+                           StaticItem(iconName: "light_bulb_116px", label: "光照"),
+                           StaticItem(iconName: "Ecology_Leaf_128px", label: "叶面图像"),
+                           StaticItem(iconName: "history_128px", label: "物候期"),]
+        
+        let icon = cell.viewWithTag(1001) as! UIImageView
+        icon.image = UIImage(named: staticIcons[indexPath.row].iconName)
+        let title = cell.viewWithTag(1002) as! UILabel
+        title.text = staticIcons[indexPath.row].label
+        title.font = UIFont(name: "PingFangSC-Regular", size: 16)
+        title.textAlignment = .center
+        return cell
+    }
+    
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+}
+
+extension PresentRoomDetailViewController:UICollectionViewDelegateFlowLayout{
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat{
+        return 50
+    }
+}
+
